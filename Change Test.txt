@@ -1,0 +1,2 @@
+-Create array (vector/map?) of both lastframe/newframe.
+-Calibration - make it so a touch point is registered only if held in a spot for X amount of time.
