@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd  ../apps/examples/
+for example in $( ls )
+do
+echo "-----------------------------------------------------------------"
+echo "building " $example
+cd $example/
+xcodebuild -configuration Release -target "openFrameworks" -project "openFrameworks.xcodeproj"
+echo "example " $example " built example"
+cd ../
+echo "-----------------------------------------------------------------"
+echo ""
+done

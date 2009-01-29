@@ -1,0 +1,67 @@
+TUIO created: 
+TUIO setup: 
+Points: 1 
+Calibration: 0.000000, 0.000000
+Calibration: 160.000000, 0.000000
+Calibration: 320.000000, 0.000000
+Calibration: 0.000000, 120.000000
+Calibration: 160.000000, 120.000000
+Calibration: 320.000000, 120.000000
+Calibration: 0.000000, 240.000000
+Calibration: 160.000000, 240.000000
+Calibration: 320.000000, 240.000000
+-------------------------------------
+listing available capture devices
+(unavailable) device[0] DV Video 
+(unavailable) device[1] IIDC FireWire Video 
+device[2] USB Video Class Video - USB 2.0 Camera
+-------------------------------------
+unable to open device[0] - will attempt other devices
+-------------------------------------
+listing available capture devices
+(unavailable) device[0] DV Video 
+(unavailable) device[1] IIDC FireWire Video 
+device[2] USB Video Class Video - USB 2.0 Camera
+-------------------------------------
+attempting to open device[2] USB Video Class Video - USB 2.0 Camera
+device opened successfully
+end setup ofVideoGrabber
+-------------------------------------
+
+Camera Mode
+Asked for 640 by 480 - actual size is 640 by 480 
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/absSubtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/subtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Contrast
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/contrast.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Threshold
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/threshold.fs
+Touchlib application is setup!
+tBeta module has exited!

@@ -1,0 +1,47 @@
+TUIO created: 
+TUIO setup: 
+Points: 1 
+Calibration: 0.000000, 0.000000
+Calibration: 160.000000, 0.000000
+Calibration: 320.000000, 0.000000
+Calibration: 0.000000, 120.000000
+Calibration: 160.000000, 120.000000
+Calibration: 320.000000, 120.000000
+Calibration: 0.000000, 240.000000
+Calibration: 160.000000, 240.000000
+Calibration: 320.000000, 240.000000
+Video Mode
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/absSubtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/subtract.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Contrast
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/contrast.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/gaussH.fs
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Threshold
+loading Shaders vs:(null), gs:(null), fs:../../../data/shaders/threshold.fs
+Touchlib application is setup!
+tBeta module has exited!
