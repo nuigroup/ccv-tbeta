@@ -5,7 +5,7 @@
 #include "cv.h"
 #include <vector>
 #include "ofMain.h"
-#include "ofxCvBlob.h"
+#include "ofxTBetaCvBlob.h"
 //#include "ofxCvTrackedBlob.h"
 
 
@@ -16,9 +16,9 @@
 class ofCvBlobListener {
   public:
   
-    virtual void blobOn( ofxCvBlob b) = 0;
-    virtual void blobMoved( ofxCvBlob b) = 0;    
-    virtual void blobOff( ofxCvBlob b) = 0;
+    virtual void blobDown( ofxTBetaCvBlob b) = 0;
+    virtual void blobMoved( ofxTBetaCvBlob b) = 0;    
+    virtual void blobUp( ofxTBetaCvBlob b) = 0;
     
 };
 

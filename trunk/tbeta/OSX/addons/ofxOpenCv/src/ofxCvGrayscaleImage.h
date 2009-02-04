@@ -2,7 +2,7 @@
 #define OFX_CV_GRAYSCALE_IMAGE_H
 
 #include "ofxCvImage.h"
-#include "ofxCvBlob.h"
+#include "ofxTBetaCvBlob.h"
 
 // for all the things ofxCvGrayscaleImage can do, check:
 // ofxCvImage.h
@@ -49,7 +49,7 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     void draw( float x, float y );
     void draw( float x, float y, float w, float h );
 
-    void drawBlobIntoMe( ofxCvBlob & blob, int color );
+    void drawBlobIntoMe( ofxTBetaCvBlob & blob, int color );
 
     // Image Filter Operations
     void contrastStretch();

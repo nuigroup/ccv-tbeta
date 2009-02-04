@@ -15,7 +15,7 @@
 
 //--------------------------
 // contours and blobs
-#include "ofxCvContourFinder.h"
+#include "ofxTBetaCvContourFinder.h"
 
 //---------------------------
 // Effects and Filters
