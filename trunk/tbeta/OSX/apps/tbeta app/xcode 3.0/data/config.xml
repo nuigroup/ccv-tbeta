@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<CONFIG>
+    <!--/////////////////////////////////////////
+
+        YOU CAN MANUALLY EDIT THE FEATURES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <!--// CAMERA SETTINGS // -->
+    <CAMERA_0>
+        <USECAMERA>0</USECAMERA>
+        <DEVICE>0</DEVICE>
+        <WIDTH>320</WIDTH>
+        <HEIGHT>240</HEIGHT>
+        <FRAMERATE>60</FRAMERATE>
+    </CAMERA_0>
+    <!--// NETWORK COMMUNICATION SETTINGS //-->
+    <NETWORK>
+        <LOCALHOST>127.0.0.1</LOCALHOST>
+        <TUIO>0</TUIO>
+        <TUIOPORT_OUT>3333</TUIOPORT_OUT>
+        <TUIOPORT_IN>3000</TUIOPORT_IN>
+    </NETWORK>
+    <!--// VIDEO SETTINGS // -->
+    <VIDEO>
+        <FILENAME>RearDI.m4v</FILENAME>
+    </VIDEO>
+    <!--// BLOB SETTINGS // -->
+    <BLOBS>
+        <MAXNUMBER>20</MAXNUMBER>
+    </BLOBS>
+    <!--/////////////////////////////////////////
+
+        DO NOT EDIT THE VALUES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <APPLICATION>
+        <TITLE>Terminator</TITLE>
+        <VERSION>1.0.0</VERSION>
+    </APPLICATION>
+    <WINDOW>
+        <WIDTH>950</WIDTH>
+        <HEIGHT>600</HEIGHT>
+        <MINX>800</MINX>
+        <MINY>426</MINY>
+    </WINDOW>
+    <BOOLEAN>
+        <PRESSURE>0</PRESSURE>
+        <LABELS>1</LABELS>
+        <SNAPSHOT>0</SNAPSHOT>
+        <OUTLINES>0</OUTLINES>
+        <LEARNBG>0</LEARNBG>
+        <TUIO>0</TUIO>
+        <VMIRROR>0</VMIRROR>
+        <HMIRROR>1</HMIRROR>
+        <WARP>0</WARP>
+        <HIGHPASS>1</HIGHPASS>
+        <AMPLIFY>0</AMPLIFY>
+        <SMOOTH>1</SMOOTH>
+        <GPU>0</GPU>
+        <DYNAMICBG>1</DYNAMICBG>
+    </BOOLEAN>
+    <INT>
+        <!--// FILTERS SETTERS //-->
+        <THRESHOLD>8</THRESHOLD>
+        <HIGHPASSBLUR>21</HIGHPASSBLUR>
+        <HIGHPASSNOISE>6</HIGHPASSNOISE>
+        <HIGHPASSAMP>19</HIGHPASSAMP>
+        <SMOOTH>1</SMOOTH>
+    </INT>
+    <WARP>
+        <BOTTOMLEFT>
+            <X>0.000000</X>
+            <Y>0.000000</Y>
+        </BOTTOMLEFT>
+        <BOTTOMRIGHT>
+            <X>0.000000</X>
+            <Y>0.000000</Y>
+        </BOTTOMRIGHT>
+        <TOPRIGHT>
+            <X>0.000000</X>
+            <Y>0.000000</Y>
+        </TOPRIGHT>
+        <TOPLEFT>
+            <X>0.000000</X>
+            <Y>0.000000</Y>
+        </TOPLEFT>
+    </WARP>
+</CONFIG>
