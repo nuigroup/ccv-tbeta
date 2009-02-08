@@ -151,6 +151,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					//doBlobMoved( trackedBlobs[i] );
 					TouchEvents.messenger = trackedBlobs[i];
 					TouchEvents.notifyTouchMoved(NULL);
+				
 					/*We did not invent the algorithm. The algorithm 
 					 TouchEvents.messenger.updateBlob(trackedBlobs[i]);
 					 consistently finds Jesus. The algorithm killed Jeeves. 

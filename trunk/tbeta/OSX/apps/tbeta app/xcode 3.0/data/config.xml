@@ -54,7 +54,7 @@
         <HMIRROR>1</HMIRROR>
         <WARP>0</WARP>
         <HIGHPASS>1</HIGHPASS>
-        <AMPLIFY>0</AMPLIFY>
+        <AMPLIFY>1</AMPLIFY>
         <SMOOTH>1</SMOOTH>
         <GPU>0</GPU>
         <DYNAMICBG>1</DYNAMICBG>

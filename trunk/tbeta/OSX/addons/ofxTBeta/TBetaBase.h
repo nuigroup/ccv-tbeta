@@ -21,26 +21,120 @@
 #define MAIN_WINDOW_HEIGHT 240.0f
 #define MAIN_WINDOW_WIDTH  320.0f
 
-
 #include "ofAddons.h"
 #include "ofMain.h"
 
 #include "ofxTBeta.h"
+//#include "ConfigurationApp.h"
 
-class TBetaBase : public TouchListener//, public BlobManager
+class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
 	{
+
+		//ofxGUI setup stuff
+		enum
+		{
+			propertiesPanel,
+			propertiesPanel_flipV,
+			propertiesPanel_flipH,
+			propertiesPanel_settings,
+			propertiesPanel_pressure,
+			
+			gpuPanel,
+			gpuPanel_use,
+			
+			optionPanel,
+			optionPanel_tuio,
+			
+			calibrationPanel,
+			calibrationPanel_calibrate,
+			calibrationPanel_warp,
+			
+			sourcePanel,
+			sourcePanel_cam,
+			sourcePanel_nextCam,
+			sourcePanel_previousCam,
+			sourcePanel_video,
+			
+			backgroundPanel,
+			backgroundPanel_remove,
+			backgroundPanel_dynamic,
+			
+			smoothPanel,
+			smoothPanel_use,
+			smoothPanel_smooth,
+			
+			amplifyPanel,
+			amplifyPanel_use,
+			amplifyPanel_amp,
+			
+			highpassPanel,
+			highpassPanel_use,
+			highpassPanel_blur,
+			highpassPanel_noise,
+			
+			trackedPanel,
+			trackedPanel_use,
+			trackedPanel_threshold,
+			trackedPanel_outlines,
+			trackedPanel_ids,
+			
+			savePanel,
+			kParameter_SaveXml,
+			kParameter_File,
+		};
+		
 	public:
 		
-		/*having the BlobManager gives us access to the blobs map
-		 
-		 any class can extend it. Idk what to do about it though... :(
-		 */
+		TBetaBase() {
+			TouchEvents.addListener(this);
+			calibration = false;
+		}
 		
-		TBetaBase();
+		/****************************************************************
+		 *						Public functions
+		 ****************************************************************/
 		
-		virtual void TouchDown( ofxTBetaCvBlob b ){}
-		virtual void TouchMoved( ofxTBetaCvBlob b ){}    
-		virtual void TouchUp( ofxTBetaCvBlob b ){} 
+		//Basic Methods
+		void setup();
+		void update();
+		void draw();
+		void exit();
+		void setupGUI();
+		
+		//Key events
+		void keyPressed(int key);
+		void keyReleased(int key);
+		void mouseMoved(int x, int y);
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased();
+		
+		//---------------------------------------GUI
+		void		handleGui(int parameterId, int task, void* data, int length);
+		ofxGui*		gui;
+		
+		
+		
+		
+		////////this is the main stuff
+		
+		void TouchDown( ofxTBetaCvBlob b );
+		void TouchMoved( ofxTBetaCvBlob b );   
+		void TouchUp( ofxTBetaCvBlob b );
+		
+		
+		///this is what we want to happen on say, key presses or draws....
+		
+		
+		//some listener stuff:::
+		//void keyPressed( int key );
+		//void keyReleased( int key );
+		
+		
+		
+		
+		
+		
 		
 		
 		//image processing stuff
@@ -64,6 +158,7 @@ class TBetaBase : public TouchListener//, public BlobManager
 		void drawFingerOutlines();
 		
 		
+	
 		
 		
 		
@@ -110,6 +205,8 @@ class TBetaBase : public TouchListener//, public BlobManager
 		int					highpassNoise;
 		int					highpassAmp;
 		int					smooth;
+		
+		bool				calibration;
 		
 		bool				bDrawVideo;
 		bool  				bFastMode;

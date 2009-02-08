@@ -1,11 +1,11 @@
 #ifndef __GUI_DEFINITION
 #define __GUI_DEFINITION
 
-#include "testApp.h"
+#include "TBetaBase.h"
 
-testApp *appPtr;
+TBetaBase  *appPtr;
 
-void testApp::setupGUI()
+void TBetaBase ::setupGUI()
 {
 	appPtr = this;
 
@@ -177,7 +177,7 @@ void testApp::setupGUI()
 		gui->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
 }
 
-void testApp::handleGui(int parameterId, int task, void* data, int length)
+void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 {
 	if(activeInput)
 	{

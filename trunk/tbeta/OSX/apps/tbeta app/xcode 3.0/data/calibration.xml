@@ -4,9 +4,9 @@
         <GRIDY>2</GRIDY>
     </GRIDMESH>
     <BOUNDINGBOX>
-        <ulx>0.002000</ulx>
-        <uly>0.000000</uly>
-        <lrx>1.000000</lrx>
+        <ulx>0.000000</ulx>
+        <uly>0.057000</uly>
+        <lrx>0.986000</lrx>
         <lry>1.000000</lry>
     </BOUNDINGBOX>
     <POINT>

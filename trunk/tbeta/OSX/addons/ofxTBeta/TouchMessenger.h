@@ -48,11 +48,12 @@ public:
 class TouchListener {
 protected:
 	
-	virtual void TouchDown(ofxTBetaCvBlob message){};
-	virtual void TouchUp(ofxTBetaCvBlob message){};
-	virtual void TouchMoved(ofxTBetaCvBlob message){};
+	virtual void TouchDown(ofxTBetaCvBlob message){}
+	virtual void TouchUp(ofxTBetaCvBlob message){}
+	virtual void TouchMoved(ofxTBetaCvBlob message){}
 	
 	void TouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
+		printf("being called\n");
 		TouchDown(eventArgs);
 	}
 	void TouchUp(const void* sender, ofxTBetaCvBlob& eventArgs){

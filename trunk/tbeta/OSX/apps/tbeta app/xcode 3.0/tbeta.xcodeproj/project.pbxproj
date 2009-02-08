@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7438606C0F3A46F800943B8E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 743860690F3A46F800943B8E /* main.cpp */; };
-		7438606D0F3A46F800943B8E /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7438606A0F3A46F800943B8E /* testApp.cpp */; };
 		7449F99B0F37AF07000733C3 /* BlobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7449F99A0F37AF07000733C3 /* BlobManager.cpp */; };
 		747318A20F36A790005532BA /* boxAlign.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7473186E0F36A790005532BA /* boxAlign.cpp */; };
 		747318A30F36A790005532BA /* calibrationB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 747318700F36A790005532BA /* calibrationB.cpp */; };
@@ -32,6 +31,7 @@
 		747318B50F36A790005532BA /* TBetaBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7473189B0F36A790005532BA /* TBetaBase.cpp */; };
 		747318B60F36A790005532BA /* TouchMessenger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7473189D0F36A790005532BA /* TouchMessenger.cpp */; };
 		747318B70F36A790005532BA /* tracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 747318A00F36A790005532BA /* tracking.cpp */; };
+		74A3A0930F3D238800231B2F /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74A3A0920F3D238800231B2F /* testApp.cpp */; };
 		7909357C0EDD88B1006BE372 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7909357A0EDD88B1006BE372 /* ofxOscBundle.cpp */; };
 		E411DE9F0E8CCF1A007CF05D /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E411DD990E8CCF1A007CF05D /* ofxDirList.cpp */; };
 		E411DEAC0E8CCF1A007CF05D /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E411DDB60E8CCF1A007CF05D /* ofxTCPClient.cpp */; };
@@ -101,10 +101,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		743860680F3A46F800943B8E /* gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gui.h; path = "../Config app/src/gui.h"; sourceTree = SOURCE_ROOT; };
 		743860690F3A46F800943B8E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../Config app/src/main.cpp"; sourceTree = SOURCE_ROOT; };
-		7438606A0F3A46F800943B8E /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = "../Config app/src/testApp.cpp"; sourceTree = SOURCE_ROOT; };
-		7438606B0F3A46F800943B8E /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = "../Config app/src/testApp.h"; sourceTree = SOURCE_ROOT; };
 		7449F9990F37AF07000733C3 /* BlobManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobManager.h; sourceTree = "<group>"; };
 		7449F99A0F37AF07000733C3 /* BlobManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlobManager.cpp; sourceTree = "<group>"; };
 		7473186E0F36A790005532BA /* boxAlign.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = boxAlign.cpp; sourceTree = "<group>"; };
@@ -155,6 +152,9 @@
 		7473189E0F36A790005532BA /* TouchMessenger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchMessenger.h; sourceTree = "<group>"; };
 		747318A00F36A790005532BA /* tracking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tracking.cpp; sourceTree = "<group>"; };
 		747318A10F36A790005532BA /* tracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tracking.h; sourceTree = "<group>"; };
+		74A3A0910F3D238800231B2F /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = "../Config app/src/testApp.h"; sourceTree = SOURCE_ROOT; };
+		74A3A0920F3D238800231B2F /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = "../Config app/src/testApp.cpp"; sourceTree = SOURCE_ROOT; };
+		74CF93940F3BBCB6006D41FD /* gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
 		7909357A0EDD88B1006BE372 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscBundle.cpp; sourceTree = "<group>"; };
 		7909357B0EDD88B1006BE372 /* ofxOscBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscBundle.h; sourceTree = "<group>"; };
 		E411BE020CFA279F007A1F4A /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
@@ -450,6 +450,7 @@
 		7473186C0F36A790005532BA /* ofxTBeta */ = {
 			isa = PBXGroup;
 			children = (
+				74CF93940F3BBCB6006D41FD /* gui.h */,
 				7473186D0F36A790005532BA /* Calibration */,
 				747318740F36A790005532BA /* Communication */,
 				747318770F36A790005532BA /* Filters */,
@@ -547,10 +548,9 @@
 		74B08A670F355E5E009D8FA9 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				743860680F3A46F800943B8E /* gui.h */,
 				743860690F3A46F800943B8E /* main.cpp */,
-				7438606A0F3A46F800943B8E /* testApp.cpp */,
-				7438606B0F3A46F800943B8E /* testApp.h */,
+				74A3A0910F3D238800231B2F /* testApp.h */,
+				74A3A0920F3D238800231B2F /* testApp.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1566,7 +1566,7 @@
 				747318B70F36A790005532BA /* tracking.cpp in Sources */,
 				7449F99B0F37AF07000733C3 /* BlobManager.cpp in Sources */,
 				7438606C0F3A46F800943B8E /* main.cpp in Sources */,
-				7438606D0F3A46F800943B8E /* testApp.cpp in Sources */,
+				74A3A0930F3D238800231B2F /* testApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
