@@ -2,28 +2,28 @@
 
 
 //--------------------------------------------------------------
-void testApp::setup(){	 
+void testApp::setup(){
 
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	
+
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
-	
+void testApp::keyPressed  (int key){
+
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-	
+void testApp::keyReleased  (int key){
+
 }
 
 //--------------------------------------------------------------
@@ -48,7 +48,9 @@ void testApp::mouseReleased(){
  *****************************************************************************/
 void testApp::TouchDown( ofxTBetaCvBlob b)
 {
-
+    ofSetColor(0xFF0000);
+    ofFill();
+	ofEllipse( b.centroid.x, b.centroid.y, 10, 10);
 }
 
 void testApp::TouchUp( ofxTBetaCvBlob b)
@@ -58,7 +60,8 @@ void testApp::TouchUp( ofxTBetaCvBlob b)
 
 void testApp::TouchMoved( ofxTBetaCvBlob b)
 {
-	
+	ofSetColor(0xFFFFFF);
+    ofFill();
 	ofEllipse( b.centroid.x, b.centroid.y, 10, 10);
 
 }
