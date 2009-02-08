@@ -29,7 +29,7 @@
 		<Cursor position="35" topLine="0" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="41698" topLine="1152" />
+		<Cursor position="26943" topLine="737" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="0" top="0" tabpos="0">
 		<Cursor position="647" topLine="3" />
@@ -64,8 +64,8 @@
 	<File name="..\..\..\libs\openFrameworks\app\ofSimpleApp.h" open="0" top="0" tabpos="15">
 		<Cursor position="954" topLine="13" />
 	</File>
-	<File name="..\..\..\libs\openFrameworks\communication\ofArduino.h" open="0" top="0" tabpos="3">
-		<Cursor position="4368" topLine="103" />
+	<File name="..\..\..\libs\openFrameworks\communication\ofArduino.h" open="1" top="0" tabpos="3">
+		<Cursor position="4366" topLine="34" />
 	</File>
 	<File name="..\..\..\libs\openFrameworks\communication\ofSerial.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="16271" topLine="586" />

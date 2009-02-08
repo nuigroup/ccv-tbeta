@@ -931,13 +931,15 @@ void TBetaBase::update()
  * The draw function paints the textures onto the screen. It runs after update.
  *****************************************************************************/
 void TBetaBase::draw(){
-	if(calibration) {
+    if(calibration) {
 
-    //temporary. only auto draw if in fullscreen
-	if(bNewFrame && bFullscreen == false){drawToScreen();}
-	else{drawToScreen();}
-	gui->draw();
-	}
+        //temporary. only auto draw if in fullscreen
+        if(bNewFrame && bFullscreen == false){drawToScreen();}
+        else{drawToScreen();}
+
+        if(!bCalibration)
+        gui->draw();
+    }
 }
 
 /*****************************************************************************
