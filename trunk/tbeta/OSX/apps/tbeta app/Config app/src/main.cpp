@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define LOGIT TRUE
+#define LOGIT FALSE
 
 int main( )
 {
@@ -14,7 +14,7 @@ int main( )
         FreeConsole();
     #endif
 
-#ifdef LOGIT
+#if LOGIT
 
      /* alright first we need to get time and date so our logs can be ordered*/
     char dateStr [9];
