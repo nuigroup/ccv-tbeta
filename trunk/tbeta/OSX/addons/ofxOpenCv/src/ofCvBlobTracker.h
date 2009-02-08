@@ -30,14 +30,14 @@ class ofCvBlobTracker {
 
 
   public:
-  
-    vector<ofCvTrackedBlob>  blobs;    
-    
-    
+
+    vector<ofTBetaCvBlob>  blobs;
+
+
     ofCvBlobTracker();
     void setListener( ofCvBlobListener* _listener );
     void trackBlobs( const vector<ofCvBlob>& blobs );
-    int findOrder( int id );  // order by which the present 
+    int findOrder( int id );  // order by which the present
                               // blobs came into existence
     ofCvTrackedBlob& getById( int id );  // returns a reference to the
                                          // corresponding blob in blobs vector
@@ -46,11 +46,11 @@ class ofCvBlobTracker {
 
 
   protected:
-  
+
     int currentID;
     int extraIDs;
     int numcheck;
-    
+
     ofCvBlobListener* listener;
 
     int reject_distance_threshold;
@@ -60,15 +60,15 @@ class ofCvBlobTracker {
     vector<vector<int> > matrix;
     vector<int> ids;
     vector<vector<ofCvTrackedBlob> > history;
-    
-    
-    void doBlobOn( const ofCvTrackedBlob& b );    
-    void doBlobMoved( const ofCvTrackedBlob& b );    
-    void doBlobOff( const ofCvTrackedBlob& b );    
-    
+
+
+    void doBlobOn( const ofCvTrackedBlob& b );
+    void doBlobMoved( const ofCvTrackedBlob& b );
+    void doBlobOff( const ofCvTrackedBlob& b );
+
     inline void permute( int k );
     inline bool checkValid( int start );
-    inline bool checkValidNew( int start );    
+    inline bool checkValidNew( int start );
 };
 
 

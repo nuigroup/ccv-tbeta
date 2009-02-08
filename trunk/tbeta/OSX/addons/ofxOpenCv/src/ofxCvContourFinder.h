@@ -35,8 +35,8 @@ class ofxCvContourFinder {
     void                    draw( float x, float y );
 
     int                     	nBlobs;     // how many did we find
-    vector <ofxCvBlob>       	blobs;      // the blobs, in a std::vector...
-    ofxCvBlob                	getBlob(int num);
+    vector <ofxTBetaCvBlob>       	blobs;      // the blobs, in a std::vector...
+    ofxTBetaCvBlob                	getBlob(int num);
 
   protected:
 

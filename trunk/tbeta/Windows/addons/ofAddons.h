@@ -49,6 +49,7 @@
 	#include "ofxXmlSettings.h"
 #endif
 
-#ifdef OF_ADDDON_USING_OFXTBETA
-	#include "ofxTBeta.h"
+#ifdef OF_ADDON_USING_OFXTBETA
+    //this really shouldn't be like this, but it's the only way i got it to compile.. any thoughts?
+	#include "ofxTBeta/ofxTBeta.h"
 #endif

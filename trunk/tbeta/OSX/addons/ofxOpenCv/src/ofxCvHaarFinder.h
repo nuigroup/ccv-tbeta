@@ -4,9 +4,9 @@
 /*
 * ofxCvHaarFinder.h
 *  Charlie Blobtracking faces test...
-*  Equal ofContourFinder but using CvHaarClassifierCascade to detect faces, 
+*  Equal ofContourFinder but using CvHaarClassifierCascade to detect faces,
 and BlobTracker to...tracking objects. -thanks to stefanix-
-*  
+*
 */
 
 
@@ -16,10 +16,10 @@ and BlobTracker to...tracking objects. -thanks to stefanix-
 class ofxCvHaarFinder{
 
   public:
-		
-    vector<ofxCvBlob> blobs;
-    
-    
+
+    vector<ofxTBetaCvBlob> blobs;
+
+
     ofxCvHaarFinder();
     ~ofxCvHaarFinder();
     void findHaarObjects( ofxCvGrayscaleImage& input,
@@ -29,10 +29,10 @@ class ofxCvHaarFinder{
     void setup(string haarFile);
     void setScaleHaar(float scaleHaar);
 
-    
-    
+
+
   protected:
-  
+
     ofxCvGrayscaleImage  inputCopy;
     CvMemStorage*  contour_storage;
     CvMemStorage*  storage;
@@ -41,12 +41,12 @@ class ofxCvHaarFinder{
     int nFacesFound;
     float scaleHaar;
 	CvSeq*  cvSeqFaces[MAX_NUM_CONTOURS_TO_FIND];
-  
+
     CvHaarClassifierCascade* cascade;
     const char* cascade_name;
-    
-    void reset();  
-    
+
+    void reset();
+
 };
 
 

@@ -3551,3 +3551,1396 @@
 1231193777 h:\tbeta\windows\apps\tbeta source\configapp\src\gui.h
 	"testApp.h"
 
+1234116068 source:c:\documents and settings\artem\desktop\windows\addons\ofxdirlist\src\ofxdirlist.cpp
+	"ofxDirList.h"
+
+1234116068 c:\documents and settings\artem\desktop\windows\addons\ofxdirlist\src\ofxdirlist.h
+	"ofMain.h"
+	<stdio.h>
+	<iostream>
+	<string.h>
+	<dirent.h>
+	<windows.h>
+	<tchar.h>
+	<string.h>
+	<assert.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\ofmain.h
+	"ofConstants.h"
+	"ofMath.h"
+	"ofUtils.h"
+	"ofTypes.h"
+	"ofSerial.h"
+	"ofStandardFirmata.h"
+	"ofArduino.h"
+	"ofTexture.h"
+	"ofTrueTypeFont.h"
+	"ofGraphics.h"
+	"ofImage.h"
+	"ofSimpleApp.h"
+	"ofAppRunner.h"
+	"ofSoundStream.h"
+	"ofSoundPlayer.h"
+	"ofVideoGrabber.h"
+	"ofVideoPlayer.h"
+	"ofAppEvents.h"
+	"ofKeyEvents.h"
+	"ofMouseEvents.h"
+	"ofAudioEvents.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\utils\ofconstants.h
+	<windows.h>
+	"GLee.h"
+	"glut.h"
+	<unistd.h>
+	"GLee.h"
+	<GLUT/glut.h>
+	<ApplicationServices/ApplicationServices.h>
+	<unistd.h>
+	"GLee.h"
+	<GL/glut.h>
+	<stdio.h>
+	<math.h>
+	<time.h>
+	<stdlib.h>
+	<string.h>
+	<iostream>
+	<vector>
+	<string>
+	<sstream>
+	<iomanip>
+
+1234116468 c:\documents and settings\artem\desktop\windows\libs\glee\include\glee.h
+	<windows.h>
+	<GL/gl.h>
+	<OpenGL/gl.h>
+	<GL/gl.h>
+	<GL/glx.h>
+	<stddef.h>
+
+1234116444 c:\documents and settings\artem\desktop\windows\libs\glut\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\utils\ofmath.h
+	"ofConstants.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\utils\ofutils.h
+	"ofConstants.h"
+	<shellapi.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\utils\oftypes.h
+	"ofConstants.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\communication\ofserial.h
+	"ofConstants.h"
+	<termios.h>
+	<sys/ioctl.h>
+	<getopt.h>
+	<dirent.h>
+	<Winbase.h>
+	<tchar.h>
+	<iostream>
+	<string.h>
+	<setupapi.h>
+	<regstr.h>
+	<winioctl.h>
+	<initguid.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<fcntl.h>
+	<errno.h>
+	<ctype.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\communication\ofstandardfirmata.h
+	<list>
+	<vector>
+	<string>
+	<iostream>
+	"Poco/BasicEvent.h"
+	"Poco/EventArgs.h"
+	"ofSerial.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\basicevent.h
+	"Poco/AbstractEvent.h"
+	"Poco/DefaultStrategy.h"
+	"Poco/AbstractDelegate.h"
+	"Poco/CompareFunctions.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\abstractevent.h
+	"Poco/Foundation.h"
+	"Poco/SingletonHolder.h"
+	"Poco/SharedPtr.h"
+	"Poco/ActiveResult.h"
+	"Poco/ActiveMethod.h"
+	"Poco/Mutex.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\foundation.h
+	"Poco/Config.h"
+	"Poco/Platform.h"
+	"Poco/Platform_WIN32.h"
+	"Poco/Platform_VMS.h"
+	"Poco/Platform_POSIX.h"
+	"Poco/Bugcheck.h"
+	"Poco/Types.h"
+	<string>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\config.h
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\platform.h
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\platform_win32.h
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\platform_vms.h
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\platform_posix.h
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\bugcheck.h
+	"Poco/Foundation.h"
+	<string>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\types.h
+	"Poco/Foundation.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\singletonholder.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\mutex.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/ScopedLock.h"
+	"Poco/Mutex_WIN32.h"
+	"Poco/Mutex_POSIX.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\exception.h
+	"Poco/Foundation.h"
+	<stdexcept>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\scopedlock.h
+	"Poco/Foundation.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\mutex_win32.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/UnWindows.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\unwindows.h
+	<windows.h>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\mutex_posix.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<pthread.h>
+	<errno.h>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\sharedptr.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/Mutex.h"
+	<algorithm>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\activeresult.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+	"Poco/Event.h"
+	"Poco/RefCountedObject.h"
+	"Poco/Exception.h"
+	<algorithm>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\event.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/Event_WIN32.h"
+	"Poco/Event_POSIX.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\event_win32.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	"Poco/UnWindows.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\event_posix.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<pthread.h>
+	<errno.h>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\refcountedobject.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\activemethod.h
+	"Poco/Foundation.h"
+	"Poco/ActiveResult.h"
+	"Poco/ActiveRunnable.h"
+	"Poco/ActiveStarter.h"
+	"Poco/AutoPtr.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\activerunnable.h
+	"Poco/Foundation.h"
+	"Poco/ActiveResult.h"
+	"Poco/Runnable.h"
+	"Poco/RefCountedObject.h"
+	"Poco/AutoPtr.h"
+	"Poco/Exception.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\runnable.h
+	"Poco/Foundation.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\autoptr.h
+	"Poco/Foundation.h"
+	"Poco/Exception.h"
+	<algorithm>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\activestarter.h
+	"Poco/Foundation.h"
+	"Poco/ThreadPool.h"
+	"Poco/ActiveRunnable.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\threadpool.h
+	"Poco/Foundation.h"
+	"Poco/Thread.h"
+	"Poco/Mutex.h"
+	<vector>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\thread.h
+	"Poco/Foundation.h"
+	"Poco/Mutex.h"
+	"Poco/Thread_WIN32.h"
+	"Poco/Thread_POSIX.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\thread_win32.h
+	"Poco/Foundation.h"
+	"Poco/Runnable.h"
+	"Poco/UnWindows.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\thread_posix.h
+	"Poco/Foundation.h"
+	"Poco/Runnable.h"
+	"Poco/SignalHandler.h"
+	"Poco/Event.h"
+	"Poco/RefCountedObject.h"
+	"Poco/AutoPtr.h"
+	<pthread.h>
+	<sys/select.h>
+	<errno.h>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\signalhandler.h
+	"Poco/Foundation.h"
+	<vector>
+	<setjmp.h>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\defaultstrategy.h
+	"Poco/NotificationStrategy.h"
+	<memory>
+	<set>
+	<vector>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\notificationstrategy.h
+	"Poco/Foundation.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\abstractdelegate.h
+	"Poco/Foundation.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\comparefunctions.h
+	"Poco/Foundation.h"
+	<functional>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\eventargs.h
+	"Poco/Foundation.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\communication\ofarduino.h
+	"ofStandardFirmata.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\oftexture.h
+	"ofConstants.h"
+	"ofGraphics.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\ofgraphics.h
+	"ofConstants.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\oftruetypefont.h
+	"ofConstants.h"
+	"ofGraphics.h"
+	"ofUtils.h"
+	"ofTypes.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\ofimage.h
+	"ofConstants.h"
+	"ofTexture.h"
+	"ofGraphics.h"
+	"ofAppRunner.h"
+	"FreeImage.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\app\ofapprunner.h
+	"ofMain.h"
+	"ofGraphics.h"
+	"ofMath.h"
+	"ofUtils.h"
+	"ofAppEvents.h"
+	"ofKeyEvents.h"
+	"ofMouseEvents.h"
+	"ofSimpleApp.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofappevents.h
+	"Poco/FIFOEvent.h"
+	"Poco/Delegate.h"
+	"ofTypes.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\fifoevent.h
+	"Poco/AbstractEvent.h"
+	"Poco/FIFOStrategy.h"
+	"Poco/AbstractDelegate.h"
+	"Poco/CompareFunctions.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\fifostrategy.h
+	"Poco/NotificationStrategy.h"
+	<map>
+	<list>
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\delegate.h
+	"Poco/Foundation.h"
+	"Poco/AbstractDelegate.h"
+	"Poco/FunctionDelegate.h"
+	"Poco/Expire.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\functiondelegate.h
+	"Poco/Foundation.h"
+	"Poco/AbstractDelegate.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\expire.h
+	"Poco/Foundation.h"
+	"Poco/AbstractDelegate.h"
+	"Poco/Timestamp.h"
+
+1234116344 c:\documents and settings\artem\desktop\windows\libs\poco\includes\poco\timestamp.h
+	"Poco/Foundation.h"
+	<ctime>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofkeyevents.h
+	"Poco/FIFOEvent.h"
+	"Poco/Delegate.h"
+	"ofTypes.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofmouseevents.h
+	"Poco/FIFOEvent.h"
+	"Poco/Delegate.h"
+	"ofTypes.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\app\ofsimpleapp.h
+	"ofAppEvents.h"
+	"ofKeyEvents.h"
+	"ofMouseEvents.h"
+	"ofAudioEvents.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofaudioevents.h
+	"Poco/FIFOEvent.h"
+	"Poco/Delegate.h"
+	"ofTypes.h"
+
+1234116440 c:\documents and settings\artem\desktop\windows\libs\freeimage\freeimage.h
+	<wchar.h>
+	<stdint.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\sound\ofsoundstream.h
+	"ofConstants.h"
+	"ofMath.h"
+	"ofAudioEvents.h"
+	"ofSimpleApp.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\sound\ofsoundplayer.h
+	"ofConstants.h"
+	"fmod.h"
+	"fmod_errors.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\fmodex\inc\fmod.h
+	"fmod_codec.h"
+	"fmod_dsp.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\fmodex\inc\fmod_codec.h
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\fmodex\inc\fmod_dsp.h
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\fmodex\inc\fmod_errors.h
+	"fmod.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofvideograbber.h
+	"ofConstants.h"
+	"ofTexture.h"
+	"ofGraphics.h"
+	"ofQtUtils.h"
+	"videoInput.h"
+	"ofUCUtils.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofqtutils.h
+	"ofConstants.h"
+	"ofGraphics.h"
+	<Quicktime/QuickTime.h>
+	<CoreServices/CoreServices.h>
+	<ApplicationServices/ApplicationServices.h>
+	<QTML.h>
+	<FixMath.h>
+	<QuickTimeComponents.h>
+	<TextUtils.h>
+	<MediaHandlers.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\qtml.h
+	<MacTypes.h>
+	<MacMemory.h>
+	<MacWindows.h>
+	<OSUtils.h>
+	<Files.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\mactypes.h
+	<ConditionalMacros.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\conditionalmacros.h
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\macmemory.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\mixedmode.h
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\macwindows.h
+	<MacTypes.h>
+	<Aliases.h>
+	<AppleEvents.h>
+	<Collections.h>
+	<Drag.h>
+	<Events.h>
+	<Menus.h>
+	<MixedMode.h>
+	<QDOffscreen.h>
+	<Quickdraw.h>
+	<TextCommon.h>
+	<Icons.h>
+	<MacErrors.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\aliases.h
+	<MacTypes.h>
+	<AppleTalk.h>
+	<Files.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\appletalk.h
+	<MacTypes.h>
+	<OSUtils.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\osutils.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<MacMemory.h>
+	<Patches.h>
+	<DateTimeUtils.h>
+	<Endian.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\patches.h
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\datetimeutils.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\endian.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\files.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<OSUtils.h>
+	<TextCommon.h>
+	<UTCUtils.h>
+	<Finder.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\textcommon.h
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\utcutils.h
+	<MacTypes.h>
+	<MacErrors.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\macerrors.h
+	<ConditionalMacros.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\finder.h
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\appleevents.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<Notification.h>
+	<Events.h>
+	<AEDataModel.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\notification.h
+	<MacTypes.h>
+	<OSUtils.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\events.h
+	<OSUtils.h>
+	<Quickdraw.h>
+	<MacTypes.h>
+	<Endian.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\quickdraw.h
+	<Components.h>
+	<MacTypes.h>
+	<MixedMode.h>
+	<QuickdrawText.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\components.h
+	<MacErrors.h>
+	<MacTypes.h>
+	<MixedMode.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\quickdrawtext.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\aedatamodel.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\collections.h
+	<MacTypes.h>
+	<MixedMode.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\drag.h
+	<MacTypes.h>
+	<Events.h>
+	<Files.h>
+	<AppleEvents.h>
+	<Quickdraw.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\menus.h
+	<MacTypes.h>
+	<Events.h>
+	<Quickdraw.h>
+	<Fonts.h>
+	<TextCommon.h>
+	<Processes.h>
+	<AppleEvents.h>
+	<Collections.h>
+	<MacErrors.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\fonts.h
+	<MacTypes.h>
+	<Files.h>
+	<Quickdraw.h>
+	<TextCommon.h>
+	<MacErrors.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\processes.h
+	<MacTypes.h>
+	<Events.h>
+	<Files.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\qdoffscreen.h
+	<MacErrors.h>
+	<Quickdraw.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\icons.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<Files.h>
+	<CodeFragments.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\codefragments.h
+	<MacTypes.h>
+	<Files.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\fixmath.h
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\quicktimecomponents.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<Components.h>
+	<ImageCompression.h>
+	<Movies.h>
+	<Quickdraw.h>
+	<Video.h>
+	<Sound.h>
+	<QuickTimeMusic.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\imagecompression.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<QDOffscreen.h>
+	<Components.h>
+	<StandardFile.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\standardfile.h
+	<MacTypes.h>
+	<Dialogs.h>
+	<Files.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\dialogs.h
+	<MacTypes.h>
+	<MixedMode.h>
+	<Events.h>
+	<MacWindows.h>
+	<TextEdit.h>
+	<Controls.h>
+	<MacErrors.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\textedit.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<MixedMode.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\controls.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<Menus.h>
+	<TextEdit.h>
+	<Drag.h>
+	<Icons.h>
+	<Collections.h>
+	<MacErrors.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\movies.h
+	<Quickdraw.h>
+	<Aliases.h>
+	<Events.h>
+	<Menus.h>
+	<Components.h>
+	<ImageCompression.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\video.h
+	<Quickdraw.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\sound.h
+	<MacTypes.h>
+	<Dialogs.h>
+	<Components.h>
+	<MixedMode.h>
+	<Movies.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\quicktimemusic.h
+	<Components.h>
+	<ImageCompression.h>
+	<Movies.h>
+	<Quickdraw.h>
+	<Video.h>
+	<MacMemory.h>
+	<Sound.h>
+	<Endian.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\textutils.h
+	<MacTypes.h>
+	<NumberFormatting.h>
+	<StringCompare.h>
+	<DateTimeUtils.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\numberformatting.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+	<IntlResources.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\intlresources.h
+	<MacTypes.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\stringcompare.h
+	<MacTypes.h>
+	<TextCommon.h>
+	<Script.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\script.h
+	<MacTypes.h>
+	<Quickdraw.h>
+	<IntlResources.h>
+	<Events.h>
+
+1234116464 c:\documents and settings\artem\desktop\windows\libs\quicktime\cincludes\mediahandlers.h
+	<ConditionalMacros.h>
+	<MacTypes.h>
+	<Components.h>
+	<Movies.h>
+	<Sound.h>
+
+1234116440 c:\documents and settings\artem\desktop\windows\libs\videoinput\include\videoinput.h
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<wchar.h>
+	<windows.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofucutils.h
+	"ofConstants.h"
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<unicap.h>
+	<unistd.h>
+	<string.h>
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofvideoplayer.h
+	"ofConstants.h"
+	"ofTexture.h"
+	"Decoder.h"
+	"ofQtUtils.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvcolorimage.cpp
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvgrayscaleimage.h
+	"ofxCvImage.h"
+	"ofxTBetaCvBlob.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvimage.h
+	"ofxCvConstants.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvconstants.h
+	<iostream>
+	"cv.h"
+	<vector>
+	"ofMain.h"
+	"ofxTBetaCvBlob.h"
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cv.h
+	<chdl.h>
+	"cxcore.h"
+	"cvtypes.h"
+	"cv.hpp"
+	"cvcompat.h"
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cxcore.h
+	"ipl.h"
+	"ipl/ipl.h"
+	"cxtypes.h"
+	"cxerror.h"
+	"cvver.h"
+	"cxcore.hpp"
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cxtypes.h
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<float.h>
+	<emmintrin.h>
+	<fastmath.h>
+	<mathimf.h>
+	<math.h>
+	<ipl.h>
+	<ipl/ipl.h>
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cxerror.h
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cvver.h
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cxcore.hpp
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cvtypes.h
+	<assert.h>
+	<stdlib.h>
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cv.hpp
+
+1234117682 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\libs\opencv\include\cvcompat.h
+	<string.h>
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvblob.h
+	"ofxCvConstants.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvcolorimage.h
+	"ofxCvImage.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvfloatimage.h
+	"ofxCvImage.h"
+
+1234119028 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvcontourfinder.cpp
+	"ofxCvContourFinder.h"
+
+1234119018 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvcontourfinder.h
+	"ofxCvConstants.h"
+	"ofxCvBlob.h"
+	"ofxCvGrayscaleImage.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvfloatimage.cpp
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvgrayscaleimage.cpp
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvimage.cpp
+	"ofxCvImage.h"
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234116054 source:c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscbundle.cpp
+	"ofxOscBundle.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscbundle.h
+	<vector>
+	"ofxOscMessage.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscmessage.h
+	"ofxOscArg.h"
+	<vector>
+	<string>
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscarg.h
+	<ofConstants.h>
+	<string>
+
+1234116054 source:c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscmessage.cpp
+	"ofxOscMessage.h"
+	<iostream>
+	<assert.h>
+
+1234116054 source:c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscreceiver.cpp
+	"ofxOscReceiver.h"
+	<pthread.h>
+	<iostream>
+	<assert.h>
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscreceiver.h
+	<deque>
+	"ofConstants.h"
+	<windows.h>
+	<pthread.h>
+	<OscTypes.h>
+	<OscPacketListener.h>
+	<UdpSocket.h>
+	"ofxOscMessage.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\osc\osctypes.h
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\osc\oscpacketlistener.h
+	"OscReceivedElements.h"
+	"../ip/PacketListener.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\osc\oscreceivedelements.h
+	"OscTypes.h"
+	"OscException.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\osc\oscexception.h
+	<exception>
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\ip\packetlistener.h
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\ip\udpsocket.h
+	"NetworkingUtils.h"
+	"IpEndpointName.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\ip\networkingutils.h
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\ip\ipendpointname.h
+
+1234116054 source:c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscsender.cpp
+	"ofxOscSender.h"
+	<UdpSocket.h>
+	<assert.h>
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxoscsender.h
+	<string>
+	"OscTypes.h"
+	"OscOutboundPacketStream.h"
+	"ofxOscBundle.h"
+	"ofxOscMessage.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\libs\oscpack\include\osc\oscoutboundpacketstream.h
+	"OscTypes.h"
+	"OscException.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\calibration\boxalign.cpp
+	"boxAlign.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\calibration\boxalign.h
+	"ofMain.h"
+	"ofxCvMain.h"
+	"ofxVectorMath.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvmain.h
+	"ofxCvConstants.h"
+	"ofxCvImage.h"
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+	"ofxTBetaCvContourFinder.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxvectormath.h
+	"ofxPoint2f.h"
+	"ofxPoint3f.h"
+	"ofxPoint4f.h"
+	"ofxVec2f.h"
+	"ofxVec3f.h"
+	"ofxVec4f.h"
+	"ofxMatrix3x3.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxpoint2f.h
+	"ofxVec2f.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxvec2f.h
+	"ofConstants.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxpoint3f.h
+	"ofxVec3f.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxvec3f.h
+	"ofConstants.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxpoint4f.h
+	"ofxVec4f.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxvec4f.h
+	"ofConstants.h"
+
+1234116328 c:\documents and settings\artem\desktop\windows\addons\ofxvectormath\src\ofxmatrix3x3.h
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\calibration\calibrationb.cpp
+	"calibrationB.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\calibration\calibrationb.h
+	"ofAddons.h"
+	"rect2d.h"
+	"vector2d.h"
+
+1234120650 c:\documents and settings\artem\desktop\windows\addons\ofaddons.h
+	"ofxCvMain.h"
+	"ofxObjLoader.h"
+	"ofxDirList.h"
+	"ofxVectorMath.h"
+	"ofxNetwork.h"
+	"ofxVectorGraphics.h"
+	"ofxOsc.h"
+	"ofxThread.h"
+	"ofxXmlSettings.h"
+	"ofxTBeta/ofxTBeta.h"
+
+1234116054 c:\documents and settings\artem\desktop\windows\addons\ofxosc\src\ofxosc.h
+	"ofxOscArg.h"
+	"ofxOscMessage.h"
+	"ofxOscSender.h"
+	"ofxOscReceiver.h"
+
+1234116060 c:\documents and settings\artem\desktop\windows\addons\ofxthread\src\ofxthread.h
+	"ofConstants.h"
+	<process.h>
+	<pthread.h>
+	<semaphore.h>
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxxmlsettings\src\ofxxmlsettings.h
+	"ofMain.h"
+	<string.h>
+	"tinyxml.h"
+
+1234116332 c:\documents and settings\artem\desktop\windows\addons\ofxxmlsettings\libs\tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\calibration\rect2d.h
+	"vector2d.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\calibration\vector2d.h
+	<math.h>
+
+1234116316 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\examples\src\main.cpp
+	"ofMain.h"
+	"testApp.h"
+
+1234116316 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\examples\src\testapp.h
+	"ofMain.h"
+	"ofAddons.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxtbetacvblob.h
+	"ofxCvConstants.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxtbetacvcontourfinder.h
+	"ofxCvConstants.h"
+	"ofxTBetaCvBlob.h"
+	"ofxCvGrayscaleImage.h"
+
+1234116316 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\examples\src\testapp.cpp
+	"testApp.h"
+
+1234119050 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvhaarfinder.cpp
+	"ofxCvHaarFinder.h"
+
+1234119038 c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxcvhaarfinder.h
+	"ofMain.h"
+	"ofxCvMain.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxopencv\src\ofxtbetacvcontourfinder.cpp
+	"ofxTBetaCvContourFinder.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\communication\tuioosc.cpp
+	"TUIOOSC.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\communication\tuioosc.h
+	"ofxTBetaCvContourFinder.h"
+	"ofAddons.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\filters\imagefilter.cpp
+	"ImageFilter.h"
+	<stdio.h>
+	"tinyxml.h"
+	"ofUtils.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\filters\imagefilter.h
+	"ShaderProgram.h"
+	<map>
+	<string>
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\filters\shaderprogram.h
+	"GLee.h"
+	<OpenGL/gl.h>
+	<GLUT/glut.h>
+	<stdlib.h>
+	"GLee.h"
+	<GL/gl.h>
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\filters\shaderprogram.cpp
+	"ShaderProgram.h"
+	<stdio.h>
+	<stdlib.h>
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tbetabase.cpp
+	"TBetaBase.h"
+	"gui.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tbetabase.h
+	"ofAddons.h"
+	"ofMain.h"
+	"ofxTBeta.h"
+
+1234119142 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxtbeta.h
+	"TouchMessenger.h"
+	"Tracking/BlobManager.h"
+	"Tracking/tracking.h"
+	"Filters/ImageFilter.h"
+	"Calibration/boxAlign.h"
+	"Calibration/calibrationB.h"
+	"Communication/TUIOOSC.h"
+	"ofxGui/ofxGui.h"
+	"ofxGui/ofxGuiTypes.h"
+	"TBetaBase.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\touchmessenger.h
+	"Poco/FIFOEvent.h"
+	"Poco/Delegate.h"
+	"ofTypes.h"
+	"ofxTBetaCvContourFinder.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\blobmanager.h
+	"../ofxTBeta.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\tracking.h
+	<list>
+	<map>
+	"ofxTBetaCvContourFinder.h"
+	"../TouchMessenger.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxgui.h
+	"ofxGuiTypes.h"
+	"ofxGuiPanel.h"
+	"ofxGuiObject.h"
+	"ofxGuiGlobals.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguitypes.h
+	"ofMain.h"
+	"ofAddons.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguipanel.h
+	"ofxGuiObject.h"
+	"ofxGuiGlobals.h"
+	"ofxGuiSlider.h"
+	"ofxGuiXYPad.h"
+	"ofxGuiPoints.h"
+	"ofxGuiButton.h"
+	"ofxGuiFiles.h"
+	"ofxGuiColor.h"
+	"ofxGuiMatrix.h"
+	"ofxGuiScope.h"
+	"ofxGuiKnob.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiobject.h
+	"ofxGuiTypes.h"
+	"ofxGuiGlobals.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiglobals.h
+	"ofxGuiTypes.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguislider.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguixypad.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguipoints.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguibutton.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguifiles.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguicolor.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguimatrix.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiscope.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiknob.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\gui.h
+	"TBetaBase.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\touchmessenger.cpp
+	"TouchMessenger.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\blobmanager.cpp
+	"BlobManager.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\tracking.cpp
+	"tracking.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxgui.cpp
+	"ofxGui.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguibutton.cpp
+	"ofxGuiButton.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguicolor.cpp
+	"ofxGuiColor.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguifiles.cpp
+	"ofxGuiFiles.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiglobals.cpp
+	"ofxGuiGlobals.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiknob.cpp
+	"ofxGuiKnob.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguimatrix.cpp
+	"ofxGuiMatrix.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiobject.cpp
+	"ofxGuiObject.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguipanel.cpp
+	"ofxGuiPanel.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguipoints.cpp
+	"ofxGuiPoints.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiradar.cpp
+	"ofxGuiRadar.h"
+
+1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiradar.h
+	"ofxGuiTypes.h"
+	"ofxGuiObject.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguiscope.cpp
+	"ofxGuiScope.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguislider.cpp
+	"ofxGuiSlider.h"
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxguixypad.cpp
+	"ofxGuiXYPad.h"
+
+1234116332 source:c:\documents and settings\artem\desktop\windows\addons\ofxxmlsettings\libs\tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+1234116332 source:c:\documents and settings\artem\desktop\windows\addons\ofxxmlsettings\libs\tinyxmlerror.cpp
+	"tinyxml.h"
+
+1234116332 source:c:\documents and settings\artem\desktop\windows\addons\ofxxmlsettings\libs\tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxxmlsettings\src\ofxxmlsettings.cpp
+	"ofxXmlSettings.h"
+	<vector>
+	<string>
+	<iostream>
+
+1234116052 source:c:\documents and settings\artem\desktop\windows\apps\tbeta app\configapp\src\main.cpp
+	"ofMain.h"
+	"testApp.h"
+	<stdio.h>
+	<stdlib.h>
+
+1234120358 c:\documents and settings\artem\desktop\windows\apps\tbeta app\configapp\src\testapp.h
+	"ofMain.h"
+	"ofAddons.h"
+
+1234116052 source:c:\documents and settings\artem\desktop\windows\apps\tbeta app\configapp\src\testapp.cpp
+	"testApp.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\app\ofapprunner.cpp
+	"ofAppRunner.h"
+	"ofAppGlutGlue.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\app\ofappglutglue.h
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\communication\ofarduino.cpp
+	"ofArduino.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\communication\ofserial.cpp
+	"ofSerial.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\communication\ofstandardfirmata.cpp
+	"ofStandardFirmata.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofappevents.cpp
+	"ofAppEvents.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofaudioevents.cpp
+	"ofAudioEvents.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofeventmodel.cpp
+	"ofEventModel.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofeventmodel.h
+	"Poco/FIFOEvent.h"
+	"Poco/EventArgs.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofkeyevents.cpp
+	"ofKeyEvents.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\events\ofmouseevents.cpp
+	"ofMouseEvents.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\ofgraphics.cpp
+	"ofGraphics.h"
+	<OpenGL/glu.h>
+	"GL/glu.h"
+	"glu.h"
+	<vector>
+
+1234116442 c:\documents and settings\artem\desktop\windows\libs\glu\glu.h
+	"glu_mangle.h"
+	<GL/gl.h>
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\ofimage.cpp
+	"ofImage.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\oftexture.cpp
+	"ofTexture.h"
+	"ofUtils.h"
+	"ofAppRunner.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\graphics\oftruetypefont.cpp
+	"ofTrueTypeFont.h"
+	<ft2build.h>
+	<freetype/freetype.h>
+	<freetype/ftglyph.h>
+	<freetype/ftoutln.h>
+	<freetype/fttrigon.h>
+	"ft2build.h"
+	"freetype.h"
+	"ftglyph.h"
+	"ftoutln.h"
+	"fttrigon.h"
+
+1234116438 c:\documents and settings\artem\desktop\windows\libs\freetype\include\ft2build.h
+	<freetype/config/ftheader.h>
+
+1234116438 c:\documents and settings\artem\desktop\windows\libs\freetype\include\freetype2\freetype\config\ftheader.h
+
+1234116438 c:\documents and settings\artem\desktop\windows\libs\freetype\include\freetype2\freetype\freetype.h
+	<ft2build.h>
+
+1234116438 c:\documents and settings\artem\desktop\windows\libs\freetype\include\freetype2\freetype\ftglyph.h
+	<ft2build.h>
+
+1234116438 c:\documents and settings\artem\desktop\windows\libs\freetype\include\freetype2\freetype\ftoutln.h
+	<ft2build.h>
+
+1234116438 c:\documents and settings\artem\desktop\windows\libs\freetype\include\freetype2\freetype\fttrigon.h
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\sound\ofsoundplayer.cpp
+	"ofSoundPlayer.h"
+	"ofUtils.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\sound\ofsoundstream.cpp
+	"ofSoundStream.h"
+	"RtAudio.h"
+
+1234116442 c:\documents and settings\artem\desktop\windows\libs\rtaudio\rtaudio.h
+	"RtError.h"
+	<string>
+	<vector>
+	<windows.h>
+	<process.h>
+	<pthread.h>
+	<CoreAudio/AudioHardware.h>
+
+1234116442 c:\documents and settings\artem\desktop\windows\libs\rtaudio\rterror.h
+	<iostream>
+	<string>
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\utils\ofmath.cpp
+	"ofMath.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\utils\ofutils.cpp
+	"ofUtils.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofqtutils.cpp
+	"ofQtUtils.h"
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofvideograbber.cpp
+	"ofVideoGrabber.h"
+	"ofV4LUtils.h"
+
+1234116434 c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofv4lutils.h
+	"ofConstants.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<errno.h>
+	<fcntl.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/stat.h>
+	<sys/mman.h>
+	<sys/types.h>
+	<time.h>
+	<linux/videodev.h>
+
+1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofvideoplayer.cpp
+	"ofVideoPlayer.h"
+	"ofUtils.h"
+
