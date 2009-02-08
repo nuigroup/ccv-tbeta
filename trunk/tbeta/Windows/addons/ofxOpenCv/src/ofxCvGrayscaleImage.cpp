@@ -238,7 +238,7 @@ void ofxCvGrayscaleImage::draw( float x, float y, float w, float h ) {
 }
 
 //--------------------------------------------------------------------------------
-void  ofxCvGrayscaleImage::drawBlobIntoMe( ofxCvBlob &blob, int color ) {
+void  ofxCvGrayscaleImage::drawBlobIntoMe( ofxTBetaCvBlob &blob, int color ) {
        if( blob.pts.size() > 0 ) {
            CvPoint* pts = new CvPoint[blob.nPts];
            for( int i=0; i < blob.nPts ; i++ ) {
