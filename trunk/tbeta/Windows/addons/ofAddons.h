@@ -48,3 +48,7 @@
 #ifdef OF_ADDON_USING_OFXXMLSETTINGS
 	#include "ofxXmlSettings.h"
 #endif
+
+#ifdef OF_ADDDON_USING_OFXTBETA
+	#include "ofxTBeta.h"
+#endif
