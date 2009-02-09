@@ -53,7 +53,6 @@ protected:
 	virtual void TouchMoved(ofxTBetaCvBlob message){}
 	
 	void TouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
-		printf("being called\n");
 		TouchDown(eventArgs);
 	}
 	void TouchUp(const void* sender, ofxTBetaCvBlob& eventArgs){
