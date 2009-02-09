@@ -1,6 +1,6 @@
 /*
  *  tracking.h
- *  
+ *
  *  Created by Ramsin Khoshabeh on 5/4/08.
  *  Copyright 2008 risenparadigm. All rights reserved.
  *
@@ -17,19 +17,25 @@
 #include "ofxTBetaCvContourFinder.h"
 #include "../TouchMessenger.h"
 
+#include "../Calibration/calibrationB.h"
+
 class BlobTracker : public TouchListener
 {
 
-public: 
+public:
 
 	BlobTracker();
-	
+
+	calibrationB calibrate;
+
+	void passInCalibration(calibrationB& calibrate);
+
 	//assigns IDs to each blob in the contourFinder
 	void track(ofxTBetaCvContourFinder* newBlobs);
 	int trackKnn(ofxTBetaCvContourFinder *newBlobs, ofxTBetaCvBlob *track, int k, double thresh);
 
 private:
-	
+
 	std::vector<ofxTBetaCvBlob>	trackedBlobs; //tracked blobs
 	int						IDCounter;	  //counter of last blob
 	int						fightMongrel;

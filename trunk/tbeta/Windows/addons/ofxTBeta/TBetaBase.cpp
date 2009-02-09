@@ -855,6 +855,8 @@ void TBetaBase::setup()
 	gui = ofxGui::Instance(this);
 	setupGUI();
 
+	tracker.passInCalibration(calibrate);
+
 	printf("Touchlib application is setup!\n");
 }
 
@@ -903,7 +905,7 @@ void TBetaBase::update()
 				contourFinder.findContours(processedImg, 1, (camWidth*camHeight)/25, maxBlobs, false);
 			}
 
-			//Track found contours/blobs
+			//Track found contours/blobss
 			tracker.track(&contourFinder);
 			//get DSP time
 			differenceTime = ofGetElapsedTimeMillis() - beforeTime;

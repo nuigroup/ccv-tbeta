@@ -1,6 +1,6 @@
 /*
  *  tracking.cpp
- *  
+ *
  *  Created by Ramsin Khoshabeh on 5/4/08.
  *  Copyright 2008 risenparadigm. All rights reserved.
  *
@@ -16,13 +16,17 @@ BlobTracker::BlobTracker()
 	TouchEvents.addListener(this);
 }
 
+void BlobTracker::passInCalibration(calibrationB& calibrater) {
+    calibrate = calibrater;
+}
+
 //assigns IDs to each blob in the contourFinder
 void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 {
 	//initialize ID's of all blobs
 	for(int i=0; i<newBlobs->nBlobs; i++)
 		newBlobs->blobs[i].id=-1;
-		
+
 	//go through all tracked blobs to compute nearest new point
 	for(int i=0; i<trackedBlobs.size(); i++)
 	{
@@ -39,6 +43,10 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 		{
 			//SEND BLOB OFF EVENT
 			//doBlobOff( trackedBlobs[i] );
+
+			calibrate.cameraToScreenPosition(trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+            calibrate.transformDimension(trackedBlobs[i].boundingRect.width, trackedBlobs[i].boundingRect.height);
+
 			TouchEvents.messenger = trackedBlobs[i];
 			TouchEvents.notifyTouchUp(NULL);
 			//mark the blob for deletion
@@ -61,7 +69,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 				if(j==trackedBlobs.size())//got to end without finding it
 				{
 					newBlobs->blobs[winner].id = trackedBlobs[i].id;
-					trackedBlobs[i] = newBlobs->blobs[winner];				
+					trackedBlobs[i] = newBlobs->blobs[winner];
 				}
 				else //found it, compare with current blob
 				{
@@ -79,7 +87,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					if(distNew<distOld) //update
 					{
 						newBlobs->blobs[winner].id = trackedBlobs[i].id;
-						
+
 //TODO--------------------------------------------------------------------------
 						//now the old winning blob has lost the win.
 						//I should also probably go through all the newBlobs
@@ -87,19 +95,27 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						//any winning matches, check if they are close to this
 						//one. Right now I'm not doing that to prevent a
 						//recursive mess. It'll just be a new track.
-						
+
 						//SEND BLOB OFF EVENT
 						//doBlobOff( trackedBlobs[j] );
+
+						calibrate.cameraToScreenPosition(trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+            calibrate.transformDimension(trackedBlobs[i].boundingRect.width, trackedBlobs[i].boundingRect.height);
+
 						TouchEvents.messenger = trackedBlobs[i];
 						TouchEvents.notifyTouchUp(NULL);
 						//mark the blob for deletion
 						trackedBlobs[j].id = -1;
-//------------------------------------------------------------------------------						
+//------------------------------------------------------------------------------
 					}
 					else //delete
 					{
 						//SEND BLOB OFF EVENT
 						//doBlobOff( trackedBlobs[i] );
+
+						calibrate.cameraToScreenPosition(trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+            calibrate.transformDimension(trackedBlobs[i].boundingRect.width, trackedBlobs[i].boundingRect.height);
+
 						TouchEvents.messenger = trackedBlobs[i];
 						TouchEvents.notifyTouchUp(NULL);
 						//mark the blob for deletion
@@ -125,7 +141,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 			trackedBlobs.erase(trackedBlobs.begin()+i,
 							   trackedBlobs.begin()+i+1);
 
-			i--; //decrement one since we removed an element	
+			i--; //decrement one since we removed an element
 		}
 		else //living, so update it's data
 		{
@@ -137,33 +153,36 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					ofPoint tempLastCentroid = trackedBlobs[i].centroid; // assign the new centroid to the old
 					trackedBlobs[i]=newBlobs->blobs[j];
 					trackedBlobs[i].lastCentroid = tempLastCentroid;
-					
+
 					trackedBlobs[i].D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
-					
+
 					ofPoint tD = trackedBlobs[i].D;
-					
+
 					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y));
-					
-					
+
+					calibrate.cameraToScreenPosition(trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+            calibrate.transformDimension(trackedBlobs[i].boundingRect.width, trackedBlobs[i].boundingRect.height);
+
+
 					//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
 					//SEND BLOB MOVED EVENT
 					//doBlobMoved( trackedBlobs[i] );
 					TouchEvents.messenger = trackedBlobs[i];
 					TouchEvents.notifyTouchMoved(NULL);
-				
-					/*We did not invent the algorithm. The algorithm 
+
+					/*We did not invent the algorithm. The algorithm
 					 TouchEvents.messenger.updateBlob(trackedBlobs[i]);
-					 consistently finds Jesus. The algorithm killed Jeeves. 
-					 The algorithm is banned in China. The algorithm is 
+					 consistently finds Jesus. The algorithm killed Jeeves.
+					 The algorithm is banned in China. The algorithm is
 					 TouchEvents.love();
 					 from Jersey. The algorithm constantly finds Jesus.
 					 This is not the algorithm. This is close.*/
 				}
 			}
-		}		
+		}
 	}
-    
+
 	//--Add New Living Tracks
 	//now every new blob should be either labeled with a tracked ID or\
 	//have ID of -1... if the ID is -1... we need to make a new track
@@ -175,16 +194,20 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 			newBlobs->blobs[i].id=IDCounter++;
 			//printf("id!!!! : %i \n", IDCounter);
 			trackedBlobs.push_back(newBlobs->blobs[i]);
-			
+
 			//SEND BLOB DOWN EVENT
 			//doBlobOn( trackedBlobs[i] );
+
+			calibrate.cameraToScreenPosition(trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+            calibrate.transformDimension(trackedBlobs[i].boundingRect.width, trackedBlobs[i].boundingRect.height);
+
 			TouchEvents.messenger = trackedBlobs[i];
 			TouchEvents.notifyTouchDown(NULL);
 		}
 	}
 }
 
-	
+
 /*************************************************************************
 * Finds the blob in 'newBlobs' that is closest to the trackedBlob with index
 * 'ind' according to the KNN algorithm and returns the index of the winner
@@ -248,7 +271,7 @@ int BlobTracker::trackKnn(ofxTBetaCvContourFinder *newBlobs, ofxTBetaCvBlob *tra
 	* wins. we use each class average distance to the target to break any
 	* possible ties.
 	*********************************************************************/
-	
+
 	// a mapping from labels (IDs) to count/distance
 	std::map<int, std::pair<int, double> > votes;
 
@@ -263,7 +286,7 @@ int BlobTracker::trackKnn(ofxTBetaCvContourFinder *newBlobs, ofxTBetaCvBlob *tra
 
 		/* check for a possible tie and break with distance */
 		if(count>votes[winner].first || count==votes[winner].first
-			&& dist<votes[winner].second) 
+			&& dist<votes[winner].second)
 		{
 			winner = iter->first;
 		}
@@ -271,4 +294,3 @@ int BlobTracker::trackKnn(ofxTBetaCvContourFinder *newBlobs, ofxTBetaCvBlob *tra
 
 	return winner;
 }
-    

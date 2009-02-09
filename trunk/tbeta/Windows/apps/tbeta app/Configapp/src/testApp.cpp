@@ -50,7 +50,7 @@ void testApp::TouchDown( ofxTBetaCvBlob b)
 {
     ofSetColor(0xFF0000);
     ofFill();
-	ofEllipse( b.centroid.x, b.centroid.y, 10, 10);
+	ofEllipse( b.centroid.x * ofGetWidth(), b.centroid.y * ofGetHeight(), 10, 10);
 }
 
 void testApp::TouchUp( ofxTBetaCvBlob b)
@@ -62,7 +62,7 @@ void testApp::TouchMoved( ofxTBetaCvBlob b)
 {
 	ofSetColor(0xFFFFFF);
     ofFill();
-	ofEllipse( b.centroid.x, b.centroid.y, 10, 10);
+	ofEllipse( b.centroid.x * ofGetWidth(), b.centroid.y * ofGetHeight(), 10, 10);
 
 }
 

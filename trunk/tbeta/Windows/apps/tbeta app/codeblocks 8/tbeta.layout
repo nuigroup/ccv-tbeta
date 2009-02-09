@@ -2,22 +2,13 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="release" />
 	<File name="..\..\..\addons\ofAddons.h" open="0" top="0" tabpos="0">
-		<Cursor position="1063" topLine="29" />
+		<Cursor position="247" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4659" topLine="133" />
+	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cv.h" open="1" top="0" tabpos="10">
+		<Cursor position="44074" topLine="995" />
 	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.h" open="0" top="0" tabpos="0">
-		<Cursor position="1122" topLine="26" />
-	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvHaarFinder.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3389" topLine="109" />
-	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvHaarFinder.h" open="0" top="0" tabpos="0">
-		<Cursor position="335" topLine="7" />
-	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxTBetaCvBlob.h" open="0" top="0" tabpos="0">
-		<Cursor position="333" topLine="18" />
+	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cvaux.h" open="1" top="0" tabpos="8">
+		<Cursor position="55623" topLine="1355" />
 	</File>
 	<File name="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="998" topLine="12" />
@@ -25,20 +16,23 @@
 	<File name="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" open="0" top="0" tabpos="0">
 		<Cursor position="934" topLine="15" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.h" open="0" top="0" tabpos="2">
-		<Cursor position="35" topLine="0" />
+	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="6328" topLine="244" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="26943" topLine="737" />
+	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.h" open="1" top="0" tabpos="9">
+		<Cursor position="263" topLine="57" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="0" top="0" tabpos="0">
-		<Cursor position="647" topLine="3" />
+	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="31482" topLine="842" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TouchMessenger.h" open="0" top="0" tabpos="0">
-		<Cursor position="266" topLine="39" />
+	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="1" top="0" tabpos="3">
+		<Cursor position="6314" topLine="289" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\ofxTBeta.h" open="0" top="0" tabpos="0">
-		<Cursor position="421" topLine="23" />
+	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="7057" topLine="172" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.h" open="1" top="0" tabpos="6">
+		<Cursor position="365" topLine="7" />
 	</File>
 	<File name="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="690" topLine="13" />
@@ -46,8 +40,8 @@
 	<File name="..\Configapp\src\main.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="102" topLine="0" />
 	</File>
-	<File name="..\Configapp\src\testApp.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="1409" topLine="40" />
+	<File name="..\Configapp\src\testApp.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1510" topLine="44" />
 	</File>
 	<File name="..\Configapp\src\testApp.h" open="0" top="0" tabpos="1">
 		<Cursor position="50" topLine="1" />
@@ -64,7 +58,7 @@
 	<File name="..\..\..\libs\openFrameworks\app\ofSimpleApp.h" open="0" top="0" tabpos="15">
 		<Cursor position="954" topLine="13" />
 	</File>
-	<File name="..\..\..\libs\openFrameworks\communication\ofArduino.h" open="1" top="0" tabpos="3">
+	<File name="..\..\..\libs\openFrameworks\communication\ofArduino.h" open="1" top="0" tabpos="2">
 		<Cursor position="4366" topLine="34" />
 	</File>
 	<File name="..\..\..\libs\openFrameworks\communication\ofSerial.cpp" open="0" top="0" tabpos="5">

@@ -24,8 +24,6 @@
 #include "ofMain.h"
 #include "ofxCvMain.h"
 
-
-
 class ofCvBlobTracker {
 
 

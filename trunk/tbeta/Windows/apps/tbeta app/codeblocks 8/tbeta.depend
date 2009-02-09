@@ -4615,11 +4615,11 @@
 	<stdio.h>
 	<stdlib.h>
 
-1234133800 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tbetabase.cpp
+1234139346 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tbetabase.cpp
 	"TBetaBase.h"
 	"gui.h"
 
-1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tbetabase.h
+1234139030 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tbetabase.h
 	"ofAddons.h"
 	"ofMain.h"
 	"ofxTBeta.h"
@@ -4645,11 +4645,12 @@
 1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\blobmanager.h
 	"../ofxTBeta.h"
 
-1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\tracking.h
+1234139090 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\tracking.h
 	<list>
 	<map>
 	"ofxTBetaCvContourFinder.h"
 	"../TouchMessenger.h"
+	"../Calibration/calibrationB.h"
 
 1234116330 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxgui.h
 	"ofxGuiTypes.h"
@@ -4726,7 +4727,7 @@
 1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\blobmanager.cpp
 	"BlobManager.h"
 
-1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\tracking.cpp
+1234139012 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\tracking\tracking.cpp
 	"tracking.h"
 
 1234116330 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxgui\ofxgui.cpp
@@ -4943,4 +4944,67 @@
 1234116434 source:c:\documents and settings\artem\desktop\windows\libs\openframeworks\video\ofvideoplayer.cpp
 	"ofVideoPlayer.h"
 	"ofUtils.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvcolorimage.cpp
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234136210 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvgrayscaleimage.h
+	"ofxCvImage.h"
+	"ofxCvBlob.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvimage.h
+	"ofxCvConstants.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvconstants.h
+	<iostream>
+	"cv.h"
+	<vector>
+	"ofMain.h"
+	"ofxTBetaCvBlob.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxtbetacvblob.h
+	"ofxCvConstants.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvcolorimage.h
+	"ofxCvImage.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvfloatimage.h
+	"ofxCvImage.h"
+
+1234119028 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvcontourfinder.cpp
+	"ofxCvContourFinder.h"
+
+1234119018 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvcontourfinder.h
+	"ofxCvConstants.h"
+	"ofxCvBlob.h"
+	"ofxCvGrayscaleImage.h"
+
+1234135446 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvblob.h
+	"ofxCvConstants.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvfloatimage.cpp
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvgrayscaleimage.cpp
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxcvimage.cpp
+	"ofxCvImage.h"
+	"ofxCvGrayscaleImage.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
+
+1234117680 source:c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxtbetacvcontourfinder.cpp
+	"ofxTBetaCvContourFinder.h"
+
+1234117680 c:\documents and settings\artem\desktop\windows\addons\ofxtbeta\ofxopencv\src\ofxtbetacvcontourfinder.h
+	"ofxCvConstants.h"
+	"ofxTBetaCvBlob.h"
+	"ofxCvGrayscaleImage.h"
 

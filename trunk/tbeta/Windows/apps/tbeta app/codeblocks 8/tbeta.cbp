@@ -127,8 +127,6 @@
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvFloatImage.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvGrayscaleImage.cpp" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvGrayscaleImage.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvHaarFinder.cpp" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvHaarFinder.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvImage.cpp" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvImage.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvMain.h" />
