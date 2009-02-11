@@ -10,12 +10,10 @@
 */
 
 
-#ifndef OFX_CV_BLOB_H
-#define OFX_CV_BLOB_H
+#ifndef OFX_BLOB
+#define OFX_BLOB
 
-
-#include "ofxCvConstants.h"
-
+#include <vector>
 
 class ofxTBetaCvBlob {
 
@@ -26,7 +24,7 @@ class ofxTBetaCvBlob {
         ofRectangle         boundingRect;
 		ofPoint             centroid, lastCentroid, D;
         bool                hole;
-	
+
 		float				maccel;
 
         vector <ofPoint>    pts;    // the contour of the blob

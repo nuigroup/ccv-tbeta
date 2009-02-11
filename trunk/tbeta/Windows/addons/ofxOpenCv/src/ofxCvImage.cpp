@@ -48,8 +48,6 @@ void ofxCvImage::clear() {
 		if( bUseTexture ) {
 			tex.clear();
 		}
-
-		bAllocated = false;
 	}
 }
 
@@ -238,9 +236,9 @@ void ofxCvImage::warpPerspective( const ofPoint& A, const ofPoint& B,
 
 
 //--------------------------------------------------------------------------------
-void ofxCvImage::warpIntoMe( const ofxCvImage& mom,ofPoint src[4], ofPoint dst[4] )
+void ofxCvImage::warpIntoMe( const ofxCvGrayscaleImage& mom,
+                            ofPoint src[4], ofPoint dst[4] )
 {
-
 	// compute matrix for perspectival warping (homography)
 	CvPoint2D32f cvsrc[4];
 	CvPoint2D32f cvdst[4];

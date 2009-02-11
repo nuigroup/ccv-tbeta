@@ -14,12 +14,12 @@ ofxCvColorImage::ofxCvColorImage( const ofxCvColorImage& mom ) {
 
 //--------------------------------------------------------------------------------
 void ofxCvColorImage::allocate( int w, int h ) {
-
+	
 	if (bAllocated == true){
 		printf ("warning: reallocating cvImage in ofxCvColorImage\n");
 		clear();
 	}
-
+	
 	cvImage = cvCreateImage( cvSize(w,h), IPL_DEPTH_8U, 3 );
 	cvImageTemp	= cvCreateImage( cvSize(w,h), IPL_DEPTH_8U, 3 );
 	pixels = new unsigned char[w*h*3];
@@ -55,7 +55,7 @@ void ofxCvColorImage::convertHsvToRgb(){
 
 //--------------------------------------------------------------------------------
 void ofxCvColorImage::setFromGrayscalePlanarImages(ofxCvGrayscaleImage& red, ofxCvGrayscaleImage& green, ofxCvGrayscaleImage& blue){
-     cvCvtPlaneToPix(red.getCvImage(), green.getCvImage(), blue.getCvImage(), NULL, cvImage);
+     cvCvtPlaneToPix(red.getCvImage(), green.getCvImage(), blue.getCvImage(),NULL, cvImage);
 }
 
 //--------------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 #include <map>
 
 #include "ofxTBetaCvContourFinder.h"
+
 #include "../TouchMessenger.h"
 
 #include "../Calibration/calibrationB.h"

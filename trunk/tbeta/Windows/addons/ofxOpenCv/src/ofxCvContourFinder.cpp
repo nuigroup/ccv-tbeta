@@ -45,7 +45,7 @@ void ofxCvContourFinder::draw( float x, float y ) {
 
 
 	// ---------------------------- draw the bounding rectangle
-	ofSetColor(0x00FF00);
+	ofSetColor(0xDD00CC);
     glPushMatrix();
     glTranslatef( x, y, 0.0 );
 
@@ -102,7 +102,7 @@ int ofxCvContourFinder::findContours( ofxCvGrayscaleImage&  input,
 			// be careful if you call this function with alot of different
 			// sized "input" images!, it does allocation every time
 			// a new size is passed in....
-			//inputCopy.clear();
+			inputCopy.clear();
 			inputCopy.allocate( input.width, input.height );
 			inputCopy = input;
 		}
@@ -146,29 +146,15 @@ int ofxCvContourFinder::findContours( ofxCvGrayscaleImage&  input,
 		blobs.push_back( ofxCvBlob() );
 		float area = cvContourArea( cvSeqBlobs[i], CV_WHOLE_SEQ );
 		CvRect rect	= cvBoundingRect( cvSeqBlobs[i], 0 );
-
-		CvBox2D32f box = cvMinAreaRect2( cvSeqBlobs[i] );
-
 		cvMoments( cvSeqBlobs[i], myMoments );
-
-		blobs[i].boundingRect.x = box.center.x;
-		blobs[i].boundingRect.y = box.center.y;
-
-		blobs[i].boundingRect.width       = box.size.height;
-		blobs[i].boundingRect.height      = box.size.width;
-
-		blobs[i].angle = box.angle;
-
-
-
 
 		blobs[i].area                     = fabs(area);
 		blobs[i].hole                     = area < 0 ? true : false;
 		blobs[i].length 			      = cvArcLength(cvSeqBlobs[i]);
-		//blobs[i].boundingRect.x           = rect.x;
-		//blobs[i].boundingRect.y           = rect.y;
-		//blobs[i].boundingRect.width       = rect.width;
-		//blobs[i].boundingRect.height      = rect.height;
+		blobs[i].boundingRect.x           = rect.x;
+		blobs[i].boundingRect.y           = rect.y;
+		blobs[i].boundingRect.width       = rect.width;
+		blobs[i].boundingRect.height      = rect.height;
 		blobs[i].centroid.x 			  = (int) (myMoments->m10 / myMoments->m00);
 		blobs[i].centroid.y 			  = (int) (myMoments->m01 / myMoments->m00);
 
@@ -193,6 +179,5 @@ int ofxCvContourFinder::findContours( ofxCvGrayscaleImage&  input,
 	if( storage != NULL ) { cvReleaseMemStorage(&storage); }
 
 	return nBlobs;
-//	return blobs;
 }
 

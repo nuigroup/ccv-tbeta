@@ -12,7 +12,7 @@
 #include "Poco/Delegate.h"
 #include "ofTypes.h"
 
-#include "ofxTBetaCvContourFinder.h"
+#include "Tracking/ofxTBetaCvContourFinder.h"
 
 // message code
 //	copied, adapted, practiced from ofMouseEvents.h
@@ -47,11 +47,11 @@ public:
 
 class TouchListener {
 protected:
-	
+
 	virtual void TouchDown(ofxTBetaCvBlob message){}
 	virtual void TouchUp(ofxTBetaCvBlob message){}
 	virtual void TouchMoved(ofxTBetaCvBlob message){}
-	
+
 	void TouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
 		TouchDown(eventArgs);
 	}
@@ -68,13 +68,13 @@ class TouchManager
 	public:
 		//TouchMessage messenger;
 		ofxTBetaCvBlob messenger;
-		
+
 		void addListener(TouchListener* listener){
 			addTouchDownListener(listener);
 			addTouchUpListener(listener);
 			addTouchMovedListener(listener);
 		}
-		
+
 		//Listeners -----------
 		void addTouchDownListener(TouchListener* listener){ //TouchDown
 			TouchDown += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::TouchDown);
@@ -85,7 +85,7 @@ class TouchManager
 		void addTouchMovedListener(TouchListener* listener){ //TouchMoved
 			TouchMoved += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::TouchMoved);
 		}
-		
+
 		//message recievers ---
 		void notifyTouchDown(void* sender){ //TouchDown
 			TouchDown.notify(sender, messenger);
@@ -96,14 +96,14 @@ class TouchManager
 		void notifyTouchMoved(void* sender){ //TouchMoved
 			TouchMoved.notify(sender, messenger);
 		}
-		
+
 		//events -------------- MONGREL
 	private:
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchDown;
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchUp;
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchMoved;
 		bool becomeSkyNet;
-		
+
 	};
 
 extern TouchManager TouchEvents;

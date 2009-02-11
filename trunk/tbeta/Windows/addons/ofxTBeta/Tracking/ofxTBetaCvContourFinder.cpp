@@ -21,8 +21,6 @@ static int qsort_carea_compare( const void* _a, const void* _b) {
 
 
 
-
-
 //--------------------------------------------------------------------------------
 ofxTBetaCvContourFinder::ofxTBetaCvContourFinder() {
 	myMoments = (CvMoments*)malloc( sizeof(CvMoments) );
@@ -171,7 +169,7 @@ int ofxTBetaCvContourFinder::findContours( ofxCvGrayscaleImage&  input,
 		//blobs[i].boundingRect.height      = rect.height;
 		blobs[i].centroid.x 			  = (int) (myMoments->m10 / myMoments->m00);
 		blobs[i].centroid.y 			  = (int) (myMoments->m01 / myMoments->m00);
-		
+
 		blobs[i].lastCentroid.x 			  = (int) 0;
 		blobs[i].lastCentroid.y 			  = (int) 0;
 
@@ -180,7 +178,7 @@ int ofxTBetaCvContourFinder::findContours( ofxCvGrayscaleImage&  input,
 		CvSeqReader       reader;
 		cvStartReadSeq( cvSeqBlobs[i], &reader, 0 );
 
-    	for( int j=0; j < cvSeqBlobs[i]->total; j++ ) {
+    	for( int j=0; j < min(TOUCH_MAX_CONTOUR_LENGTH, cvSeqBlobs[i]->total); j++ ) {
 			CV_READ_SEQ_ELEM( pt, reader );
             blobs[i].pts.push_back( ofPoint((float)pt.x, (float)pt.y) );
 		}
