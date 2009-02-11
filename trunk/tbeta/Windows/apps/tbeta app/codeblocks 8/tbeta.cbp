@@ -115,12 +115,10 @@
 		<Unit filename="..\..\..\addons\ofxOpenCv\libs\opencv\include\cxerror.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\libs\opencv\include\cxmisc.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\libs\opencv\include\cxtypes.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofCvTrackedBlob.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvBlob.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvColorImage.cpp" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvColorImage.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvConstants.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvConstants_old.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.cpp" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvFloatImage.cpp" />
@@ -130,11 +128,6 @@
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvImage.cpp" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvImage.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvMain.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxTBetaCvBlob.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxTBetaCvContourFinder.cpp" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxTBetaCvContourFinder.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\old_ ofxCvBlob.h" />
-		<Unit filename="..\..\..\addons\ofxOpenCv\src\old_ofxCvConstants.h" />
 		<Unit filename="..\..\..\addons\ofxOsc\src\ofxOsc.h">
 			<Option virtualFolder="addons\ofxOsc\src\" />
 		</Unit>
@@ -173,6 +166,8 @@
 		<Unit filename="..\..\..\addons\ofxTBeta\Calibration\vector2d.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.cpp" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ImageFilter.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ImageFilter.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ShaderProgram.cpp" />
@@ -183,6 +178,9 @@
 		<Unit filename="..\..\..\addons\ofxTBeta\TouchMessenger.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\BlobManager.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\BlobManager.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvBlob.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvContourFinder.cpp" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvContourFinder.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\tracking.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Tracking\tracking.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\gui.h" />

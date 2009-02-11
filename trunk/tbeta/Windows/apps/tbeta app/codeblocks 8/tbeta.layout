@@ -4,11 +4,23 @@
 	<File name="..\..\..\addons\ofAddons.h" open="0" top="0" tabpos="0">
 		<Cursor position="247" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cv.h" open="1" top="0" tabpos="10">
+	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cv.h" open="0" top="0" tabpos="10">
 		<Cursor position="44074" topLine="995" />
 	</File>
-	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cvaux.h" open="1" top="0" tabpos="8">
+	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cvaux.h" open="0" top="0" tabpos="8">
 		<Cursor position="55623" topLine="1355" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvConstants.h" open="0" top="0" tabpos="0">
+		<Cursor position="72" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvGrayscaleImage.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="36" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvGrayscaleImage.h" open="0" top="0" tabpos="0">
+		<Cursor position="515" topLine="15" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvImage.h" open="0" top="0" tabpos="0">
+		<Cursor position="399" topLine="113" />
 	</File>
 	<File name="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="998" topLine="12" />
@@ -16,32 +28,53 @@
 	<File name="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" open="0" top="0" tabpos="0">
 		<Cursor position="934" topLine="15" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="6328" topLine="244" />
+	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2224" topLine="58" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.h" open="1" top="0" tabpos="9">
-		<Cursor position="263" topLine="57" />
+	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.h" open="0" top="0" tabpos="9">
+		<Cursor position="561" topLine="6" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="31482" topLine="842" />
+	<File name="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2295" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.h" open="0" top="0" tabpos="5">
+		<Cursor position="57" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="89" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="5542" topLine="135" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="1" top="0" tabpos="3">
-		<Cursor position="6314" topLine="289" />
+		<Cursor position="668" topLine="10" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="7057" topLine="172" />
+	<File name="..\..\..\addons\ofxTBeta\TouchMessenger.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="172" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.h" open="1" top="0" tabpos="6">
-		<Cursor position="365" topLine="7" />
+	<File name="..\..\..\addons\ofxTBeta\TouchMessenger.h" open="0" top="0" tabpos="6">
+		<Cursor position="276" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvContourFinder.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="4767" topLine="129" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="8522" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.h" open="0" top="0" tabpos="7">
+		<Cursor position="306" topLine="5" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\gui.h" open="0" top="0" tabpos="0">
+		<Cursor position="253" topLine="0" />
 	</File>
 	<File name="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="690" topLine="13" />
 	</File>
 	<File name="..\Configapp\src\main.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="102" topLine="0" />
+		<Cursor position="174" topLine="0" />
 	</File>
 	<File name="..\Configapp\src\testApp.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="1510" topLine="44" />
+		<Cursor position="1543" topLine="30" />
 	</File>
 	<File name="..\Configapp\src\testApp.h" open="0" top="0" tabpos="1">
 		<Cursor position="50" topLine="1" />
@@ -58,8 +91,8 @@
 	<File name="..\..\..\libs\openFrameworks\app\ofSimpleApp.h" open="0" top="0" tabpos="15">
 		<Cursor position="954" topLine="13" />
 	</File>
-	<File name="..\..\..\libs\openFrameworks\communication\ofArduino.h" open="1" top="0" tabpos="2">
-		<Cursor position="4366" topLine="34" />
+	<File name="..\..\..\libs\openFrameworks\communication\ofArduino.h" open="0" top="0" tabpos="2">
+		<Cursor position="4368" topLine="89" />
 	</File>
 	<File name="..\..\..\libs\openFrameworks\communication\ofSerial.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="16271" topLine="586" />
