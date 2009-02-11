@@ -10,6 +10,12 @@
 #include "TBetaBase.h"
 #include "gui.h"
 
+
+float *             videoBW_WHITE_GAIN;
+unsigned char *		videoBWStretchint;
+unsigned char *		videoBWint;
+unsigned char *		videoMain;
+
 void TBetaBase::drawFingerOutlines(){
 
     //Find the blobs
@@ -64,10 +70,28 @@ void TBetaBase::drawFingerOutlines(){
 //Grab frame from CPU
 void TBetaBase::grabFrameToCPU(){
 	//Set sourceImg as new camera/video frame
-	if(bcamera)
-		sourceImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
-	else
-		sourceImg.setFromPixels(vidPlayer.getPixels(), 	camWidth, camHeight);
+	if(bcamera){
+
+	    sourceImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+	}
+    else
+    sourceImg.setFromPixels(vidPlayer.getPixels(), 	camWidth, camHeight);
+
+
+        processedImg = sourceImg;
+
+        videoBWint = processedImg.getPixels();
+
+        for(int y=0;y<camHeight;y++){
+            for(int x=0;x<camWidth;x++){
+
+                videoBWStretchint[x + y*camWidth] = (int)(videoBWint[(int)(x) + (int)(y)*camWidth]*videoBW_WHITE_GAIN[x + y*camWidth]);
+            }
+        }
+
+          processedImg.setFromPixels(videoBWStretchint, camWidth, camHeight);
+
+
 }
 
 //Grab frame from GPU
@@ -145,9 +169,7 @@ void TBetaBase::applyGPUImageFilters(){
 
 void TBetaBase::applyImageFilters(){
 
-	processedImg = sourceImg;
-
-
+	//processedImg = sourceImg;
 	//Set Mirroring Horizontal/Vertical
 	if(bVerticalMirror || bHorizontalMirror)processedImg.mirror(bVerticalMirror, bHorizontalMirror);
 
@@ -712,7 +734,8 @@ void TBetaBase::TouchMoved( ofxTBetaCvBlob b)
 	 }
 }
 
-
+#include "TouchMessenger.h"
+TouchListener touchMessager;
 
 /******************************************************************************
  * The setup function is run once to perform initializations in the application
@@ -858,6 +881,17 @@ void TBetaBase::setup()
 	setupGUI();
 
 	tracker.passInCalibration(calibrate);
+
+
+
+	videoBWint 	= new unsigned char[camWidth*camHeight];
+	videoBWStretchint  = new unsigned char[camWidth*camHeight];
+		videoMain	= new unsigned char[320*240];
+
+	videoBW_WHITE_GAIN = new float[camWidth*camHeight];
+	for(int i=0; i<camWidth*camHeight; i++){
+        videoBW_WHITE_GAIN[i] = 1.0;
+	}
 
 	printf("Touchlib application is setup!\n");
 }
@@ -1155,12 +1189,22 @@ void TBetaBase::keyPressed(int key) {
 }
 }
 
+
 void TBetaBase::keyReleased(int key){
 	if(calibration) {
 		switch(key)
 		{
 			case 'w':
 				bW = false;
+
+                printf("GRABBING MAX WHITE VALS...");
+
+                for(int i=0; i<camWidth*camHeight; i++){
+                    // first divide by the current gain (since videoBWStretchint is already multiplied by it.
+                    // then... find the scale factor that puts the max at 3*255 = R+G+B -- there's noise, so we go conservative at 3*200;
+                    videoBW_WHITE_GAIN[i] = min(5.0, max(0.2, (50.0*3.0)/((double)videoBWint[i])));
+                }
+
 				break;
 			case 's':
 				bS = false;
@@ -1176,6 +1220,7 @@ void TBetaBase::keyReleased(int key){
 
 	if( key == '~' || key == '`') calibration = !calibration;
 }
+
 
 
 /*****************************************************************************

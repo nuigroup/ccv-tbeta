@@ -25,9 +25,6 @@
 #include "ofMain.h"
 
 #include "ofxTBeta.h"
-
-#include "Filters/CPUImageFilter.h"
-
 //#include "ConfigurationApp.h"
 
 class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
@@ -310,7 +307,8 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		//---------------------------------------Images
 
 		ofxCvColorImage		sourceImg;
- 		CPUImageFilter      processedImg;
+
+        ofxCvGrayscaleImage processedImg;
 
         ofxCvGrayscaleImage grayImg;
 		ofxCvGrayscaleImage grayBg;

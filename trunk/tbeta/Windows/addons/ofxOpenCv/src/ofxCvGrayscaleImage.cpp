@@ -11,7 +11,7 @@ ofxCvGrayscaleImage::ofxCvGrayscaleImage( const ofxCvGrayscaleImage& mom ) {
 
 //--------------------------------------------------------------------------------
 void ofxCvGrayscaleImage::allocate( int w, int h ) {
-	
+
 	if (bAllocated == true){
 		printf ("warning: reallocating cvImage in ofxCvGrayscaleImage\n");
 		clear();
@@ -66,7 +66,7 @@ void ofxCvGrayscaleImage::operator =	( ofxCvColorImage& mom ) {
 //--------------------------------------------------------------------------------
 void ofxCvGrayscaleImage::operator =	( ofxCvFloatImage& mom ) {
 	if( mom.width == width && mom.height == height ) {
-		cvConvert( mom.getCvImage(), cvImage ); 
+		cvConvert( mom.getCvImage(), cvImage );
 	} else {
         cout << "error in =, images are different sizes" << endl;
 	}
@@ -128,28 +128,6 @@ void ofxCvGrayscaleImage::operator +=	( float scalar ){
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvGrayscaleImage::amplify ( ofxCvGrayscaleImage& mom, float level ) {
-    
-	float scalef = level / 128.0f;
-
-	cvMul( mom.getCvImage(), mom.getCvImage(), cvImageTemp, scalef );
-	swapTemp();
-}
-
-void ofxCvGrayscaleImage::highpass ( float blur1, float blur2 ) {
-    
-		//Blur Original Image
-		cvSmooth( cvImage, cvImageTemp, CV_BLUR , (blur1 * 2) + 1);
-		
-		//Original Image - Blur Image = Highpass Image
-		cvSub( cvImage, cvImageTemp, cvImageTemp );
-		
-		//Blur Highpass to remove noise
-		if(blur2 > 0)
-		cvSmooth( cvImageTemp, cvImageTemp, CV_BLUR , (blur2 * 2) + 1);
-
-		swapTemp();
-}
 
 
 //-------------------------------------------------------------------------------------
