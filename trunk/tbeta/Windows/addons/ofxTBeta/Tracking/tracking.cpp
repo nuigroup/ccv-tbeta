@@ -12,7 +12,6 @@
 
 BlobTracker::BlobTracker()
 {
-	
 	IDCounter = 0;
 	TouchEvents.addListener(this);
 }
@@ -167,8 +166,11 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 
 					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y));
 
+                    if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < 1.5) trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
+                    if(abs((int)trackedBlobs[i].lastCentroid.y - (int)trackedBlobs[i].centroid.y) < 1.5) trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
 
-					//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+
+                    //printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
 					//SEND BLOB MOVED EVENT
                     TouchEvents.messenger = trackedBlobs[i];
@@ -178,14 +180,6 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 
                     if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 					TouchEvents.notifyTouchMoved(NULL);
-
-					/*We did not invent the algorithm. The algorithm
-					 TouchEvents.messenger.updateBlob(trackedBlobs[i]);
-					 consistently finds Jesus. The algorithm killed Jeeves.
-					 The algorithm is banned in China. The algorithm is
-					 TouchEvents.love();
-					 from Jersey. The algorithm constantly finds Jesus.
-					 This is not the algorithm. This is close.*/
 				}
 			}
 		}
