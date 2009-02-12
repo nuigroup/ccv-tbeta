@@ -5956,7 +5956,7 @@
 
 1234127914 h:\new folder\trunk\tbeta\windows\addons\ofxvectormath\src\ofxmatrix3x3.h
 
-1234336432 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.cpp
+1234423427 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.cpp
 	"calibrationB.h"
 
 1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.h
@@ -6016,7 +6016,7 @@
 	"ofxGui/ofxGuiTypes.h"
 	"TBetaBase.h"
 
-1234387472 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.h
+1234424756 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.h
 	"Poco/FIFOEvent.h"
 	"Poco/Delegate.h"
 	"ofTypes.h"
@@ -6115,11 +6115,12 @@
 	"ofxGuiTypes.h"
 	"ofxGuiObject.h"
 
-1234389393 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.h
+1234473249 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.h
 	"ofAddons.h"
 	"ofMain.h"
 	"ofxTBeta.h"
 	"Filters/CPUImageFilter.h"
+	"Calibration/Calibration.h"
 
 1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\rect2d.h
 	"vector2d.h"
@@ -6149,14 +6150,14 @@
 1234387172 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\communication\tuioosc.cpp
 	"TUIOOSC.h"
 
-1234387193 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.cpp
+1234471665 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.cpp
 	"TBetaBase.h"
 	"gui.h"
 
 1234127807 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\gui.h
 	"TBetaBase.h"
 
-1234336432 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.cpp
+1234413374 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.cpp
 	"TouchMessenger.h"
 
 1234387162 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\blobmanager.cpp
@@ -6165,7 +6166,7 @@
 1234387503 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvcontourfinder.cpp
 	"ofxTBetaCvContourFinder.h"
 
-1234387162 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\tracking.cpp
+1234424320 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\tracking.cpp
 	"tracking.h"
 
 1234336432 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxgui\ofxgui.cpp
@@ -6245,7 +6246,7 @@
 	"ofMain.h"
 	"ofAddons.h"
 
-1234337078 source:h:\new folder\trunk\tbeta\windows\apps\tbeta app\configapp\src\testapp.cpp
+1234415435 source:h:\new folder\trunk\tbeta\windows\apps\tbeta app\configapp\src\testapp.cpp
 	"testApp.h"
 
 1234127939 source:h:\new folder\trunk\tbeta\windows\libs\openframeworks\app\ofapprunner.cpp
@@ -6383,9 +6384,32 @@
 	"ofVideoPlayer.h"
 	"ofUtils.h"
 
-1234389313 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\cpuimagefilter.cpp
+1234389642 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\cpuimagefilter.cpp
 	"CPUImageFilter.h"
+	"ofxCvColorImage.h"
+	"ofxCvFloatImage.h"
 
 1234389528 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\cpuimagefilter.h
 	"ofxCvGrayscaleImage.h"
+
+1234473290 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibration.h
+	"ofAddons.h"
+	"ofMain.h"
+	"calibrationB.h"
+	"../TouchMessenger.h"
+	"../Tracking/ofxTBetaCvContourFinder.h"
+
+1234424650 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\cali.h
+	"ofAddons.h"
+	"ofMain.h"
+	"Cali.h"
+	"calibrationB.h"
+	"../TouchMessenger.h"
+	"../Tracking/ofxTBetaCvContourFinder.h"
+
+1234423860 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\cali.cpp
+	"Cali.h"
+
+1234473173 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibration.cpp
+	"Calibration.h"
 
