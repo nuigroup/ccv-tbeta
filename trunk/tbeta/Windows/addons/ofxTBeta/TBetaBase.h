@@ -11,11 +11,8 @@
 #define OF_ADDON_USING_OFXXMLSETTINGS  // LOAD CONFIG.XML
 #define OF_ADDON_USING_OFXOPENCV	   // COMPUTER VISION STUFF
 #define OF_ADDON_USING_OFXOSC		   // OSC COMMUNICATION
-
 #define OF_ADDON_USING_OFXDIRLIST
 #define OF_ADDON_USING_OFXVECTORMATH
-#define OF_ADDON_USING_OFXXMLSETTINGS
-
 
 //height and width of the source/tracked draw window
 #define MAIN_WINDOW_HEIGHT 240.0f
@@ -28,11 +25,12 @@
 
 #include "Filters/CPUImageFilter.h"
 
+#include "Calibration/Calibration.h"
+
 //#include "ConfigurationApp.h"
 
 class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
 	{
-
 		//ofxGUI setup stuff
 		enum
 		{
@@ -90,8 +88,10 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 
 		TBetaBase() {
 			TouchEvents.addListener(this);
-			calibration = false;
+			showConfiguration = false;
 		}
+
+		Calibration calib;
 
 		/****************************************************************
 		 *						Public functions
@@ -116,34 +116,11 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		void		handleGui(int parameterId, int task, void* data, int length);
 		ofxGui*		gui;
 
-
-
-
 		////////this is the main stuff
 
 		void TouchDown( ofxTBetaCvBlob b );
 		void TouchMoved( ofxTBetaCvBlob b );
 		void TouchUp( ofxTBetaCvBlob b );
-		
-		void RAWTouchDown( ofxTBetaCvBlob b );
-		void RAWTouchMoved( ofxTBetaCvBlob b );
-		void RAWTouchUp( ofxTBetaCvBlob b );
-		
-
-
-		///this is what we want to happen on say, key presses or draws....
-
-
-		//some listener stuff:::
-		//void keyPressed( int key );
-		//void keyReleased( int key );
-
-
-
-
-
-
-
 
 		//image processing stuff
 		void grabFrameToCPU();
@@ -159,31 +136,12 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 							 ofxCvFloatImage & _fiLearn,
 							 float _fLearnRate );
 
-
-
-
 		void drawToScreen();
 		void drawFingerOutlines();
 
-
-
-
-
-
-
-
 		//Other Methods
 		void loadXMLSettings();								  // Load Settings
-
-
-        void doCalibration();
-		void drawCalibrationBlobs();
-		void drawCalibrationPointsAndBox();
-
 		void saveConfiguration();
-
-
-
 
 		/***************************************************************
 		 *						Video Settings
@@ -208,14 +166,14 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		int					winHeight;
 		int					minWidth;
 		int					minHeight;
-		int 				snapCounter;
 		int					highpassBlur;
 		int					highpassNoise;
 		int					highpassAmp;
 		int					smooth;
 
-		bool				calibration;
+		bool				showConfiguration;
 
+		bool				bcamera;
 		bool				bDrawVideo;
 		bool  				bFastMode;
 		bool				bShowInterface;
@@ -226,16 +184,11 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		bool				bDrawOutlines;
 		bool				bTUIOMode;
 		bool  				bFullscreen;
-		bool 				bSnapshot;
 		bool 				bCalibration;
 		bool				bVerticalMirror;
 		bool				bHorizontalMirror;
-		bool				bSlimMode;
 		bool				bShowLabels;
 		bool				bNewFrame;
-
-
-		bool				bcamera;
 
 		//filters
 		bool				bHighpass;
@@ -252,18 +205,9 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		 *End config.xml variables
 		 *****************************************************/
 
-		bool				bW;
-		bool				bS;
-		bool				bA;
-		bool				bD;
-
 		bool				activeInput;
 
 		float				fLearnRate;// rate to learn background
-
-		float				transformedX;
-		float				transformedY;
-
 
 		//FPS variables
 		int 					frames;
@@ -272,28 +216,16 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		int						differenceTime;
 		int						tuioTime;
 
-		char				eventString[255];
-		char				timeString[255];
-
 		//---------------------------------------Fonts
 		ofTrueTypeFont		verdana;
 		ofTrueTypeFont      sidebarTXT;
-		ofTrueTypeFont		calibrationText;
 		ofTrueTypeFont		bigvideo;
-		ofImage				logo;
 
 		//---------------------------------------Images
 		ofImage				background;
-		ofImage				menuBG;
 
 		//---------------------------------------Blob Tracker
 		BlobTracker			tracker;
-
-		//---------------------------------------Calibration Stuff
-		ofImage calibrationParticle;
-		bool	bShowTargets;
-		float	downColor;
-		std::map<int, int> blobcolor;
 
         string				tmpLocalHost;
         int					tmpPort;
@@ -313,10 +245,9 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		ofxTBetaCvContourFinder	contourFinder;
 
 		//---------------------------------------Images
-
-		ofxCvColorImage		sourceImg;
  		CPUImageFilter      processedImg;
 
+		ofxCvColorImage		sourceImg;
         ofxCvGrayscaleImage grayImg;
 		ofxCvGrayscaleImage grayBg;
 		ofxCvGrayscaleImage subtractBg;
@@ -332,26 +263,10 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 
 		//---------------------------------------XML Settings Vars (BLOATED)
 		ofxXmlSettings		XML;
-		ofxXmlSettings		calibrationXML;
-		string				xmlStructure;
 		string				message;
-
 
 		//---------------------------------------FOR NETWORK
 		TUIOOSC				myTUIO;
-
-
-
-		/* 5 things i want to know:
-
-		 1) gene's modified
-		 2) method of spreading
-		 3) speed of spread
-		 4) oncogenes ok?
-		 5) which cells are affected
-		 */
-
-
 
 		//---------------------------------------FOR gpuTracker
 		GLuint			gpuSourceTex;
@@ -369,8 +284,6 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		ImageFilter*	gaussHFilter;
 		ImageFilter*	gaussHFilter2;
 		ImageFilter*	threshFilter;
-
-
 	};
 
 #endif

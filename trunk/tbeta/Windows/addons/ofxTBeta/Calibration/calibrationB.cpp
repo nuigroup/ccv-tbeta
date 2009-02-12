@@ -8,9 +8,9 @@ calibrationB::calibrationB()
 	_camHeight = 240;
 }
 
-//-------------------------------------------------------------- 
-//	Load Settings from the config.xml file 
-//-------------------------------------------------------------- 
+//--------------------------------------------------------------
+//	Load Settings from the config.xml file
+//--------------------------------------------------------------
 void calibrationB::loadXMLSettings(){
 
 	// Can this load via http?
@@ -35,8 +35,8 @@ void calibrationB::loadXMLSettings(){
 	GRID_Y		= calibrationXML.getValue("SCREEN:GRIDMESH:GRIDY", 50);
 
 	setGrid(GRID_X, GRID_Y);
- 
-	
+
+
 	//Bounding Box Points
 	if(bboxRoot){
 
@@ -54,7 +54,7 @@ void calibrationB::loadXMLSettings(){
 	if(screenRoot)
 	{
 		//lets see how many <STROKE> </STROKE> tags there are in the xml file
-		int numDragTags = calibrationXML.getNumTags("SCREEN:POINT"); 
+		int numDragTags = calibrationXML.getNumTags("SCREEN:POINT");
 
 			printf("Points: %i \n", numDragTags);
 
@@ -190,15 +190,15 @@ void calibrationB::initScreenPoints()
 
 	vector2df xd(screenBB.lowerRightCorner.X-screenBB.upperLeftCorner.X,0.0f);
 	vector2df yd(0.0f, screenBB.lowerRightCorner.Y-screenBB.upperLeftCorner.Y);
-	
+
 	xd /= (float) GRID_X;
 	yd /= (float) GRID_Y;
-	
+
 	for(j=0; j<=GRID_Y; j++)
 	{
 		for(i=0; i<=GRID_X; i++)
-		{			 
-			screenPoints[p] = screenBB.upperLeftCorner + xd*i + yd*j;			
+		{
+			screenPoints[p] = screenBB.upperLeftCorner + xd*i + yd*j;
 			//printf("(%d, %d) = (%f, %f)\n", i, j, screenPoints[p].X, screenPoints[p].Y);
 			p++;
 		}
@@ -208,7 +208,7 @@ void calibrationB::initScreenPoints()
 void calibrationB::initCameraPoints(int camWidth, int camHeight)
 {
 	int p = 0;
-	
+
 	int i,j;
 	for(j=0; j<=GRID_Y; j++)
 	{
@@ -235,7 +235,7 @@ float calibrationB::getScreenScale()
 	minValL = 1.0f - minValL;
 	float minValU = MAX(screenBB.upperLeftCorner.X,screenBB.upperLeftCorner.Y);
 	float minVal = MIN(minValL,minValU);
-	return 1.0f - (2.0f * minVal);	
+	return 1.0f - (2.0f * minVal);
 }
 
 void calibrationB::cameraToScreenPosition(float &x, float &y)
@@ -274,7 +274,7 @@ void calibrationB::transformDimension(float &width, float &height)
 }
 
 void calibrationB::calculateBox()
-{		
+{
 	//reset variables
 	maxBoxX = 0;
 	minBoxX = _camWidth;
@@ -291,7 +291,7 @@ void calibrationB::calculateBox()
 		else if(cameraPoints[i].X < minBoxX){
 
 			minBoxX = cameraPoints[i].X;
-		}		
+		}
 		if(cameraPoints[i].Y > maxBoxY){
 
 			maxBoxY = cameraPoints[i].Y;
@@ -309,7 +309,7 @@ void calibrationB::cameraToScreenSpace(float &x, float &y)
 {
 
 	vector2df pt(x, y);
-	
+
 	int t = findTriangleWithin(pt);
 
 	if(t != -1)
@@ -352,7 +352,7 @@ bool calibrationB::isPointInTriangle(vector2df p, vector2df a, vector2df b, vect
 {
 	if (vector2df::isOnSameSide(p,a, b,c) && vector2df::isOnSameSide(p,b, a,c) && vector2df::isOnSameSide(p, c, a, b))
 		return true;
-    else 
+    else
 		return false;
 }
 
@@ -395,6 +395,8 @@ void calibrationB::nextCalibrationStep()
 			saveCalibration();
 			calculateBox();
 			computeCameraToScreenMap();
+
+            saveCalibration();
 		}
 	}
 }
@@ -418,7 +420,7 @@ void calibrationB::saveCalibration()
 	// -------------------------------- SAVE STATE ON EXIT
 
 	//lets see how many <STROKE> </STROKE> tags there are in the xml file
-	int numDragTags = calibrationXML.getNumTags("SCREEN:POINT"); 
+	int numDragTags = calibrationXML.getNumTags("SCREEN:POINT");
 
 	//if there is at least one <POINT> tag we can read the list of points
 	if(numDragTags > 0){
