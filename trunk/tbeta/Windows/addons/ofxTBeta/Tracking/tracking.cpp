@@ -49,6 +49,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 		{
 			//SEND BLOB OFF EVENT
 			TouchEvents.messenger = trackedBlobs[i];
+			TouchEvents.RAWmessenger = trackedBlobs[i];
 
 			calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 			calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
@@ -104,12 +105,14 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 
 						//SEND BLOB OFF EVENT
                         TouchEvents.messenger = trackedBlobs[i];
+						TouchEvents.RAWmessenger = trackedBlobs[i];
 
                         calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                         calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
                         if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 						TouchEvents.notifyTouchUp(NULL);
+						TouchEvents.notifyRAWTouchUp(NULL);
 						//mark the blob for deletion
 						trackedBlobs[j].id = -1;
 //------------------------------------------------------------------------------
@@ -118,12 +121,14 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					{
 						//SEND BLOB OFF EVENT
                         TouchEvents.messenger = trackedBlobs[i];
+						TouchEvents.RAWmessenger = trackedBlobs[i];
 
                         calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                         calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
                         if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 						TouchEvents.notifyTouchUp(NULL);
+						TouchEvents.notifyRAWTouchUp(NULL);
 						//mark the blob for deletion
 						trackedBlobs[i].id = -1;
 					}
@@ -174,12 +179,14 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 
 					//SEND BLOB MOVED EVENT
                     TouchEvents.messenger = trackedBlobs[i];
+					TouchEvents.RAWmessenger = trackedBlobs[i];
 
                     calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                     calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
                     if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 					TouchEvents.notifyTouchMoved(NULL);
+					TouchEvents.notifyRAWTouchMoved(NULL);
 				}
 			}
 		}
@@ -199,12 +206,14 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 
 			//SEND BLOB DOWN EVENT
             TouchEvents.messenger = trackedBlobs[i];
+			TouchEvents.RAWmessenger = trackedBlobs[i];
 
             calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
             calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
             if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 			TouchEvents.notifyTouchDown(NULL);
+			TouchEvents.notifyRAWTouchDown(NULL);
 		}
 	}
 }

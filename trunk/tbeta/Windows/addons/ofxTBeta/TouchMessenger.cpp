@@ -9,4 +9,4 @@
 
 #include "TouchMessenger.h"
 
-TouchManager TouchEvents;
+TouchManager TouchEvents; 

@@ -124,6 +124,11 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		void TouchDown( ofxTBetaCvBlob b );
 		void TouchMoved( ofxTBetaCvBlob b );
 		void TouchUp( ofxTBetaCvBlob b );
+		
+		void RAWTouchDown( ofxTBetaCvBlob b );
+		void RAWTouchMoved( ofxTBetaCvBlob b );
+		void RAWTouchUp( ofxTBetaCvBlob b );
+		
 
 
 		///this is what we want to happen on say, key presses or draws....

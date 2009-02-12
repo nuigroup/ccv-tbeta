@@ -17,6 +17,17 @@
 // message code
 //	copied, adapted, practiced from ofMouseEvents.h
 
+/* THE DEAL WITH THE RAW
+ 
+ I added in RAW events ender Seths rule. their
+ main objective is to get the raw camera blobs
+ without calibration so as to provide calibration.
+ Anyone can use them, but it's unneccesary
+ because the normal TouchDown, TouchUp, and TouchMoved
+ get the calibrated blobs. Enjoy!
+ 
+ */
+
 class content
 	{
 	public:
@@ -51,6 +62,11 @@ protected:
 	virtual void TouchDown(ofxTBetaCvBlob message){}
 	virtual void TouchUp(ofxTBetaCvBlob message){}
 	virtual void TouchMoved(ofxTBetaCvBlob message){}
+	
+	//RAW
+	virtual void RAWTouchDown(ofxTBetaCvBlob message){}
+	virtual void RAWTouchUp(ofxTBetaCvBlob message){}
+	virtual void RAWTouchMoved(ofxTBetaCvBlob message){}
 
 	void TouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
 		TouchDown(eventArgs);
@@ -61,6 +77,17 @@ protected:
 	void TouchMoved(const void* sender, ofxTBetaCvBlob& eventArgs){
 		TouchMoved(eventArgs);
 	}
+	
+	//RAW
+	void RAWTouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
+		RAWTouchDown(eventArgs);
+	}
+	void RAWTouchUp(const void* sender, ofxTBetaCvBlob& eventArgs){
+		RAWTouchUp(eventArgs);
+	}
+	void RAWTouchMoved(const void* sender, ofxTBetaCvBlob& eventArgs){
+		RAWTouchMoved(eventArgs);
+	}
 };
 
 class TouchManager
@@ -68,11 +95,18 @@ class TouchManager
 	public:
 		//TouchMessage messenger;
 		ofxTBetaCvBlob messenger;
+		ofxTBetaCvBlob RAWmessenger;
 
 		void addListener(TouchListener* listener){
 			addTouchDownListener(listener);
 			addTouchUpListener(listener);
 			addTouchMovedListener(listener);
+		}
+		
+		void addRAWListener(TouchListener* listener){
+			addRAWTouchDownListener(listener);
+			addRAWTouchUpListener(listener);
+			addRAWTouchMovedListener(listener);
 		}
 
 		//Listeners -----------
@@ -85,6 +119,20 @@ class TouchManager
 		void addTouchMovedListener(TouchListener* listener){ //TouchMoved
 			TouchMoved += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::TouchMoved);
 		}
+		
+		//raw listeners
+		void addRAWTouchDownListener(TouchListener* listener){ //TouchDown
+			RAWTouchDown += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::RAWTouchDown);
+		}
+		void addRAWTouchUpListener(TouchListener* listener){ //TouchUp
+			RAWTouchUp += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::RAWTouchUp);
+		}
+		void addRAWTouchMovedListener(TouchListener* listener){ //TouchMoved
+			RAWTouchMoved += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::RAWTouchMoved);
+		}
+		
+		
+		
 
 		//message recievers ---
 		void notifyTouchDown(void* sender){ //TouchDown
@@ -96,12 +144,34 @@ class TouchManager
 		void notifyTouchMoved(void* sender){ //TouchMoved
 			TouchMoved.notify(sender, messenger);
 		}
+		
+		//RAW
+		void notifyRAWTouchDown(void* sender){ //TouchDown
+			RAWTouchDown.notify(sender, RAWmessenger);
+		}
+		void notifyRAWTouchUp(void* sender){ //TouchUp
+			RAWTouchUp.notify(sender, RAWmessenger);
+		}
+		void notifyRAWTouchMoved(void* sender){ //TouchMoved
+			RAWTouchMoved.notify(sender, RAWmessenger);
+		}
+		
+		
+		
+		
+		
 
 		//events -------------- MONGREL
 	private:
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchDown;
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchUp;
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchMoved;
+		
+		//RAW
+		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchDown;
+		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchUp;
+		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchMoved;
+		
 		bool becomeSkyNet;
 
 	};
