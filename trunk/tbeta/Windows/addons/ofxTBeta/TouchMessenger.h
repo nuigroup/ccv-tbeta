@@ -172,7 +172,7 @@ class TouchManager
 		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchUp;
 		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchMoved;
 
-		bool becomeSkyNet;
+		Poco::FIFOEvent<bool>  becomeSkyNet;
 
 	};
 

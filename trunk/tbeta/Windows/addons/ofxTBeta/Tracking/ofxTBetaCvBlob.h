@@ -24,6 +24,8 @@ class ofxTBetaCvBlob {
         ofRectangle         boundingRect;
 		ofPoint             centroid, lastCentroid, D;
         bool                hole;
+	
+		bool				simulated; 
 
 		float				maccel;
 
@@ -39,6 +41,7 @@ class ofxTBetaCvBlob {
             length 		= 0.0f;
             hole 		= false;
             nPts        = 0;
+			simulated = false;
         }
 
         //----------------------------------------

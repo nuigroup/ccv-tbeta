@@ -346,9 +346,7 @@ void TBetaBase::drawToScreen(){
     {
         //Don't draw main interface
         bShowInterface = false;
-//        doCalibration();
-
-  //      calib.contourFinder = contourFinder;
+		calib.passInContourFinderAndTracker(contourFinder, tracker);
         calib.doCalibration();
     }
 

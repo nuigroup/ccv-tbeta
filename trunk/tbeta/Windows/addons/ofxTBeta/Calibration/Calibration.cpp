@@ -40,6 +40,11 @@ void Calibration::setup()
 	printf("Calibration is setup!\n");
 }
 
+void Calibration::passInContourFinderAndTracker(ofxTBetaCvContourFinder& finder, BlobTracker &trackerIn) {
+	contourFinder = finder;
+	tracker = trackerIn;
+}
+
 /******************************
  *		  CALIBRATION
  *******************************/
@@ -111,7 +116,7 @@ void Calibration::drawCalibrationPointsAndBox(){
 
 void Calibration::drawCalibrationBlobs(){
 
-/*    //Find the blobs
+    //Find the blobs
     for(int i=0; i<contourFinder.nBlobs; i++)
     {
         //temp blob to rescale and draw on screen
@@ -164,7 +169,7 @@ void Calibration::drawCalibrationBlobs(){
         glLineWidth(1);
 
         //Displat Text of blob information
-		/*      NOT SURE I WANT TO KEEP THIS. DON'T THINK IT'S USEFUL
+		//     NOT SURE I WANT TO KEEP THIS. DON'T THINK IT'S USEFUL
 
 		 ofSetColor(0xFFFFFF);
 		 glLineWidth(1);
@@ -173,8 +178,8 @@ void Calibration::drawCalibrationBlobs(){
 		 ceil(drawBlob2.centroid.y * ofGetHeight()));
 		 verdana.drawString(idStr, drawBlob2.centroid.x * ofGetWidth() - drawBlob2.boundingRect.width/2 + 40,
 		 drawBlob2.centroid.y * ofGetHeight() - drawBlob2.boundingRect.height/2 + 40);
-		 */
-//    }
+		 
+    }
 
 
 
@@ -190,7 +195,10 @@ void Calibration::RAWTouchDown( ofxTBetaCvBlob b)
 
 void Calibration::RAWTouchUp( ofxTBetaCvBlob b)
 {
-	if(contourFinder.nBlobs == 0)//If calibrating change target color back when a finger is up
+	if(b.simulated && contourFinder.nBlobs == 0) {
+		calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
+		calibrate.nextCalibrationStep();
+	} else if(contourFinder.nBlobs == 0)//If calibrating change target color back when a finger is up
 	 downColor = 0xFF0000;
 
 	 if(calibrate.bCalibrating && contourFinder.nBlobs == 0)//If Calibrating, register the calibration point on blobOff
@@ -223,10 +231,13 @@ void Calibration::keyPressed(int key) {
                  * Keys for Calibration
                  ***********************/
             case 'c': //Enter/Exit Calibration
-                if(calibrate.bCalibrating)
+                if(calibrate.bCalibrating) {
                     calibrate.bCalibrating = false;
-                else
-                    calibrate.beginCalibration();
+					tracker.passInCalibration(calibrate);
+				} else {
+					calibrate.beginCalibration();
+				}
+                    
                 break;
             case 'r': //Revert Calibration
                 if(calibrate.bCalibrating)calibrate.revertCalibrationStep();
@@ -363,6 +374,14 @@ void Calibration::keyReleased(int key){
 			case 'd':
 				bD = false;
 				break;
+			case '/':
+				if(calibrating) {
+					ofxTBetaCvBlob tempBlob;
+					tempBlob.centroid.x = mouseX;
+					tempBlob.centroid.y = mouseY;
+					tempBlob.simulated = true;
+					RAWTouchUp(tempBlob);
+				}
 		}
 	}
 }
@@ -380,8 +399,10 @@ void Calibration::mouseDragged(int x, int y, int button)
 
 void Calibration::mousePressed(int x, int y, int button)
 {
+
 }
 
 void Calibration::mouseReleased()
 {
+
 }
