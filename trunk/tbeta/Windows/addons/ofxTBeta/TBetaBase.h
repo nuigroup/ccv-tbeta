@@ -91,8 +91,6 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 			showConfiguration = false;
 		}
 
-		Calibration calib;
-
 		/****************************************************************
 		 *						Public functions
 		 ****************************************************************/
@@ -180,7 +178,6 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		bool				bShowPressure;
 		bool				bLearnBakground;
 		bool				bInvertVideo;
-		bool				bToggleHelp;
 		bool				bDrawOutlines;
 		bool				bTUIOMode;
 		bool  				bFullscreen;
@@ -238,8 +235,7 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		string videoFileName;
 		int	maxBlobs;
 
-		//---------------------------------------Calibration
-		calibrationB calibrate;
+        Calibration calib;
 
 		//---------------------------------------Blob Finder
 		ofxTBetaCvContourFinder	contourFinder;

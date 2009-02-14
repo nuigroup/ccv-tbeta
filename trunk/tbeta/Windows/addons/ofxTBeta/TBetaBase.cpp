@@ -346,7 +346,7 @@ void TBetaBase::drawToScreen(){
     {
         //Don't draw main interface
         bShowInterface = false;
-		calib.passInContourFinderAndTracker(contourFinder, tracker);
+		calib.passInContourFinder(contourFinder.nBlobs, contourFinder.blobs);
         calib.doCalibration();
     }
 
@@ -687,16 +687,10 @@ void TBetaBase::setup()
 
 
 
-    calib.setup();
+    calib.setup(camWidth, camHeight, &tracker);
 
 
-
-
-
-
-	tracker.passInCalibration(calibrate);
-
-	printf("Touchlib application is setup!\n");
+	printf("Tbeta pplication is setup!\n\n");
 }
 
 
@@ -839,14 +833,12 @@ void TBetaBase::keyPressed(int key) {
 			if(bFastMode)
 			{
 				bFastMode = false;
-				//bToggleHelp = true;
 				ofSetWindowShape(950,600); //default size
 				//ofSetWindowTitle("Configuration");
 			}
 			else
 			{
 				bFastMode = true;
-				//bToggleHelp = false;
 				ofSetWindowShape(190,155); //minimized size
 				//ofSetWindowTitle("Mini");
 			}

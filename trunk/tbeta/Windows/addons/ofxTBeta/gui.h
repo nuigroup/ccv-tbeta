@@ -198,8 +198,8 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 							camHeight = vidGrabber.height;
 							vidGrabber.initGrabber(camWidth,camHeight);
 
-							calibrate.setCamRes(camHeight, camWidth);
-							calibrate.computeCameraToScreenMap();
+//							calibrate.setCamRes(camHeight, camWidth);
+//							calibrate.computeCameraToScreenMap();
 
 							//reset gpu textures and filters
 							resetGPUTextures();
@@ -240,8 +240,8 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 							camHeight = vidPlayer.height;
 							camWidth = vidPlayer.width;
 
-							calibrate.setCamRes(camHeight, camWidth);
-							calibrate.computeCameraToScreenMap();
+//							calibrate.setCamRes(camHeight, camWidth);
+//							calibrate.computeCameraToScreenMap();
 
 							//reset gpu textures and filters
 							resetGPUTextures();

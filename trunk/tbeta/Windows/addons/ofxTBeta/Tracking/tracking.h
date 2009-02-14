@@ -27,9 +27,9 @@ public:
 
 	BlobTracker();
 
-	calibrationB calibrate;
+	calibrationB* calibrate;
 
-	void passInCalibration(calibrationB& calibrate);
+	void passInCalibration(calibrationB* calibrate);
 
 	//assigns IDs to each blob in the contourFinder
 	void track(ofxTBetaCvContourFinder* newBlobs);

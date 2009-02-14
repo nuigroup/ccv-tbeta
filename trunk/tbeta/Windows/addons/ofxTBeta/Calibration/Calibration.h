@@ -32,8 +32,7 @@ class Calibration : public TouchListener, public ofSimpleApp {
 		 *						Public
         ****************************************************************/
 		//Basic Methods
-		void setup();
-
+		void setup(int _camWidth, int _camHeight, BlobTracker *trackerIn);
 		//Key Events
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -52,8 +51,9 @@ class Calibration : public TouchListener, public ofSimpleApp {
 		void drawCalibrationBlobs();
 		void drawCalibrationPointsAndBox();
 		void saveConfiguration();
-	
-		void passInContourFinderAndTracker(ofxTBetaCvContourFinder &finder, BlobTracker &trackerIn);
+
+		void passInContourFinder(int numBlobs, vector<ofxTBetaCvBlob> blobs);
+        void passInTracker(BlobTracker *trackerIn);
 
 		ofxTBetaCvContourFinder	contourFinder;
 		bool                calibrating;
@@ -77,7 +77,7 @@ class Calibration : public TouchListener, public ofSimpleApp {
 		ofTrueTypeFont		calibrationText;
 
 		//---------------------------------------Blob Tracker
-//		BlobTracker			tracker;
+		BlobTracker*			tracker;
 
 		//---------------------------------------Calibration Stuff
 		ofImage calibrationParticle;
@@ -86,7 +86,6 @@ class Calibration : public TouchListener, public ofSimpleApp {
 		std::map<int, int> blobcolor;
 
 		calibrationB calibrate;
-		BlobTracker tracker;
 
 		ofxXmlSettings		calibrationXML;
 };

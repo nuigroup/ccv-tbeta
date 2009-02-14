@@ -388,8 +388,6 @@ void calibrationB::nextCalibrationStep()
 
 		if(calibrationStep >= GRID_POINTS)
 		{
-			printf("Calibration complete\n");
-
 			bCalibrating = false;
 			calibrationStep = 0;
 			saveCalibration();

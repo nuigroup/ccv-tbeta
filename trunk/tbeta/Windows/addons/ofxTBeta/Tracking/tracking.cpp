@@ -17,11 +17,11 @@ BlobTracker::BlobTracker()
 }
 
 
-void BlobTracker::passInCalibration(calibrationB& calibrater) {
+void BlobTracker::passInCalibration(calibrationB* calibrater) {
 
     calibrate = calibrater;
-    calibrate.setCamRes(320, 240);
-    calibrate.loadXMLSettings();
+ //   calibrate->setCamRes(320, 240);
+ //   calibrate->loadXMLSettings();
 }
 
 
@@ -52,8 +52,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 			TouchEvents.RAWmessenger = trackedBlobs[i];
 			TouchEvents.notifyRAWTouchUp(NULL);
 
-			calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
-			calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+			calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+			calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
             if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 			TouchEvents.notifyTouchUp(NULL);
@@ -109,8 +109,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						TouchEvents.RAWmessenger = trackedBlobs[i];
                         TouchEvents.notifyRAWTouchUp(NULL);
 
-                        calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
-                        calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+                        calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+                        calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
                         if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 						TouchEvents.notifyTouchUp(NULL);
@@ -125,8 +125,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						TouchEvents.RAWmessenger = trackedBlobs[i];
                         TouchEvents.notifyRAWTouchUp(NULL);
 
-                        calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
-                        calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+                        calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+                        calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
                         if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 						TouchEvents.notifyTouchUp(NULL);
@@ -183,8 +183,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					TouchEvents.RAWmessenger = trackedBlobs[i];
                     TouchEvents.notifyRAWTouchMoved(NULL);
 
-                    calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
-                    calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+                    calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+                    calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
                     if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 					TouchEvents.notifyTouchMoved(NULL);
@@ -210,8 +210,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 			TouchEvents.RAWmessenger = trackedBlobs[i];
             TouchEvents.notifyRAWTouchDown(NULL);
 
-            calibrate.transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
-            calibrate.cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+            calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+            calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
             if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 			TouchEvents.notifyTouchDown(NULL);

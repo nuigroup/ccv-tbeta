@@ -12,7 +12,7 @@
 /******************************************************************************
  * The setup function is run once to perform initializations in the application
  *****************************************************************************/
-void Calibration::setup()
+void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 {
 	/********************
 	 * Initalize Variables
@@ -32,18 +32,26 @@ void Calibration::setup()
 	calibrationText.loadFont("verdana.ttf", 10, true, true);
 
 	//Load Calibration Settings from calibration.xml file
-	calibrate.setCamRes(320, 240);
+	calibrate.setCamRes(_camWidth, _camHeight);
 	calibrate.loadXMLSettings();
 
-//	trackers.passInCalibration(calibrate);
+	tracker = trackerIn;
+	tracker->passInCalibration(&calibrate);
 
 	printf("Calibration is setup!\n");
 }
 
-void Calibration::passInContourFinderAndTracker(ofxTBetaCvContourFinder& finder, BlobTracker &trackerIn) {
-	contourFinder = finder;
-	tracker = trackerIn;
+void Calibration::passInContourFinder(int numBlobs, vector<ofxTBetaCvBlob> blobs) {
+
+    contourFinder.nBlobs = numBlobs;
+	contourFinder.blobs  = blobs;
 }
+
+void Calibration::passInTracker(BlobTracker *trackerIn) {
+	tracker = trackerIn;
+	tracker->passInCalibration(&calibrate);
+}
+
 
 /******************************
  *		  CALIBRATION
@@ -171,18 +179,15 @@ void Calibration::drawCalibrationBlobs(){
         //Displat Text of blob information
 		//     NOT SURE I WANT TO KEEP THIS. DON'T THINK IT'S USEFUL
 
-		 ofSetColor(0xFFFFFF);
+		/* ofSetColor(0xFFFFFF);
 		 glLineWidth(1);
 		 char idStr[1024];
 		 sprintf(idStr, "id: %i \n x: %f \n y: %f",drawBlob2.id, ceil(drawBlob2.centroid.x * ofGetWidth()),
 		 ceil(drawBlob2.centroid.y * ofGetHeight()));
 		 verdana.drawString(idStr, drawBlob2.centroid.x * ofGetWidth() - drawBlob2.boundingRect.width/2 + 40,
 		 drawBlob2.centroid.y * ofGetHeight() - drawBlob2.boundingRect.height/2 + 40);
-		 
+        */
     }
-
-
-
 }
 
 /*****************************************************************************
@@ -195,18 +200,24 @@ void Calibration::RAWTouchDown( ofxTBetaCvBlob b)
 
 void Calibration::RAWTouchUp( ofxTBetaCvBlob b)
 {
-	if(b.simulated && contourFinder.nBlobs == 0) {
+	if(b.simulated && contourFinder.nBlobs == 1) {
 		calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
 		calibrate.nextCalibrationStep();
-	} else if(contourFinder.nBlobs == 0)//If calibrating change target color back when a finger is up
-	 downColor = 0xFF0000;
+	} else if(contourFinder.nBlobs == 1)//If calibrating change target color back when a finger is up
+        downColor = 0xFF0000;
 
-	 if(calibrate.bCalibrating && contourFinder.nBlobs == 0)//If Calibrating, register the calibration point on blobOff
+	 if(calibrate.bCalibrating && contourFinder.nBlobs == 1)//If Calibrating, register the calibration point on blobOff
 	 {
          calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
          calibrate.nextCalibrationStep();
 
-         printf("%d (%f, %f)\n", calibrate.calibrationStep, b.centroid.x, b.centroid.y);
+         if(calibrate.calibrationStep != 0)
+            printf("%d (%f, %f)\n", calibrate.calibrationStep, b.centroid.x, b.centroid.y);
+
+         if(calibrate.calibrationStep == 0){
+            printf("%d (%f, %f)\n", calibrate.GRID_POINTS, b.centroid.x, b.centroid.y);
+            printf("Calibration complete\n");
+         }
 	 }
 }
 
@@ -233,11 +244,11 @@ void Calibration::keyPressed(int key) {
             case 'c': //Enter/Exit Calibration
                 if(calibrate.bCalibrating) {
                     calibrate.bCalibrating = false;
-					tracker.passInCalibration(calibrate);
+                    printf("Calibration Stoped\n");
 				} else {
 					calibrate.beginCalibration();
+                    printf("Calibration Started\n");
 				}
-                    
                 break;
             case 'r': //Revert Calibration
                 if(calibrate.bCalibrating)calibrate.revertCalibrationStep();
@@ -250,6 +261,9 @@ void Calibration::keyPressed(int key) {
                 break;
             case 'w': //Right
                 bW = true;
+                break;
+            case 's': //Right
+                bS = true;
                 break;
             case OF_KEY_RIGHT: //Move bounding box right
                 if(bD){
@@ -382,6 +396,26 @@ void Calibration::keyReleased(int key){
 					tempBlob.simulated = true;
 					RAWTouchUp(tempBlob);
 				}
+				break;
+            case 'x': //Begin Calibrating
+                tracker->passInCalibration(&calibrate);
+                break;
+			case OF_KEY_RIGHT: //Move bounding box right
+                calibrate.computeCameraToScreenMap();
+                tracker->passInCalibration(&calibrate);
+                break;
+            case OF_KEY_LEFT: //Move bounding box left
+                calibrate.computeCameraToScreenMap();
+                tracker->passInCalibration(&calibrate);
+                break;
+            case OF_KEY_DOWN: //Move bounding box down
+                calibrate.computeCameraToScreenMap();
+                tracker->passInCalibration(&calibrate);
+                break;
+            case OF_KEY_UP: //Move bounding box up
+                calibrate.computeCameraToScreenMap();
+                tracker->passInCalibration(&calibrate);
+                break;
 		}
 	}
 }
