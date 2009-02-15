@@ -29,6 +29,9 @@ void BlobTracker::passInCalibration(calibrationB* calibrater) {
 //assigns IDs to each blob in the contourFinder
 void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 {
+	//printf("starting time: %.3f\n", dTime.time);
+
+	
 	//initialize ID's of all blobs
 	for(int i=0; i<newBlobs->nBlobs; i++)
 		newBlobs->blobs[i].id=-1;
@@ -77,6 +80,9 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 				if(j==trackedBlobs.size())//got to end without finding it
 				{
 					newBlobs->blobs[winner].id = trackedBlobs[i].id;
+					newBlobs->blobs[winner].age = trackedBlobs[i].age;
+					newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
+					
 					trackedBlobs[i] = newBlobs->blobs[winner];
 				}
 				else //found it, compare with current blob
@@ -95,6 +101,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					if(distNew<distOld) //update
 					{
 						newBlobs->blobs[winner].id = trackedBlobs[i].id;
+						newBlobs->blobs[winner].age = trackedBlobs[i].age;
+						newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 
 //TODO--------------------------------------------------------------------------
 						//now the old winning blob has lost the win.
@@ -138,6 +146,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 			else //no conflicts, so simply update
 			{
 				newBlobs->blobs[winner].id = trackedBlobs[i].id;
+				newBlobs->blobs[winner].age = trackedBlobs[i].age;
+				newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 			}
 		}
 	}
@@ -171,23 +181,49 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					ofPoint tD = trackedBlobs[i].D;
 
 					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y));
+					
+					
+                    if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < 3 && 
+						abs((int)trackedBlobs[i].lastCentroid.y - (int)trackedBlobs[i].centroid.y) < 3) {
+						
+						trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
+						trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
+						trackedBlobs[i].sitting += 1; //1 more frame of sitting
+						printf("%i sitting: %i\n",(int)trackedBlobs[i].id, trackedBlobs[i].sitting);
+					} else {
+						trackedBlobs[i].sitting = 0;
+					}
+					
+					
+					trackedBlobs[i].age += dTime.time; //add the time diff from the last dTime.countTime();
+					dTime.countTime();
+					
+					printf("%i age: %.3f\n", i, trackedBlobs[i].age);
+					
+					if(trackedBlobs[i].age > 1000 && trackedBlobs[i].sitting > 10) {
+						TouchEvents.messenger = trackedBlobs[i];
+						TouchEvents.RAWmessenger = trackedBlobs[i];
+						
+						TouchEvents.notifyRAWTouchHeld(NULL);
+						
+						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-                    if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < 1.5) trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
-                    if(abs((int)trackedBlobs[i].lastCentroid.y - (int)trackedBlobs[i].centroid.y) < 1.5) trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
+						TouchEvents.notifyTouchHeld(NULL);
+					} else {
+						//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
+						//SEND BLOB MOVED EVENT
+						TouchEvents.messenger = trackedBlobs[i];
+						TouchEvents.RAWmessenger = trackedBlobs[i];
+						TouchEvents.notifyRAWTouchMoved(NULL);
 
-                    //printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
+						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
+						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-					//SEND BLOB MOVED EVENT
-                    TouchEvents.messenger = trackedBlobs[i];
-					TouchEvents.RAWmessenger = trackedBlobs[i];
-                    TouchEvents.notifyRAWTouchMoved(NULL);
-
-                    calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
-                    calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
-
-                    if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
-					TouchEvents.notifyTouchMoved(NULL);
+						if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
+						TouchEvents.notifyTouchMoved(NULL);
+					}
 				}
 			}
 		}
@@ -200,6 +236,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 	{
 		if(newBlobs->blobs[i].id==-1)
 		{
+			dTime.countTime();
+			
 			//add new track
 			newBlobs->blobs[i].id=IDCounter++;
 			//printf("id!!!! : %i \n", IDCounter);

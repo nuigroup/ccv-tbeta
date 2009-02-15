@@ -23,8 +23,8 @@ class ofxTBetaCvContourFinder {
 
     ofxTBetaCvContourFinder();
     ~ofxTBetaCvContourFinder();
-
-    int findContours( ofxCvGrayscaleImage& input,
+	
+	int findContours( ofxCvGrayscaleImage& input,
                        int minArea, int maxArea,
                        int nConsidered, bool bFindHoles,
                        bool bUseApproximation = true);

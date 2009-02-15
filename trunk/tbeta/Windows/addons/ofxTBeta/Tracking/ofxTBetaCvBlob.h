@@ -24,6 +24,9 @@ class ofxTBetaCvBlob {
         ofRectangle         boundingRect;
 		ofPoint             centroid, lastCentroid, D;
         bool                hole;
+		
+		float				age; //how long the blob has been at war
+		int					sitting; //how long hes been sitting in the same place
 	
 		bool				simulated; 
 
@@ -42,6 +45,8 @@ class ofxTBetaCvBlob {
             hole 		= false;
             nPts        = 0;
 			simulated = false;
+			age = 0;
+			sitting = 0;
         }
 
         //----------------------------------------
