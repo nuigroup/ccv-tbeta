@@ -139,27 +139,6 @@ void Calibration::drawCalibrationBlobs(){
         //transform x/y position to calibrated space
         calibrate.cameraToScreenPosition(drawBlob2.centroid.x, drawBlob2.centroid.y);
 
-        //Get a random color for each blob
-        if(blobcolor[drawBlob2.id] == 0)
-        {
-            int r = ofRandom(0, 255);
-            int g = ofRandom(0, 255);
-            int b = ofRandom(0, 255);
-            //Convert to hex
-            int rgbNum = ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
-            //Set hex into map position
-            blobcolor[drawBlob2.id] = rgbNum;
-        }
-
-        //Draw Fuzzy Circles
-        ofEnableAlphaBlending();
-        ofImage tempCalibrationParticle;
-        tempCalibrationParticle.clone(calibrationParticle);
-        ofSetColor(blobcolor[drawBlob2.id]);
-        tempCalibrationParticle.draw(drawBlob2.centroid.x * ofGetWidth() - drawBlob2.boundingRect.width * .625, drawBlob2.centroid.y * ofGetHeight() - drawBlob2.boundingRect.height * .625,
-									 drawBlob2.boundingRect.width * 1.25, drawBlob2.boundingRect.height * 1.25);
-        ofDisableAlphaBlending();
-
         //Draw Blob Targets
         if(bShowTargets)
         {
@@ -168,9 +147,10 @@ void Calibration::drawCalibrationBlobs(){
             glPushMatrix();
 			//	glLoadIdentity();
             glTranslatef(drawBlob2.centroid.x * ofGetWidth(), ((drawBlob2.centroid.y * ofGetHeight())), 0);
-			//  ofEllipse(0, 0, drawBlob2.boundingRect.width/2, drawBlob2.boundingRect.height/2);
-            ofLine(0, -drawBlob2.boundingRect.height/2, 0, drawBlob2.boundingRect.height/2);
-            ofLine(-drawBlob2.boundingRect.width/2, 0, drawBlob2.boundingRect.width/2, 0);
+			drawBlob2.centroid.x *= ofGetWidth() - drawBlob2.boundingRect.width * .625;
+			drawBlob2.centroid.y *= ofGetHeight() - drawBlob2.boundingRect.height * .625;
+			
+			drawBlob2.draw();
             glPopMatrix();
         }
         //set line width back to normal
@@ -208,14 +188,17 @@ void Calibration::RAWTouchUp( ofxTBetaCvBlob b)
 		if(contourFinder.nBlobs == 1)//If calibrating change target color back when a finger is up
 			downColor = 0xFF0000;
 		
-		calibrate.nextCalibrationStep();
-		
-		if(calibrate.calibrationStep != 0)
-            printf("%d (%f, %f)\n", calibrate.calibrationStep, b.centroid.x, b.centroid.y);
-		
-		if(calibrate.calibrationStep == 0){
-            printf("%d (%f, %f)\n", calibrate.GRID_POINTS, b.centroid.x, b.centroid.y);
-            printf("Calibration complete\n");
+		if(calibrate.bGoToNextStep) {
+			calibrate.nextCalibrationStep();
+			calibrate.bGoToNextStep = false;
+			
+			if(calibrate.calibrationStep != 0)
+				printf("%d (%f, %f)\n", calibrate.calibrationStep, b.centroid.x, b.centroid.y);
+			
+			if(calibrate.calibrationStep == 0){
+				printf("%d (%f, %f)\n", calibrate.GRID_POINTS, b.centroid.x, b.centroid.y);
+				printf("Calibration complete\n");
+			}
 		}
 	}
 }
@@ -225,7 +208,7 @@ void Calibration::RAWTouchMoved( ofxTBetaCvBlob b)
 }
 
 void Calibration::RAWTouchHeld( ofxTBetaCvBlob b) {
-	printf("(%i:%i:%i) %i HELD!!!\n", ofGetHours(), ofGetMinutes(), ofGetSeconds(), b.id);
+	//printf("(%i:%i:%i) %i HELD!!!\n", ofGetHours(), ofGetMinutes(), ofGetSeconds(), b.id);
 	//ofSetColor(0,b.age/1000*255,6);
 	//ofFill();
 	//ofEllipse(b.centroid.x, b.centroid.y, 20,20);
@@ -233,6 +216,7 @@ void Calibration::RAWTouchHeld( ofxTBetaCvBlob b) {
 	if(calibrate.bCalibrating && contourFinder.nBlobs == 1)//If Calibrating, register the calibration point on blobOff
 	{
 		calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
+		calibrate.bGoToNextStep = true;
 		downColor = 0xFFFFFF;
 	}
 

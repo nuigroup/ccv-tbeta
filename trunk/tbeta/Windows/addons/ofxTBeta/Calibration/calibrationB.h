@@ -59,7 +59,8 @@ class calibrationB
 
 		void calculateBox();
 
-		bool bCalibrating;		
+		bool bCalibrating;
+		bool bGoToNextStep;
 		int calibrationStep;
 
 		vector2df* screenPoints;					// GRID_X * GRID_Y

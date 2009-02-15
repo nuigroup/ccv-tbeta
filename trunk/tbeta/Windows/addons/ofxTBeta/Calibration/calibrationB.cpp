@@ -12,6 +12,8 @@ calibrationB::calibrationB()
 //	Load Settings from the config.xml file
 //--------------------------------------------------------------
 void calibrationB::loadXMLSettings(){
+	
+	bGoToNextStep = false;
 
 	// Can this load via http?
 	if( calibrationXML.loadFile("calibration.xml")){
