@@ -45,6 +45,7 @@ class Calibration : public TouchListener, public ofSimpleApp {
 		void RAWTouchDown( ofxTBetaCvBlob b );
 		void RAWTouchMoved( ofxTBetaCvBlob b );
 		void RAWTouchUp( ofxTBetaCvBlob b );
+		void RAWTouchHeld( ofxTBetaCvBlob b);
 
 		void drawFingerOutlines();
         void doCalibration();

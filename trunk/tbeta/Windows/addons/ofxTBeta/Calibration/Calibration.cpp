@@ -195,34 +195,47 @@ void Calibration::drawCalibrationBlobs(){
  *****************************************************************************/
 void Calibration::RAWTouchDown( ofxTBetaCvBlob b)
 {
-	 downColor = 0x2FB5FF;
+	if(calibrate.bCalibrating && contourFinder.nBlobs == 1)//If Calibrating, register the calibration point on blobOff
+	{
+		downColor = 0x2FB5FF;
+	}
 }
 
 void Calibration::RAWTouchUp( ofxTBetaCvBlob b)
 {
-	if(b.simulated && contourFinder.nBlobs == 1) {
-		calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
+	if(calibrate.bCalibrating && contourFinder.nBlobs == 1)//If Calibrating, register the calibration point on blobOff
+	{
+		if(contourFinder.nBlobs == 1)//If calibrating change target color back when a finger is up
+			downColor = 0xFF0000;
+		
 		calibrate.nextCalibrationStep();
-	} else if(contourFinder.nBlobs == 1)//If calibrating change target color back when a finger is up
-        downColor = 0xFF0000;
-
-	 if(calibrate.bCalibrating && contourFinder.nBlobs == 1)//If Calibrating, register the calibration point on blobOff
-	 {
-         calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
-         calibrate.nextCalibrationStep();
-
-         if(calibrate.calibrationStep != 0)
+		
+		if(calibrate.calibrationStep != 0)
             printf("%d (%f, %f)\n", calibrate.calibrationStep, b.centroid.x, b.centroid.y);
-
-         if(calibrate.calibrationStep == 0){
+		
+		if(calibrate.calibrationStep == 0){
             printf("%d (%f, %f)\n", calibrate.GRID_POINTS, b.centroid.x, b.centroid.y);
             printf("Calibration complete\n");
-         }
-	 }
+		}
+	}
 }
 
 void Calibration::RAWTouchMoved( ofxTBetaCvBlob b)
 {
+}
+
+void Calibration::RAWTouchHeld( ofxTBetaCvBlob b) {
+	printf("(%i:%i:%i) %i HELD!!!\n", ofGetHours(), ofGetMinutes(), ofGetSeconds(), b.id);
+	//ofSetColor(0,b.age/1000*255,6);
+	//ofFill();
+	//ofEllipse(b.centroid.x, b.centroid.y, 20,20);
+	
+	if(calibrate.bCalibrating && contourFinder.nBlobs == 1)//If Calibrating, register the calibration point on blobOff
+	{
+		calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
+		downColor = 0xFFFFFF;
+	}
+
 }
 
 
@@ -394,7 +407,7 @@ void Calibration::keyReleased(int key){
 					tempBlob.centroid.x = mouseX;
 					tempBlob.centroid.y = mouseY;
 					tempBlob.simulated = true;
-					RAWTouchUp(tempBlob);
+					RAWTouchDown(tempBlob);
 				}
 				break;
             case 'x': //Begin Calibrating
