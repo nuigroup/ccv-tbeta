@@ -188,19 +188,17 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						
 						trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
 						trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
-						trackedBlobs[i].sitting += 1; //1 more frame of sitting
-						printf("%i sitting: %i\n",(int)trackedBlobs[i].id, trackedBlobs[i].sitting);
+						if(trackedBlobs[i].sitting != -1) trackedBlobs[i].sitting += dTime.lastTime; //1 more frame of sitting
+						//printf("%i sitting: %i\n",(int)trackedBlobs[i].id, trackedBlobs[i].sitting);
 					} else {
-						trackedBlobs[i].sitting = 0;
+						if(trackedBlobs[i].age > 500) trackedBlobs[i].sitting = -1;
 					}
 					
-					
-					trackedBlobs[i].age += dTime.time; //add the time diff from the last dTime.countTime();
+					trackedBlobs[i].age += dTime.lastTime; //add the time diff from the last dTime.countTime();
 					dTime.countTime();
 					
-					printf("%i age: %.3f\n", i, trackedBlobs[i].age);
 					
-					if(trackedBlobs[i].age > 1000 && trackedBlobs[i].sitting > 10) {
+					if(trackedBlobs[i].sitting > 1500) {
 						TouchEvents.messenger = trackedBlobs[i];
 						TouchEvents.RAWmessenger = trackedBlobs[i];
 						

@@ -26,7 +26,7 @@ class ofxTBetaCvBlob {
         bool                hole;
 		
 		float				age; //how long the blob has been at war
-		int					sitting; //how long hes been sitting in the same place
+		float					sitting; //how long hes been sitting in the same place
 	
 		bool				simulated; 
 
@@ -45,8 +45,8 @@ class ofxTBetaCvBlob {
             hole 		= false;
             nPts        = 0;
 			simulated = false;
-			age = 0;
-			sitting = 0;
+			age = 0.0f;
+			sitting = 0.0f;
         }
 
         //----------------------------------------
@@ -68,19 +68,19 @@ class ofxTBetaCvBlob {
 
             //ofRect(x + boundingRect.x, y + boundingRect.y, boundingRect.width, boundingRect.height);
 
-
+			/*
             glPushMatrix();
                 glTranslatef(x + boundingRect.x, y + boundingRect.y, 0.0f);
                 glRotatef(-angle, 0.0f, 0.0f, 1.0f);
                 glTranslatef(-(x + boundingRect.x), -(y + boundingRect.y), 0.0f);
                 //glut(boundingRect.x - boundingRect.width, boundingRect.y - boundingRect.height, boundingRect.x + boundingRect.height,boundingRect.y + boundingRect.width, 1.0f, 0.0f, 0.0f);
-                ofRect(x + boundingRect.x - boundingRect.width/2, y + boundingRect.y - boundingRect.height/2, boundingRect.width, boundingRect.height);
+                //ofRect(x + boundingRect.x - boundingRect.width/2, y + boundingRect.y - boundingRect.height/2, boundingRect.width, boundingRect.height);
 
-                ofSetColor(0x0099FF);
-                ofRect(x + boundingRect.x, y + boundingRect.y - boundingRect.height, 1, boundingRect.height * 2); //Horizontal Plus
-                ofRect(x + boundingRect.x - boundingRect.width, y + boundingRect.y, boundingRect.width * 2, 1); //Horizontal Plus
+				ofSetColor(0x0099FF);
+                //ofRect(x + boundingRect.x, y + boundingRect.y - boundingRect.height, 1, boundingRect.height * 2); //Horizontal Plus
+                //ofRect(x + boundingRect.x - boundingRect.width, y + boundingRect.y, boundingRect.width * 2, 1); //Horizontal Plus
             glPopMatrix();
-
+*/
 
 
         }

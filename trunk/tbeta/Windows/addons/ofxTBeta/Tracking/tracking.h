@@ -23,7 +23,7 @@
 class deltaTime
 {
 public:
-	float time;
+	float time, lastTime;
 	
 	deltaTime() {
 		time= 0.0f;
@@ -41,6 +41,7 @@ public:
 		} else {
 			time = ofGetElapsedTimeMillis() - timeOne; // diff between this and that ^
 			switcher = !switcher; // more flipzz
+			lastTime = time;
 		}
 	}
 	
