@@ -25,6 +25,9 @@
  Anyone can use them, but it's unneccesary
  because the normal TouchDown, TouchUp, and TouchMoved
  get the calibrated blobs. Enjoy!
+ 
+ News: Friday 13th, 8:29 PM EST ===
+	Now you can add a hold event to your apps. good stuff...
 
  */
 
@@ -62,11 +65,14 @@ protected:
 	virtual void TouchDown(ofxTBetaCvBlob message){}
 	virtual void TouchUp(ofxTBetaCvBlob message){}
 	virtual void TouchMoved(ofxTBetaCvBlob message){}
+	virtual void TouchHeld(ofxTBetaCvBlob message){}
 
 	//RAW
 	virtual void RAWTouchDown(ofxTBetaCvBlob message){}
 	virtual void RAWTouchUp(ofxTBetaCvBlob message){}
 	virtual void RAWTouchMoved(ofxTBetaCvBlob message){}
+	virtual void RAWTouchHeld(ofxTBetaCvBlob message){}
+	
 
 	void TouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
 		TouchDown(eventArgs);
@@ -76,6 +82,9 @@ protected:
 	}
 	void TouchMoved(const void* sender, ofxTBetaCvBlob& eventArgs){
 		TouchMoved(eventArgs);
+	}
+	void TouchHeld(const void* sender, ofxTBetaCvBlob& eventArgs){
+		TouchHeld(eventArgs);
 	}
 
 	//RAW
@@ -87,6 +96,9 @@ protected:
 	}
 	void RAWTouchMoved(const void* sender, ofxTBetaCvBlob& eventArgs){
 		RAWTouchMoved(eventArgs);
+	}
+	void RAWTouchHeld(const void* sender, ofxTBetaCvBlob& eventArgs){
+		RAWTouchHeld(eventArgs);
 	}
 };
 
@@ -101,12 +113,14 @@ class TouchManager
 			addTouchDownListener(listener);
 			addTouchUpListener(listener);
 			addTouchMovedListener(listener);
+			addTouchHeldListener(listener);
 		}
 
 		void addRAWListener(TouchListener* listener){
 			addRAWTouchDownListener(listener);
 			addRAWTouchUpListener(listener);
 			addRAWTouchMovedListener(listener);
+			addRAWTouchHeldListener(listener);
 		}
 
 		//Listeners -----------
@@ -119,6 +133,9 @@ class TouchManager
 		void addTouchMovedListener(TouchListener* listener){ //TouchMoved
 			TouchMoved += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::TouchMoved);
 		}
+		void addTouchHeldListener(TouchListener* listener){ //TouchMoved
+			TouchHeld += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::TouchHeld);
+		}
 
 		//raw listeners
 		void addRAWTouchDownListener(TouchListener* listener){ //TouchDown
@@ -129,6 +146,9 @@ class TouchManager
 		}
 		void addRAWTouchMovedListener(TouchListener* listener){ //TouchMoved
 			RAWTouchMoved += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::RAWTouchMoved);
+		}
+		void addRAWTouchHeldListener(TouchListener* listener){ //TouchMoved
+			RAWTouchHeld += Poco::Delegate<TouchListener, ofxTBetaCvBlob>(listener, &TouchListener::RAWTouchHeld);
 		}
 
 
@@ -144,6 +164,9 @@ class TouchManager
 		void notifyTouchMoved(void* sender){ //TouchMoved
 			TouchMoved.notify(sender, messenger);
 		}
+		void notifyTouchHeld(void* sender){ //TouchMoved
+			TouchHeld.notify(sender, messenger);
+		}
 
 		//RAW
 		void notifyRAWTouchDown(void* sender){ //TouchDown
@@ -154,6 +177,9 @@ class TouchManager
 		}
 		void notifyRAWTouchMoved(void* sender){ //TouchMoved
 			RAWTouchMoved.notify(sender, RAWmessenger);
+		}
+		void notifyRAWTouchHeld(void* sender){ //TouchMoved
+			RAWTouchHeld.notify(sender, RAWmessenger);
 		}
 
 
@@ -166,11 +192,13 @@ class TouchManager
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchDown;
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchUp;
 		Poco::FIFOEvent<ofxTBetaCvBlob> TouchMoved;
+		Poco::FIFOEvent<ofxTBetaCvBlob> TouchHeld;
 
 		//RAW
 		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchDown;
 		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchUp;
 		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchMoved;
+		Poco::FIFOEvent<ofxTBetaCvBlob> RAWTouchHeld;
 
 		Poco::FIFOEvent<bool>  becomeSkyNet;
 
