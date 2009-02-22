@@ -150,8 +150,8 @@ void TBetaBase ::setupGUI()
 		gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
 		gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
 		//Source
-		gui->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->bcamera, sizeof(bool));
-		if(!bcamera){
+		gui->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->camera.bcamera, sizeof(bool));
+		if(!camera.bcamera){
 		bool bvideo = true;
 		gui->update(appPtr->sourcePanel_video, kofxGui_Set_Bool, &bvideo, sizeof(bool));
 		}
@@ -188,34 +188,34 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 				{
 					if(*(bool*)data)
 					{
-						if(!bcamera){
+						if(!camera.bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
-							bcamera = true;
-							vidGrabber.close();
-							vidGrabber.setDeviceID(deviceID);
-							vidGrabber.setVerbose(false);
-							camWidth = vidGrabber.width;
-							camHeight = vidGrabber.height;
-							vidGrabber.initGrabber(camWidth,camHeight);
+							camera.bcamera = true;
+							camera.vidGrabber.close();
+							camera.vidGrabber.setDeviceID(camera.deviceID);
+							camera.vidGrabber.setVerbose(false);
+							camera.camWidth = camera.vidGrabber.width;
+							camera.camHeight = camera.vidGrabber.height;
+							camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
 
-//							calibrate.setCamRes(camHeight, camWidth);
+//							calibrate.setCamRes(camera.camHeight, camera.camWidth);
 //							calibrate.computeCameraToScreenMap();
 
 							//reset gpu textures and filters
 							resetGPUTextures();
 
-							processedImg.allocate(camWidth, camHeight); //Processed Image
+							processedImg.allocate(camera.camWidth, camera.camHeight); //Processed Image
 							processedImg.setUseTexture(false);
-							sourceImg.allocate(camWidth, camHeight);    //Source Image
-							sourceImg.setUseTexture(false);
-							grayImg.allocate(camWidth, camHeight);		//Gray Image
-							grayBg.allocate(camWidth, camHeight);		//Background Image
-							subtractBg.allocate(camWidth, camHeight);   //Background After subtraction
-							grayDiff.allocate(camWidth, camHeight);		//Difference Image between Background and Source
-							highpassImg.allocate(camWidth, camHeight);  //Highpass Image
-							ampImg.allocate(camWidth, camHeight);		//Amplify Image
-							fiLearn.allocate(camWidth, camHeight);		//ofxFloatImage used for simple dynamic background subtracti
-							pressureMap.allocate(camWidth, camHeight);	//Pressure Map Image
+							camera.sourceImg.allocate(camera.camWidth, camera.camHeight);    //Source Image
+							camera.sourceImg.setUseTexture(false);
+							grayImg.allocate(camera.camWidth, camera.camHeight);		//Gray Image
+							grayBg.allocate(camera.camWidth, camera.camHeight);		//Background Image
+							subtractBg.allocate(camera.camWidth, camera.camHeight);   //Background After subtraction
+							grayDiff.allocate(camera.camWidth, camera.camHeight);		//Difference Image between Background and Source
+							highpassImg.allocate(camera.camWidth, camera.camHeight);  //Highpass Image
+							ampImg.allocate(camera.camWidth, camera.camHeight);		//Amplify Image
+							fiLearn.allocate(camera.camWidth, camera.camHeight);		//ofxFloatImage used for simple dynamic background subtracti
+							pressureMap.allocate(camera.camWidth, camera.camHeight);	//Pressure Map Image
 
 							activeInput = true;		//set to active again
 							bLearnBakground = true; //recapture background
@@ -231,33 +231,33 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 				{
 					if(*(bool*)data)
 					{
-						if(bcamera){
+						if(camera.bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
-							bcamera = false;
-							vidPlayer.loadMovie("test_videos/" + videoFileName);
-							vidPlayer.play();
+							camera.bcamera = false;
+							camera.vidPlayer.loadMovie("test_videos/" + videoFileName);
+							camera.vidPlayer.play();
 							printf("Video Mode\n");
-							camHeight = vidPlayer.height;
-							camWidth = vidPlayer.width;
+							camera.camHeight = camera.vidPlayer.height;
+							camera.camWidth = camera.vidPlayer.width;
 
-//							calibrate.setCamRes(camHeight, camWidth);
+//							calibrate.setCamRes(camera.camHeight, camera.camWidth);
 //							calibrate.computeCameraToScreenMap();
 
 							//reset gpu textures and filters
 							resetGPUTextures();
 
-							processedImg.allocate(camWidth, camHeight); //Processed Image
+							processedImg.allocate(camera.camWidth, camera.camHeight); //Processed Image
 							processedImg.setUseTexture(false);
-							sourceImg.allocate(camWidth, camHeight);    //Source Image
-							sourceImg.setUseTexture(false);
-							grayImg.allocate(camWidth, camHeight);		//Gray Image
-							grayBg.allocate(camWidth, camHeight);		//Background Image
-							subtractBg.allocate(camWidth, camHeight);   //Background After subtraction
-							grayDiff.allocate(camWidth, camHeight);		//Difference Image between Background and Source
-							highpassImg.allocate(camWidth, camHeight);  //Highpass Image
-							ampImg.allocate(camWidth, camHeight);		//Amplify Image
-							fiLearn.allocate(camWidth, camHeight);		//ofxFloatImage used for simple dynamic background subtracti
-							pressureMap.allocate(camWidth, camHeight);	//Pressure Map Image
+							camera.sourceImg.allocate(camera.camWidth, camera.camHeight);    //Source Image
+							camera.sourceImg.setUseTexture(false);
+							grayImg.allocate(camera.camWidth, camera.camHeight);		//Gray Image
+							grayBg.allocate(camera.camWidth, camera.camHeight);		//Background Image
+							subtractBg.allocate(camera.camWidth, camera.camHeight);   //Background After subtraction
+							grayDiff.allocate(camera.camWidth, camera.camHeight);		//Difference Image between Background and Source
+							highpassImg.allocate(camera.camWidth, camera.camHeight);  //Highpass Image
+							ampImg.allocate(camera.camWidth, camera.camHeight);		//Amplify Image
+							fiLearn.allocate(camera.camWidth, camera.camHeight);		//ofxFloatImage used for simple dynamic background subtracti
+							pressureMap.allocate(camera.camWidth, camera.camHeight);	//Pressure Map Image
 
 							activeInput = true;
 							bLearnBakground = true;
@@ -276,13 +276,13 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 					{
 						activeInput = false; //this stops the app from doing everything when changing source
 
-						deviceID += 1;
-						if(deviceID >= vidGrabber.getDeviceCount()) {deviceID = vidGrabber.getDeviceCount();}
+						camera.deviceID += 1;
+						if(camera.deviceID >= camera.vidGrabber.getDeviceCount()) {camera.deviceID = camera.vidGrabber.getDeviceCount();}
 						else{
-							vidGrabber.close();
-							vidGrabber.setDeviceID(deviceID);
-							vidGrabber.setVerbose(true);
-							vidGrabber.initGrabber(camWidth,camHeight);
+							camera.vidGrabber.close();
+							camera.vidGrabber.setDeviceID(camera.deviceID);
+							camera.vidGrabber.setVerbose(true);
+							camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
 							bLearnBakground = true;
 						}
 						activeInput = true;
@@ -296,13 +296,13 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 					{
 						activeInput = false; //this stops the app from doing everything when changing source
 
-						deviceID -= 1;
-						if(deviceID < 0) deviceID = 0;
+						camera.deviceID -= 1;
+						if(camera.deviceID < 0) camera.deviceID = 0;
 						else{
-							vidGrabber.close();
-							vidGrabber.setDeviceID(deviceID);
-							vidGrabber.setVerbose(true);
-							vidGrabber.initGrabber(camWidth,camHeight);
+							camera.vidGrabber.close();
+							camera.vidGrabber.setDeviceID(camera.deviceID);
+							camera.vidGrabber.setVerbose(true);
+							camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
 							bLearnBakground = true;
 						}
 						activeInput = true;
@@ -313,9 +313,9 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 			case propertiesPanel_settings:
 				if(length == sizeof(bool))
 				{
-					if(*(bool*)data && bcamera)
+					if(*(bool*)data && camera.bcamera)
 					{
-						vidGrabber.videoSettings();
+						camera.vidGrabber.videoSettings();
 					}
 				}
 				break;

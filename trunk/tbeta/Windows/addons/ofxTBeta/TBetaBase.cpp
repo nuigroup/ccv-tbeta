@@ -24,28 +24,28 @@ void TBetaBase::drawFingerOutlines(){
             //Get the contour (points) so they can be drawn
             for( int j=0; j<contourFinder.blobs[i].nPts; j++ )
             {
-                drawBlob.pts[j].x = (MAIN_WINDOW_WIDTH/camWidth)  * (drawBlob.pts[j].x);
-                drawBlob.pts[j].y = (MAIN_WINDOW_HEIGHT/camHeight) * (drawBlob.pts[j].y);
+                drawBlob.pts[j].x = (MAIN_WINDOW_WIDTH/camera.camWidth)  * (drawBlob.pts[j].x);
+                drawBlob.pts[j].y = (MAIN_WINDOW_HEIGHT/camera.camHeight) * (drawBlob.pts[j].y);
             }
 
             //This adjusts the blob drawing for different cameras
-            drawBlob.boundingRect.width  *= (MAIN_WINDOW_WIDTH/camWidth);
-            drawBlob.boundingRect.height *= (MAIN_WINDOW_HEIGHT/camHeight);
-            drawBlob.boundingRect.x		 *= (MAIN_WINDOW_WIDTH/camWidth);
-            drawBlob.boundingRect.y		 *= (MAIN_WINDOW_HEIGHT/camHeight);
+            drawBlob.boundingRect.width  *= (MAIN_WINDOW_WIDTH/camera.camWidth);
+            drawBlob.boundingRect.height *= (MAIN_WINDOW_HEIGHT/camera.camHeight);
+            drawBlob.boundingRect.x		 *= (MAIN_WINDOW_WIDTH/camera.camWidth);
+            drawBlob.boundingRect.y		 *= (MAIN_WINDOW_HEIGHT/camera.camHeight);
 
             //Draw contours (outlines) on the source image
             drawBlob.draw(40, 30);
 
 			//           ofSetColor(0x0099FF); //Make Plus Sign
-			//           ofRect((drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camWidth)) + 40, (drawBlob.centroid.y * (MAIN_WINDOW_HEIGHT/camHeight)) - drawBlob.boundingRect.height + 30, .5, drawBlob.boundingRect.height * 2); //Horizontal Plus
-			//           ofRect((drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camWidth)) - drawBlob.boundingRect.width + 40, (drawBlob.centroid.y  * (MAIN_WINDOW_HEIGHT/camHeight)) + 30, drawBlob.boundingRect.width * 2, .5); //Vertical Plus
+			//           ofRect((drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camera.camWidth)) + 40, (drawBlob.centroid.y * (MAIN_WINDOW_HEIGHT/camera.camHeight)) - drawBlob.boundingRect.height + 30, .5, drawBlob.boundingRect.height * 2); //Horizontal Plus
+			//           ofRect((drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camera.camWidth)) - drawBlob.boundingRect.width + 40, (drawBlob.centroid.y  * (MAIN_WINDOW_HEIGHT/camera.camHeight)) + 30, drawBlob.boundingRect.width * 2, .5); //Vertical Plus
         }
 
         if(bShowLabels)  //Show ID label;
         {
-            float xpos = drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camWidth);
-            float ypos = drawBlob.centroid.y * (MAIN_WINDOW_HEIGHT/camHeight);
+            float xpos = drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camera.camWidth);
+            float ypos = drawBlob.centroid.y * (MAIN_WINDOW_HEIGHT/camera.camHeight);
 
             ofSetColor(0xCCFFCC);
             char idStr[1024];
@@ -56,53 +56,13 @@ void TBetaBase::drawFingerOutlines(){
     ofSetColor(0xFFFFFF);
 }
 
-
-/************************************************
- *				Frame Grab
- ************************************************/
-
-//Grab frame from CPU
-void TBetaBase::grabFrameToCPU(){
-	//Set sourceImg as new camera/video frame
-	if(bcamera)
-		sourceImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
-	else
-		sourceImg.setFromPixels(vidPlayer.getPixels(), 	camWidth, camHeight);
-}
-
-//Grab frame from GPU
-void TBetaBase::grabFrameToGPU(GLuint target){
-	//grab the frame to a raw openGL texture
-	if(bcamera)
-	{
-		glEnable(GL_TEXTURE_2D);
-		//glPixelStorei(1);
-		glBindTexture(GL_TEXTURE_2D, target);
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber.getPixels());
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber.getPixels());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glBindTexture(GL_TEXTURE_2D,0);
-	}
-	else{
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, target);
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, vidPlayer.getPixels());
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidPlayer.getPixels());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glBindTexture(GL_TEXTURE_2D,0);
-	}
-}
-
-
 /************************************************
  *				FILTERS
  ************************************************/
 void TBetaBase::applyGPUImageFilters(){
 
 	if (bLearnBakground == true){
-		grabFrameToGPU(gpuBGTex);
+		camera.grabFrameToGPU(gpuBGTex);
 		bLearnBakground = false;
 	}
 
@@ -135,8 +95,8 @@ void TBetaBase::applyGPUImageFilters(){
 	//TODO: make this part not super slow ;)
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, threshFilter->output_buffer);
 	//glReadBuffer(gaussVFilter->output_buffer);
-	glReadPixels(0,0,camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, gpuReadBackBuffer);
-	gpuReadBackImage.setFromPixels(gpuReadBackBuffer, camWidth, camHeight);
+	glReadPixels(0,0,camera.camWidth, camera.camHeight, GL_RGB, GL_UNSIGNED_BYTE, gpuReadBackBuffer);
+	gpuReadBackImage.setFromPixels(gpuReadBackBuffer, camera.camWidth, camera.camHeight);
 	gpuReadBackImageGS = gpuReadBackImage;
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
@@ -145,7 +105,7 @@ void TBetaBase::applyGPUImageFilters(){
 
 void TBetaBase::applyImageFilters(){
 
-	processedImg = sourceImg;
+	processedImg = camera.sourceImg;
 
 
 	//Set Mirroring Horizontal/Vertical
@@ -190,26 +150,26 @@ void TBetaBase::resetGPUTextures(){
 
 
 	delete gpuReadBackBuffer;
-	gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
-	gpuReadBackImage.allocate(camWidth, camHeight);
-	gpuReadBackImageGS.allocate(camWidth, camHeight);
+	gpuReadBackBuffer = new unsigned char[camera.camWidth*camera.camHeight*3];
+	gpuReadBackImage.allocate(camera.camWidth, camera.camHeight);
+	gpuReadBackImageGS.allocate(camera.camWidth, camera.camHeight);
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, gpuSourceTex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camera.camWidth, camera.camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glBindTexture(GL_TEXTURE_2D, gpuBGTex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camera.camWidth, camera.camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
 
-	subtractFilter = new ImageFilter("filters/absSubtract.xml", camWidth, camHeight);
-	subtractFilter2 = new ImageFilter("filters/subtract.xml", camWidth, camHeight);
-	contrastFilter = new ImageFilter("filters/contrast.xml", camWidth, camHeight);
-	gaussVFilter = new ImageFilter("filters/gaussV.xml", camWidth, camHeight);
-	gaussHFilter = new ImageFilter("filters/gauss.xml", camWidth, camHeight);
-	gaussVFilter2 = new ImageFilter("filters/gaussV2.xml", camWidth, camHeight);
-	gaussHFilter2 = new ImageFilter("filters/gauss2.xml", camWidth, camHeight);
-	threshFilter = new ImageFilter("filters/threshold.xml", camWidth, camHeight);
+	subtractFilter = new ImageFilter("filters/absSubtract.xml", camera.camWidth, camera.camHeight);
+	subtractFilter2 = new ImageFilter("filters/subtract.xml", camera.camWidth, camera.camHeight);
+	contrastFilter = new ImageFilter("filters/contrast.xml", camera.camWidth, camera.camHeight);
+	gaussVFilter = new ImageFilter("filters/gaussV.xml", camera.camWidth, camera.camHeight);
+	gaussHFilter = new ImageFilter("filters/gauss.xml", camera.camWidth, camera.camHeight);
+	gaussVFilter2 = new ImageFilter("filters/gaussV2.xml", camera.camWidth, camera.camHeight);
+	gaussHFilter2 = new ImageFilter("filters/gauss2.xml", camera.camWidth, camera.camHeight);
+	threshFilter = new ImageFilter("filters/threshold.xml", camera.camWidth, camera.camHeight);
 }
 
 
@@ -253,11 +213,11 @@ void TBetaBase::loadXMLSettings(){
 	minWidth			= XML.getValue("CONFIG:WINDOW:MINX",0);
 	minHeight			= XML.getValue("CONFIG:WINDOW:MINY",0);
 
-	bcamera				= XML.getValue("CONFIG:CAMERA_0:USECAMERA",0);
-	deviceID			= XML.getValue("CONFIG:CAMERA_0:DEVICE",0);
-	camWidth			= XML.getValue("CONFIG:CAMERA_0:WIDTH",0);
-	camHeight			= XML.getValue("CONFIG:CAMERA_0:HEIGHT",0);
-	camRate				= XML.getValue("CONFIG:CAMERA_0:FRAMERATE",0);
+	camera.bcamera				= XML.getValue("CONFIG:CAMERA_0:USECAMERA",0);
+	camera.deviceID			= XML.getValue("CONFIG:CAMERA_0:DEVICE",0);
+	camera.camWidth			= XML.getValue("CONFIG:CAMERA_0:WIDTH",0);
+	camera.camHeight			= XML.getValue("CONFIG:CAMERA_0:HEIGHT",0);
+	camera.camRate				= XML.getValue("CONFIG:CAMERA_0:FRAMERATE",0);
 
 	videoFileName		= XML.getValue("CONFIG:VIDEO:FILENAME", "RearDI.m4v");
 
@@ -301,11 +261,11 @@ void TBetaBase::loadXMLSettings(){
 void TBetaBase::saveConfiguration()
 {
 
-	XML.setValue("CONFIG:CAMERA_0:USECAMERA", bcamera);
-	XML.setValue("CONFIG:CAMERA_0:DEVICE", deviceID);
-	XML.setValue("CONFIG:CAMERA_0:WIDTH", camWidth);
-	XML.setValue("CONFIG:CAMERA_0:HEIGHT", camHeight);
-	XML.setValue("CONFIG:CAMERA_0:FRAMERATE", camRate);
+	XML.setValue("CONFIG:CAMERA_0:USECAMERA", camera.bcamera);
+	XML.setValue("CONFIG:CAMERA_0:DEVICE", camera.deviceID);
+	XML.setValue("CONFIG:CAMERA_0:WIDTH", camera.camWidth);
+	XML.setValue("CONFIG:CAMERA_0:HEIGHT", camera.camHeight);
+	XML.setValue("CONFIG:CAMERA_0:FRAMERATE", camera.camRate);
 
 	XML.setValue("CONFIG:BOOLEAN:PRESSURE",bShowPressure);
 	XML.setValue("CONFIG:BOOLEAN:LABELS",bShowLabels);
@@ -407,10 +367,10 @@ void TBetaBase::drawToScreen(){
         string str = "DSP Milliseconds: ";
         str+= ofToString(differenceTime, 0)+"\n\n";
 
-        if(bcamera)
+        if(camera.bcamera)
         {
             string str2 = "Camera Res:     ";
-            str2+= ofToString(vidGrabber.width, 0) + " x " + ofToString(vidGrabber.height, 0)  + "\n";
+            str2+= ofToString(camera.vidGrabber.width, 0) + " x " + ofToString(camera.vidGrabber.height, 0)  + "\n";
             string str4 = "Camera FPS:     ";
             str4+= ofToString(fps, 0)+"\n\n";
             string str5 = "Blob Count:       ";
@@ -421,7 +381,7 @@ void TBetaBase::drawToScreen(){
         else
         {
             string str2 = "Video Res:       ";
-            str2+= ofToString(vidPlayer.width, 0) + " x " + ofToString(vidPlayer.height, 0)  + "\n";
+            str2+= ofToString(camera.vidPlayer.width, 0) + " x " + ofToString(camera.vidPlayer.height, 0)  + "\n";
             string str4 = "Video FPS:       ";
             str4+= ofToString(fps, 0)+"\n\n";
             string str5 = "Blob Count:       ";
@@ -460,10 +420,10 @@ void TBetaBase::drawToScreen(){
         string str = "DSP Milliseconds: ";
         str+= ofToString(differenceTime, 0)+"\n\n";
 
-        if(bcamera)
+        if(camera.bcamera)
         {
             string str2 = "Camera Res:     ";
-            str2+= ofToString(vidGrabber.width, 0) + " x " + ofToString(vidGrabber.height, 0)  + "\n";
+            str2+= ofToString(camera.vidGrabber.width, 0) + " x " + ofToString(camera.vidGrabber.height, 0)  + "\n";
             string str4 = "Camera FPS:     ";
             str4+= ofToString(fps, 0)+"\n";
             ofSetColor(0xFFFFFF);
@@ -472,7 +432,7 @@ void TBetaBase::drawToScreen(){
         else
         {
             string str2 = "Video Res:       ";
-            str2+= ofToString(vidPlayer.width, 0) + " x " + ofToString(vidPlayer.height, 0)  + "\n";
+            str2+= ofToString(camera.vidPlayer.width, 0) + " x " + ofToString(camera.vidPlayer.height, 0)  + "\n";
             string str4 = "Video FPS:       ";
             str4+= ofToString(fps, 0)+"\n";
             ofSetColor(0xFFFFFF);
@@ -594,49 +554,49 @@ void TBetaBase::setup()
 
 	//Setup Window Properties
 	ofSetWindowShape(winWidth,winHeight);
-	ofSetFrameRate(camRate * 1.4);			//This will be based on camera fps in the future
+	ofSetFrameRate(camera.camRate * 1.4);			//This will be based on camera fps in the future
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance
 
 	//Pick the Source - camera or video
-	if(bcamera)
+	if(camera.bcamera)
 	{
         activeInput = true;
-		vidGrabber.listDevices();
-		vidGrabber.setDeviceID(deviceID);
-		vidGrabber.setVerbose(true);
-        vidGrabber.initGrabber(camWidth,camHeight);
-		int grabW = vidGrabber.width;
-		int grabH = vidGrabber.height;
-		printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
+		camera.vidGrabber.listDevices();
+		camera.vidGrabber.setDeviceID(camera.deviceID);
+		camera.vidGrabber.setVerbose(true);
+        camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
+		int grabW = camera.vidGrabber.width;
+		int grabH = camera.vidGrabber.height;
+		printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camera.camWidth, camera.camHeight, grabW, grabH);
 	}
 	else
 	{
 		activeInput = true;
-		vidPlayer.loadMovie("test_videos/" + videoFileName);
-        vidPlayer.play();
+		camera.vidPlayer.loadMovie("test_videos/" + videoFileName);
+        camera.vidPlayer.play();
 		printf("Video Mode\n");
-		camHeight = vidPlayer.height;
-		camWidth = vidPlayer.width;
+		camera.camHeight = camera.vidPlayer.height;
+		camera.camWidth = camera.vidPlayer.width;
 	}
 
 	/*****************************************************************************************************
 	 * Allocate images (needed for drawing/processing images) ----Most of These won't be needed in the end
 	 ******************************************************************************************************/
-	processedImg.allocate(camWidth, camHeight); //main Image that'll be processed.
+	processedImg.allocate(camera.camWidth, camera.camHeight); //main Image that'll be processed.
 	processedImg.setUseTexture(false);
-	sourceImg.allocate(camWidth, camHeight);    //Source Image
-	sourceImg.setUseTexture(false);				//We don't need to draw this so don't create a texture
+	camera.sourceImg.allocate(camera.camWidth, camera.camHeight);    //Source Image
+	camera.sourceImg.setUseTexture(false);				//We don't need to draw this so don't create a texture
 
 	//These images are used for drawing only
-	grayImg.allocate(camWidth, camHeight);		//Gray Image
-	grayBg.allocate(camWidth, camHeight);		//Background Image
-	subtractBg.allocate(camWidth, camHeight);   //Background After subtraction
-	grayDiff.allocate(camWidth, camHeight);		//Difference Image between Background and Source
-	highpassImg.allocate(camWidth, camHeight);  //Highpass Image
-	ampImg.allocate(camWidth, camHeight);		//Amplied Image
-	fiLearn.allocate(camWidth, camHeight);		//ofxFloatImage used for simple dynamic background subtracti
+	grayImg.allocate(camera.camWidth, camera.camHeight);		//Gray Image
+	grayBg.allocate(camera.camWidth, camera.camHeight);		//Background Image
+	subtractBg.allocate(camera.camWidth, camera.camHeight);   //Background After subtraction
+	grayDiff.allocate(camera.camWidth, camera.camHeight);		//Difference Image between Background and Source
+	highpassImg.allocate(camera.camWidth, camera.camHeight);  //Highpass Image
+	ampImg.allocate(camera.camWidth, camera.camHeight);		//Amplied Image
+	fiLearn.allocate(camera.camWidth, camera.camHeight);		//ofxFloatImage used for simple dynamic background subtracti
 	//	fiLearn.setUseTexture(false);
-	pressureMap.allocate(camWidth, camHeight);	//Pressure Map Image
+	pressureMap.allocate(camera.camWidth, camera.camHeight);	//Pressure Map Image
 
 	/********************************************************************************************************/
 
@@ -650,27 +610,27 @@ void TBetaBase::setup()
 	//initialize texture once with glTexImage2D so we can use gltexSubImage2D afetrwards (fastser)
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, gpuSourceTex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camera.camWidth, camera.camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glBindTexture(GL_TEXTURE_2D, gpuBGTex);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camera.camWidth, camera.camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
 
-	grabFrameToGPU(gpuBGTex);
+	camera.grabFrameToGPU(gpuBGTex);
 
 	//so very inefficient..but only for now..until i fix the gpu blob detection and geoemtry shader for variable length output
-	gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
-	gpuReadBackImage.allocate(camWidth, camHeight);
-	gpuReadBackImageGS.allocate(camWidth, camHeight);
+	gpuReadBackBuffer = new unsigned char[camera.camWidth*camera.camHeight*3];
+	gpuReadBackImage.allocate(camera.camWidth, camera.camHeight);
+	gpuReadBackImageGS.allocate(camera.camWidth, camera.camHeight);
 
-	subtractFilter = new ImageFilter("filters/absSubtract.xml", camWidth, camHeight);
-	subtractFilter2 = new ImageFilter("filters/subtract.xml", camWidth, camHeight);
-	contrastFilter = new ImageFilter("filters/contrast.xml", camWidth, camHeight);
-	gaussVFilter = new ImageFilter("filters/gaussV.xml", camWidth, camHeight);
-	gaussHFilter = new ImageFilter("filters/gauss.xml", camWidth, camHeight);
-	gaussVFilter2 = new ImageFilter("filters/gaussV2.xml", camWidth, camHeight);
-	gaussHFilter2 = new ImageFilter("filters/gauss2.xml", camWidth, camHeight);
-	threshFilter = new ImageFilter("filters/threshold.xml", camWidth, camHeight);
+	subtractFilter = new ImageFilter("filters/absSubtract.xml", camera.camWidth, camera.camHeight);
+	subtractFilter2 = new ImageFilter("filters/subtract.xml", camera.camWidth, camera.camHeight);
+	contrastFilter = new ImageFilter("filters/contrast.xml", camera.camWidth, camera.camHeight);
+	gaussVFilter = new ImageFilter("filters/gaussV.xml", camera.camWidth, camera.camHeight);
+	gaussHFilter = new ImageFilter("filters/gauss.xml", camera.camWidth, camera.camHeight);
+	gaussVFilter2 = new ImageFilter("filters/gaussV2.xml", camera.camWidth, camera.camHeight);
+	gaussHFilter2 = new ImageFilter("filters/gauss2.xml", camera.camWidth, camera.camHeight);
+	threshFilter = new ImageFilter("filters/threshold.xml", camera.camWidth, camera.camHeight);
 
 	/**********************************************************/
 
@@ -687,7 +647,7 @@ void TBetaBase::setup()
 
 
 
-    calib.setup(camWidth, camHeight, &tracker);
+    calib.setup(camera.camWidth, camera.camHeight, &tracker);
 
 
 	printf("Tbeta pplication is setup!\n\n");
@@ -703,13 +663,13 @@ void TBetaBase::update()
 
 	if(activeInput){
 
-		if(bcamera){
-			vidGrabber.grabFrame();
-			bNewFrame = vidGrabber.isFrameNew();
+		if(camera.bcamera){
+			camera.vidGrabber.grabFrame();
+			bNewFrame = camera.vidGrabber.isFrameNew();
 		}
 		else{
-			vidPlayer.idleMovie();
-			bNewFrame = vidPlayer.isFrameNew();
+			camera.vidPlayer.idleMovie();
+			bNewFrame = camera.vidPlayer.isFrameNew();
 		}
 
 		if (bNewFrame)
@@ -728,14 +688,14 @@ void TBetaBase::update()
 
 			float beforeTime = ofGetElapsedTimeMillis();
 			if(bGPUMode){
-				grabFrameToGPU(gpuSourceTex);
+				camera.grabFrameToGPU(gpuSourceTex);
 				applyGPUImageFilters();
-				contourFinder.findContours(gpuReadBackImageGS, 1, (camWidth*camHeight)/25, maxBlobs, false);
+				contourFinder.findContours(gpuReadBackImageGS, 1, (camera.camWidth*camera.camHeight)/25, maxBlobs, false);
 			}
 			else{
-				grabFrameToCPU();
+				camera.grabFrameToCPU();
 				applyImageFilters();
-				contourFinder.findContours(processedImg, 1, (camWidth*camHeight)/25, maxBlobs, false);
+				contourFinder.findContours(processedImg, 1, (camera.camWidth*camera.camHeight)/25, maxBlobs, false);
 			}
 
 			//Track found contours/blobss
@@ -775,6 +735,15 @@ void TBetaBase::draw(){
 
         if(!bCalibration)
         gui->draw();
+		
+		ofSetColor(180, 220, 180, 180);
+		ofFill();
+		ofRect(ofGetWidth() - 200,ofGetHeight() - 14, 200, 14);
+		
+		ofSetColor(0x000000);
+		ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 200, ofGetHeight() - 2);
+		
+		
     }
 }
 
@@ -783,79 +752,80 @@ void TBetaBase::draw(){
  *****************************************************************************/
 void TBetaBase::keyPressed(int key) {
 	if(showConfiguration) {
-	switch(key)
-	{
-		case 'b':
-			bLearnBakground = true;
-			break;
-		case 'o':
-			bDrawOutlines ? bDrawOutlines = false : bDrawOutlines = true;
-			gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
-			break;
-		case 'h':
-			bHorizontalMirror ? bHorizontalMirror = false : bHorizontalMirror = true;
-			gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->bHorizontalMirror, sizeof(bool));
-			break;
-		case 'j':
-			bVerticalMirror ? bVerticalMirror = false : bVerticalMirror = true;
-			gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->bVerticalMirror, sizeof(bool));
-			break;
-		case 't':
-			if(!bCalibration && bTUIOMode)
-			{
-				bTUIOMode = false;
-				myTUIO.blobs.clear();
-				gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
-			}
-			else
-			{
-				bTUIOMode = true;
-				gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
-			}
-			break;
-		case 'g':
-			bGPUMode ? bGPUMode = false : bGPUMode = true;
-			gui->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
-			bLearnBakground = true;
-			break;
-		case 'v':
-			if(bcamera)
-				vidGrabber.videoSettings();
-			break;
-		case 'l':
-			bShowLabels ? bShowLabels = false : bShowLabels = true;
-			gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
-			break;
-		case 'p':
-			bShowPressure ? bShowPressure = false : bShowPressure = true;
-			break;
-		case ' ':
-			if(bFastMode)
-			{
-				bFastMode = false;
-				ofSetWindowShape(950,600); //default size
-				//ofSetWindowTitle("Configuration");
-			}
-			else
-			{
-				bFastMode = true;
-				ofSetWindowShape(190,155); //minimized size
-				//ofSetWindowTitle("Mini");
-			}
-			break;
-			 /***********************
-			 * Keys for Calibration
-			 ***********************/
-		case 'x': //Begin Calibrating
-			if(bCalibration){
-				bCalibration = false;
-				calib.calibrating = false;
-				if(bFullscreen == true) ofToggleFullscreen(); bFullscreen = false; ofSetBackgroundAuto(false);
-			}
-			break;
+		switch(key)
+		{
+			case 'b':
+				bLearnBakground = true;
+				break;
+			case 'o':
+				bDrawOutlines ? bDrawOutlines = false : bDrawOutlines = true;
+				gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
+				break;
+			case 'h':
+				bHorizontalMirror ? bHorizontalMirror = false : bHorizontalMirror = true;
+				gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->bHorizontalMirror, sizeof(bool));
+				break;
+			case 'j':
+				bVerticalMirror ? bVerticalMirror = false : bVerticalMirror = true;
+				gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->bVerticalMirror, sizeof(bool));
+				break;
+			case 't':
+				if(!bCalibration && bTUIOMode)
+				{
+					bTUIOMode = false;
+					myTUIO.blobs.clear();
+					gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
+				}
+				else
+				{
+					bTUIOMode = true;
+					gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
+				}
+				break;
+			case 'g':
+				bGPUMode ? bGPUMode = false : bGPUMode = true;
+				gui->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
+				bLearnBakground = true;
+				break;
+			case 'v':
+				if(camera.bcamera)
+					camera.vidGrabber.videoSettings();
+				break;
+			case 'l':
+				bShowLabels ? bShowLabels = false : bShowLabels = true;
+				gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
+				break;
+			case 'p':
+				bShowPressure ? bShowPressure = false : bShowPressure = true;
+				break;
+			case ' ':
+				if(bFastMode)
+				{
+					bFastMode = false;
+					ofSetWindowShape(950,600); //default size
+					//ofSetWindowTitle("Configuration");
+				}
+				else
+				{
+					bFastMode = true;
+					ofSetWindowShape(190,155); //minimized size
+					//ofSetWindowTitle("Mini");
+				}
+				break;
+				/***********************
+				 * Keys for Calibration
+				 ***********************/
+			case 'x': //Begin Calibrating
+				if(bCalibration){
+					bCalibration = false;
+					calib.calibrating = false;
+					if(bFullscreen == true) ofToggleFullscreen(); bFullscreen = false; ofSetBackgroundAuto(false);
+				}
+				break;
         }
     }
 }
+
 
 void TBetaBase::keyReleased(int key){
 
@@ -888,8 +858,10 @@ void TBetaBase::mouseDragged(int x, int y, int button)
 
 void TBetaBase::mousePressed(int x, int y, int button)
 {
-    if(showConfiguration)
-	gui->mousePressed(x, y, button); //guilistener
+    if(showConfiguration) {
+		gui->mousePressed(x, y, button); //guilistener
+		if(x > ofGetWidth() - 200 && y > ofGetHeight() - 14) ofLaunchBrowser("http://tbeta.nuigroup.com/");	
+	}
 }
 
 void TBetaBase::mouseReleased()

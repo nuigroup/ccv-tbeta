@@ -17,8 +17,6 @@
 //RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
 #endif
 
-
-
 #include "TouchMessenger.h"
 
 //Used for tracking algo
@@ -42,6 +40,7 @@
 #include "ofxGui/ofxGui.h"
 #include "ofxGui/ofxGuiTypes.h"
 
+#include "Camera/Camera.h"
 
 #include "TBetaBase.h"
 

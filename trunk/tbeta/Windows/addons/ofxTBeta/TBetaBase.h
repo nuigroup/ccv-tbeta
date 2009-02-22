@@ -25,9 +25,37 @@
 
 #include "Filters/CPUImageFilter.h"
 
+#include "Camera/Camera.h"
+
 #include "Calibration/Calibration.h"
 
 //#include "ConfigurationApp.h"
+
+class Camera
+	{
+	public:
+		
+		Camera();
+		~Camera();
+		
+		void grabFrameToCPU();
+		void grabFrameToGPU(GLuint target);
+		
+		int					deviceID;
+		int 				camRate;
+		int 				camWidth;
+		int 				camHeight;
+		
+		bool				bcamera;
+		
+		ofxCvColorImage		sourceImg;
+		
+		/***************************************************************
+		 *						Video Settings
+		 ***************************************************************/
+		ofVideoGrabber 		vidGrabber;
+		ofVideoPlayer 		vidPlayer;
+	};	
 
 class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
 	{
@@ -90,6 +118,8 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 			TouchEvents.addListener(this);
 			showConfiguration = false;
 		}
+		
+		Camera camera;
 
 		/****************************************************************
 		 *						Public functions
@@ -121,10 +151,10 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		void TouchUp( ofxTBetaCvBlob b );
 
 		//image processing stuff
-		void grabFrameToCPU();
+		//void grabFrameToCPU(); //moved to Camera.h
 		void applyImageFilters();
 
-		void grabFrameToGPU(GLuint target);
+		//void grabFrameToGPU(GLuint target); //moved to Camera.h
 		void applyGPUImageFilters();
 		void resetGPUTextures();
 
@@ -140,26 +170,30 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		//Other Methods
 		void loadXMLSettings();								  // Load Settings
 		void saveConfiguration();
-
-		/***************************************************************
-		 *						Video Settings
-		 ***************************************************************/
-		ofVideoGrabber 		vidGrabber;
-		ofVideoPlayer 		vidPlayer;
+		
+		
+		
+		
+		/****************************************************************
+		 *							Video Crap
+		 *****************************************************************/
+		//ofVideoPlayer 		vidPlayer; //this and grabber are in Camera.h
+		
+		
 
 		/****************************************************************
 		 *            Variables in config.xml Settings file
 		 *****************************************************************/
 
-	    int					deviceID;
+	    //int					deviceID; //moved to Camera.h
 		int 				frameseq;
 		int 				threshold;
 		int 				blurValue;
 		int 				blurGaussianValue;
 		int					wobbleThreshold;
-		int 				camRate;
-		int 				camWidth;
-		int 				camHeight;
+		//int 				camRate;   //moved
+		//int 				camWidth;  //to
+		//int 				camHeight; //Camera.h
 		int					winWidth;
 		int					winHeight;
 		int					minWidth;
@@ -171,7 +205,7 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 
 		bool				showConfiguration;
 
-		bool				bcamera;
+		//bool				bcamera; //moved to Camera.h
 		bool				bDrawVideo;
 		bool  				bFastMode;
 		bool				bShowInterface;
@@ -243,7 +277,7 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		//---------------------------------------Images
  		CPUImageFilter      processedImg;
 
-		ofxCvColorImage		sourceImg;
+		//ofxCvColorImage		sourceImg; //moved to Camera.h
         ofxCvGrayscaleImage grayImg;
 		ofxCvGrayscaleImage grayBg;
 		ofxCvGrayscaleImage subtractBg;
