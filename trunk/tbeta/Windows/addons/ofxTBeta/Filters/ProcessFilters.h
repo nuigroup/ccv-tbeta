@@ -42,7 +42,6 @@ class ProcessFilters : public Filters {
         delete gpuReadBackBuffer;
 
         gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
-        gpuReadBackImage.allocate(camWidth, camHeight);
         gpuReadBackImageGS.allocate(camWidth, camHeight);
 
         glEnable(GL_TEXTURE_2D);
@@ -62,6 +61,7 @@ class ProcessFilters : public Filters {
         gaussHFilter2 = new GPUImageFilter("filters/gauss2.xml", camWidth, camHeight);
         threshFilter = new GPUImageFilter("filters/threshold.xml", camWidth, camHeight);
         copyFilter = new GPUImageFilter("filters/copy.xml", camWidth, camHeight);
+        grayScale = new GPUImageFilter("filters/grayScale.xml", camWidth, camHeight);
     }
 
 /****************************************************************
@@ -152,20 +152,26 @@ class ProcessFilters : public Filters {
             gaussVFilter2->parameters["kernel_size"]->value = (float)highpassBlur;
             processedTex = gaussHFilter2->apply(processedTex);
             processedTex = gaussVFilter2->apply(processedTex);
-            processedTex = subtractFilter2->apply(gaussVFilter->output_texture, processedTex);
+
+            if(bSmooth)
+                processedTex = subtractFilter2->apply(gaussVFilter->output_texture, processedTex);
+            else
+                processedTex = subtractFilter2->apply(subtractFilter->output_texture, processedTex);
         }
 
         if(bAmplify){}//amplify
 
         threshFilter->parameters["Threshold"]->value = (float)threshold / 255.0; //threshold
-        threshFilter->apply(processedTex);
+        processedTex = threshFilter->apply(processedTex);
+
+        //convert to grayscale so readback is faster. maybe do this from the start?
+        grayScale->apply(processedTex);
 
         //until the rest of the pipeline is fixed well just download the preprocessing result from the gpu and use that for the blob detection
         //TODO: make this part not super slow ;)
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, threshFilter->output_buffer);
-        glReadPixels(0,0,camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, gpuReadBackBuffer);
-        gpuReadBackImage.setFromPixels(gpuReadBackBuffer, camWidth, camHeight);
-        gpuReadBackImageGS = gpuReadBackImage;
+        glReadPixels(0,0,camWidth, camHeight, GL_LUMINANCE, GL_UNSIGNED_BYTE, gpuReadBackBuffer);
+        gpuReadBackImageGS.setFromPixels(gpuReadBackBuffer, camWidth, camHeight);
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
     }
 
@@ -191,7 +197,7 @@ class ProcessFilters : public Filters {
         drawGLTexture(85, 392, 128, 96, gpuBGTex);
         gaussVFilter->drawOutputTexture(235, 392, 128, 96);
         subtractFilter2->drawOutputTexture(385, 392, 128, 96);
-        threshFilter->drawOutputTexture(535, 392, 128, 96);
+        threshFilter->drawOutputTexture(535, 392, 128, 96); //this should be amplify filter but we don't have one yet
         gpuReadBackImageGS.draw(385, 30, 320, 240);
     }
 };

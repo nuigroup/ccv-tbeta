@@ -58,7 +58,6 @@ class Filters {
     GLuint			gpuBGTex;
     GLuint	gpuSourceTex;
     unsigned char * gpuReadBackBuffer;
-    ofxCvColorImage gpuReadBackImage;
     ofxCvGrayscaleImage gpuReadBackImageGS;
     GPUImageFilter*	contrastFilter;
     GPUImageFilter*	subtractFilter;
@@ -69,6 +68,7 @@ class Filters {
     GPUImageFilter*	gaussHFilter2;
     GPUImageFilter*	threshFilter;
     GPUImageFilter*	copyFilter;
+    GPUImageFilter*	grayScale;
 
     virtual void allocate( int w, int h ) = 0;
     virtual void applyCPUFilters(CPUImageFilter& img) = 0;
