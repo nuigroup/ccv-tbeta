@@ -9,8 +9,6 @@ void TBetaBase ::setupGUI()
 {
 	appPtr = this;
 
-	//if(!gui->buildFromXml(OFXGUI_XML))
-	//{
 		//panel border color
 		gui->mGlobals->mBorderColor.r = 0;
 		gui->mGlobals->mBorderColor.g = 0;
@@ -46,9 +44,6 @@ void TBetaBase ::setupGUI()
 		gui->mGlobals->mSliderColor.b = 0;
 		gui->mGlobals->mSliderColor.a = .8;
 
-
-
-
 		ofxGuiPanel* propPanel = gui->addPanel(appPtr->propertiesPanel, "Source Properties", 735, 10, 12, OFXGUI_PANEL_SPACING);
 		propPanel->addButton(appPtr->propertiesPanel_settings, "Camera Settings (v)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 		propPanel->addButton(appPtr->propertiesPanel_flipV, "Flip Vertical (j)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
@@ -68,7 +63,6 @@ void TBetaBase ::setupGUI()
 		cPanel->mObjWidth = 200;
 
 		ofxGuiPanel* panel2 = gui->addPanel(appPtr->savePanel, "files", 735, 303, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
-		//savePanel->addFiles(kParameter_File, "files", 110, OFXGUI_FILES_HEIGHT, "", "", "xml");
 		panel2->addButton(appPtr->kParameter_SaveXml, "Save Settings (s)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 		panel2->mObjWidth = 200;
 
@@ -76,7 +70,7 @@ void TBetaBase ::setupGUI()
 		ofxGuiPanel* trackPanel = gui->addPanel(appPtr->trackedPanel, "Tracked Image", 386, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 		trackPanel->addButton(appPtr->trackedPanel_outlines, "Show Outlines (o)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		trackPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
-		trackPanel->addSlider(appPtr->trackedPanel_threshold, "Threshold (a/z)", 300, 13, 0.0f, 255.0f, threshold, kofxGui_Display_Int, 0);
+		trackPanel->addSlider(appPtr->trackedPanel_threshold, "Threshold (a/z)", 300, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
 		trackPanel->mObjHeight = 85;
 		trackPanel->mObjWidth = 319;
 		trackPanel->mObjects[1]->mObjX = 130;
@@ -108,7 +102,7 @@ void TBetaBase ::setupGUI()
 		//Smooth Image
 		ofxGuiPanel* sPanel = gui->addPanel(appPtr->smoothPanel, "Smooth", 236, 487, 10, 7);
 		sPanel->addButton(smoothPanel_use, "", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch, "");
-		sPanel->addSlider(smoothPanel_smooth, "Smooth", 110, 13, 0.0f, 15.0f, smooth, kofxGui_Display_Int, 0);
+		sPanel->addSlider(smoothPanel_smooth, "Smooth", 110, 13, 0.0f, 15.0f, filter->smooth, kofxGui_Display_Int, 0);
 		sPanel->mObjects[0]->mObjX = 105;
 		sPanel->mObjects[0]->mObjY = 10;
 		sPanel->mObjects[1]->mObjY = 30;
@@ -118,8 +112,8 @@ void TBetaBase ::setupGUI()
 		//Highpass Image
 		ofxGuiPanel* hpPanel = gui->addPanel(appPtr->highpassPanel, "Highpass", 386, 487, OFXGUI_PANEL_BORDER, 7);
 		hpPanel->addButton(highpassPanel_use, "", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch, "");
-		hpPanel->addSlider(highpassPanel_blur, "Blur", 110, 13, 0.0f, 200.0f, highpassBlur, kofxGui_Display_Int, 0);
-		hpPanel->addSlider(highpassPanel_noise, "Noise", 110, 13, 0.0f, 30.0f, highpassNoise, kofxGui_Display_Int, 0);
+		hpPanel->addSlider(highpassPanel_blur, "Blur", 110, 13, 0.0f, 200.0f, filter->highpassBlur, kofxGui_Display_Int, 0);
+		hpPanel->addSlider(highpassPanel_noise, "Noise", 110, 13, 0.0f, 30.0f, filter->highpassNoise, kofxGui_Display_Int, 0);
 		hpPanel->mObjects[0]->mObjX = 105;
 		hpPanel->mObjects[0]->mObjY = 10;
 		hpPanel->mObjects[1]->mObjY = 30;
@@ -127,11 +121,10 @@ void TBetaBase ::setupGUI()
 		hpPanel->mObjWidth = 127;
 		hpPanel->mObjHeight = 95;
 
-
 		//Amplify Image
 		ofxGuiPanel* ampPanel = gui->addPanel(appPtr->amplifyPanel, "Amplify", 536, 487, OFXGUI_PANEL_BORDER, 7);
 		ampPanel->addButton(amplifyPanel_use, "", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch, "");
-		ampPanel->addSlider(amplifyPanel_amp, "Amplify", 110, 13, 0.0f, 300.0f, highpassAmp, kofxGui_Display_Int, 0);
+		ampPanel->addSlider(amplifyPanel_amp, "Amplify", 110, 13, 0.0f, 300.0f, filter->highpassAmp, kofxGui_Display_Int, 0);
 		ampPanel->mObjects[0]->mObjX = 105;
 		ampPanel->mObjects[0]->mObjY = 10;
 		ampPanel->mObjects[1]->mObjY = 30;
@@ -141,7 +134,7 @@ void TBetaBase ::setupGUI()
 		//do update while inactive
 		gui->forceUpdate(false);
 		gui->activate(true);
-	//}
+
 		/****************************
 		* Set GUI values on startup
 		****************************/
@@ -150,27 +143,27 @@ void TBetaBase ::setupGUI()
 		gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
 		gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
 		//Source
-		gui->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->camera.bcamera, sizeof(bool));
-		if(!camera.bcamera){
+		gui->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->bcamera, sizeof(bool));
+		if(!bcamera){
 		bool bvideo = true;
 		gui->update(appPtr->sourcePanel_video, kofxGui_Set_Bool, &bvideo, sizeof(bool));
 		}
 		//Calibration
 		gui->update(appPtr->calibrationPanel_calibrate, kofxGui_Set_Bool, &appPtr->bCalibration, sizeof(bool));
 		//Dynamic Background
-		gui->update(appPtr->backgroundPanel_dynamic, kofxGui_Set_Bool, &appPtr->bDynamicBG, sizeof(bool));
+		gui->update(appPtr->backgroundPanel_dynamic, kofxGui_Set_Bool, &appPtr->filter->bDynamicBG, sizeof(bool));
 		//Smooth
-		gui->update(appPtr->smoothPanel_use, kofxGui_Set_Bool, &appPtr->bSmooth, sizeof(bool));
-		gui->update(appPtr->smoothPanel_smooth, kofxGui_Set_Bool, &appPtr->smooth, sizeof(float));
+		gui->update(appPtr->smoothPanel_use, kofxGui_Set_Bool, &appPtr->filter->bSmooth, sizeof(bool));
+		gui->update(appPtr->smoothPanel_smooth, kofxGui_Set_Bool, &appPtr->filter->smooth, sizeof(float));
 		//Highpass
-		gui->update(appPtr->highpassPanel_use, kofxGui_Set_Bool, &appPtr->bHighpass, sizeof(bool));
-		gui->update(appPtr->highpassPanel_blur, kofxGui_Set_Bool, &appPtr->highpassBlur, sizeof(float));
-		gui->update(appPtr->highpassPanel_noise, kofxGui_Set_Bool, &appPtr->highpassNoise, sizeof(float));
+		gui->update(appPtr->highpassPanel_use, kofxGui_Set_Bool, &appPtr->filter->bHighpass, sizeof(bool));
+		gui->update(appPtr->highpassPanel_blur, kofxGui_Set_Bool, &appPtr->filter->highpassBlur, sizeof(float));
+		gui->update(appPtr->highpassPanel_noise, kofxGui_Set_Bool, &appPtr->filter->highpassNoise, sizeof(float));
 		//Amplify
-		gui->update(appPtr->amplifyPanel_use, kofxGui_Set_Bool, &appPtr->bAmplify, sizeof(bool));
-		gui->update(appPtr->amplifyPanel_amp, kofxGui_Set_Bool, &appPtr->highpassAmp, sizeof(float));
+		gui->update(appPtr->amplifyPanel_use, kofxGui_Set_Bool, &appPtr->filter->bAmplify, sizeof(bool));
+		gui->update(appPtr->amplifyPanel_amp, kofxGui_Set_Bool, &appPtr->filter->highpassAmp, sizeof(float));
 		//Threshold
-		gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->threshold, sizeof(float));
+		gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
 		//Send TUIO
 		gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
 		//GPU Mode
@@ -188,37 +181,25 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 				{
 					if(*(bool*)data)
 					{
-						if(!camera.bcamera){
+						if(!bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
-							camera.bcamera = true;
-							camera.vidGrabber.close();
-							camera.vidGrabber.setDeviceID(camera.deviceID);
-							camera.vidGrabber.setVerbose(false);
-							camera.camWidth = camera.vidGrabber.width;
-							camera.camHeight = camera.vidGrabber.height;
-							camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
-
-//							calibrate.setCamRes(camera.camHeight, camera.camWidth);
+							bcamera = true;
+							vidGrabber.close();
+							vidGrabber.setDeviceID(deviceID);
+							vidGrabber.setVerbose(false);
+							camWidth = vidGrabber.width;
+							camHeight = vidGrabber.height;
+							vidGrabber.initGrabber(camWidth,camHeight);
+//							calibrate.setCamRes(camHeight, camWidth);
 //							calibrate.computeCameraToScreenMap();
 
 							//reset gpu textures and filters
-							resetGPUTextures();
-
-							processedImg.allocate(camera.camWidth, camera.camHeight); //Processed Image
+							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
-							camera.sourceImg.allocate(camera.camWidth, camera.camHeight);    //Source Image
-							camera.sourceImg.setUseTexture(false);
-							grayImg.allocate(camera.camWidth, camera.camHeight);		//Gray Image
-							grayBg.allocate(camera.camWidth, camera.camHeight);		//Background Image
-							subtractBg.allocate(camera.camWidth, camera.camHeight);   //Background After subtraction
-							grayDiff.allocate(camera.camWidth, camera.camHeight);		//Difference Image between Background and Source
-							highpassImg.allocate(camera.camWidth, camera.camHeight);  //Highpass Image
-							ampImg.allocate(camera.camWidth, camera.camHeight);		//Amplify Image
-							fiLearn.allocate(camera.camWidth, camera.camHeight);		//ofxFloatImage used for simple dynamic background subtracti
-							pressureMap.allocate(camera.camWidth, camera.camHeight);	//Pressure Map Image
-
+							sourceImg.allocate(camWidth, camHeight);    //Source Image
+							sourceImg.setUseTexture(false);
+							filter->allocate(camWidth, camHeight);
 							activeInput = true;		//set to active again
-							bLearnBakground = true; //recapture background
 							//Turn off the video button;
 							bool setBool = false;
 							gui->update(sourcePanel_video, kofxGui_Set_Bool, &setBool, length);
@@ -231,36 +212,24 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 				{
 					if(*(bool*)data)
 					{
-						if(camera.bcamera){
+						if(bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
-							camera.bcamera = false;
-							camera.vidPlayer.loadMovie("test_videos/" + videoFileName);
-							camera.vidPlayer.play();
+							bcamera = false;
+							vidPlayer.loadMovie("test_videos/" + videoFileName);
+							vidPlayer.play();
 							printf("Video Mode\n");
-							camera.camHeight = camera.vidPlayer.height;
-							camera.camWidth = camera.vidPlayer.width;
-
-//							calibrate.setCamRes(camera.camHeight, camera.camWidth);
+							camHeight = vidPlayer.height;
+							camWidth = vidPlayer.width;
+//							calibrate.setCamRes(camHeight, camWidth);
 //							calibrate.computeCameraToScreenMap();
 
 							//reset gpu textures and filters
-							resetGPUTextures();
-
-							processedImg.allocate(camera.camWidth, camera.camHeight); //Processed Image
+							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
-							camera.sourceImg.allocate(camera.camWidth, camera.camHeight);    //Source Image
-							camera.sourceImg.setUseTexture(false);
-							grayImg.allocate(camera.camWidth, camera.camHeight);		//Gray Image
-							grayBg.allocate(camera.camWidth, camera.camHeight);		//Background Image
-							subtractBg.allocate(camera.camWidth, camera.camHeight);   //Background After subtraction
-							grayDiff.allocate(camera.camWidth, camera.camHeight);		//Difference Image between Background and Source
-							highpassImg.allocate(camera.camWidth, camera.camHeight);  //Highpass Image
-							ampImg.allocate(camera.camWidth, camera.camHeight);		//Amplify Image
-							fiLearn.allocate(camera.camWidth, camera.camHeight);		//ofxFloatImage used for simple dynamic background subtracti
-							pressureMap.allocate(camera.camWidth, camera.camHeight);	//Pressure Map Image
-
+							sourceImg.allocate(camWidth, camHeight);    //Source Image
+							sourceImg.setUseTexture(false);
+							filter->allocate(camWidth, camHeight);
 							activeInput = true;
-							bLearnBakground = true;
 							//Turn off the camera button;
 							bool setBool = false;
 							gui->update(sourcePanel_cam, kofxGui_Set_Bool, &setBool, length);
@@ -268,7 +237,6 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 					}
 				}
 				break;
-
 			case sourcePanel_nextCam:
 				if(length == sizeof(bool))
 				{
@@ -276,14 +244,14 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 					{
 						activeInput = false; //this stops the app from doing everything when changing source
 
-						camera.deviceID += 1;
-						if(camera.deviceID >= camera.vidGrabber.getDeviceCount()) {camera.deviceID = camera.vidGrabber.getDeviceCount();}
+						deviceID += 1;
+						if(deviceID >= vidGrabber.getDeviceCount()) {deviceID = vidGrabber.getDeviceCount();}
 						else{
-							camera.vidGrabber.close();
-							camera.vidGrabber.setDeviceID(camera.deviceID);
-							camera.vidGrabber.setVerbose(true);
-							camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
-							bLearnBakground = true;
+							vidGrabber.close();
+							vidGrabber.setDeviceID(deviceID);
+							vidGrabber.setVerbose(true);
+							vidGrabber.initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
 						}
 						activeInput = true;
 					}
@@ -296,26 +264,25 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 					{
 						activeInput = false; //this stops the app from doing everything when changing source
 
-						camera.deviceID -= 1;
-						if(camera.deviceID < 0) camera.deviceID = 0;
+						deviceID -= 1;
+						if(deviceID < 0) deviceID = 0;
 						else{
-							camera.vidGrabber.close();
-							camera.vidGrabber.setDeviceID(camera.deviceID);
-							camera.vidGrabber.setVerbose(true);
-							camera.vidGrabber.initGrabber(camera.camWidth,camera.camHeight);
-							bLearnBakground = true;
+							vidGrabber.close();
+							vidGrabber.setDeviceID(deviceID);
+							vidGrabber.setVerbose(true);
+							vidGrabber.initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
 						}
 						activeInput = true;
 					}
 				}
 				break;
-
 			case propertiesPanel_settings:
 				if(length == sizeof(bool))
 				{
-					if(*(bool*)data && camera.bcamera)
+					if(*(bool*)data && bcamera)
 					{
-						camera.vidGrabber.videoSettings();
+						vidGrabber.videoSettings();
 					}
 				}
 				break;
@@ -347,37 +314,37 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 			//Background
 			case backgroundPanel_dynamic:
 				if(length == sizeof(bool))
-					bDynamicBG = *(bool*)data;
+					filter->bDynamicBG = *(bool*)data;
 				break;
 			case backgroundPanel_remove:
 				if(length == sizeof(bool))
-					bLearnBakground = *(bool*)data;
+					filter->bLearnBakground = *(bool*)data;
 				break;
 			//Highpass
 			case highpassPanel_use:
 				if(length == sizeof(bool))
-					bHighpass = *(bool*)data;
+					filter->bHighpass = *(bool*)data;
 				break;
 			case highpassPanel_blur:
 				if(length == sizeof(float))
-					highpassBlur = *(float*)data;
+					filter->highpassBlur = *(float*)data;
 				break;
 			case highpassPanel_noise:
 				if(length == sizeof(float))
-					highpassNoise = *(float*)data;
+					filter->highpassNoise = *(float*)data;
 				break;
 			//Amplify
 			case amplifyPanel_use:
 				if(length == sizeof(bool))
-					bAmplify = *(bool*)data;
+					filter->bAmplify = *(bool*)data;
 				break;
 			case amplifyPanel_amp:
 				if(length == sizeof(float))
-					highpassAmp = *(float*)data;
+					filter->highpassAmp = *(float*)data;
 				break;
 			case trackedPanel_threshold:
 				if(length == sizeof(float))
-					threshold = *(float*)data;
+					filter->threshold = *(float*)data;
 				break;
 			case trackedPanel_outlines:
 				if(length == sizeof(bool))
@@ -390,11 +357,11 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 			//smooth
 			case smoothPanel_smooth:
 				if(length == sizeof(float))
-					smooth = *(float*)data;
+					filter->smooth = *(float*)data;
 				break;
 			case smoothPanel_use:
 				if(length == sizeof(bool))
-					bSmooth = *(bool*)data;
+					filter->bSmooth = *(bool*)data;
 				break;
 			//Save Settings
 			case kParameter_SaveXml:
@@ -407,22 +374,8 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 					}
 				}
 				break;
-			case kParameter_File:
-				if(length == sizeof(string))
-				{
-					string file = *(string*)data;
-					gui->buildFromXml(file);
-				}
-				break;
-
 		}
 	}
-
 }
-
-
-
-
-
 #endif //__GUI_DEFINITION
 

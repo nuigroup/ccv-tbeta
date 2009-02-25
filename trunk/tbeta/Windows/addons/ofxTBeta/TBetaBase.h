@@ -25,37 +25,11 @@
 
 #include "Filters/CPUImageFilter.h"
 
-#include "Camera/Camera.h"
-
 #include "Calibration/Calibration.h"
 
 //#include "ConfigurationApp.h"
 
-class Camera
-	{
-	public:
-		
-		Camera();
-		~Camera();
-		
-		void grabFrameToCPU();
-		void grabFrameToGPU(GLuint target);
-		
-		int					deviceID;
-		int 				camRate;
-		int 				camWidth;
-		int 				camHeight;
-		
-		bool				bcamera;
-		
-		ofxCvColorImage		sourceImg;
-		
-		/***************************************************************
-		 *						Video Settings
-		 ***************************************************************/
-		ofVideoGrabber 		vidGrabber;
-		ofVideoPlayer 		vidPlayer;
-	};	
+#include "ofxTouchAdaptiveFilter.h"
 
 class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
 	{
@@ -118,13 +92,10 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 			TouchEvents.addListener(this);
 			showConfiguration = false;
 		}
-		
-		Camera camera;
 
 		/****************************************************************
 		 *						Public functions
 		 ****************************************************************/
-
 		//Basic Methods
 		void setup();
 		void update();
@@ -151,18 +122,8 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		void TouchUp( ofxTBetaCvBlob b );
 
 		//image processing stuff
-		//void grabFrameToCPU(); //moved to Camera.h
-		void applyImageFilters();
-
-		//void grabFrameToGPU(GLuint target); //moved to Camera.h
-		void applyGPUImageFilters();
-		void resetGPUTextures();
-
-		void bgCapture(ofxCvGrayscaleImage & _giLive);        //Background Capture
-	    void learnBackground( ofxCvGrayscaleImage & _giLive,  //Background Learn (bgCapture and dynamic Bg subtraction
-							 ofxCvGrayscaleImage & _grayBg,
-							 ofxCvFloatImage & _fiLearn,
-							 float _fLearnRate );
+		void grabFrameToCPU();
+		void grabFrameToGPU(GLuint target);
 
 		void drawToScreen();
 		void drawFingerOutlines();
@@ -170,48 +131,35 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		//Other Methods
 		void loadXMLSettings();								  // Load Settings
 		void saveConfiguration();
-		
-		
-		
-		
-		/****************************************************************
-		 *							Video Crap
-		 *****************************************************************/
-		//ofVideoPlayer 		vidPlayer; //this and grabber are in Camera.h
-		
-		
+
+		/***************************************************************
+		 *						Video Settings
+		 ***************************************************************/
+		ofVideoGrabber 		vidGrabber;
+		ofVideoPlayer 		vidPlayer;
 
 		/****************************************************************
 		 *            Variables in config.xml Settings file
 		 *****************************************************************/
-
-	    //int					deviceID; //moved to Camera.h
+	    int					deviceID;
 		int 				frameseq;
 		int 				threshold;
-		int 				blurValue;
-		int 				blurGaussianValue;
 		int					wobbleThreshold;
-		//int 				camRate;   //moved
-		//int 				camWidth;  //to
-		//int 				camHeight; //Camera.h
+		int 				camRate;
+		int 				camWidth;
+		int 				camHeight;
 		int					winWidth;
 		int					winHeight;
 		int					minWidth;
 		int					minHeight;
-		int					highpassBlur;
-		int					highpassNoise;
-		int					highpassAmp;
-		int					smooth;
 
 		bool				showConfiguration;
 
-		//bool				bcamera; //moved to Camera.h
+		bool				bcamera;
 		bool				bDrawVideo;
 		bool  				bFastMode;
 		bool				bShowInterface;
 		bool				bShowPressure;
-		bool				bLearnBakground;
-		bool				bInvertVideo;
 		bool				bDrawOutlines;
 		bool				bTUIOMode;
 		bool  				bFullscreen;
@@ -220,25 +168,15 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		bool				bHorizontalMirror;
 		bool				bShowLabels;
 		bool				bNewFrame;
-
 		//filters
-		bool				bHighpass;
-		bool				bAmplify;
-		bool				bThreshold;
-		bool				bSmooth;
-		bool				bDynamicBG;
 		bool				bAutoBackground;
-
 		//modes
 		bool				bGPUMode;
 
 		/****************************************************
 		 *End config.xml variables
 		 *****************************************************/
-
 		bool				activeInput;
-
-		float				fLearnRate;// rate to learn background
 
 		//FPS variables
 		int 					frames;
@@ -261,11 +199,12 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
         string				tmpLocalHost;
         int					tmpPort;
 
+        //---------------------------------------Blob Tracker
+        ofxTouchFilter*  filter;
 
         /****************************************************************
 		 *						Private Stuff
-		 ****************************************************************/
-
+    	 ****************************************************************/
 		string videoFileName;
 		int	maxBlobs;
 
@@ -276,20 +215,7 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 
 		//---------------------------------------Images
  		CPUImageFilter      processedImg;
-
-		//ofxCvColorImage		sourceImg; //moved to Camera.h
-        ofxCvGrayscaleImage grayImg;
-		ofxCvGrayscaleImage grayBg;
-		ofxCvGrayscaleImage subtractBg;
-		ofxCvGrayscaleImage grayDiff;
-		ofxCvGrayscaleImage highpassImg;
-		ofxCvGrayscaleImage ampImg;
-
-		//---------------------------------------Pressure Map
-		ofxCvColorImage		pressureMap;
-
-		//---------------------------------------Background Subtraction
-	    ofxCvFloatImage		fiLearn;
+		ofxCvColorImage		sourceImg;
 
 		//---------------------------------------XML Settings Vars (BLOATED)
 		ofxXmlSettings		XML;
@@ -297,23 +223,6 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 
 		//---------------------------------------FOR NETWORK
 		TUIOOSC				myTUIO;
-
-		//---------------------------------------FOR gpuTracker
-		GLuint			gpuSourceTex;
-		GLuint			gpuBGTex;
-
-		unsigned char * gpuReadBackBuffer;
-		ofxCvColorImage gpuReadBackImage;
-		ofxCvGrayscaleImage gpuReadBackImageGS;
-
-		ImageFilter*	contrastFilter;
-		ImageFilter*	subtractFilter;
-		ImageFilter*	subtractFilter2; //we need 2 because we are showing the output of each
-		ImageFilter*	gaussVFilter;
-		ImageFilter*	gaussVFilter2;
-		ImageFilter*	gaussHFilter;
-		ImageFilter*	gaussHFilter2;
-		ImageFilter*	threshFilter;
 	};
 
 #endif

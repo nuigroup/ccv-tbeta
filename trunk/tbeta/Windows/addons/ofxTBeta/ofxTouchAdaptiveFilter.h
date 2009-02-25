@@ -1,0 +1,189 @@
+/*
+* Copyright 2008 NOR_/D <http://nortd.com>
+*
+* * *
+* The default filter.
+*/
+
+#ifndef OFX_TOUCHADAPTIVEFILTER
+#define OFX_TOUCHADAPTIVEFILTER
+
+#include "ofxTouchFilter.h"
+
+class ofxTouchAdaptiveFilter : public ofxTouchFilter {
+
+  public:
+
+    void allocate( int w, int h ) {
+
+        camWidth = w;
+        camHeight = h;
+
+        exposureStartTime = ofGetElapsedTimeMillis();
+
+        //CPU Setup
+        grayImg.allocate(camWidth, camHeight);		//Gray Image
+        grayBg.allocate(camWidth, camHeight);		//Background Image
+        subtractBg.allocate(camWidth, camHeight);   //Background After subtraction
+        grayDiff.allocate(camWidth, camHeight);		//Difference Image between Background and Source
+        highpassImg.allocate(camWidth, camHeight);  //Highpass Image
+        ampImg.allocate(camWidth, camHeight);		//Amplied Image
+        fiLearn.allocate(camWidth, camHeight);		//ofxFloatImage used for simple dynamic background subtraction
+
+        //GPU Setup
+        allocateGPU();
+    }
+
+    void allocateGPU(){
+
+        glGenTextures(1, &gpuSourceTex);
+        glGenTextures(1, &gpuBGTex);
+
+        delete gpuReadBackBuffer;
+
+        gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
+        gpuReadBackImage.allocate(camWidth, camHeight);
+        gpuReadBackImageGS.allocate(camWidth, camHeight);
+
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, gpuSourceTex);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glBindTexture(GL_TEXTURE_2D, gpuBGTex);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8,  camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+
+        subtractFilter = new ImageFilter("filters/absSubtract.xml", camWidth, camHeight);
+        subtractFilter2 = new ImageFilter("filters/subtract.xml", camWidth, camHeight);
+        contrastFilter = new ImageFilter("filters/contrast.xml", camWidth, camHeight);
+        gaussVFilter = new ImageFilter("filters/gaussV.xml", camWidth, camHeight);
+        gaussHFilter = new ImageFilter("filters/gauss.xml", camWidth, camHeight);
+        gaussVFilter2 = new ImageFilter("filters/gaussV2.xml", camWidth, camHeight);
+        gaussHFilter2 = new ImageFilter("filters/gauss2.xml", camWidth, camHeight);
+        threshFilter = new ImageFilter("filters/threshold.xml", camWidth, camHeight);
+        copyFilter = new ImageFilter("filters/copy.xml", camWidth, camHeight);
+    }
+
+
+     void applyCPUFilters(CPUImageFilter& img){
+
+        //Set Mirroring Horizontal/Vertical
+        if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
+
+        //if(!bFastMode)
+        grayImg = img; //for drawing
+
+        //Dynamic background with learn rate...eventually learnrate will have GUI sliders
+        if(bDynamicBG){
+            learnBackground( img, grayBg, fiLearn, fLearnRate);
+        }
+
+        //recapature the background for 2 seconds to make sure the background image is when the camera is fully loaded
+        if((ofGetElapsedTimeMillis() - exposureStartTime) < CAMERA_EXPOSURE_TIME) bLearnBakground = true;
+
+        //Capture full background
+        if (bLearnBakground == true){
+
+            learnBackground( img, grayBg, fiLearn, 1.0f);
+
+            bLearnBakground = false;
+        }
+
+        img.absDiff(grayBg, img); //Background Subtraction
+
+        if(bSmooth){//Smooth
+            img.blur((smooth * 2) + 1); //needs to be an odd number
+            //if(!bFastMode)
+            subtractBg = img; //for drawing
+        }
+
+        if(bHighpass){//HighPass
+            img.highpass(highpassBlur, highpassNoise);
+            //if(!bFastMode)
+            highpassImg = img; //for drawing
+        }
+
+        if(bAmplify){//Amplify
+            img.amplify(img, highpassAmp);
+            //if(!bFastMode)
+            ampImg = img; //for drawing
+        }
+
+        img.threshold(threshold); //Threshold
+        //if(!bFastMode)
+        grayDiff = img; //for drawing
+    }
+
+    void learnBackground( ofxCvGrayscaleImage& live, ofxCvGrayscaleImage& _grayBg, ofxCvFloatImage& fLearn, float learnRate )
+    {
+        fLearn.addWeighted( live, learnRate);
+        _grayBg = fLearn;
+    }
+
+    void applyGPUFilters(){
+
+        if((ofGetElapsedTimeMillis() - exposureStartTime) < CAMERA_EXPOSURE_TIME) bLearnBakground = true;
+
+        if (bLearnBakground == true){
+
+            gpuBGTex = copyFilter->apply(gpuSourceTex, gpuBGTex);
+            bLearnBakground = false;
+        }
+
+        GLuint processedTex;
+
+        processedTex = subtractFilter->apply(gpuSourceTex, gpuBGTex);
+
+        if(bSmooth){//Smooth
+            gaussHFilter->parameters["kernel_size"]->value = (float)smooth;
+            gaussVFilter->parameters["kernel_size"]->value = (float)smooth;
+            processedTex = gaussHFilter->apply(processedTex);
+            processedTex = gaussVFilter->apply(processedTex);
+        }
+
+        if(bHighpass){//Highpass
+            gaussHFilter2->parameters["kernel_size"]->value = (float)highpassBlur;
+            gaussVFilter2->parameters["kernel_size"]->value = (float)highpassBlur;
+            processedTex = gaussHFilter2->apply(processedTex);
+            processedTex = gaussVFilter2->apply(processedTex);
+            processedTex = subtractFilter2->apply(gaussVFilter->output_texture, processedTex);
+        }
+
+        if(bAmplify){}//amplify
+
+        threshFilter->parameters["Threshold"]->value = (float)threshold / 255.0; //threshold
+        threshFilter->apply(processedTex);
+
+        //until the rest of the pipeline is fixed well just download the preprocessing result from the gpu and use that for the blob detection
+        //TODO: make this part not super slow ;)
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, threshFilter->output_buffer);
+        glReadPixels(0,0,camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, gpuReadBackBuffer);
+        gpuReadBackImage.setFromPixels(gpuReadBackBuffer, camWidth, camHeight);
+        gpuReadBackImageGS = gpuReadBackImage;
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    }
+
+    void draw()
+    {
+        grayImg.draw(40, 30, 320, 240);
+        grayDiff.draw(385, 30, 320, 240);
+        fiLearn.draw(85, 392, 128, 96);
+        subtractBg.draw(235, 392, 128, 96);
+        highpassImg.draw(385, 392, 128, 96);
+        ampImg.draw(535, 392, 128, 96);
+//      ofSetColor(0x000000);
+//      bigvideo.drawString("Source Image", 140, 20);
+//		bigvideo.drawString("Tracked Image", 475, 20);
+    }
+
+    void drawGPU()
+    {
+        drawGLTexture(40, 30, 320, 240, gpuSourceTex);
+        drawGLTexture(85, 392, 128, 96, gpuBGTex);
+        gaussVFilter->drawOutputTexture(235, 392, 128, 96);
+        subtractFilter2->drawOutputTexture(385, 392, 128, 96);
+        threshFilter->drawOutputTexture(535, 392, 128, 96);
+        gpuReadBackImageGS.draw(385, 30, 320, 240);
+    }
+};
+#endif
