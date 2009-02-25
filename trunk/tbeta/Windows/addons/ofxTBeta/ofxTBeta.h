@@ -25,7 +25,7 @@
 #include "Tracking/tracking.h"
 
 //GPU image filters
-#include "Filters/ImageFilter.h"
+#include "Filters/GPUImageFilter.h"
 
 //Used for warped image calibration
 #include "Calibration/boxAlign.h"

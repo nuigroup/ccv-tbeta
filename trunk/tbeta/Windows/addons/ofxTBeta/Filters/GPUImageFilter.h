@@ -1,5 +1,5 @@
-#ifndef IMAGEFILTER_H_
-#define IMAGEFILTER_H_
+#ifndef GPUIMAGEFILTER_H_
+#define GPUIMAGEFILTER_H_
 
 #include "ShaderProgram.h"
 
@@ -16,45 +16,45 @@ public:
 	float value;
 	float max;
 	float min;
-	
-	
-	inline FilterParameter(const char* n, float val, float minVal, float maxVal, int t) { 
-		this->name=n; this->value=val; this->min=minVal; this->max=maxVal; this->type=t;  
+
+
+	inline FilterParameter(const char* n, float val, float minVal, float maxVal, int t) {
+		this->name=n; this->value=val; this->min=minVal; this->max=maxVal; this->type=t;
 	};
 
 };
 
 
 
-class ImageFilter		
+class GPUImageFilter
 {
 	private:
 		//should maybe go wih image..but for now we are only passing gl texture handles...
 		int res_x, res_y;
 		bool useGeometryShader;
 		ShaderProgram* shader;
-		
+
 		//GLuint output_texture;
-		
+
 		const char* name;
-		
+
 		void parseXML(const char* fname);
-	
-	
+
+
 	public:
 		GLuint output_buffer;
 		GLuint output_texture;
 		std::map<std::string, FilterParameter*> parameters;
-		
-		ImageFilter(const char* fname, int outputWidth, int outputHeight);
-		
+
+		GPUImageFilter(const char* fname, int outputWidth, int outputHeight);
+
 		GLuint apply(GLuint inputTexture, GLuint inputTexture2=0);
 
 		void drawOutputTexture(float x,float y, float w, float h);
 
 		void setOutputSize(int x, int y){ res_x = x; res_y = y; }
-		
-		virtual ~ImageFilter();
+
+		virtual ~GPUImageFilter();
 };
 
 

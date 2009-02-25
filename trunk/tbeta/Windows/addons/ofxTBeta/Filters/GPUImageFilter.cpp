@@ -1,4 +1,4 @@
-#include "ImageFilter.h"
+#include "GPUImageFilter.h"
 #include <stdio.h>
 #include "tinyxml.h"
 #include "ofUtils.h"
@@ -39,7 +39,7 @@ void getFrameBufferForTexture(GLuint* fbo, GLuint* tex, int sizeX, int sizeY){
 
 
 
-ImageFilter::ImageFilter(const char* fname, int sx, int sy){
+GPUImageFilter::GPUImageFilter(const char* fname, int sx, int sy){
 //read the filter description file and creates a filter based on the shaders and parameters given in that file
 //allocates output buffer/texture
 
@@ -53,7 +53,7 @@ ImageFilter::ImageFilter(const char* fname, int sx, int sy){
 }
 
 
-void ImageFilter::parseXML(const char* fname){
+void GPUImageFilter::parseXML(const char* fname){
 	//load filter description file
 	printf("Loading Filter...\n");
 
@@ -111,7 +111,7 @@ void ImageFilter::parseXML(const char* fname){
 //saves opengl states, and binds this filter's output buffer (render to texture)
 //sets up ortho projection for drawing just the texture using teh filters shaders
 //parameters are set as uniforms for the shaders
-GLuint ImageFilter::apply(GLuint inputTexture, GLuint inputTexture2){
+GLuint GPUImageFilter::apply(GLuint inputTexture, GLuint inputTexture2){
 
 	glPushAttrib(GL_VIEWPORT_BIT);
     glPushAttrib(GL_ENABLE_BIT);
@@ -215,7 +215,7 @@ GLuint ImageFilter::apply(GLuint inputTexture, GLuint inputTexture2){
 
 
 
-void ImageFilter::drawOutputTexture(float x,float y, float w, float h){
+void GPUImageFilter::drawOutputTexture(float x,float y, float w, float h){
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, this->output_texture);
 	glPushMatrix();
@@ -232,6 +232,6 @@ void ImageFilter::drawOutputTexture(float x,float y, float w, float h){
 
 
 //destructor
-ImageFilter::~ImageFilter()
+GPUImageFilter::~GPUImageFilter()
 {
 }

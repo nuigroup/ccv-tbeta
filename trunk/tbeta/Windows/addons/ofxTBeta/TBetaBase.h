@@ -24,12 +24,12 @@
 #include "ofxTBeta.h"
 
 #include "Filters/CPUImageFilter.h"
+#include "Filters/ProcessFilters.h"
 
 #include "Calibration/Calibration.h"
 
 //#include "ConfigurationApp.h"
 
-#include "ofxTouchAdaptiveFilter.h"
 
 class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
 	{
@@ -200,7 +200,7 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
         int					tmpPort;
 
         //---------------------------------------Blob Tracker
-        ofxTouchFilter*  filter;
+        Filters*  filter;
 
         /****************************************************************
 		 *						Private Stuff

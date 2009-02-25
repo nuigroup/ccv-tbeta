@@ -43,7 +43,7 @@ void TBetaBase::setup()
 
     //create filter
     if( filter == NULL ) {
-        filter = new ofxTouchAdaptiveFilter();
+        filter = new ProcessFilters();
     }
 
 	//Load Settings from config.xml file
