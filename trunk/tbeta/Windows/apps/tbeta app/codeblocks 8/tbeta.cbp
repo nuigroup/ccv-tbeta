@@ -158,6 +158,8 @@
 		<Unit filename="..\..\..\addons\ofxOsc\src\ofxOscSender.h">
 			<Option virtualFolder="addons\ofxOsc\src\" />
 		</Unit>
+		<Unit filename="..\..\..\addons\ofxTBeta\Calibration\Calibration.cpp" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Calibration\Calibration.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Calibration\boxAlign.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Calibration\boxAlign.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Calibration\calibrationB.cpp" />
@@ -214,6 +216,8 @@
 		<Unit filename="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiXYPad.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiXYPad.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\ofxTBeta.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\ofxTouchAdaptiveFilter.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\ofxTouchFilter.h" />
 		<Unit filename="..\..\..\addons\ofxVectorMath\src\ofxMatrix3x3.h">
 			<Option virtualFolder="addons\ofxVectorMath\src\" />
 		</Unit>

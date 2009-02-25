@@ -902,28 +902,13 @@
 	"OscTypes.h"
 	"OscException.h"
 
-1234565937 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibration.cpp
-	"Calibration.h"
+1234995864 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\boxalign.cpp
+	"boxAlign.h"
 
-1234561417 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibration.h
-	"ofAddons.h"
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\boxalign.h
 	"ofMain.h"
-	"calibrationB.h"
-	"../TouchMessenger.h"
-	"../Tracking/ofxTBetaCvContourFinder.h"
-	"../Tracking/tracking.h"
-
-1234127916 h:\new folder\trunk\tbeta\windows\addons\ofaddons.h
 	"ofxCvMain.h"
-	"ofxObjLoader.h"
-	"ofxDirList.h"
 	"ofxVectorMath.h"
-	"ofxNetwork.h"
-	"ofxVectorGraphics.h"
-	"ofxOsc.h"
-	"ofxThread.h"
-	"ofxXmlSettings.h"
-	"ofxTBeta/ofxTBeta.h"
 
 1206065220 h:\new folder\trunk\tbeta\windows\addons\ofxopencv\src\ofxcvmain.h
 	"ofxCvConstants.h"
@@ -962,6 +947,33 @@
 
 1234127914 h:\new folder\trunk\tbeta\windows\addons\ofxvectormath\src\ofxmatrix3x3.h
 
+1234387172 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\communication\tuioosc.cpp
+	"TUIOOSC.h"
+
+1234387432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\communication\tuioosc.h
+	"../Tracking/ofxTBetaCvContourFinder.h"
+	"ofAddons.h"
+
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvcontourfinder.h
+	"ofMain.h"
+	"ofxCvMain.h"
+	"ofxTBetaCvBlob.h"
+
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvblob.h
+	<vector>
+
+1234127916 h:\new folder\trunk\tbeta\windows\addons\ofaddons.h
+	"ofxCvMain.h"
+	"ofxObjLoader.h"
+	"ofxDirList.h"
+	"ofxVectorMath.h"
+	"ofxNetwork.h"
+	"ofxVectorGraphics.h"
+	"ofxOsc.h"
+	"ofxThread.h"
+	"ofxXmlSettings.h"
+	"ofxTBeta/ofxTBeta.h"
+
 1234127856 h:\new folder\trunk\tbeta\windows\addons\ofxosc\src\ofxosc.h
 	"ofxOscArg.h"
 	"ofxOscMessage.h"
@@ -990,51 +1002,44 @@
 	<sstream>
 	"tinystr.h"
 
-1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxtbeta.h
+1235593220 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxtbeta.h
 	"TouchMessenger.h"
 	"Tracking/BlobManager.h"
 	"Tracking/tracking.h"
-	"Filters/ImageFilter.h"
+	"Filters/GPUImageFilter.h"
 	"Calibration/boxAlign.h"
 	"Calibration/calibrationB.h"
 	"Communication/TUIOOSC.h"
 	"ofxGui/ofxGui.h"
 	"ofxGui/ofxGuiTypes.h"
+	"Camera/Camera.h"
 	"TBetaBase.h"
 
-1234488600 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.h
+1234684501 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.h
 	"Poco/FIFOEvent.h"
 	"Poco/Delegate.h"
 	"ofTypes.h"
 	"Tracking/ofxTBetaCvContourFinder.h"
 
-1234387364 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvcontourfinder.h
-	"ofMain.h"
-	"ofxCvMain.h"
-	"ofxTBetaCvBlob.h"
-
-1234488600 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvblob.h
-	<vector>
-
-1234387162 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\blobmanager.h
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\blobmanager.h
 	"../ofxTBeta.h"
 
-1234555494 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\tracking.h
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\tracking.h
 	<list>
 	<map>
 	"ofxTBetaCvContourFinder.h"
 	"../TouchMessenger.h"
 	"../Calibration/calibrationB.h"
 
-1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.h
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.h
 	"ofAddons.h"
 	"rect2d.h"
 	"vector2d.h"
 
-1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\rect2d.h
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\rect2d.h
 	"vector2d.h"
 
-1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\vector2d.h
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\vector2d.h
 	<math.h>
 
 1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\imagefilter.h
@@ -1049,15 +1054,6 @@
 	<stdlib.h>
 	"GLee.h"
 	<GL/gl.h>
-
-1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\boxalign.h
-	"ofMain.h"
-	"ofxCvMain.h"
-	"ofxVectorMath.h"
-
-1234387432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\communication\tuioosc.h
-	"../Tracking/ofxTBetaCvContourFinder.h"
-	"ofAddons.h"
 
 1234336432 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxgui\ofxgui.h
 	"ofxGuiTypes.h"
@@ -1125,24 +1121,24 @@
 	"ofxGuiTypes.h"
 	"ofxGuiObject.h"
 
-1234564227 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.h
+1235593481 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.h
 	"ofAddons.h"
 	"ofMain.h"
 	"ofxTBeta.h"
 	"Filters/CPUImageFilter.h"
+	"Filters/ProcessFilters.h"
 	"Calibration/Calibration.h"
 
 1234389528 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\cpuimagefilter.h
 	"ofxCvGrayscaleImage.h"
 
-1234336432 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\boxalign.cpp
-	"boxAlign.h"
-
-1234565156 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.cpp
+1234995864 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibration.h
+	"ofAddons.h"
+	"ofMain.h"
 	"calibrationB.h"
-
-1234387172 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\communication\tuioosc.cpp
-	"TUIOOSC.h"
+	"../TouchMessenger.h"
+	"../Tracking/ofxTBetaCvContourFinder.h"
+	"../Tracking/tracking.h"
 
 1234389642 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\cpuimagefilter.cpp
 	"CPUImageFilter.h"
@@ -1160,24 +1156,18 @@
 	<stdio.h>
 	<stdlib.h>
 
-1234564133 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.cpp
+1235593510 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tbetabase.cpp
 	"TBetaBase.h"
 	"gui.h"
 
-1234553506 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\gui.h
+1235548328 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\gui.h
 	"TBetaBase.h"
 
 1234413374 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\touchmessenger.cpp
 	"TouchMessenger.h"
 
-1234387162 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\blobmanager.cpp
+1234995864 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\blobmanager.cpp
 	"BlobManager.h"
-
-1234490528 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvcontourfinder.cpp
-	"ofxTBetaCvContourFinder.h"
-
-1234557584 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\tracking.cpp
-	"tracking.h"
 
 1234336432 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxgui\ofxgui.cpp
 	"ofxGui.h"
@@ -1392,5 +1382,48 @@
 
 1234127939 source:h:\new folder\trunk\tbeta\windows\libs\openframeworks\video\ofvideoplayer.cpp
 	"ofVideoPlayer.h"
+	"ofUtils.h"
+
+1234995864 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibrationb.cpp
+	"calibrationB.h"
+
+1234995864 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\ofxtbetacvcontourfinder.cpp
+	"ofxTBetaCvContourFinder.h"
+
+1234995864 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\tracking\tracking.cpp
+	"tracking.h"
+
+1234995864 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\calibration\calibration.cpp
+	"Calibration.h"
+
+1235548518 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxtouchadaptivefilter.h
+	"ofxTouchFilter.h"
+
+1235548277 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\ofxtouchfilter.h
+	"ofMain.h"
+	"ofxCvMain.h"
+	"Filters/CPUImageFilter.h"
+
+1235591903 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\camera\camera.h
+	"../ofxTBeta.h"
+	"ofMain.h"
+
+1235594456 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\processfilters.h
+	"Filters.h"
+
+1235594075 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\filters.h
+	"ofMain.h"
+	"ofxCvMain.h"
+	"CPUImageFilter.h"
+
+1235594061 h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\gpuimagefilter.h
+	"ShaderProgram.h"
+	<map>
+	<string>
+
+1235593208 source:h:\new folder\trunk\tbeta\windows\addons\ofxtbeta\filters\gpuimagefilter.cpp
+	"GPUImageFilter.h"
+	<stdio.h>
+	"tinyxml.h"
 	"ofUtils.h"
 

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="release" />
+	<ActiveTarget name="debug" />
 	<File name="..\..\..\addons\ofAddons.h" open="0" top="0" tabpos="0">
 		<Cursor position="247" topLine="0" />
 	</File>
 	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cv.h" open="0" top="0" tabpos="10">
-		<Cursor position="44074" topLine="995" />
+		<Cursor position="50230" topLine="1105" />
 	</File>
 	<File name="..\..\..\addons\ofxOpenCv\libs\opencv\include\cvaux.h" open="0" top="0" tabpos="8">
 		<Cursor position="55623" topLine="1355" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvColorImage.h" open="0" top="0" tabpos="0">
+		<Cursor position="1046" topLine="2" />
 	</File>
 	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvConstants.h" open="0" top="0" tabpos="0">
 		<Cursor position="72" topLine="0" />
@@ -28,26 +31,35 @@
 	<File name="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" open="0" top="0" tabpos="0">
 		<Cursor position="934" topLine="15" />
 	</File>
+	<File name="..\..\..\addons\ofxTBeta\Calibration\Calibration.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="761" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Calibration\Calibration.h" open="0" top="0" tabpos="1">
+		<Cursor position="658" topLine="0" />
+	</File>
 	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="2224" topLine="58" />
+		<Cursor position="9144" topLine="369" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\Calibration\calibrationB.h" open="0" top="0" tabpos="9">
-		<Cursor position="561" topLine="6" />
+		<Cursor position="865" topLine="0" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2295" topLine="0" />
+		<Cursor position="2295" topLine="47" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.h" open="0" top="0" tabpos="5">
 		<Cursor position="57" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.cpp" open="1" top="1" tabpos="5">
+	<File name="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="89" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="5542" topLine="135" />
+	<File name="..\..\..\addons\ofxTBeta\Filters\ImageFilter.h" open="0" top="0" tabpos="0">
+		<Cursor position="427" topLine="35" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="11005" topLine="276" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="1" top="0" tabpos="3">
-		<Cursor position="668" topLine="10" />
+		<Cursor position="2665" topLine="102" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\TouchMessenger.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="172" topLine="0" />
@@ -55,17 +67,32 @@
 	<File name="..\..\..\addons\ofxTBeta\TouchMessenger.h" open="0" top="0" tabpos="6">
 		<Cursor position="276" topLine="0" />
 	</File>
+	<File name="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvBlob.h" open="0" top="0" tabpos="6">
+		<Cursor position="0" topLine="0" />
+	</File>
 	<File name="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvContourFinder.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4767" topLine="129" />
+		<Cursor position="5490" topLine="154" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="8522" topLine="0" />
+	<File name="..\..\..\addons\ofxTBeta\Tracking\ofxTBetaCvContourFinder.h" open="0" top="0" tabpos="0">
+		<Cursor position="342" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.h" open="0" top="0" tabpos="7">
-		<Cursor position="306" topLine="5" />
+	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="7818" topLine="82" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\gui.h" open="0" top="0" tabpos="0">
-		<Cursor position="253" topLine="0" />
+	<File name="..\..\..\addons\ofxTBeta\Tracking\tracking.h" open="0" top="0" tabpos="5">
+		<Cursor position="608" topLine="12" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\gui.h" open="0" top="0" tabpos="7">
+		<Cursor position="11056" topLine="259" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\ofxTBeta.h" open="0" top="0" tabpos="0">
+		<Cursor position="669" topLine="3" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\ofxTouchAdaptiveFilter.h" open="1" top="0" tabpos="2">
+		<Cursor position="4450" topLine="86" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\ofxTouchFilter.h" open="1" top="0" tabpos="4">
+		<Cursor position="2296" topLine="45" />
 	</File>
 	<File name="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="690" topLine="13" />
@@ -73,8 +100,8 @@
 	<File name="..\Configapp\src\main.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="174" topLine="0" />
 	</File>
-	<File name="..\Configapp\src\testApp.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="1543" topLine="30" />
+	<File name="..\Configapp\src\testApp.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="963" topLine="28" />
 	</File>
 	<File name="..\Configapp\src\testApp.h" open="0" top="0" tabpos="1">
 		<Cursor position="50" topLine="1" />
@@ -124,6 +151,9 @@
 	<File name="..\..\..\libs\openFrameworks\utils\ofTypes.h" open="0" top="0" tabpos="0">
 		<Cursor position="358" topLine="0" />
 	</File>
+	<File name="..\..\..\libs\openFrameworks\utils\ofUtils.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="332" topLine="0" />
+	</File>
 	<File name="..\..\..\libs\openFrameworks\utils\ofUtils.h" open="0" top="0" tabpos="0">
 		<Cursor position="226" topLine="0" />
 	</File>
@@ -133,11 +163,11 @@
 	<File name="..\..\..\libs\openFrameworks\video\ofQtUtils.h" open="0" top="0" tabpos="7">
 		<Cursor position="396" topLine="10" />
 	</File>
-	<File name="..\..\..\libs\openFrameworks\video\ofVideoGrabber.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="89" topLine="5" />
+	<File name="..\..\..\libs\openFrameworks\video\ofVideoGrabber.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="22035" topLine="831" />
 	</File>
 	<File name="..\..\..\libs\openFrameworks\video\ofVideoGrabber.h" open="0" top="0" tabpos="11">
-		<Cursor position="191" topLine="0" />
+		<Cursor position="483" topLine="25" />
 	</File>
 	<File name="..\..\..\libs\openFrameworks\video\ofVideoPlayer.cpp" open="0" top="0" tabpos="10">
 		<Cursor position="4478" topLine="146" />
