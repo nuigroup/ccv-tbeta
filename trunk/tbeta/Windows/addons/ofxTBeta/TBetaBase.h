@@ -89,8 +89,37 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 	public:
 
 		TBetaBase() {
+			//listen for Touch Events
 			TouchEvents.addListener(this);
-			showConfiguration = false;
+			//initialize filter
+			filter = NULL; 
+			//fps and dsp calculation
+			frames		= 0;
+			fps			= 0;
+			lastFPSlog	= 0;
+			differenceTime = 0;
+			//bools
+			bCalibration= 0;
+			bDrawVideo = 1;
+			bFullscreen = 0;
+			bcamera = 0;	
+			bShowLabels = 1;
+			bFastMode = 0;
+			bDrawOutlines = 1;
+			bGPUMode = 0;
+			bTUIOMode = 0;
+			showConfiguration = 0;	
+			//camera
+			camRate = 30;
+			camWidth = 320;
+			camHeight = 240;
+		} 
+
+		~TBetaBase(){
+			    
+			if( filter != NULL ) {
+				delete filter;
+			}
 		}
 
 		/****************************************************************

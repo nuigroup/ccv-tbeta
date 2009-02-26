@@ -11,7 +11,6 @@
 
 //removes the 'x' button on windows which causes a crash due to a GLUT bug
 #ifdef TARGET_WIN32
-
 //HWND hwndConsole = FindWindowA(NULL, "tbeta");
 //HMENU hMnu = ::GetSystemMenu(hwndConsole, FALSE);
 //RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
@@ -40,7 +39,7 @@
 #include "ofxGui/ofxGui.h"
 #include "ofxGui/ofxGuiTypes.h"
 
-#include "Camera/Camera.h"
+//#include "Camera/Camera.h"
 
 #include "TBetaBase.h"
 

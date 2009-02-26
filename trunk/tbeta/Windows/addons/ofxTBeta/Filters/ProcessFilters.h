@@ -31,6 +31,8 @@ class ProcessFilters : public Filters {
         fiLearn.allocate(camWidth, camHeight);		//ofxFloatImage used for simple dynamic background subtraction
 
         //GPU Setup
+		gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
+        gpuReadBackImageGS.allocate(camWidth, camHeight);
         allocateGPU();
     }
 
@@ -39,7 +41,7 @@ class ProcessFilters : public Filters {
         glGenTextures(1, &gpuSourceTex);
         glGenTextures(1, &gpuBGTex);
 
-        delete gpuReadBackBuffer;
+		delete gpuReadBackBuffer;
 
         gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
         gpuReadBackImageGS.allocate(camWidth, camHeight);
@@ -186,9 +188,6 @@ class ProcessFilters : public Filters {
         subtractBg.draw(235, 392, 128, 96);
         highpassImg.draw(385, 392, 128, 96);
         ampImg.draw(535, 392, 128, 96);
-//      ofSetColor(0x000000);
-//      bigvideo.drawString("Source Image", 140, 20);
-//		bigvideo.drawString("Tracked Image", 475, 20);
     }
 
     void drawGPU()

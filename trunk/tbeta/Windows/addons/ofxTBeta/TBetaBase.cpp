@@ -25,20 +25,6 @@ void TBetaBase::setup()
 	RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
 #endif
 
-	/********************
-	 * Initalize Variables
-	 *********************/
-	//Intialize FPS variables
-	frames		= 0;
-	fps			= 0;
-	lastFPSlog	= 0;
-	//Calibration Booleans
-	bCalibration= false;
-
-	differenceTime = 0;
-
-	bDrawVideo = true;
-	bFullscreen = false;
 	ofSetBackgroundAuto(false);
 
     //create filter
@@ -328,6 +314,13 @@ void TBetaBase::draw(){
 
         if(!bCalibration)
         gui->draw();
+
+		//draw link to tbeta website
+		ofSetColor(180, 220, 180, 180);
+		ofFill();
+		ofRect(ofGetWidth() - 230,ofGetHeight() - 14, 230, 14);
+		ofSetColor(0x000000);
+		ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 230, ofGetHeight() - 2);
     }
 }
 
@@ -599,9 +592,10 @@ void TBetaBase::keyPressed(int key) {
 			 * Keys for Calibration
 			 ***********************/
 		case 'x': //Begin Calibrating
-			if(bCalibration){
+			if(bCalibration){				
 				bCalibration = false;
 				calib.calibrating = false;
+				tracker.isCalibrating = false;
 				if(bFullscreen == true) ofToggleFullscreen(); bFullscreen = false; ofSetBackgroundAuto(false);
 			}
 			break;
@@ -617,6 +611,7 @@ void TBetaBase::keyReleased(int key){
         { //Enter/Exit Calibration
             bCalibration = true;
             calib.calibrating = true;
+			tracker.isCalibrating = true;
             if(bFullscreen == false) ofToggleFullscreen(); bFullscreen = true; ofSetBackgroundAuto(true);
         }
     }
@@ -679,8 +674,10 @@ void TBetaBase::mouseDragged(int x, int y, int button)
 
 void TBetaBase::mousePressed(int x, int y, int button)
 {
-    if(showConfiguration)
-	gui->mousePressed(x, y, button); //guilistener
+	if(showConfiguration){
+		gui->mousePressed(x, y, button); //guilistener
+		if(x > ofGetWidth() - 230 && y > ofGetHeight() - 14) ofLaunchBrowser("http://tbeta.nuigroup.com");	
+	}
 }
 
 void TBetaBase::mouseReleased()

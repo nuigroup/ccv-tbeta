@@ -56,7 +56,7 @@ class Filters {
 
     //GPU
     GLuint			gpuBGTex;
-    GLuint	gpuSourceTex;
+    GLuint			gpuSourceTex;
     unsigned char * gpuReadBackBuffer;
     ofxCvGrayscaleImage gpuReadBackImageGS;
     GPUImageFilter*	contrastFilter;

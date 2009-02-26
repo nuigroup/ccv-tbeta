@@ -62,6 +62,8 @@ public:
 
 	calibrationB* calibrate;
 
+	bool isCalibrating;
+
 	void passInCalibration(calibrationB* calibrate);
 
 	//assigns IDs to each blob in the contourFinder
