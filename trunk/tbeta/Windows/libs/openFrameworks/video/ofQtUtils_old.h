@@ -6,7 +6,7 @@
 
 #ifndef TARGET_LINUX
 
-#include "ofGraphics.h" 	
+#include "ofGraphics.h"
 
 
 #ifdef TARGET_OSX
@@ -17,9 +17,9 @@
 	#include <QTML.h>
 	#include <FixMath.h>
 	#include <QuickTimeComponents.h>
+	#include <TextUtils.h>
 	#include <MediaHandlers.h>
-	//#include <MoviesFormat.h>  // this conflicts with winioctl.h
-	#include <TextUtils.h>	
+	//#include <MoviesFormat.h>
 #endif
 
 //p2cstr depreciation fix - thanks pickard!
@@ -29,8 +29,8 @@
 
 //-------------------------- helpful for rgba->rgb conversion
 typedef struct{
-	unsigned char r; 
-	unsigned char g; 
+	unsigned char r;
+	unsigned char g;
 	unsigned char b;
 } pix24;
 
@@ -45,7 +45,7 @@ Boolean 	SeqGrabberModalFilterUPP(DialogPtr theDialog, const EventRecord *theEve
 OSErr           IsMPEGMediaHandler(MediaHandler inMediaHandler, Boolean *outIsMPEG);
 ComponentResult MPEGMediaGetStaticFrameRate(MediaHandler inMPEGMediaHandler, Fixed *outStaticFrameRate);
 OSErr           MediaGetStaticFrameRate(Media inMovieMedia, double *outFPS);
-void            MovieGetVideoMediaAndMediaHandler(Movie inMovie, Media *outMedia, 
+void            MovieGetVideoMediaAndMediaHandler(Movie inMovie, Media *outMedia,
 				MediaHandler *outMediaHandler);
 void            MovieGetStaticFrameRate(Movie inMovie, double *outStaticFrameRate);
 

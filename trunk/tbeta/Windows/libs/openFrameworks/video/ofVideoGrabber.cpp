@@ -106,6 +106,9 @@ int ofVideoGrabber::getDeviceCount(){
 		SGGetChannelDeviceList (gVideoChannel, sgDeviceListIncludeInputs, &deviceList);
 		numDevices =  (*deviceList)->count;
 		return numDevices;
+
+	#else
+		return 0; 
 	//---------------------------------
 	#endif
 	//---------------------------------

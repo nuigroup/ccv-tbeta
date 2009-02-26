@@ -238,12 +238,9 @@ void ofImage::grabScreen(int _x, int _y, int _w, int _h){
 	glPopClientAttrib();
 	
 	
-	/* changing this for VS:
+	
 	int sizeOfOneLineOfPixels = myPixels.width * myPixels.bytesPerPixel;
 	unsigned char tempLineOfPix[sizeOfOneLineOfPixels];
-	*/
-	int sizeOfOneLineOfPixels = myPixels.width * myPixels.bytesPerPixel;
-	unsigned char * tempLineOfPix = new unsigned char[sizeOfOneLineOfPixels];
 	unsigned char * linea;
 	unsigned char * lineb;
 	for (int i = 0; i < myPixels.height/2; i++){
@@ -253,7 +250,7 @@ void ofImage::grabScreen(int _x, int _y, int _w, int _h){
 		memcpy(linea, lineb, sizeOfOneLineOfPixels);
 		memcpy(lineb, tempLineOfPix, sizeOfOneLineOfPixels);
 	}
-	delete [] tempLineOfPix;
+
 	update();
 }
 
