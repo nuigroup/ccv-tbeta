@@ -17,6 +17,8 @@ class ofAppListener {
     virtual void draw(){};
 	virtual void exit(){};
 
+	public:
+
 	//TODO: sleep now
 	void setup(const void* sender, ofEventArgs& eventArgs){
 		setup();

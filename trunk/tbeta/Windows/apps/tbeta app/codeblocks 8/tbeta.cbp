@@ -170,8 +170,10 @@
 		<Unit filename="..\..\..\addons\ofxTBeta\Communication\TUIOOSC.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.h" />
-		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ImageFilter.cpp" />
-		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ImageFilter.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Filters\Filters.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Filters\GPUImageFilter.cpp" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Filters\GPUImageFilter.h" />
+		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ProcessFilters.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ShaderProgram.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\Filters\ShaderProgram.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\TBetaBase.cpp" />
@@ -216,8 +218,6 @@
 		<Unit filename="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiXYPad.cpp" />
 		<Unit filename="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiXYPad.h" />
 		<Unit filename="..\..\..\addons\ofxTBeta\ofxTBeta.h" />
-		<Unit filename="..\..\..\addons\ofxTBeta\ofxTouchAdaptiveFilter.h" />
-		<Unit filename="..\..\..\addons\ofxTBeta\ofxTouchFilter.h" />
 		<Unit filename="..\..\..\addons\ofxVectorMath\src\ofxMatrix3x3.h">
 			<Option virtualFolder="addons\ofxVectorMath\src\" />
 		</Unit>

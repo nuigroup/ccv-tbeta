@@ -52,14 +52,23 @@
 	<File name="..\..\..\addons\ofxTBeta\Filters\CPUImageFilter.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="89" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\Filters\ImageFilter.h" open="0" top="0" tabpos="0">
-		<Cursor position="427" topLine="35" />
+	<File name="..\..\..\addons\ofxTBeta\Filters\Filters.h" open="1" top="0" tabpos="2">
+		<Cursor position="1194" topLine="39" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="11005" topLine="276" />
+	<File name="..\..\..\addons\ofxTBeta\Filters\GPUImageFilter.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="6548" topLine="0" />
 	</File>
-	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="1" top="0" tabpos="3">
-		<Cursor position="2665" topLine="102" />
+	<File name="..\..\..\addons\ofxTBeta\Filters\GPUImageFilter.h" open="0" top="0" tabpos="0">
+		<Cursor position="52" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\Filters\ProcessFilters.h" open="1" top="1" tabpos="1">
+		<Cursor position="1880" topLine="15" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\TBetaBase.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="767" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxTBeta\TBetaBase.h" open="0" top="0" tabpos="3">
+		<Cursor position="4645" topLine="0" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\TouchMessenger.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="172" topLine="0" />
@@ -86,19 +95,13 @@
 		<Cursor position="11056" topLine="259" />
 	</File>
 	<File name="..\..\..\addons\ofxTBeta\ofxTBeta.h" open="0" top="0" tabpos="0">
-		<Cursor position="669" topLine="3" />
-	</File>
-	<File name="..\..\..\addons\ofxTBeta\ofxTouchAdaptiveFilter.h" open="1" top="0" tabpos="2">
-		<Cursor position="4450" topLine="86" />
-	</File>
-	<File name="..\..\..\addons\ofxTBeta\ofxTouchFilter.h" open="1" top="0" tabpos="4">
-		<Cursor position="2296" topLine="45" />
+		<Cursor position="595" topLine="4" />
 	</File>
 	<File name="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="690" topLine="13" />
 	</File>
 	<File name="..\Configapp\src\main.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="174" topLine="0" />
+		<Cursor position="434" topLine="4" />
 	</File>
 	<File name="..\Configapp\src\testApp.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="963" topLine="28" />

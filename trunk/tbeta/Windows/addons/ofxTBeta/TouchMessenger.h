@@ -25,7 +25,7 @@
  Anyone can use them, but it's unneccesary
  because the normal TouchDown, TouchUp, and TouchMoved
  get the calibrated blobs. Enjoy!
- 
+
  News: Friday 13th, 8:29 PM EST ===
 	Now you can add a hold event to your apps. good stuff...
 
@@ -60,7 +60,8 @@ public:
 };
 
 class TouchListener {
-protected:
+
+  protected:
 
 	virtual void TouchDown(ofxTBetaCvBlob message){}
 	virtual void TouchUp(ofxTBetaCvBlob message){}
@@ -72,7 +73,8 @@ protected:
 	virtual void RAWTouchUp(ofxTBetaCvBlob message){}
 	virtual void RAWTouchMoved(ofxTBetaCvBlob message){}
 	virtual void RAWTouchHeld(ofxTBetaCvBlob message){}
-	
+
+  public:
 
 	void TouchDown(const void* sender, ofxTBetaCvBlob& eventArgs){
 		TouchDown(eventArgs);
