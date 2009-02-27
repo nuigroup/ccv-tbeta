@@ -650,7 +650,6 @@ void TBetaBase::TouchUp( ofxTBetaCvBlob b)
 
 void TBetaBase::TouchMoved( ofxTBetaCvBlob b)
 {
-	//printf("b: %f, %f\n", b.centroid.x, b.centroid.y);
 	 if(bTUIOMode)//If sending TUIO, add the blob to the map list
 	 {
          //if blob is not otuside calibration mesh
@@ -664,7 +663,7 @@ void TBetaBase::TouchMoved( ofxTBetaCvBlob b)
  *****************************************************************************/
 void TBetaBase::mouseMoved(int x, int y)
 {
-}
+} 
 
 void TBetaBase::mouseDragged(int x, int y, int button)
 {
@@ -676,7 +675,7 @@ void TBetaBase::mousePressed(int x, int y, int button)
 {
 	if(showConfiguration){
 		gui->mousePressed(x, y, button); //guilistener
-		if(x > ofGetWidth() - 230 && y > ofGetHeight() - 14) ofLaunchBrowser("http://tbeta.nuigroup.com");	
+		if(x > ofGetWidth() - 230 && y > ofGetHeight() - 14) ofLaunchBrowser("http://www.wordpress.com");	
 	}
 }
 

@@ -9,9 +9,8 @@
 *
 */
 
-
-#ifndef OFX_BLOB
-#define OFX_BLOB
+#ifndef _BLOB_H
+#define _BLOB_H
 
 #include <vector>
 
@@ -22,11 +21,12 @@ class ofxTBetaCvBlob {
         float               area;
         float               length;
         ofRectangle         boundingRect;
+		ofRectangle         angleBoundingRect;
 		ofPoint             centroid, lastCentroid, D;
         bool                hole;
 		
 		float				age; //how long the blob has been at war
-		float					sitting; //how long hes been sitting in the same place
+		float				sitting; //how long hes been sitting in the same place
 	
 		bool				simulated; 
 
@@ -35,7 +35,6 @@ class ofxTBetaCvBlob {
         vector <ofPoint>    pts;    // the contour of the blob
         int                 nPts;   // number of pts;
 		int					id;
-
 		float               angle;
 
         //----------------------------------------
@@ -51,42 +50,30 @@ class ofxTBetaCvBlob {
 
         //----------------------------------------
         void draw(float x = 0, float y = 0){
-            ofNoFill();
+
+/*		    //draw contours
+		    ofNoFill();
             ofSetColor(0xFF00FF);
             ofBeginShape();
             for (int i = 0; i < nPts; i++){
                    ofVertex(x + pts[i].x, y + pts[i].y);
             }
             ofEndShape(true);
-            ofSetColor(0xFFFFFF);
-		    //ofLine(x + boundingRect.x+boundingRect.width/2,y + boundingRect.y+boundingRect.height/2,x+boundingRect.width+100,y+boundingRect.height+200); //hands
-			ofFill();
-			ofNoFill();
-			ofSetColor(0xFF0099);
-			//ofCircle(x + boundingRect.x+boundingRect.width/2,y + boundingRect.y+boundingRect.height/2,area/100);
-			//ofRect(x + boundingRect.x+boundingRect.width/4, y + boundingRect.y+boundingRect.height/4, boundingRect.width/2, boundingRect.height/2);
-
-            //ofRect(x + boundingRect.x, y + boundingRect.y, boundingRect.width, boundingRect.height);
-
-			/*
+*/
+			//draw angled bounding box with cross-hair
             glPushMatrix();
-                glTranslatef(x + boundingRect.x, y + boundingRect.y, 0.0f);
+			    ofSetColor(0xFF0099);
+                glTranslatef(x + angleBoundingRect.x, y + angleBoundingRect.y, 0.0f);
                 glRotatef(-angle, 0.0f, 0.0f, 1.0f);
-                glTranslatef(-(x + boundingRect.x), -(y + boundingRect.y), 0.0f);
-                //glut(boundingRect.x - boundingRect.width, boundingRect.y - boundingRect.height, boundingRect.x + boundingRect.height,boundingRect.y + boundingRect.width, 1.0f, 0.0f, 0.0f);
-                //ofRect(x + boundingRect.x - boundingRect.width/2, y + boundingRect.y - boundingRect.height/2, boundingRect.width, boundingRect.height);
+                glTranslatef(-(x + angleBoundingRect.x), -(y + angleBoundingRect.y), 0.0f);
+                ofRect(x + angleBoundingRect.x - angleBoundingRect.width/2, y + angleBoundingRect.y - angleBoundingRect.height/2, angleBoundingRect.width, angleBoundingRect.height);
 
 				ofSetColor(0x0099FF);
-                //ofRect(x + boundingRect.x, y + boundingRect.y - boundingRect.height, 1, boundingRect.height * 2); //Horizontal Plus
-                //ofRect(x + boundingRect.x - boundingRect.width, y + boundingRect.y, boundingRect.width * 2, 1); //Horizontal Plus
+                ofRect(x + angleBoundingRect.x, y + angleBoundingRect.y - angleBoundingRect.height, 1, angleBoundingRect.height * 2); //Horizontal Plus
+                ofRect(x + angleBoundingRect.x - angleBoundingRect.width, y + angleBoundingRect.y, angleBoundingRect.width * 2, 1); //Horizontal Plus
             glPopMatrix();
-*/
-
-
         }
 };
-
-
 #endif
 
 

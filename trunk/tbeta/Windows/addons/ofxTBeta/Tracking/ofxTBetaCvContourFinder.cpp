@@ -1,8 +1,6 @@
 
 #include "ofxTBetaCvContourFinder.h"
 
-
-
 //--------------------------------------------------------------------------------
 static int qsort_carea_compare( const void* _a, const void* _b) {
 	int out = 0;
@@ -143,35 +141,34 @@ int ofxTBetaCvContourFinder::findContours( ofxCvGrayscaleImage&  input,
 	for( int i = 0; i < MIN(nConsidered, nCvSeqsFound); i++ ) {
 		blobs.push_back( ofxTBetaCvBlob() );
 		float area = cvContourArea( cvSeqBlobs[i], CV_WHOLE_SEQ );
-		CvRect rect	= cvBoundingRect( cvSeqBlobs[i], 0 );
-
-		CvBox2D32f box = cvMinAreaRect2( cvSeqBlobs[i] );
 
 		cvMoments( cvSeqBlobs[i], myMoments );
+		
+		// this is if using non-angle bounding box
+		CvRect rect	= cvBoundingRect( cvSeqBlobs[i], 0 );
+		blobs[i].boundingRect.x      = rect.x;
+		blobs[i].boundingRect.y      = rect.y;
+		blobs[i].boundingRect.width  = rect.width;
+		blobs[i].boundingRect.height = rect.height;
 
-		blobs[i].boundingRect.x = box.center.x;
-		blobs[i].boundingRect.y = box.center.y;
+		// this is for using angle bounding box
+		CvBox2D32f box;
+		box = cvMinAreaRect2( cvSeqBlobs[i] );
 
-		blobs[i].boundingRect.width       = box.size.height;
-		blobs[i].boundingRect.height      = box.size.width;
-
+		blobs[i].angleBoundingRect.x	  = box.center.x;
+		blobs[i].angleBoundingRect.y	  = box.center.y;
+		blobs[i].angleBoundingRect.width  = box.size.height;
+		blobs[i].angleBoundingRect.height = box.size.width;
 		blobs[i].angle = box.angle;
 
-
-
-
-		blobs[i].area                     = fabs(area);
-		blobs[i].hole                     = area < 0 ? true : false;
-		blobs[i].length 			      = cvArcLength(cvSeqBlobs[i]);
-		//blobs[i].boundingRect.x           = rect.x;
-		//blobs[i].boundingRect.y           = rect.y;
-		//blobs[i].boundingRect.width       = rect.width;
-		//blobs[i].boundingRect.height      = rect.height;
-		blobs[i].centroid.x 			  = (int) (myMoments->m10 / myMoments->m00);
-		blobs[i].centroid.y 			  = (int) (myMoments->m01 / myMoments->m00);
-
-		blobs[i].lastCentroid.x 			  = (int) 0;
-		blobs[i].lastCentroid.y 			  = (int) 0;
+		// assign other parameters
+		blobs[i].area                = fabs(area);
+		blobs[i].hole                = area < 0 ? true : false;
+		blobs[i].length 			 = cvArcLength(cvSeqBlobs[i]);		
+		blobs[i].centroid.x			 = (int) (myMoments->m10 / myMoments->m00);
+		blobs[i].centroid.y 		 = (int) (myMoments->m01 / myMoments->m00);
+		blobs[i].lastCentroid.x 	 = (int) 0;
+		blobs[i].lastCentroid.y 	 = (int) 0;
 
 		// get the points for the blob:
 		CvPoint           pt;

@@ -242,6 +242,12 @@ float calibrationB::getScreenScale()
 
 void calibrationB::cameraToScreenPosition(float &x, float &y)
 {
+	//is this right to avoid boundingbox overflow? this overflow occurs due to new angle box
+	if(y > _camHeight) y = _camHeight;
+	if(y < 0) y = 0;
+	if(x > _camWidth) x = _camWidth;
+	if(x < 0) x = 0;
+
 	int pos = (int)y * (int)_camWidth + (int)x;
 
 	x = cameraToScreenMap[pos].X;

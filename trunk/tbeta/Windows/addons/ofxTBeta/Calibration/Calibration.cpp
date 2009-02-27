@@ -139,6 +139,27 @@ void Calibration::drawCalibrationBlobs(){
         //transform x/y position to calibrated space
         calibrate.cameraToScreenPosition(drawBlob2.centroid.x, drawBlob2.centroid.y);
 
+		//Get a random color for each blob
+        if(blobcolor[drawBlob2.id] == 0)
+        {
+            int r = ofRandom(0, 255);
+            int g = ofRandom(0, 255);
+            int b = ofRandom(0, 255);
+            //Convert to hex
+            int rgbNum = ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
+            //Set hex into map position
+            blobcolor[drawBlob2.id] = rgbNum;
+        }
+
+        //Draw Fuzzy Circles
+        ofEnableAlphaBlending();
+        ofImage tempCalibrationParticle;
+        tempCalibrationParticle.clone(calibrationParticle);
+        ofSetColor(blobcolor[drawBlob2.id]);
+        tempCalibrationParticle.draw(drawBlob2.centroid.x * ofGetWidth() - drawBlob2.boundingRect.width * .625, drawBlob2.centroid.y * ofGetHeight() - drawBlob2.boundingRect.height * .625,
+									 drawBlob2.boundingRect.width * 1.25, drawBlob2.boundingRect.height * 1.25);
+        ofDisableAlphaBlending();
+
         //Draw Blob Targets
         if(bShowTargets)
         {
@@ -147,26 +168,26 @@ void Calibration::drawCalibrationBlobs(){
             glPushMatrix();
 			//	glLoadIdentity();
             glTranslatef(drawBlob2.centroid.x * ofGetWidth(), ((drawBlob2.centroid.y * ofGetHeight())), 0);
-			drawBlob2.centroid.x *= ofGetWidth() - drawBlob2.boundingRect.width * .625;
-			drawBlob2.centroid.y *= ofGetHeight() - drawBlob2.boundingRect.height * .625;
-			
-			drawBlob2.draw();
+			//  ofEllipse(0, 0, drawBlob2.boundingRect.width/2, drawBlob2.boundingRect.height/2);
+            ofLine(0, -drawBlob2.boundingRect.height/2, 0, drawBlob2.boundingRect.height/2);
+            ofLine(-drawBlob2.boundingRect.width/2, 0, drawBlob2.boundingRect.width/2, 0);
             glPopMatrix();
         }
+
         //set line width back to normal
         glLineWidth(1);
 
-        //Displat Text of blob information
-		//     NOT SURE I WANT TO KEEP THIS. DON'T THINK IT'S USEFUL
+         // Displat Text of blob information
+/*		 NOT SURE WE WANT TO KEEP THIS. DON'T THINK IT'S USEFUL
 
-		/* ofSetColor(0xFFFFFF);
+		 ofSetColor(0xFFFFFF);
 		 glLineWidth(1);
 		 char idStr[1024];
 		 sprintf(idStr, "id: %i \n x: %f \n y: %f",drawBlob2.id, ceil(drawBlob2.centroid.x * ofGetWidth()),
 		 ceil(drawBlob2.centroid.y * ofGetHeight()));
 		 verdana.drawString(idStr, drawBlob2.centroid.x * ofGetWidth() - drawBlob2.boundingRect.width/2 + 40,
 		 drawBlob2.centroid.y * ofGetHeight() - drawBlob2.boundingRect.height/2 + 40);
-        */
+*/
     }
 }
 

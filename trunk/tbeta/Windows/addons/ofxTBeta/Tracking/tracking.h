@@ -55,8 +55,7 @@ class BlobTracker : public TouchListener
 
 public:
 
-	BlobTracker();
-	
+	BlobTracker();	
 	
 	deltaTime dTime;
 
