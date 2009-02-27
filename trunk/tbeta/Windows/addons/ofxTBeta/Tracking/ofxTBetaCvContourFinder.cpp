@@ -17,8 +17,6 @@ static int qsort_carea_compare( const void* _a, const void* _b) {
 	return out;
 }
 
-
-
 //--------------------------------------------------------------------------------
 ofxTBetaCvContourFinder::ofxTBetaCvContourFinder() {
 	myMoments = (CvMoments*)malloc( sizeof(CvMoments) );
@@ -35,37 +33,6 @@ void ofxTBetaCvContourFinder::reset() {
     blobs.clear();
     nBlobs = 0;
 }
-
-//--------------------------------------------------------------------------------
-void ofxTBetaCvContourFinder::draw( float x, float y ) {
-
-
-	// ---------------------------- draw the bounding rectangle
-	ofSetColor(0x00FF00);
-    glPushMatrix();
-    glTranslatef( x, y, 0.0 );
-
-	ofNoFill();
-	for( int i=0; i<blobs.size(); i++ ) {
-		ofRect( blobs[i].boundingRect.x, blobs[i].boundingRect.y,
-                blobs[i].boundingRect.width, blobs[i].boundingRect.height );
-	}
-
-	// ---------------------------- draw the blobs
-	ofSetColor(0x00FFFF);
-
-	for( int i=0; i<blobs.size(); i++ ) {
-		ofNoFill();
-		ofBeginShape();
-		for( int j=0; j<blobs[i].nPts; j++ ) {
-			ofVertex( blobs[i].pts[j].x, blobs[i].pts[j].y );
-		}
-		ofEndShape();
-
-	}
-	glPopMatrix();
-}
-
 
 //--------------------------------------------------------------------------------
 int ofxTBetaCvContourFinder::findContours( ofxCvGrayscaleImage&  input,

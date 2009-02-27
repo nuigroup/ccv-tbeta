@@ -30,9 +30,7 @@ class ofxTBetaCvContourFinder {
                        bool bUseApproximation = true);
                        // approximation = don't do points for all points of the contour, if the contour runs
                        // along a straight line, for example...
-
-    void               draw( float x, float y );
-
+		
     int                        nBlobs;     // how many did we find
     vector <ofxTBetaCvBlob>	   blobs;      // the blobs, in a std::vector...
     ofxTBetaCvBlob 	           getBlob(int num);

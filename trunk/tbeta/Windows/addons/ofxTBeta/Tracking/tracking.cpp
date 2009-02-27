@@ -14,7 +14,6 @@ BlobTracker::BlobTracker()
 {
 	IDCounter = 0;
 	isCalibrating = false;
-	//TouchEvents.addListener(this);
 }
 
 
@@ -28,7 +27,6 @@ void BlobTracker::passInCalibration(calibrationB* calibrater) {
 void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 {
 	//printf("starting time: %.3f\n", dTime.time);
-
 	
 	//initialize ID's of all blobs
 	for(int i=0; i<newBlobs->nBlobs; i++)

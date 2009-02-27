@@ -314,13 +314,6 @@ void TBetaBase::draw(){
 
         if(!bCalibration)
         gui->draw();
-
-		//draw link to tbeta website
-		ofSetColor(180, 220, 180, 180);
-		ofFill();
-		ofRect(ofGetWidth() - 230,ofGetHeight() - 14, 230, 14);
-		ofSetColor(0x000000);
-		ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 230, ofGetHeight() - 2);
     }
 }
 
@@ -364,6 +357,13 @@ void TBetaBase::drawToScreen(){
         if(bShowPressure){bigvideo.drawString("Pressure Map", 140, 20);}
         else             {bigvideo.drawString("Source Image", 140, 20);}
 		bigvideo.drawString("Tracked Image", 475, 20);
+
+		//draw link to tbeta website
+		ofSetColor(180, 220, 180, 180);
+		ofFill();
+		ofRect(ofGetWidth() - 230,ofGetHeight() - 14, 230, 14);
+		ofSetColor(0x000000);
+		ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 230, ofGetHeight() - 2);
     }
 
     if(bFastMode)
@@ -466,9 +466,6 @@ void TBetaBase::drawToScreen(){
         ofFill();
         ofCircle(20, 10, 5);
         ofNoFill();
-
-		//gui->draw();
-
     }
 
     if(bShowInterface && !bFastMode) //IF DRAWING BLOB OUTLINES
@@ -503,10 +500,6 @@ void TBetaBase::drawFingerOutlines(){
 
             //Draw contours (outlines) on the source image
             drawBlob.draw(40, 30);
-
-//			ofSetColor(0x0099FF); //Make Plus Sign
-//			ofRect((drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camWidth)) + 40, (drawBlob.centroid.y * (MAIN_WINDOW_HEIGHT/camHeight)) - drawBlob.boundingRect.height + 30, .5, drawBlob.boundingRect.height * 2); //Horizontal Plus
-//			ofRect((drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camWidth)) - drawBlob.boundingRect.width + 40, (drawBlob.centroid.y  * (MAIN_WINDOW_HEIGHT/camHeight)) + 30, drawBlob.boundingRect.width * 2, .5); //Vertical Plus
         }
 
         if(bShowLabels)  //Show ID label;
