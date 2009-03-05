@@ -8,7 +8,7 @@
     <!--// CAMERA SETTINGS // -->
     <CAMERA_0>
         <USECAMERA>1</USECAMERA>
-        <DEVICE>0</DEVICE>
+        <DEVICE>1</DEVICE>
         <WIDTH>320</WIDTH>
         <HEIGHT>240</HEIGHT>
         <FRAMERATE>60</FRAMERATE>
@@ -45,7 +45,7 @@
     </WINDOW>
     <BOOLEAN>
         <PRESSURE>193</PRESSURE>
-        <LABELS>1</LABELS>
+        <LABELS>0</LABELS>
         <OUTLINES>1</OUTLINES>
         <LEARNBG>0</LEARNBG>
         <TUIO>0</TUIO>
