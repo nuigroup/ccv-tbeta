@@ -138,8 +138,8 @@ void TBetaBase ::setupGUI()
 		/****************************
 		* Set GUI values on startup
 		****************************/
-		gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->bVerticalMirror, sizeof(bool));
-		gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->bHorizontalMirror, sizeof(bool));
+		gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
+		gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
 		gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
 		gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
 		//Source
@@ -294,11 +294,11 @@ void TBetaBase ::handleGui(int parameterId, int task, void* data, int length)
 			//Source
 			case propertiesPanel_flipH:
 				if(length == sizeof(bool))
-					bHorizontalMirror = *(bool*)data;
+					filter->bHorizontalMirror = *(bool*)data;
 				break;
 			case propertiesPanel_flipV:
 				if(length == sizeof(bool))
-					bVerticalMirror = *(bool*)data;
+					filter->bVerticalMirror = *(bool*)data;
 				break;
 			//GPU
 			case gpuPanel_use:

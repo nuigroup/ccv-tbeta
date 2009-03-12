@@ -131,6 +131,7 @@ void TBetaBase::loadXMLSettings(){
 	filter->bVerticalMirror		= XML.getValue("CONFIG:BOOLEAN:VMIRROR",0);
 	filter->bHorizontalMirror	= XML.getValue("CONFIG:BOOLEAN:HMIRROR",0);
 
+
 	//Filters
 	filter->bHighpass			= XML.getValue("CONFIG:BOOLEAN:HIGHPASS",1);
 	filter->bAmplify			= XML.getValue("CONFIG:BOOLEAN:AMPLIFY", 1);
@@ -523,6 +524,19 @@ void TBetaBase::keyPressed(int key) {
 	if(showConfiguration) {
 	switch(key)
 	{
+		/* ughhh!!!! 
+		 my main problem is that the slider doesn't move.... 
+		 case 'a':
+			filter->threshold++;
+			gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
+
+			break;
+		case 'z':
+			filter->threshold--;
+			gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
+
+			break;
+		 */
 		case 'b':
 			filter->bLearnBakground = true;
 			break;
@@ -531,12 +545,12 @@ void TBetaBase::keyPressed(int key) {
 			gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
 			break;
 		case 'h':
-			bHorizontalMirror ? bHorizontalMirror = false : bHorizontalMirror = true;
-			gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->bHorizontalMirror, sizeof(bool));
+			filter->bHorizontalMirror ? filter->bHorizontalMirror = false : filter->bHorizontalMirror = true;
+			gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
 			break;
 		case 'j':
-			bVerticalMirror ? bVerticalMirror = false : bVerticalMirror = true;
-			gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->bVerticalMirror, sizeof(bool));
+			filter->bVerticalMirror ? filter->bVerticalMirror = false : filter->bVerticalMirror = true;
+			gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
 			break;
 		case 't':
 			if(!bCalibration && bTUIOMode)

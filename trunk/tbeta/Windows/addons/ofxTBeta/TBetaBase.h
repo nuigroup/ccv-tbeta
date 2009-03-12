@@ -193,8 +193,6 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		bool				bTUIOMode;
 		bool  				bFullscreen;
 		bool 				bCalibration;
-		bool				bVerticalMirror;
-		bool				bHorizontalMirror;
 		bool				bShowLabels;
 		bool				bNewFrame;
 		//filters
