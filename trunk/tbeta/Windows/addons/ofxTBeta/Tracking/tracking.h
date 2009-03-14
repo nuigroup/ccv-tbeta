@@ -20,36 +20,6 @@
 
 #include "../Calibration/calibrationB.h"
 
-class deltaTime
-{
-public:
-	float time, lastTime;
-	
-	deltaTime() {
-		time= 0.0f;
-		timeOne=0.0f;
-		switcher=true;
-	}
-	~deltaTime() {
-	}
-	
-	void countTime() {
-		if(switcher) {
-			timeOne = 0.0f;
-			timeOne = ofGetElapsedTimeMillis(); // get the first value
-			switcher = !switcher; //flip teh switchez!
-		} else {
-			time = ofGetElapsedTimeMillis() - timeOne; // diff between this and that ^
-			switcher = !switcher; // more flipzz
-			lastTime = time;
-		}
-	}
-	
-private:
-	float timeOne;
-	bool switcher;
-};
-
 class BlobTracker : public TouchListener
 {
 
@@ -57,8 +27,6 @@ public:
 
 	BlobTracker();	
 	
-	deltaTime dTime;
-
 	calibrationB* calibrate;
 
 	bool isCalibrating;

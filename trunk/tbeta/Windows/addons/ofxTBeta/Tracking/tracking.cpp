@@ -25,9 +25,7 @@ void BlobTracker::passInCalibration(calibrationB* calibrater) {
 
 //assigns IDs to each blob in the contourFinder
 void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
-{
-	//printf("starting time: %.3f\n", dTime.time);
-	
+{	
 	//initialize ID's of all blobs
 	for(int i=0; i<newBlobs->nBlobs; i++)
 		newBlobs->blobs[i].id=-1;
@@ -81,6 +79,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					newBlobs->blobs[winner].id = trackedBlobs[i].id;
 					newBlobs->blobs[winner].age = trackedBlobs[i].age;
 					newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
+					newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
 					
 					trackedBlobs[i] = newBlobs->blobs[winner];
 				}
@@ -102,6 +101,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						newBlobs->blobs[winner].id = trackedBlobs[i].id;
 						newBlobs->blobs[winner].age = trackedBlobs[i].age;
 						newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
+						newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
 
 //TODO--------------------------------------------------------------------------
 						//now the old winning blob has lost the win.
@@ -153,6 +153,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 				newBlobs->blobs[winner].id = trackedBlobs[i].id;
 				newBlobs->blobs[winner].age = trackedBlobs[i].age;
 				newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
+				newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
 			}
 		}
 	}
@@ -180,28 +181,41 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					ofPoint tempLastCentroid = trackedBlobs[i].centroid; // assign the new centroid to the old
 					trackedBlobs[i]=newBlobs->blobs[j];
 					trackedBlobs[i].lastCentroid = tempLastCentroid;
-
+					
+					//get the Differences in position
 					trackedBlobs[i].D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
-
+					
+					//calculate the accelleration
 					ofPoint tD = trackedBlobs[i].D;
-
 					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y));
 					
+					//calculate the age
+					trackedBlobs[i].age = ofGetElapsedTimef() - trackedBlobs[i].downTime;
+					
+					//todo: add in wiggle room, where is it seth?
 		            if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < 3 && 
 					   abs((int)trackedBlobs[i].lastCentroid.y - (int)trackedBlobs[i].centroid.y) < 3)
 					{						
 						trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
 						trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
-						if(trackedBlobs[i].sitting != -1) trackedBlobs[i].sitting += dTime.lastTime; //1 more frame of sitting
+						if(trackedBlobs[i].sitting != -1) {
+							trackedBlobs[i].sitting = ofGetElapsedTimef() - trackedBlobs[i].downTime; //1 more frame of sitting
+							
+							//used to test sitting time
+							//printf("%i is sitting! %f (%i)\n", i, trackedBlobs[i].sitting, ofGetSeconds());
+						}
 					
 					} else {
+						//if its old enough, and it moves then forget about holds
+						//the user gets .5 seconds of mercy, should be adjustable
 						if(trackedBlobs[i].age > 500) trackedBlobs[i].sitting = -1;
 					}
 					
-					trackedBlobs[i].age += dTime.lastTime; //add the time diff from the last dTime.countTime();
-					dTime.countTime();					
-					
-					if(trackedBlobs[i].sitting > 1500) {
+					//printf("time: %f\n", ofGetElapsedTimef());
+
+					//ok time is now in seconds instead of milliseconds... 
+					//so instead of waiting 1500 we wait 1.5
+					if(trackedBlobs[i].sitting > 1.5) {
 
 						TouchEvents.messenger = trackedBlobs[i];
 
@@ -213,6 +227,9 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 						TouchEvents.notifyTouchHeld(NULL);
+						
+						//should print if holding
+						//printf("holding\n");
 
 					} else {
 						//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
@@ -243,12 +260,13 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 	{
 		if(newBlobs->blobs[i].id==-1)
 		{
-			dTime.countTime();
 			
 			//add new track
 			newBlobs->blobs[i].id=IDCounter++;
 			//printf("id!!!! : %i \n", IDCounter);
+			
 			trackedBlobs.push_back(newBlobs->blobs[i]);
+			trackedBlobs[i].downTime = ofGetElapsedTimef();
 
 			//SEND BLOB DOWN EVENT
 			TouchEvents.messenger = trackedBlobs[i];

@@ -27,6 +27,7 @@ class ofxTBetaCvBlob {
 		
 		float				age; //how long the blob has been at war
 		float				sitting; //how long hes been sitting in the same place
+		float				downTime;
 	
 		bool				simulated; 
 
