@@ -26,6 +26,15 @@ class Calibration : public TouchListener, public ofSimpleApp {
 		Calibration() {
 			TouchEvents.addRAWListener(this);
 			calibrating = false;
+			
+			calibrating = false;
+			bShowTargets = true;
+			bW			= false;
+			bA			= false;
+			bS			= false;
+			bD			= false;
+			
+			downColor = 0xFF0000;
 		}
 
 		/****************************************************************

@@ -20,13 +20,6 @@ void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 	calibrationParticle.loadImage("images/particle.png");
 	calibrationParticle.setUseTexture(true);
 	
-    calibrating = false;
-	bShowTargets = true;
-	bW			= false;
-	bA			= false;
-	bS			= false;
-	bD			= false;
-
     //Fonts - Is there a way to dynamically change font size?
 	verdana.loadFont("verdana.ttf", 8, true, true);	   //Font used for small images
 	calibrationText.loadFont("verdana.ttf", 10, true, true);
@@ -37,8 +30,6 @@ void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 
 	tracker = trackerIn;
 	tracker->passInCalibration(&calibrate);
-	
-	downColor = 0xFF0000;
 
 	printf("Calibration is setup!\n");
 }
@@ -102,8 +93,6 @@ void Calibration::drawCalibrationPointsAndBox(){
 		//If calibrating, draw a red circle around the active point
 		if(calibrate.calibrationStep == i && calibrate.bCalibrating)
 		{
-			if(calibrate.bCalibrating) printf("calibrating... step: %i\n", calibrate.calibrationStep);
-			
 			
 			glPushMatrix();
 			glTranslatef(screenpts[i].X * ofGetWidth(), screenpts[i].Y * ofGetHeight(), 0.0f);
