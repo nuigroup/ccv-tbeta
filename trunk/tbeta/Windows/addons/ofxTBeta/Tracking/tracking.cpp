@@ -209,16 +209,15 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					} else {
 						//if its old enough, and it moves then forget about holds
 						//the user gets .5 seconds of mercy, should be adjustable
-						if(trackedBlobs[i].age > 500) trackedBlobs[i].sitting = -1;
+						if(trackedBlobs[i].age > 0.5f) trackedBlobs[i].sitting = -1;
 					}
 					
 					//printf("time: %f\n", ofGetElapsedTimef());
-					
-					printf("%i age: %f, downTimed at: %f\n", i, trackedBlobs[i].age, trackedBlobs[i].downTime);
+					//printf("%i age: %f, downTimed at: %f\n", i, trackedBlobs[i].age, trackedBlobs[i].downTime);
 
 					//ok time is now in seconds instead of milliseconds... 
 					//so instead of waiting 1500 we wait 1.5
-					if(trackedBlobs[i].sitting > 1.5) {
+					if(trackedBlobs[i].sitting > 1.5f) {
 
 						TouchEvents.messenger = trackedBlobs[i];
 
