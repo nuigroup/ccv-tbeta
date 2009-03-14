@@ -19,7 +19,7 @@ void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 	 *********************/
 	calibrationParticle.loadImage("images/particle.png");
 	calibrationParticle.setUseTexture(true);
-
+	
     calibrating = false;
 	bShowTargets = true;
 	bW			= false;
@@ -37,6 +37,8 @@ void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 
 	tracker = trackerIn;
 	tracker->passInCalibration(&calibrate);
+	
+	downColor = 0xFF0000;
 
 	printf("Calibration is setup!\n");
 }
@@ -100,6 +102,9 @@ void Calibration::drawCalibrationPointsAndBox(){
 		//If calibrating, draw a red circle around the active point
 		if(calibrate.calibrationStep == i && calibrate.bCalibrating)
 		{
+			if(calibrate.bCalibrating) printf("calibrating... step: %i\n", calibrate.calibrationStep);
+			
+			
 			glPushMatrix();
 			glTranslatef(screenpts[i].X * ofGetWidth(), screenpts[i].Y * ofGetHeight(), 0.0f);
 			//draw Circle
