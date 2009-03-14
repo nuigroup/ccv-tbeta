@@ -191,6 +191,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					
 					//calculate the age
 					trackedBlobs[i].age = ofGetElapsedTimef() - trackedBlobs[i].downTime;
+					//printf("%i, downTime: %i, age: %i\n")
 					
 					//todo: add in wiggle room, where is it seth?
 		            if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < 3 && 
@@ -212,6 +213,8 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					}
 					
 					//printf("time: %f\n", ofGetElapsedTimef());
+					
+					printf("%i age: %f, downTimed at: %f\n", i, trackedBlobs[i].age, trackedBlobs[i].downTime);
 
 					//ok time is now in seconds instead of milliseconds... 
 					//so instead of waiting 1500 we wait 1.5
