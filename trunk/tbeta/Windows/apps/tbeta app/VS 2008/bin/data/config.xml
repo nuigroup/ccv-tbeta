@@ -7,7 +7,7 @@
     ///////////////////////////////////////////// -->
     <!--// CAMERA SETTINGS // -->
     <CAMERA_0>
-        <USECAMERA>1</USECAMERA>
+        <USECAMERA>0</USECAMERA>
         <DEVICE>0</DEVICE>
         <WIDTH>320</WIDTH>
         <HEIGHT>240</HEIGHT>
@@ -48,22 +48,22 @@
         <LABELS>1</LABELS>
         <OUTLINES>1</OUTLINES>
         <LEARNBG>0</LEARNBG>
-        <TUIO>1</TUIO>
+        <TUIO>0</TUIO>
         <VMIRROR>0</VMIRROR>
         <HMIRROR>0</HMIRROR>
         <HIGHPASS>1</HIGHPASS>
-        <AMPLIFY>0</AMPLIFY>
-        <SMOOTH>0</SMOOTH>
+        <AMPLIFY>1</AMPLIFY>
+        <SMOOTH>1</SMOOTH>
         <GPU>0</GPU>
         <DYNAMICBG>0</DYNAMICBG>
         <SNAPSHOT>0</SNAPSHOT>
     </BOOLEAN>
     <INT>
         <!--// FILTERS SETTERS //-->
-        <THRESHOLD>41</THRESHOLD>
-        <HIGHPASSBLUR>54</HIGHPASSBLUR>
+        <THRESHOLD>16</THRESHOLD>
+        <HIGHPASSBLUR>16</HIGHPASSBLUR>
         <HIGHPASSNOISE>2</HIGHPASSNOISE>
-        <HIGHPASSAMP>38</HIGHPASSAMP>
-        <SMOOTH>4</SMOOTH>
+        <HIGHPASSAMP>84</HIGHPASSAMP>
+        <SMOOTH>3</SMOOTH>
     </INT>
 </CONFIG>
