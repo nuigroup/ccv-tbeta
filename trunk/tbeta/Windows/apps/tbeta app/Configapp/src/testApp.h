@@ -1,6 +1,8 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
+#define AUTOTRACKER
+
 #define OF_ADDON_USING_OFXTBETA
 
 #include "ofMain.h"

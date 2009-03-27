@@ -24,12 +24,12 @@ class ofxTBetaCvBlob {
 		ofRectangle         angleBoundingRect;
 		ofPoint             centroid, lastCentroid, D;
         bool                hole;
-		
+
 		float				age; //how long the blob has been at war
 		float				sitting; //how long hes been sitting in the same place
 		float				downTime;
-	
-		bool				simulated; 
+
+		bool				simulated;
 
 		float				maccel;
 
@@ -51,16 +51,6 @@ class ofxTBetaCvBlob {
 
         //----------------------------------------
         void draw(float x = 0, float y = 0){
-
-/*		    //draw contours
-		    ofNoFill();
-            ofSetColor(0xFF00FF);
-            ofBeginShape();
-            for (int i = 0; i < nPts; i++){
-                   ofVertex(x + pts[i].x, y + pts[i].y);
-            }
-            ofEndShape(true);
-*/
 			//draw angled bounding box with cross-hair
             glPushMatrix();
 			    ofSetColor(0xFF0099);
@@ -73,6 +63,26 @@ class ofxTBetaCvBlob {
                 ofRect(x + angleBoundingRect.x, y + angleBoundingRect.y - angleBoundingRect.height, 1, angleBoundingRect.height * 2); //Horizontal Plus
                 ofRect(x + angleBoundingRect.x - angleBoundingRect.width, y + angleBoundingRect.y, angleBoundingRect.width * 2, 1); //Horizontal Plus
             glPopMatrix();
+        }
+
+        void drawContours(float x = 0, float y = 0, float width = ofGetWidth(), float height = ofGetHeight()) {
+            //draw contours
+		    ofNoFill();
+            ofSetColor(0xFFFFFF);
+
+            /*glPushMatrix();
+			    ofSetColor(0xFF0099);
+                glTranslatef(x + angleBoundingRect.x/width * ofGetWidth(), y + angleBoundingRect.y/(height) * ofGetHeight(), 0.0f);
+                glRotatef(-angle, 0.0f, 0.0f, 1.0f);*/
+            ofBeginShape();
+            for (int i = 0; i < nPts; i++){
+                   ofVertex(x + pts[i].x/width * ofGetWidth(), y + pts[i].y/(height) * ofGetHeight());
+            }
+            ofEndShape(true);
+                /*ofSetColor(0x0099FF);
+                ofRect(x + angleBoundingRect.x, y + angleBoundingRect.y - angleBoundingRect.height, 1, angleBoundingRect.height * 2); //Horizontal Plus
+                ofRect(x + angleBoundingRect.x - angleBoundingRect.width, y + angleBoundingRect.y, angleBoundingRect.width * 2, 1); //Horizontal Plus
+            glPopMatrix();*/
         }
 };
 #endif

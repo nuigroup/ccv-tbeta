@@ -92,7 +92,7 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 			//listen for Touch Events
 			TouchEvents.addListener(this);
 			//initialize filter
-			filter = NULL; 
+			filter = NULL;
 			//fps and dsp calculation
 			frames		= 0;
 			fps			= 0;
@@ -102,21 +102,29 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 			bCalibration= 0;
 			bDrawVideo = 1;
 			bFullscreen = 0;
-			bcamera = 0;	
+			bcamera = 0;
 			bShowLabels = 1;
 			bFastMode = 0;
 			bDrawOutlines = 1;
 			bGPUMode = 0;
 			bTUIOMode = 0;
-			showConfiguration = 0;	
+			showConfiguration = 0;
 			//camera
 			camRate = 30;
 			camWidth = 320;
 			camHeight = 240;
-		} 
+
+            //if auto tracker is defined then the tracker automagically comes up
+            //on startup..
+            #ifdef AUTOTRACKER
+                autoTracker = true;
+            #else
+                autoTracker = false;
+            #endif
+		}
 
 		~TBetaBase(){
-			    
+
 			if( filter != NULL ) {
 				delete filter;
 			}
@@ -199,6 +207,9 @@ class TBetaBase : public ofSimpleApp, public ofxGuiListener, public TouchListene
 		bool				bAutoBackground;
 		//modes
 		bool				bGPUMode;
+
+		//auto ~
+		bool                autoTracker;
 
 		/****************************************************
 		 *End config.xml variables
