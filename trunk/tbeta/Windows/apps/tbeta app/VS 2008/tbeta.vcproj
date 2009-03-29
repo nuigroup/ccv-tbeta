@@ -711,122 +711,122 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="ofxGui"
+						Name="GUI"
 						>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGui.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGui.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGui.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGui.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiButton.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiButton.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiButton.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiButton.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiColor.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiColor.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiColor.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiColor.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiFiles.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiFiles.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiFiles.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiFiles.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiGlobals.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiGlobals.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiGlobals.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiGlobals.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiKnob.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiKnob.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiKnob.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiKnob.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiMatrix.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiMatrix.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiMatrix.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiMatrix.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiObject.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiObject.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiObject.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiObject.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiPanel.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiPanel.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiPanel.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiPanel.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiPoints.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiPoints.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiPoints.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiPoints.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiRadar.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiRadar.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiRadar.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiRadar.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiScope.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiScope.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiScope.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiScope.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiSlider.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiSlider.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiSlider.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiSlider.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiTypes.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiTypes.h"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiXYPad.cpp"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiXYPad.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\addons\ofxTBeta\ofxGui\ofxGuiXYPad.h"
+							RelativePath="..\..\..\addons\ofxTBeta\GUI\ofxGuiXYPad.h"
 							>
 						</File>
 					</Filter>

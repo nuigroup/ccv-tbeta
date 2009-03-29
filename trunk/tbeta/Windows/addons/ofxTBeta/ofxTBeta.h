@@ -36,8 +36,8 @@
 #include "Communication/TUIOOSC.h"
 
 //GUI
-#include "ofxGui/ofxGui.h"
-#include "ofxGui/ofxGuiTypes.h"
+#include "GUI/ofxGui.h"
+#include "GUI/ofxGuiTypes.h"
 
 //#include "Camera/Camera.h"
 
