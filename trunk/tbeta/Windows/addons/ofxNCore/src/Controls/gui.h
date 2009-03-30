@@ -107,8 +107,9 @@ void ofxNCoreVision ::setupGUI()
 		ofxGuiPanel* bkPanel1 = gui->addPanel(appPtr->backgroundPanel, "Background", 86, 487, 10, 7);
 		bkPanel1->addButton(backgroundPanel_remove, "Remove BG (b)", 10, 10, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 		bkPanel1->addButton(backgroundPanel_dynamic, "Dynamic Subtract", 10, 10, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+		bkPanel1->addSlider(appPtr->backgroundPanel_learn_rate, "Learn Speed", 110, 13, 1.0f, 500.0f, backgroundLearnRate, kofxGui_Display_Int, 0);
 		bkPanel1->mObjWidth = 127;
-		bkPanel1->mObjHeight = 65;
+		bkPanel1->mObjHeight = 95;
 
 		//Smooth Image
 		ofxGuiPanel* sPanel = gui->addPanel(appPtr->smoothPanel, "Smooth", 236, 487, 10, 7);
@@ -181,6 +182,8 @@ void ofxNCoreVision ::setupGUI()
 		gui->update(appPtr->trackedPanel_min_blob_size, kofxGui_Set_Bool, &appPtr->MIN_BLOB_SIZE, sizeof(float));
 		//Max Blob Size
 		gui->update(appPtr->trackedPanel_max_blob_size, kofxGui_Set_Bool, &appPtr->MAX_BLOB_SIZE, sizeof(float));
+		//Background Learn Rate
+		gui->update(appPtr->backgroundPanel_learn_rate, kofxGui_Set_Bool, &appPtr->backgroundLearnRate, sizeof(float));
 		//Send TUIO
 		gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
 		//GPU Mode
@@ -330,6 +333,10 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			case backgroundPanel_remove:
 				if(length == sizeof(bool))
 					filter->bLearnBakground = *(bool*)data;
+				break;
+			case backgroundPanel_learn_rate:
+				if(length == sizeof(float))
+					backgroundLearnRate = *(float*)data;
 				break;
 			//Highpass
 			case highpassPanel_use:

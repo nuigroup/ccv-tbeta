@@ -63,6 +63,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			backgroundPanel,
 			backgroundPanel_remove,
 			backgroundPanel_dynamic,
+			backgroundPanel_learn_rate,
 
 			smoothPanel,
 			smoothPanel_use,
@@ -118,7 +119,8 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			camRate = 30;
 			camWidth = 320;
 			camHeight = 240;
-			
+			//ints/floats
+			backgroundLearnRate = .01;
 			MIN_BLOB_SIZE = 2;
 			MAX_BLOB_SIZE = 100;
             //if auto tracker is defined then the tracker automagically comes up
@@ -196,6 +198,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 		int					winHeight;
 		int					MIN_BLOB_SIZE;
 		int					MAX_BLOB_SIZE;
+		float				backgroundLearnRate;
 
 		bool				showConfiguration;
 

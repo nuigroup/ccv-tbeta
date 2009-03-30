@@ -18,8 +18,10 @@ class ProcessFilters : public Filters {
 
         camWidth = w;
         camHeight = h;
-
-        exposureStartTime = ofGetElapsedTimeMillis();
+		//initialize learnrate
+		fLearnRate = 0.0f;
+        
+		exposureStartTime = ofGetElapsedTimeMillis();
 
         //CPU Setup
         grayImg.allocate(camWidth, camHeight);		//Gray Image

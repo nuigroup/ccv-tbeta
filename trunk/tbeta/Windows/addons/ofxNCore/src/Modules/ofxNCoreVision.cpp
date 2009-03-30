@@ -161,6 +161,7 @@ void ofxNCoreVision::loadXMLSettings()
     tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
 	MIN_BLOB_SIZE				= XML.getValue("CONFIG:INT:MINBLOBSIZE",2);
 	MAX_BLOB_SIZE				= XML.getValue("CONFIG:INT:MAXBLOBSIZE",100);
+	backgroundLearnRate			= XML.getValue("CONFIG:INT:BGLEARNRATE", 0.01f);
 
 	//Filter Settings
     filter->threshold			= XML.getValue("CONFIG:INT:THRESHOLD",0);
@@ -207,6 +208,7 @@ void ofxNCoreVision::saveConfiguration()
 	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MIN_MOVEMENT_THRESHOLD);
 	XML.setValue("CONFIG:INT:MINBLOBSIZE", MIN_BLOB_SIZE);
 	XML.setValue("CONFIG:INT:MAXBLOBSIZE", MAX_BLOB_SIZE);
+	XML.setValue("CONFIG:INT:BGLEARNRATE", backgroundLearnRate);	
 
     XML.setValue("CONFIG:INT:THRESHOLD", filter->threshold);
     XML.setValue("CONFIG:INT:HIGHPASSBLUR", filter->highpassBlur);
@@ -280,10 +282,10 @@ void ofxNCoreVision::update()
             //Dynamic Background subtraction LearRate
             if (filter->bDynamicBG)
             {
-                filter->fLearnRate = 0.01f; //If there are no blobs, add the background faster.
+                filter->fLearnRate = backgroundLearnRate * .0001; //If there are no blobs, add the background faster.
                 if (contourFinder.nBlobs > 0) //If there ARE blobs, add the background slower.
                 {
-                    filter->fLearnRate = 0.0003f;
+                    filter->fLearnRate = backgroundLearnRate * .0001;
                 }
             }//End Background Learning rate
 

@@ -9,8 +9,8 @@
     <CAMERA_0>
         <USECAMERA>0</USECAMERA>
         <DEVICE>0</DEVICE>
-        <WIDTH>240</WIDTH>
-        <HEIGHT>320</HEIGHT>
+        <WIDTH>320</WIDTH>
+        <HEIGHT>240</HEIGHT>
         <FRAMERATE>60</FRAMERATE>
     </CAMERA_0>
     <!--// NETWORK COMMUNICATION SETTINGS //-->
@@ -22,7 +22,7 @@
     </NETWORK>
     <!--// VIDEO SETTINGS // -->
     <VIDEO>
-        <FILENAME>test_videos/hard-5point.avi</FILENAME>
+        <FILENAME>test_videos/RearDI.m4v</FILENAME>
     </VIDEO>
     <!--// BLOB SETTINGS // -->
     <BLOBS>
@@ -42,7 +42,7 @@
         <HEIGHT>600</HEIGHT>
     </WINDOW>
     <BOOLEAN>
-        <PRESSURE>0</PRESSURE>
+        <PRESSURE>205</PRESSURE>
         <LABELS>1</LABELS>
         <OUTLINES>1</OUTLINES>
         <LEARNBG>0</LEARNBG>
@@ -58,7 +58,7 @@
         <MINIMODE>0</MINIMODE>
     </BOOLEAN>
     <INT>
-        <MINMOVEMENT>0</MINMOVEMENT>
+        <MINMOVEMENT>1</MINMOVEMENT>
         <MINBLOBSIZE>46</MINBLOBSIZE>
         <MAXBLOBSIZE>135</MAXBLOBSIZE>
         <!--// FILTERS SETTERS //-->
@@ -67,5 +67,6 @@
         <HIGHPASSNOISE>3</HIGHPASSNOISE>
         <HIGHPASSAMP>27</HIGHPASSAMP>
         <SMOOTH>3</SMOOTH>
+        <BGLEARNRATE>19.145454</BGLEARNRATE>
     </INT>
 </CONFIG>
