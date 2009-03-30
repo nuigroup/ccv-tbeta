@@ -640,10 +640,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="Camera"
-					>
-				</Filter>
-				<Filter
 					Name="Communication"
 					>
 					<File
