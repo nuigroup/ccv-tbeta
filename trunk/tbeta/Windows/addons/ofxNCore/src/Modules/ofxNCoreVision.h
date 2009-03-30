@@ -118,7 +118,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 
             //if auto tracker is defined then the tracker automagically comes up
             //on startup..
-            #ifdef AUTOTRACKER
+            #ifdef AUTO_CONFIG
                 autoTracker = true;
             #else
                 autoTracker = false;

@@ -1,10 +1,13 @@
 /*
  *  ofxNCoreVision.cpp
  *  NUI Group Community Core Vision
- * 
+ *  http://core.nuigroup.com/vision
+ *  
+ *  License: (Put information here)
  *  Created by NUI Group Dev Team A on 2/1/09.
  *  Copyright 2009 NUI Group/Inc. All rights reserved.
- *
+ *  http://forums.nuigroup.com/
+ * 
  */
 
 #include "ofxNCoreVision.h"
@@ -508,7 +511,7 @@ void ofxNCoreVision::drawToScreen()
         }
 
         ofSetColor(0xFF0000);
-        sidebarTXT.drawString("Press spacebar to toggle mini mode", 740, 580);
+        sidebarTXT.drawString("Press spacebar to toggle mini mode", 729, 580);
 
         //Draw PINK CIRCLE 'ON' LIGHT
         ofSetColor(255, 0, 255);
