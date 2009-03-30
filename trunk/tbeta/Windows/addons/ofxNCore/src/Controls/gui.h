@@ -23,7 +23,7 @@ void ofxNCoreVision ::setupGUI()
 		gui->mGlobals->mFrameColor.r = 0;
 		gui->mGlobals->mFrameColor.g = 0;
 		gui->mGlobals->mFrameColor.b = 0;
-		gui->mGlobals->mFrameColor.a = .3;
+		gui->mGlobals->mFrameColor.a = .3; 
 		//text color
 		gui->mGlobals->mTextColor.r = 0;
 		gui->mGlobals->mTextColor.g = 0;
@@ -70,12 +70,16 @@ void ofxNCoreVision ::setupGUI()
 		ofxGuiPanel* trackPanel = gui->addPanel(appPtr->trackedPanel, "Tracked Image", 386, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 		trackPanel->addButton(appPtr->trackedPanel_outlines, "Show Outlines (o)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		trackPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
-		trackPanel->addSlider(appPtr->trackedPanel_threshold, "Threshold (a/z)", 300, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
+		trackPanel->addSlider(appPtr->trackedPanel_threshold, "Image Threshold (a/z)", 140, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
+		trackPanel->addSlider(appPtr->trackedPanel_min_movement, "Movement Threshold", 140, 13, 0.0f, 15.0f, tracker.MIN_MOVEMENT_THRESHOLD, kofxGui_Display_Int, 0);
 		trackPanel->mObjHeight = 85;
 		trackPanel->mObjWidth = 319;
 		trackPanel->mObjects[1]->mObjX = 130;
 		trackPanel->mObjects[1]->mObjY = 32;
 		trackPanel->mObjects[2]->mObjY = 52;
+		trackPanel->mObjects[3]->mObjX = 165;
+		trackPanel->mObjects[3]->mObjY = 52;
+		trackPanel->adjustToNewContent(100, 0);
 
 		//Source Image
 		ofxGuiPanel* srcPanel = gui->addPanel(appPtr->sourcePanel, "Source Image", 41, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
@@ -164,6 +168,8 @@ void ofxNCoreVision ::setupGUI()
 		gui->update(appPtr->amplifyPanel_amp, kofxGui_Set_Bool, &appPtr->filter->highpassAmp, sizeof(float));
 		//Threshold
 		gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
+		//Min Movement
+		gui->update(appPtr->trackedPanel_min_movement, kofxGui_Set_Bool, &appPtr->tracker.MIN_MOVEMENT_THRESHOLD, sizeof(float));
 		//Send TUIO
 		gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
 		//GPU Mode
@@ -190,9 +196,6 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 							camWidth = vidGrabber.width;
 							camHeight = vidGrabber.height;
 							vidGrabber.initGrabber(camWidth,camHeight);
-//							calibrate.setCamRes(camHeight, camWidth);
-//							calibrate.computeCameraToScreenMap();
-
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
@@ -220,9 +223,6 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 							printf("Video Mode\n");
 							camHeight = vidPlayer.height;
 							camWidth = vidPlayer.width;
-//							calibrate.setCamRes(camHeight, camWidth);
-//							calibrate.computeCameraToScreenMap();
-
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
@@ -345,6 +345,10 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			case trackedPanel_threshold:
 				if(length == sizeof(float))
 					filter->threshold = *(float*)data;
+				break;
+			case trackedPanel_min_movement:
+				if(length == sizeof(float))
+					tracker.MIN_MOVEMENT_THRESHOLD = *(float*)data;
 				break;
 			case trackedPanel_outlines:
 				if(length == sizeof(bool))

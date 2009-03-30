@@ -27,9 +27,11 @@ public:
 
 	BlobTracker();	
 	
-	calibrationB* calibrate;
+	calibrationB* calibrate; 
 
 	bool isCalibrating;
+	
+	int MIN_MOVEMENT_THRESHOLD;
 
 	void passInCalibration(calibrationB* calibrate);
 

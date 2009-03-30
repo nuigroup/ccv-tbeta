@@ -80,6 +80,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			trackedPanel,
 			trackedPanel_use,
 			trackedPanel_threshold,
+			trackedPanel_min_movement,
 			trackedPanel_outlines,
 			trackedPanel_ids,
 

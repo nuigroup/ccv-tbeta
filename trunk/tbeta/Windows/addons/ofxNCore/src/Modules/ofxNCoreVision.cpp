@@ -1,13 +1,10 @@
 /*
  *  ofxNCoreVision.cpp
  *  NUI Group Community Core Vision
- *  http://core.nuigroup.com/vision
- *  
- *  License: (Put information here)
+ * 
  *  Created by NUI Group Dev Team A on 2/1/09.
  *  Copyright 2009 NUI Group/Inc. All rights reserved.
- *  http://forums.nuigroup.com/
- * 
+ *
  */
 
 #include "ofxNCoreVision.h"
@@ -34,7 +31,7 @@ void ofxNCoreVision::setup()
     if ( filter == NULL )
     {
         filter = new ProcessFilters();
-    }
+    } 
 
     //Load Settings from config.xml file
     loadXMLSettings();
@@ -161,9 +158,10 @@ void ofxNCoreVision::loadXMLSettings()
     filter->bDynamicBG			= XML.getValue("CONFIG:BOOLEAN:DYNAMICBG", 1);
 
     //GPU
-    bGPUMode			= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
+    bGPUMode					= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
 
-    //Filter Settings
+    tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
+	//Filter Settings
     filter->threshold			= XML.getValue("CONFIG:INT:THRESHOLD",0);
     filter->highpassBlur		= XML.getValue("CONFIG:INT:HIGHPASSBLUR",0);
     filter->highpassNoise		= XML.getValue("CONFIG:INT:HIGHPASSNOISE",0);
@@ -204,7 +202,8 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:BOOLEAN:DYNAMICBG", filter->bDynamicBG);
 
     XML.setValue("CONFIG:BOOLEAN:GPU", bGPUMode);
-
+	
+	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MIN_MOVEMENT_THRESHOLD);
     XML.setValue("CONFIG:INT:THRESHOLD", filter->threshold);
     XML.setValue("CONFIG:INT:HIGHPASSBLUR", filter->highpassBlur);
     XML.setValue("CONFIG:INT:HIGHPASSNOISE", filter->highpassNoise);
@@ -511,7 +510,7 @@ void ofxNCoreVision::drawToScreen()
         }
 
         ofSetColor(0xFF0000);
-        sidebarTXT.drawString("Press spacebar to toggle mini mode", 729, 580);
+        sidebarTXT.drawString("Press spacebar to toggle mini mode", 740, 580);
 
         //Draw PINK CIRCLE 'ON' LIGHT
         ofSetColor(255, 0, 255);

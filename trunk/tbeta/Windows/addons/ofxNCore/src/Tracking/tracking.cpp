@@ -194,10 +194,10 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 					//printf("%i, downTime: %i, age: %i\n")
 					
 					//todo: add in wiggle room, where is it seth?
-		            if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < 3 && 
-					   abs((int)trackedBlobs[i].lastCentroid.y - (int)trackedBlobs[i].centroid.y) < 3)
+		            if(abs((int)trackedBlobs[i].lastCentroid.x - (int)trackedBlobs[i].centroid.x) < MIN_MOVEMENT_THRESHOLD && 
+					   abs((int)trackedBlobs[i].lastCentroid.y - (int)trackedBlobs[i].centroid.y) < MIN_MOVEMENT_THRESHOLD)
 					{						
-						trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
+						trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x; 
 						trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
 						if(trackedBlobs[i].sitting != -1) {
 							trackedBlobs[i].sitting = ofGetElapsedTimef() - trackedBlobs[i].downTime; //1 more frame of sitting
