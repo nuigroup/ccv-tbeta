@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<CONFIG>
+    <!--/////////////////////////////////////////
+
+        YOU CAN MANUALLY EDIT THE FEATURES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <!--// CAMERA SETTINGS // -->
+    <CAMERA_0>
+        <USECAMERA>0</USECAMERA>
+        <DEVICE>0</DEVICE>
+        <WIDTH>320</WIDTH>
+        <HEIGHT>240</HEIGHT>
+        <FRAMERATE>60</FRAMERATE>
+    </CAMERA_0>
+    <!--// NETWORK COMMUNICATION SETTINGS //-->
+    <NETWORK>
+        <LOCALHOST>127.0.0.1</LOCALHOST>
+        <TUIO>0</TUIO>
+        <TUIOPORT_OUT>3333</TUIOPORT_OUT>
+        <TUIOPORT_IN>3000</TUIOPORT_IN>
+    </NETWORK>
+    <!--// VIDEO SETTINGS // -->
+    <VIDEO>
+        <FILENAME>test_videos/RearDI.m4v</FILENAME>
+    </VIDEO>
+    <!--// BLOB SETTINGS // -->
+    <BLOBS>
+        <MAXNUMBER>20</MAXNUMBER>
+    </BLOBS>
+    <!--/////////////////////////////////////////
+
+        DO NOT EDIT THE VALUES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <APPLICATION>
+        <TITLE>T-Beta</TITLE>
+        <VERSION>1.1.0</VERSION>
+    </APPLICATION>
+    <WINDOW>
+        <WIDTH>950</WIDTH>
+        <HEIGHT>600</HEIGHT>
+        <MINX>800</MINX>
+        <MINY>426</MINY>
+    </WINDOW>
+    <BOOLEAN>
+        <PRESSURE>0</PRESSURE>
+        <LABELS>1</LABELS>
+        <OUTLINES>1</OUTLINES>
+        <LEARNBG>0</LEARNBG>
+        <TUIO>1</TUIO>
+        <VMIRROR>1</VMIRROR>
+        <HMIRROR>0</HMIRROR>
+        <HIGHPASS>1</HIGHPASS>
+        <AMPLIFY>1</AMPLIFY>
+        <SMOOTH>1</SMOOTH>
+        <GPU>0</GPU>
+        <DYNAMICBG>1</DYNAMICBG>
+        <SNAPSHOT>0</SNAPSHOT>
+        <MINIMODE>0</MINIMODE>
+    </BOOLEAN>
+    <INT>
+        <!--// FILTERS SETTERS //-->
+        <THRESHOLD>39</THRESHOLD>
+        <HIGHPASSBLUR>20</HIGHPASSBLUR>
+        <HIGHPASSNOISE>9</HIGHPASSNOISE>
+        <HIGHPASSAMP>114</HIGHPASSAMP>
+        <SMOOTH>3</SMOOTH>
+    </INT>
+</CONFIG>

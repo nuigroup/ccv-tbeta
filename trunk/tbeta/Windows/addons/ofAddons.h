@@ -49,7 +49,13 @@
 	#include "ofxXmlSettings.h"
 #endif
 
+//-------------------------------------------- ofxTbeta
 #ifdef OF_ADDON_USING_OFXTBETA
     //this really shouldn't be like this, but it's the only way i got it to compile.. any thoughts?
 	#include "ofxTBeta/ofxTBeta.h"
+#endif
+
+//-------------------------------------------- ofxNCore
+#ifdef OF_ADDON_USING_OFXNCORE
+	#include "ofxNCore/src/ofxNCore.h"
 #endif
