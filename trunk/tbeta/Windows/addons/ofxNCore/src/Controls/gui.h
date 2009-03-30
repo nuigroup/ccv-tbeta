@@ -72,13 +72,20 @@ void ofxNCoreVision ::setupGUI()
 		trackPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		trackPanel->addSlider(appPtr->trackedPanel_threshold, "Image Threshold (a/z)", 140, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
 		trackPanel->addSlider(appPtr->trackedPanel_min_movement, "Movement Threshold", 140, 13, 0.0f, 15.0f, tracker.MIN_MOVEMENT_THRESHOLD, kofxGui_Display_Int, 0);
-		trackPanel->mObjHeight = 85;
+		trackPanel->addSlider(appPtr->trackedPanel_min_blob_size, "Min Blob Size", 140, 13, 0.0f, 50.0f, MIN_BLOB_SIZE, kofxGui_Display_Int, 0);
+		trackPanel->addSlider(appPtr->trackedPanel_max_blob_size, "Max Blob Size", 140, 13, 5.0f, 200.0f, MAX_BLOB_SIZE, kofxGui_Display_Int, 0);
+		trackPanel->mObjHeight = 100;
 		trackPanel->mObjWidth = 319;
-		trackPanel->mObjects[1]->mObjX = 130;
-		trackPanel->mObjects[1]->mObjY = 32;
-		trackPanel->mObjects[2]->mObjY = 52;
+		trackPanel->mObjects[0]->mObjX = 120;
+		trackPanel->mObjects[0]->mObjY = 11;
+		trackPanel->mObjects[1]->mObjX = 235;
+		trackPanel->mObjects[1]->mObjY = 11;
+		trackPanel->mObjects[2]->mObjY = 32;		
 		trackPanel->mObjects[3]->mObjX = 165;
-		trackPanel->mObjects[3]->mObjY = 52;
+		trackPanel->mObjects[3]->mObjY = 32;
+		trackPanel->mObjects[4]->mObjY = 67;
+		trackPanel->mObjects[5]->mObjX = 165;
+		trackPanel->mObjects[5]->mObjY = 67;
 		trackPanel->adjustToNewContent(100, 0);
 
 		//Source Image
@@ -170,6 +177,10 @@ void ofxNCoreVision ::setupGUI()
 		gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
 		//Min Movement
 		gui->update(appPtr->trackedPanel_min_movement, kofxGui_Set_Bool, &appPtr->tracker.MIN_MOVEMENT_THRESHOLD, sizeof(float));
+		//Min Blob Size
+		gui->update(appPtr->trackedPanel_min_blob_size, kofxGui_Set_Bool, &appPtr->MIN_BLOB_SIZE, sizeof(float));
+		//Max Blob Size
+		gui->update(appPtr->trackedPanel_max_blob_size, kofxGui_Set_Bool, &appPtr->MAX_BLOB_SIZE, sizeof(float));
 		//Send TUIO
 		gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
 		//GPU Mode
@@ -349,6 +360,14 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			case trackedPanel_min_movement:
 				if(length == sizeof(float))
 					tracker.MIN_MOVEMENT_THRESHOLD = *(float*)data;
+				break;
+			case trackedPanel_min_blob_size:
+				if(length == sizeof(float))
+					MIN_BLOB_SIZE = *(float*)data;
+				break;
+			case trackedPanel_max_blob_size:
+				if(length == sizeof(float))
+					MAX_BLOB_SIZE = *(float*)data;
 				break;
 			case trackedPanel_outlines:
 				if(length == sizeof(bool))

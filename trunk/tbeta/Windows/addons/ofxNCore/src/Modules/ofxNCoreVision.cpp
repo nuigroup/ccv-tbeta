@@ -127,16 +127,14 @@ void ofxNCoreVision::loadXMLSettings()
     //--------------------------------------------------------------
     //frameRate			= XML.getValue("CONFIG:APPLICATION:FRAMERATE",0);
 
-    winWidth			= XML.getValue("CONFIG:WINDOW:WIDTH",0);
-    winHeight			= XML.getValue("CONFIG:WINDOW:HEIGHT",0);
-    minWidth			= XML.getValue("CONFIG:WINDOW:MINX",0);
-    minHeight			= XML.getValue("CONFIG:WINDOW:MINY",0);
+    winWidth			= XML.getValue("CONFIG:WINDOW:WIDTH", 950);
+    winHeight			= XML.getValue("CONFIG:WINDOW:HEIGHT", 600);
 
-    bcamera				= XML.getValue("CONFIG:CAMERA_0:USECAMERA",0);
-    deviceID			= XML.getValue("CONFIG:CAMERA_0:DEVICE",0);
-    camWidth			= XML.getValue("CONFIG:CAMERA_0:WIDTH",0);
-    camHeight			= XML.getValue("CONFIG:CAMERA_0:HEIGHT",0);
-    camRate				= XML.getValue("CONFIG:CAMERA_0:FRAMERATE",0);
+    bcamera				= XML.getValue("CONFIG:CAMERA_0:USECAMERA", 1);
+    deviceID			= XML.getValue("CONFIG:CAMERA_0:DEVICE", 0);
+    camWidth			= XML.getValue("CONFIG:CAMERA_0:WIDTH", 320);
+    camHeight			= XML.getValue("CONFIG:CAMERA_0:HEIGHT", 240);
+    camRate				= XML.getValue("CONFIG:CAMERA_0:FRAMERATE", 0);
 
     videoFileName		= XML.getValue("CONFIG:VIDEO:FILENAME", "RearDI.m4v");
 
@@ -161,6 +159,9 @@ void ofxNCoreVision::loadXMLSettings()
     bGPUMode					= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
 
     tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
+	MIN_BLOB_SIZE				= XML.getValue("CONFIG:INT:MINBLOBSIZE",2);
+	MAX_BLOB_SIZE				= XML.getValue("CONFIG:INT:MAXBLOBSIZE",100);
+
 	//Filter Settings
     filter->threshold			= XML.getValue("CONFIG:INT:THRESHOLD",0);
     filter->highpassBlur		= XML.getValue("CONFIG:INT:HIGHPASSBLUR",0);
@@ -204,6 +205,9 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:BOOLEAN:GPU", bGPUMode);
 	
 	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MIN_MOVEMENT_THRESHOLD);
+	XML.setValue("CONFIG:INT:MINBLOBSIZE", MIN_BLOB_SIZE);
+	XML.setValue("CONFIG:INT:MAXBLOBSIZE", MAX_BLOB_SIZE);
+
     XML.setValue("CONFIG:INT:THRESHOLD", filter->threshold);
     XML.setValue("CONFIG:INT:HIGHPASSBLUR", filter->highpassBlur);
     XML.setValue("CONFIG:INT:HIGHPASSNOISE", filter->highpassNoise);
@@ -259,13 +263,13 @@ void ofxNCoreVision::update()
             {
                 grabFrameToGPU(filter->gpuSourceTex);
                 filter->applyGPUFilters();
-                contourFinder.findContours(filter->gpuReadBackImageGS, 1, (camWidth*camHeight)/25, maxBlobs, false);
+                contourFinder.findContours(filter->gpuReadBackImageGS, MIN_BLOB_SIZE, MAX_BLOB_SIZE, maxBlobs, false);
             }
             else
             {
                 grabFrameToCPU();
                 filter->applyCPUFilters( processedImg );
-                contourFinder.findContours(processedImg, 1, (camWidth*camHeight)/25, maxBlobs, false);
+                contourFinder.findContours(processedImg, MIN_BLOB_SIZE, MAX_BLOB_SIZE, maxBlobs, false);
             }
 
             //Track found contours/blobss

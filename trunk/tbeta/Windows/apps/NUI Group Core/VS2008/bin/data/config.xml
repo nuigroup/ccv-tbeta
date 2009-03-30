@@ -34,14 +34,12 @@
  
     ///////////////////////////////////////////// -->
     <APPLICATION>
-        <TITLE>T-Beta</TITLE>
-        <VERSION>1.1.0</VERSION>
+        <TITLE>Community Core Visision</TITLE>
+        <VERSION>1.2.0</VERSION>
     </APPLICATION>
     <WINDOW>
         <WIDTH>950</WIDTH>
         <HEIGHT>600</HEIGHT>
-        <MINX>800</MINX>
-        <MINY>426</MINY>
     </WINDOW>
     <BOOLEAN>
         <PRESSURE>205</PRESSURE>
@@ -52,7 +50,7 @@
         <VMIRROR>0</VMIRROR>
         <HMIRROR>0</HMIRROR>
         <HIGHPASS>1</HIGHPASS>
-        <AMPLIFY>1</AMPLIFY>
+        <AMPLIFY>0</AMPLIFY>
         <SMOOTH>0</SMOOTH>
         <GPU>0</GPU>
         <DYNAMICBG>0</DYNAMICBG>
@@ -60,11 +58,13 @@
         <MINIMODE>0</MINIMODE>
     </BOOLEAN>
     <INT>
-        <MINMOVEMENT>2</MINMOVEMENT>
+        <MINMOVEMENT>1</MINMOVEMENT>
+        <MINBLOBSIZE>3</MINBLOBSIZE>
+        <MAXBLOBSIZE>50</MAXBLOBSIZE>
         <!--// FILTERS SETTERS //-->
-        <THRESHOLD>49</THRESHOLD>
+        <THRESHOLD>21</THRESHOLD>
         <HIGHPASSBLUR>23</HIGHPASSBLUR>
-        <HIGHPASSNOISE>2</HIGHPASSNOISE>
+        <HIGHPASSNOISE>0</HIGHPASSNOISE>
         <HIGHPASSAMP>32</HIGHPASSAMP>
         <SMOOTH>3</SMOOTH>
     </INT>

@@ -81,6 +81,8 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			trackedPanel_use,
 			trackedPanel_threshold,
 			trackedPanel_min_movement,
+			trackedPanel_min_blob_size,
+			trackedPanel_max_blob_size,
 			trackedPanel_outlines,
 			trackedPanel_ids,
 
@@ -116,10 +118,12 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			camRate = 30;
 			camWidth = 320;
 			camHeight = 240;
-
+			
+			MIN_BLOB_SIZE = 2;
+			MAX_BLOB_SIZE = 100;
             //if auto tracker is defined then the tracker automagically comes up
             //on startup..
-            #ifdef AUTO_CONFIG
+            #ifdef AUTOTRACKER
                 autoTracker = true;
             #else
                 autoTracker = false;
@@ -190,8 +194,8 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 		int 				camHeight;
 		int					winWidth;
 		int					winHeight;
-		int					minWidth;
-		int					minHeight;
+		int					MIN_BLOB_SIZE;
+		int					MAX_BLOB_SIZE;
 
 		bool				showConfiguration;
 
