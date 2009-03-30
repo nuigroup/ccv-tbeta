@@ -19,7 +19,6 @@
 #include "TouchMessenger.h"
 
 //Used for tracking algo
-//
 #include "Tracking/BlobManager.h"
 #include "Tracking/tracking.h"
 

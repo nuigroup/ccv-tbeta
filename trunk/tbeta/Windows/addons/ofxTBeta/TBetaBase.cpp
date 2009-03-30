@@ -56,7 +56,7 @@ void TBetaBase::setup()
     else
     {
         activeInput = true;
-        vidPlayer.loadMovie("test_videos/" + videoFileName);
+        vidPlayer.loadMovie(videoFileName);
         vidPlayer.play();
         printf("Video Mode\n");
         camHeight = vidPlayer.height;
@@ -629,14 +629,14 @@ void TBetaBase::keyPressed(int key)
         case 'p':
             bShowPressure ? bShowPressure = false : bShowPressure = true;
             break;
-        case ' ':
-            if (bFastMode)
+        case ' ': 
+            if (bFastMode && !bCalibration) // NEED TO ADD HERE ONLY GO MINI MODE IF NOT CALIBRATING
             {
                 bFastMode = false;
                 ofSetWindowShape(950,600); //default size
                 //ofSetWindowTitle("Configuration");
             }
-            else
+            else if(!bCalibration)
             {
                 bFastMode = true;
                 ofSetWindowShape(190,215); //minimized size
