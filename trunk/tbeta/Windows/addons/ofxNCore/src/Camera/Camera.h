@@ -10,7 +10,7 @@
  *
  */
 
-#include "../ofxTBeta.h"
+#include "../ofxNCore.h"
 #include "ofMain.h"
 
 
