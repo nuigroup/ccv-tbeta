@@ -72,8 +72,8 @@ void ofxNCoreVision ::setupGUI()
 		trackPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		trackPanel->addSlider(appPtr->trackedPanel_threshold, "Image Threshold (a/z)", 140, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
 		trackPanel->addSlider(appPtr->trackedPanel_min_movement, "Movement Threshold", 140, 13, 0.0f, 15.0f, tracker.MIN_MOVEMENT_THRESHOLD, kofxGui_Display_Int, 0);
-		trackPanel->addSlider(appPtr->trackedPanel_min_blob_size, "Min Blob Size", 140, 13, 0.0f, 50.0f, MIN_BLOB_SIZE, kofxGui_Display_Int, 0);
-		trackPanel->addSlider(appPtr->trackedPanel_max_blob_size, "Max Blob Size", 140, 13, 5.0f, 200.0f, MAX_BLOB_SIZE, kofxGui_Display_Int, 0);
+		trackPanel->addSlider(appPtr->trackedPanel_min_blob_size, "Min Blob Size", 140, 13, 0.0f, 200.0f, MIN_BLOB_SIZE, kofxGui_Display_Int, 0);
+		trackPanel->addSlider(appPtr->trackedPanel_max_blob_size, "Max Blob Size", 140, 13, 5.0f, 2000.0f, MAX_BLOB_SIZE, kofxGui_Display_Int, 0);
 		trackPanel->mObjHeight = 100;
 		trackPanel->mObjWidth = 319;
 		trackPanel->mObjects[0]->mObjX = 120;

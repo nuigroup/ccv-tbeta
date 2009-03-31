@@ -106,11 +106,10 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			differenceTime = 0;
 			//bools
 			bCalibration= 0;
-			bDrawVideo = 1;
 			bFullscreen = 0;
 			bcamera = 0;
 			bShowLabels = 1;
-			bFastMode = 0;
+			bMiniMode = 0;
 			bDrawOutlines = 1;
 			bGPUMode = 0;
 			bTUIOMode = 0;
@@ -173,6 +172,8 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 
 		void drawToScreen();
 		void drawFingerOutlines();
+		void drawMiniMode();
+		void drawFullMode();
 
 		//Other Methods
 		void loadXMLSettings();								  // Load Settings
@@ -203,8 +204,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 		bool				showConfiguration;
 
 		bool				bcamera;
-		bool				bDrawVideo;
-		bool  				bFastMode;
+		bool  				bMiniMode;
 		bool				bShowInterface;
 		bool				bShowPressure;
 		bool				bDrawOutlines;

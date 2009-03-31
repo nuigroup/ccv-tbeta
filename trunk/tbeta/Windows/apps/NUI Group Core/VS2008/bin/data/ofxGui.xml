@@ -135,7 +135,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -166,7 +166,7 @@
         </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>38</ID>
+        <ID>39</ID>
         <TYPE>PANEL</TYPE>
         <NAME>files</NAME>
         <LEFT>735.000000</LEFT>
@@ -179,7 +179,7 @@
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
-            <ID>39</ID>
+            <ID>40</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Save Settings (s)</NAME>
             <LEFT>10.000000</LEFT>
@@ -193,7 +193,7 @@
         </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>30</ID>
+        <ID>31</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Tracked Image</NAME>
         <LEFT>386.000000</LEFT>
@@ -206,7 +206,7 @@
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
-            <ID>36</ID>
+            <ID>37</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Show Outlines (o)</NAME>
             <LEFT>120.000000</LEFT>
@@ -216,10 +216,10 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>37</ID>
+            <ID>38</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Show IDs (i)</NAME>
             <LEFT>235.000000</LEFT>
@@ -232,7 +232,7 @@
             <VALUE>1</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>32</ID>
+            <ID>33</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Image Threshold (a/z)</NAME>
             <LEFT>10.000000</LEFT>
@@ -244,10 +244,10 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>255.000000</MAX>
-            <VALUE>12.750000</VALUE>
+            <VALUE>9.107143</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>33</ID>
+            <ID>34</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Movement Threshold</NAME>
             <LEFT>165.000000</LEFT>
@@ -259,10 +259,10 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>15.000000</MAX>
-            <VALUE>0.964286</VALUE>
+            <VALUE>1.000000</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>34</ID>
+            <ID>35</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Min Blob Size</NAME>
             <LEFT>10.000000</LEFT>
@@ -273,11 +273,11 @@
             <DISPLAY>1</DISPLAY>
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
-            <MAX>50.000000</MAX>
+            <MAX>200.000000</MAX>
             <VALUE>25.714287</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>35</ID>
+            <ID>36</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Max Blob Size</NAME>
             <LEFT>165.000000</LEFT>
@@ -288,8 +288,8 @@
             <DISPLAY>1</DISPLAY>
             <STEPS>0</STEPS>
             <MIN>5.000000</MIN>
-            <MAX>200.000000</MAX>
-            <VALUE>200.000000</VALUE>
+            <MAX>2000.000000</MAX>
+            <VALUE>304.250000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -365,7 +365,7 @@
         <LEFT>86.000000</LEFT>
         <TOP>487.000000</TOP>
         <WIDTH>144.000000</WIDTH>
-        <HEIGHT>56.000000</HEIGHT>
+        <HEIGHT>88.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
         <STEPS>0</STEPS>
@@ -397,9 +397,24 @@
             <STEPS>0</STEPS>
             <VALUE>0</VALUE>
         </OBJECT>
+        <OBJECT>
+            <ID>20</ID>
+            <TYPE>SLIDER</TYPE>
+            <NAME>Learn Speed</NAME>
+            <LEFT>10.000000</LEFT>
+            <TOP>63.000000</TOP>
+            <WIDTH>110.000000</WIDTH>
+            <HEIGHT>13.000000</HEIGHT>
+            <MODE>0</MODE>
+            <DISPLAY>1</DISPLAY>
+            <STEPS>0</STEPS>
+            <MIN>1.000000</MIN>
+            <MAX>500.000000</MAX>
+            <VALUE>150.700012</VALUE>
+        </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>20</ID>
+        <ID>21</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Smooth</NAME>
         <LEFT>236.000000</LEFT>
@@ -412,7 +427,7 @@
         <BORDER>10</BORDER>
         <SPACING>7</SPACING>
         <OBJECT>
-            <ID>21</ID>
+            <ID>22</ID>
             <TYPE>BUTTON</TYPE>
             <NAME></NAME>
             <LEFT>105.000000</LEFT>
@@ -425,7 +440,7 @@
             <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>22</ID>
+            <ID>23</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Smooth</NAME>
             <LEFT>10.000000</LEFT>
@@ -437,11 +452,11 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>15.000000</MAX>
-            <VALUE>3.000000</VALUE>
+            <VALUE>4.363636</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>26</ID>
+        <ID>27</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Highpass</NAME>
         <LEFT>386.000000</LEFT>
@@ -454,7 +469,7 @@
         <BORDER>10</BORDER>
         <SPACING>7</SPACING>
         <OBJECT>
-            <ID>27</ID>
+            <ID>28</ID>
             <TYPE>BUTTON</TYPE>
             <NAME></NAME>
             <LEFT>105.000000</LEFT>
@@ -467,7 +482,7 @@
             <VALUE>1</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>28</ID>
+            <ID>29</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Blur</NAME>
             <LEFT>10.000000</LEFT>
@@ -479,10 +494,10 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>200.000000</MAX>
-            <VALUE>23.000000</VALUE>
+            <VALUE>29.000000</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>29</ID>
+            <ID>30</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Noise</NAME>
             <LEFT>10.000000</LEFT>
@@ -494,11 +509,11 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>30.000000</MAX>
-            <VALUE>3.818182</VALUE>
+            <VALUE>4.000000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>23</ID>
+        <ID>24</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Amplify</NAME>
         <LEFT>536.000000</LEFT>
@@ -511,7 +526,7 @@
         <BORDER>10</BORDER>
         <SPACING>7</SPACING>
         <OBJECT>
-            <ID>24</ID>
+            <ID>25</ID>
             <TYPE>BUTTON</TYPE>
             <NAME></NAME>
             <LEFT>105.000000</LEFT>
@@ -521,10 +536,10 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>25</ID>
+            <ID>26</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Amplify</NAME>
             <LEFT>10.000000</LEFT>
@@ -536,7 +551,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>300.000000</MAX>
-            <VALUE>19.090908</VALUE>
+            <VALUE>51.000000</VALUE>
         </OBJECT>
     </OBJECT>
 </UI>

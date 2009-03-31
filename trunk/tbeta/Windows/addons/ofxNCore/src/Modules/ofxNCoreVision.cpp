@@ -64,7 +64,7 @@ void ofxNCoreVision::setup()
     }
 
     /*****************************************************************************************************
-     * Allocate images (needed for drawing/processing images) ----Most of These won't be needed in the end
+     * Allocate images (needed for drawing/processing images)
      ******************************************************************************************************/
     processedImg.allocate(camWidth, camHeight); //main Image that'll be processed.
     processedImg.setUseTexture(false);
@@ -93,11 +93,12 @@ void ofxNCoreVision::setup()
         showConfiguration = true;
     }
 
-    if (bFastMode)
+    if (bMiniMode)
     {
         printf("Starting in Mini Mode...\n");
-        ofSetWindowShape(190,215); //minimized size
+        ofSetWindowShape(190, 200); //minimized size
         //ofSetWindowTitle("Mini");
+		filter->bMiniMode = bMiniMode;
     }
 
 
@@ -141,7 +142,7 @@ void ofxNCoreVision::loadXMLSettings()
     maxBlobs			= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
 
     bShowLabels			= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
-    bFastMode			= XML.getValue("CONFIG:BOOLEAN:FAST",0);
+    bMiniMode			= XML.getValue("CONFIG:BOOLEAN:FAST",0);
     bDrawOutlines		= XML.getValue("CONFIG:BOOLEAN:OUTLINES",0);
 
     filter->bLearnBakground		= XML.getValue("CONFIG:BOOLEAN:LEARNBG",0);
@@ -171,7 +172,7 @@ void ofxNCoreVision::loadXMLSettings()
     filter->smooth				= XML.getValue("CONFIG:INT:SMOOTH",0);
 
     //MINI MODE
-    bFastMode                    = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
+    bMiniMode                    = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
 
     //--------------------------------------------------- TODO XML NETWORK SETTINGS
     bTUIOMode			= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
@@ -216,7 +217,7 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:INT:HIGHPASSAMP", filter->highpassAmp);
     XML.setValue("CONFIG:INT:SMOOTH", filter->smooth);
 
-    XML.setValue("CONFIG:BOOLEAN:MINIMODE", bFastMode);
+    XML.setValue("CONFIG:BOOLEAN:MINIMODE", bMiniMode);
 
     //	XML.setValue("CONFIG:NETWORK:LOCALHOST", *myTUIO.localHost);
     //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
@@ -365,210 +366,172 @@ void ofxNCoreVision::draw()
             drawToScreen();
         }
 
-        if (!bCalibration && !bFastMode)
+        if (!bCalibration && !bMiniMode)
             gui->draw();
     }
 }
 
 void ofxNCoreVision::drawToScreen()
 {
-
-    /*********************************
-     * IF CALIBRATING
-     *********************************/
+	//if calibration
     if (bCalibration)
     {
         //Don't draw main interface
-        bShowInterface = false;
         calib.passInContourFinder(contourFinder.nBlobs, contourFinder.blobs);
         calib.doCalibration();
     }
-
-    if (bFastMode)
+	//if mini mode
+    else if (bMiniMode)
     {
-        ofSetColor(0,0,0);
-        ofRect(0,0,ofGetWidth(), ofGetHeight());
+        drawMiniMode();
+    }
+	//if full mode
+    else if (bShowInterface)
+    {
+		drawFullMode();  		
+	
+		if(bDrawOutlines || bShowLabels){
+			drawFingerOutlines();
+		}
+    }
+}
 
-        //now lets draw the blobs!
-		
-		/**/ // lets not draw the blobs :P the (a goal of mini mode is performance)
-        for (int i=0; i<contourFinder.nBlobs; i++)
-        {
-            contourFinder.blobs[i].drawContours(0,0, camWidth, camHeight+64);
-        }
-		
-        ofSetColor(128,128,128);
-        ofFill();
-        ofRect(0,ofGetHeight() - 62, ofGetWidth(), 20);
-        ofRect(0,ofGetHeight() - 41, ofGetWidth(), 20);
-        ofRect(0,ofGetHeight() - 20, ofGetWidth(), 20);
 
-        ofSetColor(250,250,250);
-        sidebarTXT.drawString("DSP [ms]:                " + ofToString(differenceTime,0),10, ofGetHeight() - 50 );
+void ofxNCoreVision::drawFullMode(){
 
-        if (bcamera)
-        {
-            sidebarTXT.drawString("Camera [ms]:            " + ofToString(fps,0),5, ofGetHeight() - 29 );
-        }
-        else
-        {
-            sidebarTXT.drawString("Video [ms]:              " + ofToString(fps,0),10, ofGetHeight() - 29 );
-        }
+	ofSetColor(0xFFFFFF);
+    //Draw Background Image
+    background.draw(0, 0);
+    //Draw arrows
+    ofSetColor(187, 200, 203);
+    ofFill();
+    ofTriangle(680, 420, 680, 460, 700, 440);
+    ofTriangle(70, 420, 70, 460, 50, 440);
+    ofSetColor(255, 255, 0);
 
-        sidebarTXT.drawString("TUIO:  " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 9 );
+    ofSetColor(0xFFFFFF);
+	//Draw Image Filters To Screen
+    if (bGPUMode) filter->drawGPU();
+    else filter->draw();
 
-        if (bTUIOMode)
-        {
-            //Draw GREEN CIRCLE 'ON' LIGHT
-            ofSetColor(0x00FF00);
-            ofFill();
-            ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
-            ofNoFill();
-        }
+    ofSetColor(0x000000);
+    if (bShowPressure)
+    {
+        bigvideo.drawString("Pressure Map", 140, 20);
+    }
+    else
+    {
+        bigvideo.drawString("Source Image", 140, 20);
+    }
+    bigvideo.drawString("Tracked Image", 475, 20);
+
+    //draw link to tbeta website
+    ofSetColor(79, 79, 79);
+    ofFill();
+    ofRect(ofGetWidth() - 228,ofGetHeight() - 14, 228, 14);
+    ofSetColor(0xFFFFFF);
+    ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 228, ofGetHeight() - 2);
+
+    //Display Application information in bottom right
+    string str = "DSP Milliseconds: ";
+    str+= ofToString(differenceTime, 0)+"\n\n";
+
+    if (bcamera)
+    {
+        string str2 = "Camera Res:     ";
+        str2+= ofToString(vidGrabber.width, 0) + " x " + ofToString(vidGrabber.height, 0)  + "\n";
+        string str4 = "Camera FPS:     ";
+        str4+= ofToString(fps, 0)+"\n";
+        ofSetColor(0xFFFFFF);
+        sidebarTXT.drawString(str + str2 + str4, 740, 410);
+    }
+    else
+    {
+        string str2 = "Video Res:       ";
+        str2+= ofToString(vidPlayer.width, 0) + " x " + ofToString(vidPlayer.height, 0)  + "\n";
+        string str4 = "Video FPS:       ";
+        str4+= ofToString(fps, 0)+"\n";
+        ofSetColor(0xFFFFFF);
+        sidebarTXT.drawString(str + str2 + str4, 740, 410);
     }
 
-    /********************************
-     * IF SHOWING MAIN INTERFACE STUFF
-     ********************************/
-    if (bDrawVideo && bShowInterface && !bFastMode)
+    if (bTUIOMode)
     {
-        ofSetColor(0xFFFFFF);
-        //Draw Everything
-        background.draw(0, 0);
-
-        //Draw arrows
-        ofSetColor(187, 200, 203);
-        ofFill();
-        ofTriangle(680, 420, 680, 460, 700, 440);
-        ofTriangle(70, 420, 70, 460, 50, 440);
-        ofSetColor(255, 255, 0);
-        //		ofNoFill();
-        //		ofTriangle(70, 420, 70, 460, 50, 440);
-
-        ofSetColor(0xFFFFFF);
-
-        if (bGPUMode) filter->drawGPU();
-        else filter->draw();
-
-        ofSetColor(0x000000);
-        if (bShowPressure)
-        {
-            bigvideo.drawString("Pressure Map", 140, 20);
-        }
-        else
-        {
-            bigvideo.drawString("Source Image", 140, 20);
-        }
-        bigvideo.drawString("Tracked Image", 475, 20);
-
-        //draw link to tbeta website
-        ofSetColor(180, 220, 180, 180);
-        ofFill();
-        ofRect(ofGetWidth() - 230,ofGetHeight() - 14, 230, 14);
-        ofSetColor(0x000000);
-        //ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 230, ofGetHeight() - 2);
+        //Draw Port and IP to screen
+        ofSetColor(0xffffff);
+        char buf[256];
+        sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+        sidebarTXT.drawString(buf, 740, 480);
     }
 
-    /*********************************
-     * IF NOT CALIBRATING
-     *********************************/
-    if (!bCalibration && !bFastMode)
+    ofSetColor(0xFF0000);
+    sidebarTXT.drawString("Press spacebar to toggle mini mode", ofGetWidth() - 215, 580);   
+}
+
+void ofxNCoreVision::drawMiniMode(){
+		
+	//black background
+	ofSetColor(0,0,0);
+    ofRect(0,0,ofGetWidth(), ofGetHeight());
+    //draw outlines	
+	if (bDrawOutlines){
+		for (int i=0; i<contourFinder.nBlobs; i++)
+		{
+			contourFinder.blobs[i].drawContours(0,0, camWidth, camHeight+105, ofGetWidth(), ofGetHeight());
+		}
+	}
+	
+	//draw grey rectagles for text information
+    ofSetColor(128,128,128);
+    ofFill();
+	ofRect(0,ofGetHeight() - 83, ofGetWidth(), 20);
+    ofRect(0,ofGetHeight() - 62, ofGetWidth(), 20);
+    ofRect(0,ofGetHeight() - 41, ofGetWidth(), 20);
+    ofRect(0,ofGetHeight() - 20, ofGetWidth(), 20);
+	
+	//draw text
+    ofSetColor(250,250,250);
+    sidebarTXT.drawString("Calc. Time  [ms]:        " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
+    if (bcamera){
+		sidebarTXT.drawString("Camera [fps]:             " + ofToString(fps,0),10, ofGetHeight() - 50 );
+	}
+	else {
+		sidebarTXT.drawString("Video [fps]:              " + ofToString(fps,0),10, ofGetHeight() - 50 );
+	}
+	sidebarTXT.drawString("Blob Count:               " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 29 );
+    sidebarTXT.drawString("Sending TUIO:  " ,10, ofGetHeight() - 9 );
+	
+	//draw green tuio circle
+    if (bTUIOMode)
     {
-        //Draw main interface
-        bShowInterface = true;
-
-        //Display Application information in bottom right
-        string str = "DSP Milliseconds: ";
-        str+= ofToString(differenceTime, 0)+"\n\n";
-
-        if (bcamera)
-        {
-            string str2 = "Camera Res:     ";
-            str2+= ofToString(vidGrabber.width, 0) + " x " + ofToString(vidGrabber.height, 0)  + "\n";
-            string str4 = "Camera FPS:     ";
-            str4+= ofToString(fps, 0)+"\n";
-            ofSetColor(0xFFFFFF);
-            sidebarTXT.drawString(str + str2 + str4, 740, 410);
-        }
-        else
-        {
-            string str2 = "Video Res:       ";
-            str2+= ofToString(vidPlayer.width, 0) + " x " + ofToString(vidPlayer.height, 0)  + "\n";
-            string str4 = "Video FPS:       ";
-            str4+= ofToString(fps, 0)+"\n";
-            ofSetColor(0xFFFFFF);
-            sidebarTXT.drawString(str + str2 + str4, 740, 410);
-        }
-
-        if (bTUIOMode)
-        {
-            //Draw Port and IP to screen
-            ofSetColor(0xffffff);
-            char buf[256];
-            sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
-            sidebarTXT.drawString(buf, 740, 480);
-
-            //Draw GREEN CIRCLE 'ON' LIGHT
-            ofSetColor(0x00FF00);
-            ofFill();
-            ofCircle(35, 10, 5);
-            ofNoFill();
-        }
-
-        ofSetColor(0xFF0000);
-        sidebarTXT.drawString("Press spacebar to toggle mini mode", 740, 580);
-
-        //Draw PINK CIRCLE 'ON' LIGHT
-        ofSetColor(255, 0, 255);
+        //Draw GREEN CIRCLE 'ON' LIGHT
+        ofSetColor(0x00FF00);
         ofFill();
-        ofCircle(20, 10, 5);
+        ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
         ofNoFill();
-    }
-
-    if (bShowInterface && !bFastMode) //IF DRAWING BLOB OUTLINES
-    {
-        drawFingerOutlines();
     }
 }
 
 void ofxNCoreVision::drawFingerOutlines()
 {
-
-    //Find the blobs
+    //Find the blobs for drawing
     for (int i=0; i<contourFinder.nBlobs; i++)
     {
-        //temp blob to rescale and draw on screen
-        ofxTBetaCvBlob drawBlob;
-        drawBlob = contourFinder.blobs[i];
-
         if (bDrawOutlines)
         {
-            //Get the contour (points) so they can be drawn
-            for ( int j=0; j<contourFinder.blobs[i].nPts; j++ )
-            {
-                drawBlob.pts[j].x = (MAIN_WINDOW_WIDTH/camWidth)  * (drawBlob.pts[j].x);
-                drawBlob.pts[j].y = (MAIN_WINDOW_HEIGHT/camHeight) * (drawBlob.pts[j].y);
-            }
-
-            //This adjusts the blob drawing for different cameras
-            drawBlob.boundingRect.width  *= (MAIN_WINDOW_WIDTH/camWidth);
-            drawBlob.boundingRect.height *= (MAIN_WINDOW_HEIGHT/camHeight);
-            drawBlob.boundingRect.x		 *= (MAIN_WINDOW_WIDTH/camWidth);
-            drawBlob.boundingRect.y		 *= (MAIN_WINDOW_HEIGHT/camHeight);
-
             //Draw contours (outlines) on the source image
-            drawBlob.draw(40, 30);
+			contourFinder.blobs[i].drawContours(40, 30, camWidth, camHeight, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
         }
 
         if (bShowLabels) //Show ID label;
         {
-            float xpos = drawBlob.centroid.x * (MAIN_WINDOW_WIDTH/camWidth);
-            float ypos = drawBlob.centroid.y * (MAIN_WINDOW_HEIGHT/camHeight);
+            float xpos = contourFinder.blobs[i].centroid.x * (MAIN_WINDOW_WIDTH/camWidth);
+            float ypos = contourFinder.blobs[i].centroid.y * (MAIN_WINDOW_HEIGHT/camHeight);
 
             ofSetColor(0xCCFFCC);
             char idStr[1024];
-            sprintf(idStr, "id: %i,(%i, %i)",drawBlob.id, drawBlob.lastCentroid.x, drawBlob.lastCentroid.y);
-            verdana.drawString(idStr, xpos + 365, ypos + drawBlob.boundingRect.height/2 + 45);
+            sprintf(idStr, "id: %i", contourFinder.blobs[i].id);
+            verdana.drawString(idStr, xpos + 365, ypos + contourFinder.blobs[i].boundingRect.height/2 + 45);
         }
     }
     ofSetColor(0xFFFFFF);
@@ -588,12 +551,10 @@ void ofxNCoreVision::keyPressed(int key)
         case 'a':
             filter->threshold++;
             gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
-
             break;
         case 'z':
             filter->threshold--;
             gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
-
             break;
         case 'b':
             filter->bLearnBakground = true;
@@ -640,25 +601,24 @@ void ofxNCoreVision::keyPressed(int key)
             bShowPressure ? bShowPressure = false : bShowPressure = true;
             break;
         case ' ': 
-            if (bFastMode && !bCalibration) // NEED TO ADD HERE ONLY GO MINI MODE IF NOT CALIBRATING
+            if (bMiniMode && !bCalibration) // NEED TO ADD HERE ONLY GO MINI MODE IF NOT CALIBRATING
             {
-                bFastMode = false;
+                bMiniMode = false;
+				bShowInterface = true;
+				filter->bMiniMode = bMiniMode;
                 ofSetWindowShape(950,600); //default size
-                //ofSetWindowTitle("Configuration");
             }
             else if(!bCalibration)
             {
-                bFastMode = true;
-                ofSetWindowShape(190,215); //minimized size
-                //ofSetWindowTitle("Mini");
+                bMiniMode = true;
+				bShowInterface = false;
+				filter->bMiniMode = bMiniMode;
+                ofSetWindowShape(190,200); //minimized size
             }
             break;
-            /***********************
-            * Keys for Calibration
-            ***********************/
-        case 'x': //Begin Calibrating
+        case 'x': //Exit Calibrating
             if (bCalibration)
-            {
+            {	bShowInterface = true;
                 bCalibration = false;
                 calib.calibrating = false;
                 tracker.isCalibrating = false;
@@ -673,11 +633,10 @@ void ofxNCoreVision::keyPressed(int key)
 
 void ofxNCoreVision::keyReleased(int key)
 {
-
     if (showConfiguration)
     {
         if ( key == 'c' && !bCalibration)
-        {
+        {	bShowInterface = false;
             //Enter/Exit Calibration
             bCalibration = true;
             calib.calibrating = true;

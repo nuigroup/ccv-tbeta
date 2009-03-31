@@ -41,6 +41,7 @@ class Filters {
 	bool bAmplify;
     bool bThreshold;
     bool bLearnBakground;
+	bool bMiniMode;
 
     //CPU
     ofxCvFloatImage  floatBgImg;

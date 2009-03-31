@@ -50,39 +50,31 @@ class ofxTBetaCvBlob {
         }
 
         //----------------------------------------
-        void draw(float x = 0, float y = 0){
-			//draw angled bounding box with cross-hair
+        void drawContours(float x = 0, float y = 0, float inputWidth = ofGetWidth(), float inputHeight = ofGetHeight(), float outputWidth = ofGetWidth(), float outputHeight = ofGetHeight()) {
+            
             glPushMatrix();
-			    ofSetColor(0xFF0099);
-                glTranslatef(x + angleBoundingRect.x, y + angleBoundingRect.y, 0.0f);
+                glTranslatef(x + angleBoundingRect.x/inputWidth * outputWidth, y + angleBoundingRect.y/inputHeight * outputHeight, 0.0f);
                 glRotatef(-angle, 0.0f, 0.0f, 1.0f);
-                glTranslatef(-(x + angleBoundingRect.x), -(y + angleBoundingRect.y), 0.0f);
-                ofRect(x + angleBoundingRect.x - angleBoundingRect.width/2, y + angleBoundingRect.y - angleBoundingRect.height/2, angleBoundingRect.width, angleBoundingRect.height);
+                glTranslatef(-(x + angleBoundingRect.x/inputWidth * outputWidth), -(y + angleBoundingRect.y/inputHeight * outputHeight), 0.0f);                
+				
+				//draw box
+//				ofSetColor(0xFFFFFF);
+//				ofRect(x + (angleBoundingRect.x - angleBoundingRect.width/2)/inputWidth * outputWidth, y + (angleBoundingRect.y - angleBoundingRect.height/2)/inputHeight * outputHeight, angleBoundingRect.width/inputWidth * outputWidth, angleBoundingRect.height/inputHeight * outputHeight);
 
+				//draw cross-hairs	
 				ofSetColor(0x0099FF);
-                ofRect(x + angleBoundingRect.x, y + angleBoundingRect.y - angleBoundingRect.height, 1, angleBoundingRect.height * 2); //Horizontal Plus
-                ofRect(x + angleBoundingRect.x - angleBoundingRect.width, y + angleBoundingRect.y, angleBoundingRect.width * 2, 1); //Horizontal Plus
+                ofRect(x + (angleBoundingRect.x/inputWidth) * outputWidth, y + ((angleBoundingRect.y - angleBoundingRect.height)/inputHeight) * outputHeight, 1, (angleBoundingRect.height * 2)/inputHeight * outputHeight); //Vertical Plus
+                ofRect(x + ((angleBoundingRect.x - angleBoundingRect.width)/inputWidth) * outputWidth, y + (angleBoundingRect.y/inputHeight) * outputHeight, (angleBoundingRect.width * 2)/inputWidth * outputWidth, 1); //Horizontal Plus
             glPopMatrix();
-        }
 
-        void drawContours(float x = 0, float y = 0, float width = ofGetWidth(), float height = ofGetHeight()) {
-            //draw contours
-		    ofNoFill();
-            ofSetColor(0xFFFFFF);
-
-            /*glPushMatrix();
-			    ofSetColor(0xFF0099);
-                glTranslatef(x + angleBoundingRect.x/width * ofGetWidth(), y + angleBoundingRect.y/(height) * ofGetHeight(), 0.0f);
-                glRotatef(-angle, 0.0f, 0.0f, 1.0f);*/
+			//draw contours
+			ofNoFill();
+            ofSetColor(0xFF0099);
             ofBeginShape();
             for (int i = 0; i < nPts; i++){
-                   ofVertex(x + pts[i].x/width * ofGetWidth(), y + pts[i].y/(height) * ofGetHeight());
+                   ofVertex(x + pts[i].x/inputWidth * outputWidth, y + pts[i].y/(inputHeight) * outputHeight);
             }
-            ofEndShape(true);
-                /*ofSetColor(0x0099FF);
-                ofRect(x + angleBoundingRect.x, y + angleBoundingRect.y - angleBoundingRect.height, 1, angleBoundingRect.height * 2); //Horizontal Plus
-                ofRect(x + angleBoundingRect.x - angleBoundingRect.width, y + angleBoundingRect.y, angleBoundingRect.width * 2, 1); //Horizontal Plus
-            glPopMatrix();*/
+            ofEndShape(true);	
         }
 };
 #endif

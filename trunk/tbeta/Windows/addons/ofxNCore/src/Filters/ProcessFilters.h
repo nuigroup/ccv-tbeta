@@ -20,7 +20,8 @@ class ProcessFilters : public Filters {
         camHeight = h;
 		//initialize learnrate
 		fLearnRate = 0.0f;
-        
+        bMiniMode = false;
+
 		exposureStartTime = ofGetElapsedTimeMillis();
 
         //CPU Setup
@@ -76,7 +77,7 @@ class ProcessFilters : public Filters {
         //Set Mirroring Horizontal/Vertical
         if(bVerticalMirror || bHorizontalMirror) img.mirror(bVerticalMirror, bHorizontalMirror);
 
-        //if(!bFastMode)
+        if(!bMiniMode)
         grayImg = img; //for drawing
 
         //Dynamic background with learn rate...eventually learnrate will have GUI sliders
@@ -99,24 +100,24 @@ class ProcessFilters : public Filters {
 
         if(bSmooth){//Smooth
             img.blur((smooth * 2) + 1); //needs to be an odd number
-            //if(!bFastMode)
+            if(!bMiniMode)
             subtractBg = img; //for drawing
         }
 
         if(bHighpass){//HighPass
             img.highpass(highpassBlur, highpassNoise);
-            //if(!bFastMode)
+            if(!bMiniMode)
             highpassImg = img; //for drawing
         }
 
         if(bAmplify){//Amplify
             img.amplify(img, highpassAmp);
-            //if(!bFastMode)
+            if(!bMiniMode)
             ampImg = img; //for drawing
         }
 
         img.threshold(threshold); //Threshold
-        //if(!bFastMode)
+        if(!bMiniMode)
         grayDiff = img; //for drawing
     }
 
