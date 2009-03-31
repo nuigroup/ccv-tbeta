@@ -9,6 +9,38 @@
 /* Begin PBXBuildFile section */
 		7438606C0F3A46F800943B8E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 743860690F3A46F800943B8E /* main.cpp */; };
 		74A3A0930F3D238800231B2F /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74A3A0920F3D238800231B2F /* testApp.cpp */; };
+		74D1D3D50F68993600692DE2 /* automat.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B10F68993600692DE2 /* automat.ttf */; };
+		74D1D3D60F68993600692DE2 /* calibration.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B20F68993600692DE2 /* calibration.xml */; };
+		74D1D3D70F68993600692DE2 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B30F68993600692DE2 /* config.xml */; };
+		74D1D3D80F68993600692DE2 /* absSubtract.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B50F68993600692DE2 /* absSubtract.xml */; };
+		74D1D3D90F68993600692DE2 /* blobExtractor.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B60F68993600692DE2 /* blobExtractor.xml */; };
+		74D1D3DA0F68993600692DE2 /* contrast.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B70F68993600692DE2 /* contrast.xml */; };
+		74D1D3DB0F68993600692DE2 /* copy.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B80F68993600692DE2 /* copy.xml */; };
+		74D1D3DC0F68993600692DE2 /* gauss.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3B90F68993600692DE2 /* gauss.xml */; };
+		74D1D3DD0F68993600692DE2 /* gauss2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3BA0F68993600692DE2 /* gauss2.xml */; };
+		74D1D3DE0F68993600692DE2 /* gaussV.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3BB0F68993600692DE2 /* gaussV.xml */; };
+		74D1D3DF0F68993600692DE2 /* gaussV2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3BC0F68993600692DE2 /* gaussV2.xml */; };
+		74D1D3E00F68993600692DE2 /* grayScale.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3BD0F68993600692DE2 /* grayScale.xml */; };
+		74D1D3E10F68993600692DE2 /* subtract.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3BE0F68993600692DE2 /* subtract.xml */; };
+		74D1D3E20F68993600692DE2 /* threshold.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3BF0F68993600692DE2 /* threshold.xml */; };
+		74D1D3E30F68993600692DE2 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C10F68993600692DE2 /* background.jpg */; };
+		74D1D3E40F68993600692DE2 /* particle.png in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C20F68993600692DE2 /* particle.png */; };
+		74D1D3E50F68993600692DE2 /* Thumbs.db in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C30F68993600692DE2 /* Thumbs.db */; };
+		74D1D3E60F68993600692DE2 /* ofxGui.xml in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C40F68993600692DE2 /* ofxGui.xml */; };
+		74D1D3E70F68993600692DE2 /* absSubtract.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C60F68993600692DE2 /* absSubtract.fs */; };
+		74D1D3E80F68993600692DE2 /* blobDetector.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C70F68993600692DE2 /* blobDetector.fs */; };
+		74D1D3E90F68993600692DE2 /* blobExtractor.gs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C80F68993600692DE2 /* blobExtractor.gs */; };
+		74D1D3EA0F68993600692DE2 /* contrast.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3C90F68993600692DE2 /* contrast.fs */; };
+		74D1D3EB0F68993600692DE2 /* copy.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3CA0F68993600692DE2 /* copy.fs */; };
+		74D1D3EC0F68993600692DE2 /* gaussH.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3CB0F68993600692DE2 /* gaussH.fs */; };
+		74D1D3ED0F68993600692DE2 /* gaussV.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3CC0F68993600692DE2 /* gaussV.fs */; };
+		74D1D3EE0F68993600692DE2 /* grayScale.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3CD0F68993600692DE2 /* grayScale.fs */; };
+		74D1D3EF0F68993600692DE2 /* inverse.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3CE0F68993600692DE2 /* inverse.fs */; };
+		74D1D3F00F68993600692DE2 /* minimal.vs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3CF0F68993600692DE2 /* minimal.vs */; };
+		74D1D3F10F68993600692DE2 /* subtract.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3D00F68993600692DE2 /* subtract.fs */; };
+		74D1D3F20F68993600692DE2 /* threshold.fs in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3D10F68993600692DE2 /* threshold.fs */; };
+		74D1D3F30F68993600692DE2 /* RearDI.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3D30F68993600692DE2 /* RearDI.m4v */; };
+		74D1D3F40F68993600692DE2 /* verdana.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 74D1D3D40F68993600692DE2 /* verdana.ttf */; };
 		74E4B6B20F60119500EFEBC4 /* boxAlign.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74E4B66F0F60119500EFEBC4 /* boxAlign.cpp */; };
 		74E4B6B30F60119500EFEBC4 /* Calibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74E4B6710F60119500EFEBC4 /* Calibration.cpp */; };
 		74E4B6B40F60119500EFEBC4 /* calibrationB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 74E4B6730F60119500EFEBC4 /* calibrationB.cpp */; };
@@ -106,6 +138,38 @@
 		743860690F3A46F800943B8E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../Config app/src/main.cpp"; sourceTree = SOURCE_ROOT; };
 		74A3A0910F3D238800231B2F /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = "../Config app/src/testApp.h"; sourceTree = SOURCE_ROOT; };
 		74A3A0920F3D238800231B2F /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = "../Config app/src/testApp.cpp"; sourceTree = SOURCE_ROOT; };
+		74D1D3B10F68993600692DE2 /* automat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = automat.ttf; sourceTree = "<group>"; };
+		74D1D3B20F68993600692DE2 /* calibration.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = calibration.xml; sourceTree = "<group>"; };
+		74D1D3B30F68993600692DE2 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		74D1D3B50F68993600692DE2 /* absSubtract.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = absSubtract.xml; sourceTree = "<group>"; };
+		74D1D3B60F68993600692DE2 /* blobExtractor.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = blobExtractor.xml; sourceTree = "<group>"; };
+		74D1D3B70F68993600692DE2 /* contrast.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = contrast.xml; sourceTree = "<group>"; };
+		74D1D3B80F68993600692DE2 /* copy.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = copy.xml; sourceTree = "<group>"; };
+		74D1D3B90F68993600692DE2 /* gauss.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gauss.xml; sourceTree = "<group>"; };
+		74D1D3BA0F68993600692DE2 /* gauss2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gauss2.xml; sourceTree = "<group>"; };
+		74D1D3BB0F68993600692DE2 /* gaussV.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gaussV.xml; sourceTree = "<group>"; };
+		74D1D3BC0F68993600692DE2 /* gaussV2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gaussV2.xml; sourceTree = "<group>"; };
+		74D1D3BD0F68993600692DE2 /* grayScale.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = grayScale.xml; sourceTree = "<group>"; };
+		74D1D3BE0F68993600692DE2 /* subtract.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = subtract.xml; sourceTree = "<group>"; };
+		74D1D3BF0F68993600692DE2 /* threshold.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = threshold.xml; sourceTree = "<group>"; };
+		74D1D3C10F68993600692DE2 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		74D1D3C20F68993600692DE2 /* particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particle.png; sourceTree = "<group>"; };
+		74D1D3C30F68993600692DE2 /* Thumbs.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Thumbs.db; sourceTree = "<group>"; };
+		74D1D3C40F68993600692DE2 /* ofxGui.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ofxGui.xml; sourceTree = "<group>"; };
+		74D1D3C60F68993600692DE2 /* absSubtract.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = absSubtract.fs; sourceTree = "<group>"; };
+		74D1D3C70F68993600692DE2 /* blobDetector.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blobDetector.fs; sourceTree = "<group>"; };
+		74D1D3C80F68993600692DE2 /* blobExtractor.gs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blobExtractor.gs; sourceTree = "<group>"; };
+		74D1D3C90F68993600692DE2 /* contrast.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = contrast.fs; sourceTree = "<group>"; };
+		74D1D3CA0F68993600692DE2 /* copy.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = copy.fs; sourceTree = "<group>"; };
+		74D1D3CB0F68993600692DE2 /* gaussH.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gaussH.fs; sourceTree = "<group>"; };
+		74D1D3CC0F68993600692DE2 /* gaussV.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gaussV.fs; sourceTree = "<group>"; };
+		74D1D3CD0F68993600692DE2 /* grayScale.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = grayScale.fs; sourceTree = "<group>"; };
+		74D1D3CE0F68993600692DE2 /* inverse.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = inverse.fs; sourceTree = "<group>"; };
+		74D1D3CF0F68993600692DE2 /* minimal.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = minimal.vs; sourceTree = "<group>"; };
+		74D1D3D00F68993600692DE2 /* subtract.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = subtract.fs; sourceTree = "<group>"; };
+		74D1D3D10F68993600692DE2 /* threshold.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = threshold.fs; sourceTree = "<group>"; };
+		74D1D3D30F68993600692DE2 /* RearDI.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = RearDI.m4v; sourceTree = "<group>"; };
+		74D1D3D40F68993600692DE2 /* verdana.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = verdana.ttf; sourceTree = "<group>"; };
 		74E4B66F0F60119500EFEBC4 /* boxAlign.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = boxAlign.cpp; sourceTree = "<group>"; };
 		74E4B6700F60119500EFEBC4 /* boxAlign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = boxAlign.h; sourceTree = "<group>"; };
 		74E4B6710F60119500EFEBC4 /* Calibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Calibration.cpp; sourceTree = "<group>"; };
@@ -463,6 +527,77 @@
 				74A3A0920F3D238800231B2F /* testApp.cpp */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		74D1D3B00F68993600692DE2 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				74D1D3B10F68993600692DE2 /* automat.ttf */,
+				74D1D3B20F68993600692DE2 /* calibration.xml */,
+				74D1D3B30F68993600692DE2 /* config.xml */,
+				74D1D3B40F68993600692DE2 /* filters */,
+				74D1D3C00F68993600692DE2 /* images */,
+				74D1D3C40F68993600692DE2 /* ofxGui.xml */,
+				74D1D3C50F68993600692DE2 /* shaders */,
+				74D1D3D20F68993600692DE2 /* test_videos */,
+				74D1D3D40F68993600692DE2 /* verdana.ttf */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		74D1D3B40F68993600692DE2 /* filters */ = {
+			isa = PBXGroup;
+			children = (
+				74D1D3B50F68993600692DE2 /* absSubtract.xml */,
+				74D1D3B60F68993600692DE2 /* blobExtractor.xml */,
+				74D1D3B70F68993600692DE2 /* contrast.xml */,
+				74D1D3B80F68993600692DE2 /* copy.xml */,
+				74D1D3B90F68993600692DE2 /* gauss.xml */,
+				74D1D3BA0F68993600692DE2 /* gauss2.xml */,
+				74D1D3BB0F68993600692DE2 /* gaussV.xml */,
+				74D1D3BC0F68993600692DE2 /* gaussV2.xml */,
+				74D1D3BD0F68993600692DE2 /* grayScale.xml */,
+				74D1D3BE0F68993600692DE2 /* subtract.xml */,
+				74D1D3BF0F68993600692DE2 /* threshold.xml */,
+			);
+			path = filters;
+			sourceTree = "<group>";
+		};
+		74D1D3C00F68993600692DE2 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				74D1D3C10F68993600692DE2 /* background.jpg */,
+				74D1D3C20F68993600692DE2 /* particle.png */,
+				74D1D3C30F68993600692DE2 /* Thumbs.db */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		74D1D3C50F68993600692DE2 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				74D1D3C60F68993600692DE2 /* absSubtract.fs */,
+				74D1D3C70F68993600692DE2 /* blobDetector.fs */,
+				74D1D3C80F68993600692DE2 /* blobExtractor.gs */,
+				74D1D3C90F68993600692DE2 /* contrast.fs */,
+				74D1D3CA0F68993600692DE2 /* copy.fs */,
+				74D1D3CB0F68993600692DE2 /* gaussH.fs */,
+				74D1D3CC0F68993600692DE2 /* gaussV.fs */,
+				74D1D3CD0F68993600692DE2 /* grayScale.fs */,
+				74D1D3CE0F68993600692DE2 /* inverse.fs */,
+				74D1D3CF0F68993600692DE2 /* minimal.vs */,
+				74D1D3D00F68993600692DE2 /* subtract.fs */,
+				74D1D3D10F68993600692DE2 /* threshold.fs */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
+		74D1D3D20F68993600692DE2 /* test_videos */ = {
+			isa = PBXGroup;
+			children = (
+				74D1D3D30F68993600692DE2 /* RearDI.m4v */,
+			);
+			path = test_videos;
 			sourceTree = "<group>";
 		};
 		74E4B66D0F60119500EFEBC4 /* ofxTBeta */ = {
@@ -1445,6 +1580,7 @@
 				E4B69B5B0A3A1756003C02F2 /* tbeta.app */,
 				E4B6FCAD0C3E899E008CF71C /* tbeta-Info.plist */,
 				74B08A670F355E5E009D8FA9 /* src */,
+				74D1D3B00F68993600692DE2 /* data */,
 				E41382EA0E8C973B0088FD17 /* openFrameworks */,
 				E45BE0360E8CC5DE009D7055 /* libs */,
 			);
@@ -1495,6 +1631,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B6FCAE0C3E899E008CF71C /* tbeta-Info.plist in Resources */,
+				74D1D3D50F68993600692DE2 /* automat.ttf in Resources */,
+				74D1D3D60F68993600692DE2 /* calibration.xml in Resources */,
+				74D1D3D70F68993600692DE2 /* config.xml in Resources */,
+				74D1D3D80F68993600692DE2 /* absSubtract.xml in Resources */,
+				74D1D3D90F68993600692DE2 /* blobExtractor.xml in Resources */,
+				74D1D3DA0F68993600692DE2 /* contrast.xml in Resources */,
+				74D1D3DB0F68993600692DE2 /* copy.xml in Resources */,
+				74D1D3DC0F68993600692DE2 /* gauss.xml in Resources */,
+				74D1D3DD0F68993600692DE2 /* gauss2.xml in Resources */,
+				74D1D3DE0F68993600692DE2 /* gaussV.xml in Resources */,
+				74D1D3DF0F68993600692DE2 /* gaussV2.xml in Resources */,
+				74D1D3E00F68993600692DE2 /* grayScale.xml in Resources */,
+				74D1D3E10F68993600692DE2 /* subtract.xml in Resources */,
+				74D1D3E20F68993600692DE2 /* threshold.xml in Resources */,
+				74D1D3E30F68993600692DE2 /* background.jpg in Resources */,
+				74D1D3E40F68993600692DE2 /* particle.png in Resources */,
+				74D1D3E50F68993600692DE2 /* Thumbs.db in Resources */,
+				74D1D3E60F68993600692DE2 /* ofxGui.xml in Resources */,
+				74D1D3E70F68993600692DE2 /* absSubtract.fs in Resources */,
+				74D1D3E80F68993600692DE2 /* blobDetector.fs in Resources */,
+				74D1D3E90F68993600692DE2 /* blobExtractor.gs in Resources */,
+				74D1D3EA0F68993600692DE2 /* contrast.fs in Resources */,
+				74D1D3EB0F68993600692DE2 /* copy.fs in Resources */,
+				74D1D3EC0F68993600692DE2 /* gaussH.fs in Resources */,
+				74D1D3ED0F68993600692DE2 /* gaussV.fs in Resources */,
+				74D1D3EE0F68993600692DE2 /* grayScale.fs in Resources */,
+				74D1D3EF0F68993600692DE2 /* inverse.fs in Resources */,
+				74D1D3F00F68993600692DE2 /* minimal.vs in Resources */,
+				74D1D3F10F68993600692DE2 /* subtract.fs in Resources */,
+				74D1D3F20F68993600692DE2 /* threshold.fs in Resources */,
+				74D1D3F30F68993600692DE2 /* RearDI.m4v in Resources */,
+				74D1D3F40F68993600692DE2 /* verdana.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

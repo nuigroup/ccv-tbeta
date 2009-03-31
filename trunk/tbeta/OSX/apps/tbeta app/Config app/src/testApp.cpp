@@ -48,7 +48,9 @@ void testApp::mouseReleased(){
  *****************************************************************************/
 void testApp::TouchDown( ofxTBetaCvBlob b)
 {
-
+	ofFill();
+	ofSetColor(0,255,0);
+	ofEllipse(b.centroid.x*ofGetWidth(), b.centroid.y*ofGetHeight(), 10,10);
 }
 
 void testApp::TouchUp( ofxTBetaCvBlob b)
@@ -58,8 +60,9 @@ void testApp::TouchUp( ofxTBetaCvBlob b)
 
 void testApp::TouchMoved( ofxTBetaCvBlob b)
 {
-	
-	ofEllipse( b.centroid.x, b.centroid.y, 10, 10);
+	ofFill();
+	ofSetColor(255,255,255);
+	ofEllipse(b.centroid.x*ofGetWidth(), b.centroid.y*ofGetHeight(), 10, 10);
 
 }
 

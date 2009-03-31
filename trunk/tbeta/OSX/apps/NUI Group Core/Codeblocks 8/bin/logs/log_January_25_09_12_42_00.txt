@@ -1,0 +1,135 @@
+
+***** VIDEOINPUT LIBRARY - 0.1991 - TFW07 *****
+
+TUIO created: 
+TUIO setup: 
+Points: 1 
+Calibration: 2.000000, 47.000000
+Calibration: 306.000000, 166.000000
+Calibration: 554.000000, 49.000000
+Calibration: 2.000000, 202.000000
+Calibration: 259.000000, 180.000000
+Calibration: 495.000000, 194.000000
+Calibration: 2.000000, 446.000000
+Calibration: 279.000000, 432.000000
+Calibration: 544.000000, 452.000000
+Video Mode
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:data/shaders/absSubtract.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:data/shaders/subtract.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Contrast
+loading Shaders vs:(null), gs:(null), fs:data/shaders/contrast.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Threshold
+loading Shaders vs:(null), gs:(null), fs:data/shaders/threshold.fs
+
+
+Touchlib application is setup!
+choosing 0  
+SETUP: Setting up device 0
+SETUP: USB Video Device
+SETUP: Couldn't find preview pin using SmartTee
+SETUP: Setting capture size to 320 by 240 
+SETUP: Media Type is YUY2 converted to RGB24
+SETUP: Capture callback set
+SETUP: Device is setup and ready to capture.
+
+warning: reallocating cvImage in ofxCvColorImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:data/shaders/absSubtract.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Subtraction
+loading Shaders vs:(null), gs:(null), fs:data/shaders/subtract.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Contrast
+loading Shaders vs:(null), gs:(null), fs:data/shaders/contrast.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Gaussian Blur
+loading Shaders vs:(null), gs:(null), fs:data/shaders/gaussH.fs
+
+
+Frame buffer status: 36053
+Loading Filter...
+Filter Name:Threshold
+loading Shaders vs:(null), gs:(null), fs:data/shaders/threshold.fs
+
+
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvColorImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvGrayscaleImage
+warning: reallocating cvImage in ofxCvFloatImage
+warning: reallocating cvImage in ofxCvColorImage
+tBeta module has exited!

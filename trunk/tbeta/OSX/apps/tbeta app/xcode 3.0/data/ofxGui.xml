@@ -37,7 +37,7 @@
         <NAME>Source Properties</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>10.000000</TOP>
-        <WIDTH>168.000000</WIDTH>
+        <WIDTH>165.000000</WIDTH>
         <HEIGHT>84.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
@@ -81,7 +81,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -90,7 +90,7 @@
         <NAME>GPU Properties</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>114.000000</TOP>
-        <WIDTH>124.000000</WIDTH>
+        <WIDTH>122.000000</WIDTH>
         <HEIGHT>42.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
@@ -108,7 +108,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>0</VALUE>
+            <VALUE>1</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -117,7 +117,7 @@
         <NAME>Communication</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>177.000000</TOP>
-        <WIDTH>127.000000</WIDTH>
+        <WIDTH>124.000000</WIDTH>
         <HEIGHT>42.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
@@ -144,7 +144,7 @@
         <NAME>Calibration</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>240.000000</TOP>
-        <WIDTH>163.000000</WIDTH>
+        <WIDTH>161.000000</WIDTH>
         <HEIGHT>42.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
@@ -171,7 +171,7 @@
         <NAME>files</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>303.000000</TOP>
-        <WIDTH>147.000000</WIDTH>
+        <WIDTH>145.000000</WIDTH>
         <HEIGHT>42.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
@@ -216,7 +216,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>0</VALUE>
+            <VALUE>1</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>34</ID>
@@ -244,7 +244,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>255.000000</MAX>
-            <VALUE>8.000000</VALUE>
+            <VALUE>11.050000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -271,7 +271,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>0</VALUE>
+            <VALUE>1</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>15</ID>
@@ -310,7 +310,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -319,7 +319,7 @@
         <NAME>Background</NAME>
         <LEFT>86.000000</LEFT>
         <TOP>487.000000</TOP>
-        <WIDTH>146.000000</WIDTH>
+        <WIDTH>144.000000</WIDTH>
         <HEIGHT>56.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
@@ -350,7 +350,7 @@
             <MODE>2</MODE>
             <DISPLAY>2</DISPLAY>
             <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
+            <VALUE>0</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -392,7 +392,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>15.000000</MAX>
-            <VALUE>1.000000</VALUE>
+            <VALUE>3.545455</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -434,7 +434,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>200.000000</MAX>
-            <VALUE>21.000000</VALUE>
+            <VALUE>14.545454</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>29</ID>
@@ -449,7 +449,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>30.000000</MAX>
-            <VALUE>6.000000</VALUE>
+            <VALUE>1.000000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -491,7 +491,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>300.000000</MAX>
-            <VALUE>19.000000</VALUE>
+            <VALUE>73.000000</VALUE>
         </OBJECT>
     </OBJECT>
 </UI>
