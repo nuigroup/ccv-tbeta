@@ -7,7 +7,7 @@
     ///////////////////////////////////////////// -->
     <!--// CAMERA SETTINGS // -->
     <CAMERA_0>
-        <USECAMERA>0</USECAMERA>
+        <USECAMERA>1</USECAMERA>
         <DEVICE>0</DEVICE>
         <WIDTH>320</WIDTH>
         <HEIGHT>240</HEIGHT>
@@ -42,7 +42,7 @@
         <HEIGHT>600</HEIGHT>
     </WINDOW>
     <BOOLEAN>
-        <PRESSURE>205</PRESSURE>
+        <PRESSURE>0</PRESSURE>
         <LABELS>1</LABELS>
         <OUTLINES>0</OUTLINES>
         <LEARNBG>0</LEARNBG>
@@ -59,7 +59,7 @@
     </BOOLEAN>
     <INT>
         <MINMOVEMENT>1</MINMOVEMENT>
-        <MINBLOBSIZE>25</MINBLOBSIZE>
+        <MINBLOBSIZE>28</MINBLOBSIZE>
         <MAXBLOBSIZE>304</MAXBLOBSIZE>
         <!--// FILTERS SETTERS //-->
         <THRESHOLD>9</THRESHOLD>

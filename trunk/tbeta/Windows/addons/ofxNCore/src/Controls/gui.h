@@ -204,12 +204,19 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						if(!bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
 							bcamera = true;
-							vidGrabber.close();
-							vidGrabber.setDeviceID(deviceID);
-							vidGrabber.setVerbose(false);
-							camWidth = vidGrabber.width;
-							camHeight = vidGrabber.height;
-							vidGrabber.initGrabber(camWidth,camHeight);
+							if(deviceID>vidGrabber.getDeviceCount())
+							{
+								//vidGrabber.close();
+								ffmv.setDeviceID(deviceID);
+							}
+							else{
+								vidGrabber.close();
+								vidGrabber.setDeviceID(deviceID);
+								vidGrabber.setVerbose(false);
+								camWidth = vidGrabber.width;
+								camHeight = vidGrabber.height;
+								vidGrabber.initGrabber(camWidth,camHeight);
+							}
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
@@ -259,9 +266,22 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID += 1;
-						if(deviceID >= vidGrabber.getDeviceCount()) {deviceID = vidGrabber.getDeviceCount();}
+						if(deviceID >= vidGrabber.getDeviceCount())
+						{
+							if(deviceID>=(vidGrabber.getDeviceCount()+ffmv.getDeviceCount()))
+							{
+								deviceID=vidGrabber.getDeviceCount()+ffmv.getDeviceCount();
+							}
+							else
+							{
+								vidGrabber.close();
+								ffmv.setDeviceID(deviceID);
+								filter->exposureStartTime = ofGetElapsedTimeMillis();
+							}
+							//deviceID = vidGrabber.getDeviceCount();
+						}
 						else{
-							vidGrabber.close();
+							//vidGrabber.close();
 							vidGrabber.setDeviceID(deviceID);
 							vidGrabber.setVerbose(true);
 							vidGrabber.initGrabber(camWidth,camHeight);
@@ -279,12 +299,21 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID -= 1;
-						if(deviceID < 0) deviceID = 0;
-						else{
-							vidGrabber.close();
-							vidGrabber.setDeviceID(deviceID);
-							vidGrabber.setVerbose(true);
-							vidGrabber.initGrabber(camWidth,camHeight);
+						if(deviceID <= vidGrabber.getDeviceCount())
+						{
+							if(deviceID < 0) deviceID = 0;
+							else{
+								vidGrabber.close();
+								vidGrabber.setDeviceID(deviceID);
+								vidGrabber.setVerbose(true);
+								vidGrabber.initGrabber(camWidth,camHeight);
+								filter->exposureStartTime = ofGetElapsedTimeMillis();
+							}
+						}
+						else
+						{
+							//vidGrabber.close();
+							ffmv.setDeviceID(deviceID);
 							filter->exposureStartTime = ofGetElapsedTimeMillis();
 						}
 						activeInput = true;

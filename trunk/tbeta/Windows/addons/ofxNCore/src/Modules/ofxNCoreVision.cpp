@@ -49,6 +49,9 @@ void ofxNCoreVision::setup()
         vidGrabber.setDeviceID(deviceID);
         vidGrabber.setVerbose(true);
         vidGrabber.initGrabber(camWidth,camHeight);
+		/////ffmv//////
+		ffmv.listDevices();
+		ffmv.initFFMV(camWidth,camHeight);
         int grabW = vidGrabber.width;
         int grabH = vidGrabber.height;
         printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
@@ -237,8 +240,15 @@ void ofxNCoreVision::update()
 
         if (bcamera)
         {
-            vidGrabber.grabFrame();
-            bNewFrame = vidGrabber.isFrameNew();
+			if(deviceID<=vidGrabber.getDeviceCount())
+			{
+				vidGrabber.grabFrame();
+				bNewFrame = vidGrabber.isFrameNew();
+			}
+			else{
+				ffmv.grabFrame();
+				bNewFrame =true;			
+			}
         }
         else
         {
@@ -311,12 +321,23 @@ void ofxNCoreVision::grabFrameToCPU()
 {
     //Set sourceImg as new camera/video frame
     if (bcamera)
-        sourceImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+	{
+		if(deviceID>vidGrabber.getDeviceCount())
+		{
+			processedImg.setFromPixels(ffmv.fcImage[ffmv.getDeviceID()].pData,camWidth,camHeight);
+		}
+		else{
+			sourceImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+			//convert to grayscale
+			processedImg = sourceImg;
+		}
+	}
     else
+	{
         sourceImg.setFromPixels(vidPlayer.getPixels(), 	camWidth, camHeight);
-
-    //convert to grayscale
-    processedImg = sourceImg;
+        //convert to grayscale
+        processedImg = sourceImg;
+	}
 }
 
 //Grab frame from GPU

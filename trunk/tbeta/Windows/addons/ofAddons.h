@@ -3,7 +3,10 @@
 // for the addon you want to add
 // you will also need to follow the other steps
 // like adding the library linking paths, etc,etc.
-
+//-------------------------------------------- ffmv
+#ifdef OF_ADDON_USING_OFXFFMV
+#include "ofxffmv.h"
+#endif
 //-------------------------------------------- openCV
 #ifdef OF_ADDON_USING_OFXOPENCV
 	#include "ofxCvMain.h"

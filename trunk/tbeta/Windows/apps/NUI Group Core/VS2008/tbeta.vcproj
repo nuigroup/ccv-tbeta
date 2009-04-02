@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\quicktime\CIncludes;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\poco\includes;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src"
+				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\quicktime\CIncludes;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\poco\includes;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE; POCO_STATIC;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmt.lib PocoNetmtd.lib PocoUtilmtd.lib PocoXMLmtd.lib Ws2_32.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cxcore.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cv.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\win32\oscpack.lib"
+				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmt.lib PocoNetmtd.lib PocoUtilmtd.lib PocoXMLmtd.lib Ws2_32.lib ..\..\..\addons\ofxFFMV\lib\PGRFlyCapture.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cxcore.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cv.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\win32\oscpack.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\libs\poco\libs;..\..\..\libs\glut;..\..\..\libs\rtAudio\libs\vs2008;..\..\..\libs\freeImage;..\..\..\libs\freeType\lib;..\..\..\libs\quicktime\Libraries;..\..\..\libs\fmodex\lib;..\..\..\libs\videoInput\lib;..\..\..\libs\glee\lib;..\..\..\libs\glu"
@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\quicktime\CIncludes;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\poco\includes;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src"
+				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\quicktime\CIncludes;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\poco\includes;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;  POCO_STATIC;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -146,7 +146,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmt.lib PocoNetmtd.lib PocoUtilmtd.lib PocoXMLmtd.lib Ws2_32.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cxcore.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cv.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\win32\oscpack.lib"
+				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmt.lib PocoNetmtd.lib PocoUtilmtd.lib PocoXMLmtd.lib Ws2_32.lib ..\..\..\addons\ofxFFMV\lib\PGRFlyCapture.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cxcore.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cv.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\win32\oscpack.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\libs\poco\libs;..\..\..\libs\glut;..\..\..\libs\rtAudio\libs\vs2008;..\..\..\libs\freeImage;..\..\..\libs\freeType\lib;..\..\..\libs\quicktime\Libraries;..\..\..\libs\fmodex\lib;..\..\..\libs\videoInput\lib;..\..\..\libs\glee\lib;..\..\..\libs\glu"
 				IgnoreAllDefaultLibraries="false"
@@ -888,6 +888,26 @@
 					</File>
 					<File
 						RelativePath="..\..\..\addons\ofxDirList\src\ofxDirList.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="ofxFFMV"
+				>
+				<Filter
+					Name="src"
+					>
+					<File
+						RelativePath="..\..\..\addons\ofxFFMV\src\ofxffmv.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxFFMV\src\ofxffmv.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxFFMV\src\pgrflycapture.h"
 						>
 					</File>
 				</Filter>

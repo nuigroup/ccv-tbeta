@@ -14,6 +14,7 @@
 
 #define OF_ADDON_USING_OFXXMLSETTINGS  // LOAD CONFIG.XML
 #define OF_ADDON_USING_OFXOPENCV	   // COMPUTER VISION STUFF
+#define OF_ADDON_USING_OFXFFMV	   // COMPUTER VISION STUFF
 #define OF_ADDON_USING_OFXOSC		   // OSC COMMUNICATION
 #define OF_ADDON_USING_OFXDIRLIST	   // LOCAL DIRECTORY LISTING
 #define OF_ADDON_USING_OFXVECTORMATH   // VECTOR MATH/ARRAYS
@@ -183,6 +184,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 		 *						Video Settings
 		 ***************************************************************/
 		ofVideoGrabber 		vidGrabber;
+		ofxffmv             ffmv;//for firefly mv
 		ofVideoPlayer 		vidPlayer;
 
 		/****************************************************************
