@@ -93,7 +93,7 @@ bool ofxTCPClient::send(string message){
 	//it is the only way I can think of
 	//to make sure we get the full message
 	//there must be a better way than this :)
-	message += STR_END_MSG;
+//	message += STR_END_MSG;
 	message += (char)0; //for flash
 
 	if( !TCPClient.SendAll( message.c_str(), message.length() ) ){
