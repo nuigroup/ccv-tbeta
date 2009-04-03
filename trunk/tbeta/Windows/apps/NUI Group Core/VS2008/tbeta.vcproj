@@ -912,6 +912,66 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="ofxNetwork"
+				>
+				<Filter
+					Name="src"
+					>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxNetwork.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxTCPClient.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxTCPManager.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="ofxThread"
+				>
+				<Filter
+					Name="src"
+					>
+					<File
+						RelativePath="..\..\..\addons\ofxThread\src\ofxThread.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\addons\ofxThread\src\ofxThread.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

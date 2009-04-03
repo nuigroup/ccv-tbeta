@@ -1,7 +1,7 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-#define AUTOTRACKER
+//#define AUTOTRACKER
 
 #define OF_ADDON_USING_OFXNCORE
 

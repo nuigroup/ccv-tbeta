@@ -25,7 +25,7 @@ void ofxNCoreVision::setup()
     RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
 #endif
 
-    ofSetBackgroundAuto(false);
+    //ofSetBackgroundAuto(false);
 
     //create filter
     if ( filter == NULL )
@@ -49,9 +49,12 @@ void ofxNCoreVision::setup()
         vidGrabber.setDeviceID(deviceID);
         vidGrabber.setVerbose(true);
         vidGrabber.initGrabber(camWidth,camHeight);
-		/////ffmv//////
-		ffmv.listDevices();
+		/////ffmv - firefly camera only//////
+		if(ffmv.getDeviceCount() > 0){
+			ffmv.listDevices();
+		}
 		ffmv.initFFMV(camWidth,camHeight);
+		/////**************************//////
         int grabW = vidGrabber.width;
         int grabH = vidGrabber.height;
         printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
@@ -98,11 +101,18 @@ void ofxNCoreVision::setup()
 
     if (bMiniMode)
     {
+		bShowInterface = false;
         printf("Starting in Mini Mode...\n");
         ofSetWindowShape(190, 200); //minimized size
         //ofSetWindowTitle("Mini");
 		filter->bMiniMode = bMiniMode;
     }
+	else{
+		//full mode	
+		bShowInterface = true;
+	}
+
+
 
 
     printf("Community Core Vision is setup!\n\n");
@@ -133,50 +143,37 @@ void ofxNCoreVision::loadXMLSettings()
 
     winWidth			= XML.getValue("CONFIG:WINDOW:WIDTH", 950);
     winHeight			= XML.getValue("CONFIG:WINDOW:HEIGHT", 600);
-
     bcamera				= XML.getValue("CONFIG:CAMERA_0:USECAMERA", 1);
     deviceID			= XML.getValue("CONFIG:CAMERA_0:DEVICE", 0);
     camWidth			= XML.getValue("CONFIG:CAMERA_0:WIDTH", 320);
     camHeight			= XML.getValue("CONFIG:CAMERA_0:HEIGHT", 240);
     camRate				= XML.getValue("CONFIG:CAMERA_0:FRAMERATE", 0);
-
     videoFileName		= XML.getValue("CONFIG:VIDEO:FILENAME", "RearDI.m4v");
-
     maxBlobs			= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
-
     bShowLabels			= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
-    bMiniMode			= XML.getValue("CONFIG:BOOLEAN:FAST",0);
     bDrawOutlines		= XML.getValue("CONFIG:BOOLEAN:OUTLINES",0);
-
     filter->bLearnBakground		= XML.getValue("CONFIG:BOOLEAN:LEARNBG",0);
     filter->bVerticalMirror		= XML.getValue("CONFIG:BOOLEAN:VMIRROR",0);
     filter->bHorizontalMirror	= XML.getValue("CONFIG:BOOLEAN:HMIRROR",0);
-
-
     //Filters
     filter->bHighpass			= XML.getValue("CONFIG:BOOLEAN:HIGHPASS",1);
     filter->bAmplify			= XML.getValue("CONFIG:BOOLEAN:AMPLIFY", 1);
     filter->bSmooth				= XML.getValue("CONFIG:BOOLEAN:SMOOTH", 1);
     filter->bDynamicBG			= XML.getValue("CONFIG:BOOLEAN:DYNAMICBG", 1);
-
-    //GPU
+    //MODES
     bGPUMode					= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
-
+	bMiniMode                    = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
+	//CONTROLS
     tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
 	MIN_BLOB_SIZE				= XML.getValue("CONFIG:INT:MINBLOBSIZE",2);
 	MAX_BLOB_SIZE				= XML.getValue("CONFIG:INT:MAXBLOBSIZE",100);
 	backgroundLearnRate			= XML.getValue("CONFIG:INT:BGLEARNRATE", 0.01f);
-
 	//Filter Settings
     filter->threshold			= XML.getValue("CONFIG:INT:THRESHOLD",0);
     filter->highpassBlur		= XML.getValue("CONFIG:INT:HIGHPASSBLUR",0);
     filter->highpassNoise		= XML.getValue("CONFIG:INT:HIGHPASSNOISE",0);
     filter->highpassAmp			= XML.getValue("CONFIG:INT:HIGHPASSAMP",0);
     filter->smooth				= XML.getValue("CONFIG:INT:SMOOTH",0);
-
-    //MINI MODE
-    bMiniMode                    = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
-
     //--------------------------------------------------- TODO XML NETWORK SETTINGS
     bTUIOMode			= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
     tmpLocalHost		= XML.getValue("CONFIG:NETWORK:LOCALHOST", "localhost");
@@ -193,7 +190,6 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:CAMERA_0:WIDTH", camWidth);
     XML.setValue("CONFIG:CAMERA_0:HEIGHT", camHeight);
     XML.setValue("CONFIG:CAMERA_0:FRAMERATE", camRate);
-
     XML.setValue("CONFIG:BOOLEAN:PRESSURE",bShowPressure);
     XML.setValue("CONFIG:BOOLEAN:LABELS",bShowLabels);
     XML.setValue("CONFIG:BOOLEAN:OUTLINES",bDrawOutlines);
@@ -201,25 +197,20 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:BOOLEAN:TUIO",bTUIOMode);
     XML.setValue("CONFIG:BOOLEAN:VMIRROR", filter->bVerticalMirror);
     XML.setValue("CONFIG:BOOLEAN:HMIRROR", filter->bHorizontalMirror);
-
     XML.setValue("CONFIG:BOOLEAN:HIGHPASS", filter->bHighpass);
     XML.setValue("CONFIG:BOOLEAN:AMPLIFY", filter->bAmplify);
     XML.setValue("CONFIG:BOOLEAN:SMOOTH", filter->bSmooth);
     XML.setValue("CONFIG:BOOLEAN:DYNAMICBG", filter->bDynamicBG);
-
-    XML.setValue("CONFIG:BOOLEAN:GPU", bGPUMode);
-	
+    XML.setValue("CONFIG:BOOLEAN:GPU", bGPUMode);	
 	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MIN_MOVEMENT_THRESHOLD);
 	XML.setValue("CONFIG:INT:MINBLOBSIZE", MIN_BLOB_SIZE);
 	XML.setValue("CONFIG:INT:MAXBLOBSIZE", MAX_BLOB_SIZE);
-	XML.setValue("CONFIG:INT:BGLEARNRATE", backgroundLearnRate);	
-
+	XML.setValue("CONFIG:INT:BGLEARNRATE", backgroundLearnRate);
     XML.setValue("CONFIG:INT:THRESHOLD", filter->threshold);
     XML.setValue("CONFIG:INT:HIGHPASSBLUR", filter->highpassBlur);
     XML.setValue("CONFIG:INT:HIGHPASSNOISE", filter->highpassNoise);
     XML.setValue("CONFIG:INT:HIGHPASSAMP", filter->highpassAmp);
     XML.setValue("CONFIG:INT:SMOOTH", filter->smooth);
-
     XML.setValue("CONFIG:BOOLEAN:MINIMODE", bMiniMode);
 
     //	XML.setValue("CONFIG:NETWORK:LOCALHOST", *myTUIO.localHost);
@@ -247,7 +238,7 @@ void ofxNCoreVision::update()
 			}
 			else{
 				ffmv.grabFrame();
-				bNewFrame =true;			
+				bNewFrame = true;			
 			}
         }
         else
@@ -276,13 +267,13 @@ void ofxNCoreVision::update()
             {
                 grabFrameToGPU(filter->gpuSourceTex);
                 filter->applyGPUFilters();
-                contourFinder.findContours(filter->gpuReadBackImageGS, MIN_BLOB_SIZE, MAX_BLOB_SIZE, maxBlobs, false);
-            }
+                contourFinder.findContours(filter->gpuReadBackImageGS,  (((camWidth * camHeight) * .0001) * MIN_BLOB_SIZE) - ((camWidth * camHeight) * .0001), (((camWidth * camHeight) * .0001) * MAX_BLOB_SIZE) - ((camWidth * camHeight) * .0001), maxBlobs, false);  
+			}
             else
             {
                 grabFrameToCPU();
                 filter->applyCPUFilters( processedImg );
-                contourFinder.findContours(processedImg, MIN_BLOB_SIZE, MAX_BLOB_SIZE, maxBlobs, false);
+                contourFinder.findContours(processedImg,  (((camWidth * camHeight) * .0001) * MIN_BLOB_SIZE) - ((camWidth * camHeight) * .0001), (((camWidth * camHeight) * .0001) * MAX_BLOB_SIZE) - ((camWidth * camHeight) * .0001), maxBlobs, false);
             }
 
             //Track found contours/blobss
@@ -498,7 +489,7 @@ void ofxNCoreVision::drawMiniMode(){
 	if (bDrawOutlines){
 		for (int i=0; i<contourFinder.nBlobs; i++)
 		{
-			contourFinder.blobs[i].drawContours(0,0, camWidth, camHeight+105, ofGetWidth(), ofGetHeight());
+			contourFinder.blobs[i].drawContours(0,0, camWidth, camHeight+175, ofGetWidth(), ofGetHeight());
 		}
 	}
 	
@@ -728,7 +719,7 @@ void ofxNCoreVision::mousePressed(int x, int y, int button)
     if (showConfiguration)
     {
         gui->mousePressed(x, y, button); //guilistener
-        if (x > ofGetWidth() - 230 && y > ofGetHeight() - 14) ofLaunchBrowser("http://www.wordpress.com");
+		if (x > ofGetWidth() - 230 && y > ofGetHeight() - 14){ofLaunchBrowser("http://www.openframeworks.cc/forum/viewtopic.php?p=9651#9651");}
     }
 }
 
