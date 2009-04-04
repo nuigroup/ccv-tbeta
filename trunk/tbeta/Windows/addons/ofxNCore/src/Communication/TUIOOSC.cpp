@@ -30,7 +30,6 @@ void TUIOOSC::update() {
 
 void TUIOOSC::sendOSC()
 {	
-	cout << blobs.size() << endl;
 
 	if(blobs.size() == 0){
 

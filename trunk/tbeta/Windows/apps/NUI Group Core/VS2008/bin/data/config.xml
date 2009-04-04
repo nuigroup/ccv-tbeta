@@ -7,7 +7,7 @@
     ///////////////////////////////////////////// -->
     <!--// CAMERA SETTINGS // -->
     <CAMERA_0>
-        <USECAMERA>0</USECAMERA>
+        <USECAMERA>1</USECAMERA>
         <DEVICE>0</DEVICE>
         <WIDTH>320</WIDTH>
         <HEIGHT>240</HEIGHT>
@@ -60,9 +60,9 @@
     <INT>
         <MINMOVEMENT>1</MINMOVEMENT>
         <MINBLOBSIZE>8</MINBLOBSIZE>
-        <MAXBLOBSIZE>79</MAXBLOBSIZE>
+        <MAXBLOBSIZE>664</MAXBLOBSIZE>
         <!--// FILTERS SETTERS //-->
-        <THRESHOLD>10</THRESHOLD>
+        <THRESHOLD>16</THRESHOLD>
         <HIGHPASSBLUR>29</HIGHPASSBLUR>
         <HIGHPASSNOISE>4</HIGHPASSNOISE>
         <HIGHPASSAMP>51</HIGHPASSAMP>

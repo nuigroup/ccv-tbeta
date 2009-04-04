@@ -123,7 +123,7 @@ bool ofxTCPClient::send(string message){
 		close();
 		return false;
 	}else if(ret<0){
-		if(verbose)printf("ofxTCPClient: sendAll() failed\n");
+//		if(verbose)printf("ofxTCPClient: sendAll() failed\n");
 		return false;
 	}else if(ret<(int)message.length()){
 		// in case of partial send, store the

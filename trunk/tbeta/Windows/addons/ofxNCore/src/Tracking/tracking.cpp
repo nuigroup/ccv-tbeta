@@ -55,7 +55,6 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 			calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 			calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-            if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 			TouchEvents.notifyTouchUp(NULL);
 			//mark the blob for deletion
 			trackedBlobs[i].id = -1;
@@ -112,18 +111,17 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						//recursive mess. It'll just be a new track.
 
 						//SEND BLOB OFF EVENT						
-						TouchEvents.messenger = trackedBlobs[i];
+						TouchEvents.messenger = trackedBlobs[j];
 
 						if(isCalibrating){
-							TouchEvents.RAWmessenger = trackedBlobs[i];
+							TouchEvents.RAWmessenger = trackedBlobs[j];
 							TouchEvents.notifyRAWTouchUp(NULL);
 						}
 
                         calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                         calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-                        if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
-						TouchEvents.notifyTouchUp(NULL);
+     					TouchEvents.notifyTouchUp(NULL);
 						//mark the blob for deletion
 						trackedBlobs[j].id = -1;
 //------------------------------------------------------------------------------
@@ -141,7 +139,6 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
                         calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                         calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-                        if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 						TouchEvents.notifyTouchUp(NULL);
 						//mark the blob for deletion
 						trackedBlobs[i].id = -1;
@@ -247,7 +244,7 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-						if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
+		//				if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
 						TouchEvents.notifyTouchMoved(NULL);
 					}
 				}
@@ -255,34 +252,33 @@ void BlobTracker::track(ofxTBetaCvContourFinder* newBlobs)
 		}
 	}
 
+
 	//--Add New Living Tracks
 	//now every new blob should be either labeled with a tracked ID or\
 	//have ID of -1... if the ID is -1... we need to make a new track
 	for(int i=0; i<newBlobs->nBlobs; i++)
 	{
 		if(newBlobs->blobs[i].id==-1)
-		{
-			
+		{			
 			//add new track
 			newBlobs->blobs[i].id=IDCounter++;
-			//printf("id!!!! : %i \n", IDCounter);
-			
-			trackedBlobs.push_back(newBlobs->blobs[i]);
-			trackedBlobs[i].downTime = ofGetElapsedTimef();
+			newBlobs->blobs[i].downTime = ofGetElapsedTimef();
 
-			//SEND BLOB DOWN EVENT
-			TouchEvents.messenger = trackedBlobs[i];
+			//Add to blob messenger
+			TouchEvents.messenger = newBlobs->blobs[i];
 			
 			if(isCalibrating){
-				TouchEvents.RAWmessenger = trackedBlobs[i];
+				TouchEvents.RAWmessenger = newBlobs->blobs[i];
 				TouchEvents.notifyRAWTouchDown(NULL);
 			}
 
             calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
             calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 
-            if(TouchEvents.messenger.centroid.x != 0 && TouchEvents.messenger.centroid.y != 0)
+			//Send Event
 			TouchEvents.notifyTouchDown(NULL);
+
+			trackedBlobs.push_back(newBlobs->blobs[i]);
 		}
 	}
 }
