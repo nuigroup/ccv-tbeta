@@ -239,7 +239,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						if(bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
 							bcamera = false;
-							vidPlayer.loadMovie("test_videos/" + videoFileName);
+							vidPlayer.loadMovie(videoFileName);
 							vidPlayer.play();
 							printf("Video Mode\n");
 							camHeight = vidPlayer.height;

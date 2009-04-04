@@ -18,7 +18,6 @@ void TUIOOSC::setup(const char* host, int port) {
 
 	//FOR TCP
 	m_tcpServer.setup(TUIOPort);
-	printf("TUIOPort is: %i \n", TUIOPort);
 
 	//FOR OSC
 	//TUIOSocket.setup(localHost, TUIOPort);
@@ -31,10 +30,9 @@ void TUIOOSC::update() {
 
 void TUIOOSC::sendOSC()
 {	
+	cout << blobs.size() << endl;
 
 	if(blobs.size() == 0){
-
-		cout << blobs.size() << endl;
 
 		m_tcpServer.sendToAll("<OSCPACKET ADDRESS=\"127.0.0.1\" PORT=\""+ofToString(TUIOPort)+"\" TIME=\"1\">" +   
 						 "<MESSAGE NAME=\"/tuio/2Dcur\">"+ 

@@ -66,7 +66,8 @@ class ofxTCPClient{
 		string			str, tmpStr, ipAddr;
 		int				index, messageSize, port;
 		bool			connected, verbose;
-	
+		
+		string 			partialPrevMsg;
 };
 
 #endif	

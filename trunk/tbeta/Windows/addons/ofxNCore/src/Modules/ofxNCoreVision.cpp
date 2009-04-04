@@ -64,7 +64,7 @@ void ofxNCoreVision::setup()
         activeInput = true;
         vidPlayer.loadMovie(videoFileName);
         vidPlayer.play();
-        printf("Video Mode\n");
+        printf("Video Mode\n\n");
         camHeight = vidPlayer.height;
         camWidth = vidPlayer.width;
     }

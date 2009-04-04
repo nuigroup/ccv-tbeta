@@ -14,6 +14,8 @@ ofxTCPClient::ofxTCPClient(){
 	tmpStr		= "";
 	ipAddr		="000.000.000.000";
 	
+	partialPrevMsg = "";
+
 	memset(tmpBuff,  0, TCP_MAX_MSG_SIZE);
 }
 
@@ -87,6 +89,7 @@ bool ofxTCPClient::close(){
 }
 
 //--------------------------
+/*
 bool ofxTCPClient::send(string message){
 
 	//fuck this is ghetto 
@@ -100,6 +103,37 @@ bool ofxTCPClient::send(string message){
 		if(verbose)printf("ofxTCPClient: send() failed\n");
 		return false;
 	}else{
+		return true;
+	}
+}
+*/
+
+bool ofxTCPClient::send(string message){
+	// tcp is a stream oriented protocol
+	// so there's no way to be sure were
+	// a message ends without using a terminator
+	// note that you will receive a trailing [/TCP]\0
+	// if sending from here and receiving from receiveRaw or
+	// other applications
+	message = partialPrevMsg + message;
+	message += (char)0; //for flash
+	int ret = TCPClient.SendAll( message.c_str(), message.length() );
+	if( ret == 0 ){
+		if(verbose)printf("ofxTCPClient: other side disconnected\n");
+		close();
+		return false;
+	}else if(ret<0){
+		if(verbose)printf("ofxTCPClient: sendAll() failed\n");
+		return false;
+	}else if(ret<(int)message.length()){
+		// in case of partial send, store the
+		// part that hasn't been sent and send
+		// with the next message to not corrupt
+		// next messages
+		partialPrevMsg=message.substr(ret);
+		return true;
+	}else{
+		partialPrevMsg = "";
 		return true;
 	}
 }
