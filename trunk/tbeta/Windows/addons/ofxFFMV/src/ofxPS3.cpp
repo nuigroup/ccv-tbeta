@@ -54,7 +54,7 @@ void ofxPS3::initPS3(int width,int height, int framerate)
    
 	 // Allocate image buffer (we are going to capture 24bit RGB images)
    	 // The supported color depths are 16, 24 and 32     
-	 pBuffer = new BYTE[(320*240*24)/8];
+	 pBuffer = new BYTE[(width*height*24)/8];
    
 	 // Start capturing
 	 pCam->StartCapture();
