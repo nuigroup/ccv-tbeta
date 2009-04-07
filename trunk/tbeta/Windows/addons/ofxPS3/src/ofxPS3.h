@@ -14,7 +14,7 @@ class ofxPS3
         int getCamWidth();
         int getCamHeight();
         void listDevices();
-        int getDeviceCount();
+        static int getDeviceCount();
 		bool isFrameNew();
 		PBYTE getPixels();
 
@@ -27,6 +27,6 @@ class ofxPS3
         int camWidth;
         int camHeight;
         // Enumerate the cameras on the bus.
-        unsigned int	  camNum ;
+        static unsigned int	camNum;
 };
 #endif // OFXPS3_H_

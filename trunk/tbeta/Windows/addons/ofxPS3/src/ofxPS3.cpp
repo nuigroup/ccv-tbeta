@@ -1,15 +1,18 @@
 #include "ofxPS3.h"
 #include <stdio.h>
 
+// TODO: move this quiery to the PS3EyeLib driver
+unsigned int ofxPS3::camNum=1;
+
 ofxPS3::ofxPS3() 
 {
 }
 
 void ofxPS3::listDevices()
 {
-    // PS3 Camera Testing
+	// PS3 Camera Testing
 	pCam = IPS3EyeLib::Create();
-	
+
 	// Query supported video formats
 	printf("printing formats...\n");
 	for(int i=0; i<IPS3EyeLib::GetNumFormats(); i++) 
@@ -22,7 +25,7 @@ void ofxPS3::listDevices()
 		description=IPS3EyeLib::GetFormats()[i].formatTxt;
 		printf(description);
 		printf("\n");
-	 }
+	}
 }
 
 void ofxPS3::setDeviceID(int id)
@@ -31,7 +34,7 @@ void ofxPS3::setDeviceID(int id)
 
 int ofxPS3::getDeviceID()
 {
-    return 0;
+	return 0;
 }
 
 PBYTE ofxPS3::getPixels()
@@ -46,22 +49,26 @@ bool ofxPS3::isFrameNew()
 
 void ofxPS3::initPS3(int width,int height, int framerate)
 {
-     printf("selecting format...\n");
+	printf("selecting format...\n");
 
-	 //select format
-	 pCam->SetFormat(IPS3EyeLib::GetFormatIndex(width, height, framerate));
-   
-	 // Allocate image buffer (we are going to capture 24bit RGB images)
-   	 // The supported color depths are 16, 24 and 32     
-	 pBuffer = new BYTE[(width*height*24)/8];
-   
-	 // Start capturing
-	 pCam->StartCapture();
+	//select format
+	pCam->SetFormat(IPS3EyeLib::GetFormatIndex(width, height, framerate));
+
+	// Allocate image buffer (we are going to capture 24bit RGB images)
+	// The supported color depths are 16, 24 and 32     
+	pBuffer = new BYTE[(width*height*24)/8];
+
+	// Start capturing
+	pCam->StartCapture();
+	pCam->AutoAGC(false);
+	pCam->AutoAEC(false);
+	pCam->SetExposure(511);
+	pCam->SetGain(0);
 }
 
 int ofxPS3::getDeviceCount()
 {
-    return camNum;
+	return camNum;
 }
 
 int ofxPS3::getCamWidth()
@@ -77,10 +84,11 @@ int ofxPS3::getCamHeight()
 //Clean up
 ofxPS3::~ofxPS3()
 {
-	// Free the image buffer
- 	delete [] pBuffer;
 	// Stop capturing
-    pCam->StopCapture();
-    // Free the
-    delete pCam;
+	pCam->StopCapture();
+	Sleep(50);
+	// Free the
+	delete pCam;
+	// Free the image buffer
+	delete [] pBuffer;
 }

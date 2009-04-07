@@ -8,7 +8,6 @@ void keyboard_up_cb(unsigned char key, int x, int y);
 void special_key_cb(int key, int x, int y) ;
 void special_key_up_cb(int key, int x, int y) ;
 
-
 //--------------------------------
 static float timeNow, timeThen, fps;
 static int nFramesForFPS;
@@ -146,7 +145,6 @@ void display(void){
 	nFrameCount++;		// increase the overall frame count
 
 	setFrameNum(nFrameCount); // get this info to ofUtils for people to access
-
 }
 
 
@@ -195,7 +193,6 @@ void passive_motion_cb(int x, int y) {
         ofMouseEvents.notifyMoved( NULL );
 	}
 }
-
 
 void idle_cb(void) {
 
@@ -249,6 +246,3 @@ void special_key_up_cb(int key, int x, int y) {
     ofKeyEvents.keyEventArgs.key = (key | OF_KEY_MODIFIER);
     ofKeyEvents.notifyReleased( NULL );
 }
-
-
-

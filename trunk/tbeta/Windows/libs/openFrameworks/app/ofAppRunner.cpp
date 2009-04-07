@@ -61,7 +61,6 @@ void ofSetupOpenGL(int w, int h, int screenMode){
 void ofExitCallback();
 void ofExitCallback(){
 
-
 	//------------------------
 	// try to close FMOD:
 	ofSoundPlayer::closeFmod();
@@ -71,7 +70,6 @@ void ofExitCallback(){
 	#if defined( TARGET_OSX ) || defined( TARGET_WIN32 )
 	closeQuicktime();
 	#endif
-
 
 	//------------------------
 	// try to close freeImage:
