@@ -49,7 +49,9 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 			gpuPanel_use,
 
 			optionPanel,
-			optionPanel_tuio,
+			optionPanel_tuio_osc,
+			optionPanel_tuio_tcp,
+			optionPanel_tuio_height_width,
 
 			calibrationPanel,
 			calibrationPanel_calibrate,

@@ -50,19 +50,21 @@ void ofxNCoreVision ::setupGUI()
 		propPanel->addButton(appPtr->propertiesPanel_flipH, "Flip Horizontal (h)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		propPanel->mObjWidth = 200;
 
-		ofxGuiPanel* gPanel = gui->addPanel(appPtr->gpuPanel, "GPU Properties", 735, 114, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+		ofxGuiPanel* gPanel = gui->addPanel(appPtr->gpuPanel, "GPU Properties", 735, 110, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 		gPanel->addButton(appPtr->gpuPanel_use, "GPU Mode (g)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		gPanel->mObjWidth = 200;
 
-		ofxGuiPanel* oPanel = gui->addPanel(appPtr->optionPanel, "Communication", 735, 177, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
-		oPanel->addButton(appPtr->optionPanel_tuio, "Send TUIO (t)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+		ofxGuiPanel* oPanel = gui->addPanel(appPtr->optionPanel, "Communication", 735, 167, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+		oPanel->addButton(appPtr->optionPanel_tuio_osc, "Send TUIO OSC (t)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+		oPanel->addButton(appPtr->optionPanel_tuio_tcp, "Send TUIO TCP | For Flash (f)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+		oPanel->addButton(appPtr->optionPanel_tuio_height_width, "Send Height & Width ", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 		oPanel->mObjWidth = 200;
 
-		ofxGuiPanel* cPanel = gui->addPanel(appPtr->calibrationPanel, "Calibration", 735, 240, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+		ofxGuiPanel* cPanel = gui->addPanel(appPtr->calibrationPanel, "Calibration", 735, 264, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 		cPanel->addButton(appPtr->calibrationPanel_calibrate, "Enter Calibration (c)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 		cPanel->mObjWidth = 200;
 
-		ofxGuiPanel* panel2 = gui->addPanel(appPtr->savePanel, "files", 735, 303, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+		ofxGuiPanel* panel2 = gui->addPanel(appPtr->savePanel, "Files", 735, 322, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 		panel2->addButton(appPtr->kParameter_SaveXml, "Save Settings (s)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 		panel2->mObjWidth = 200;
 
@@ -185,7 +187,10 @@ void ofxNCoreVision ::setupGUI()
 		//Background Learn Rate
 		gui->update(appPtr->backgroundPanel_learn_rate, kofxGui_Set_Bool, &appPtr->backgroundLearnRate, sizeof(float));
 		//Send TUIO
-		gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
+		gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+		gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+		//TUIO Height Width
+		gui->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
 		//GPU Mode
 		gui->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
 }
@@ -349,11 +354,30 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 					bGPUMode= *(bool*)data;
 				break;
 			//Communication
-			case optionPanel_tuio:
+			case optionPanel_tuio_osc:
 				if(length == sizeof(bool))
+					myTUIO.bOSCMode = *(bool*)data;
 					bTUIOMode = *(bool*)data;
+					//set tcp to opposite
+					myTUIO.bTCPMode = false;
+					gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+					//clear blobs
 					myTUIO.blobs.clear();
 				break;
+			case optionPanel_tuio_tcp:
+				if(length == sizeof(bool))
+					myTUIO.bTCPMode = *(bool*)data;
+					bTUIOMode = *(bool*)data;
+					//set osc to opposite
+					myTUIO.bOSCMode = false;
+					gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+					//clear blobs
+					myTUIO.blobs.clear();
+				break;
+			case optionPanel_tuio_height_width:
+				if(length == sizeof(bool))
+					myTUIO.bHeightWidth = *(bool*)data;
+				break;				
 			//Background
 			case backgroundPanel_dynamic:
 				if(length == sizeof(bool))

@@ -12,7 +12,9 @@ class TUIOOSC {
 
 private:
 
-	int		   frameseq;
+	int    frameseq;
+	bool   send(string message);
+	string partialPrevMsg;
 
 public:
 	
@@ -26,13 +28,16 @@ public:
 	void update();
 	void sendOSC();
 
-	ofxTCPServer 	m_tcpServer;
-
 	//---------------------------------------FOR NETWORK 
-//	ofxOscSender		TUIOSocket; 
-	const char*			localHost;
-	char				remoteHost[255];
-	int					TUIOPort;	
+	ofxTCPServer 	m_tcpServer;
+	ofxOscSender	TUIOSocket; 
+	const char*		localHost;
+	char			remoteHost[255];
+	int				TUIOPort;	
+	
+	bool 			bHeightWidth;
+	bool 			bOSCMode;
+	bool			bTCPMode;
 
 	std::map<int, ofxTBetaCvBlob> blobs;
 };

@@ -175,9 +175,12 @@ void ofxNCoreVision::loadXMLSettings()
     filter->highpassAmp			= XML.getValue("CONFIG:INT:HIGHPASSAMP",0);
     filter->smooth				= XML.getValue("CONFIG:INT:SMOOTH",0);
     //--------------------------------------------------- TODO XML NETWORK SETTINGS
-    bTUIOMode			= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
-    tmpLocalHost		= XML.getValue("CONFIG:NETWORK:LOCALHOST", "localhost");
-    tmpPort				= XML.getValue("CONFIG:NETWORK:TUIOPORT_OUT", 3333);
+    bTUIOMode					= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
+	myTUIO.bOSCMode				= XML.getValue("CONFIG:BOOLEAN:TUIO",1);
+	myTUIO.bTCPMode				= XML.getValue("CONFIG:BOOLEAN:TUIO",1);
+	myTUIO.bHeightWidth			= XML.getValue("CONFIG:BOOLEAN:HEIGHTWIDTH",0);
+    tmpLocalHost				= XML.getValue("CONFIG:NETWORK:LOCALHOST", "localhost");
+    tmpPort						= XML.getValue("CONFIG:NETWORK:TUIOPORT_OUT", 3333);
     myTUIO.setup(tmpLocalHost.c_str(), tmpPort); //have to convert tmpLocalHost to a const char*
     //--------------------------------------------------------------
     //  END XML SETUP
@@ -212,7 +215,11 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:INT:HIGHPASSAMP", filter->highpassAmp);
     XML.setValue("CONFIG:INT:SMOOTH", filter->smooth);
     XML.setValue("CONFIG:BOOLEAN:MINIMODE", bMiniMode);
-
+	
+	XML.setValue("CONFIG:BOOLEAN:HEIGHTWIDTH", myTUIO.bHeightWidth);
+	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bOSCMode);
+	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bTCPMode);
+	
     //	XML.setValue("CONFIG:NETWORK:LOCALHOST", *myTUIO.localHost);
     //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
 
@@ -445,23 +452,23 @@ void ofxNCoreVision::drawFullMode(){
     ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", ofGetWidth() - 228, ofGetHeight() - 2);
 
     //Display Application information in bottom right
-    string str = "DSP Milliseconds: ";
+    string str = "Calc. Time [ms]: ";
     str+= ofToString(differenceTime, 0)+"\n\n";
 
     if (bcamera)
     {
-        string str2 = "Camera Res:     ";
+        string str2 = "Camera [Res]:     ";
         str2+= ofToString(vidGrabber.width, 0) + " x " + ofToString(vidGrabber.height, 0)  + "\n";
-        string str4 = "Camera FPS:     ";
+        string str4 = "Camera [fps]:     ";
         str4+= ofToString(fps, 0)+"\n";
         ofSetColor(0xFFFFFF);
         sidebarTXT.drawString(str + str2 + str4, 740, 410);
     }
     else
     {
-        string str2 = "Video Res:       ";
+        string str2 = "Video [Res]:      ";
         str2+= ofToString(vidPlayer.width, 0) + " x " + ofToString(vidPlayer.height, 0)  + "\n";
-        string str4 = "Video FPS:       ";
+        string str4 = "Video [fps]:       ";
         str4+= ofToString(fps, 0)+"\n";
         ofSetColor(0xFFFFFF);
         sidebarTXT.drawString(str + str2 + str4, 740, 410);
@@ -505,10 +512,10 @@ void ofxNCoreVision::drawMiniMode(){
     ofSetColor(250,250,250);
     sidebarTXT.drawString("Calc. Time  [ms]:        " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
     if (bcamera){
-		sidebarTXT.drawString("Camera [fps]:             " + ofToString(fps,0),10, ofGetHeight() - 50 );
+		sidebarTXT.drawString("Camera [fps]:            " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	else {
-		sidebarTXT.drawString("Video [fps]:              " + ofToString(fps,0),10, ofGetHeight() - 50 );
+		sidebarTXT.drawString("Video [fps]:             " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	sidebarTXT.drawString("Blob Count:               " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 29 );
     sidebarTXT.drawString("Sending TUIO:  " ,10, ofGetHeight() - 9 );
@@ -584,17 +591,48 @@ void ofxNCoreVision::keyPressed(int key)
             gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
             break;
         case 't':
-            if (!bCalibration && bTUIOMode)
-            {
-                bTUIOMode = false;
-                myTUIO.blobs.clear();
-                gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
-            }
+            if (myTUIO.bOSCMode)
+            {				
+				bTUIOMode = false;
+				myTUIO.bOSCMode = false;
+				myTUIO.bTCPMode = false;
+				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+				//clear blobs
+				myTUIO.blobs.clear();		
+			}
             else
             {
-                bTUIOMode = true;
-                gui->update(appPtr->optionPanel_tuio, kofxGui_Set_Bool, &appPtr->bTUIOMode, sizeof(bool));
-            }
+               	bTUIOMode = true;
+				myTUIO.bOSCMode = true;
+				myTUIO.bTCPMode = false;
+				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+				//clear blobs
+				myTUIO.blobs.clear();
+			}
+            break;
+		case 'f':
+            if (myTUIO.bTCPMode)
+            {				
+				bTUIOMode = false;
+				myTUIO.bOSCMode = false;
+				myTUIO.bTCPMode = false;
+				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+				//clear blobs
+				myTUIO.blobs.clear();		
+			}
+            else
+            {
+               	bTUIOMode = true;
+				myTUIO.bOSCMode = false;
+				myTUIO.bTCPMode = true;
+				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+				//clear blobs
+				myTUIO.blobs.clear();
+			}
             break;
         case 'g':
             bGPUMode ? bGPUMode = false : bGPUMode = true;
