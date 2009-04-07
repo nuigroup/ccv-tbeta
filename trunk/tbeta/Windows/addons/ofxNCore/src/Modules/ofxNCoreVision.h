@@ -274,7 +274,7 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 		string				message;
 
 		//---------------------------------------FOR NETWORK
-		TUIOOSC				myTUIO;
+		TUIO				myTUIO;
 	};
 
 #endif

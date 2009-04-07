@@ -62,7 +62,7 @@
 #include "Calibration/calibrationB.h"
 
 //Communications
-#include "Communication/TUIOOSC.h"
+#include "Communication/TUIO.h"
 
 //GUI
 #include "Controls/ofxGui.h"

@@ -1,14 +1,14 @@
-#include "TUIOOSC.h"
+#include "TUIO.h"
 
-TUIOOSC::TUIOOSC() {
+TUIO::TUIO() {
 }
 
-TUIOOSC::~TUIOOSC() {
+TUIO::~TUIO() {
 	
 	// this could be useful for whenever we get rid of an object
 }
 
-void TUIOOSC::setup(const char* host, int port) {
+void TUIO::setup(const char* host, int port) {
 
 	localHost = host;
 	TUIOPort = port;
@@ -20,17 +20,12 @@ void TUIOOSC::setup(const char* host, int port) {
 	TUIOSocket.setup(localHost, TUIOPort);
 }
 
-void TUIOOSC::update() {
-
-	frameseq += 1;
-}
-
-void TUIOOSC::sendOSC()
+void TUIO::sendTUIO()
 {	
+	frameseq += 1;
+
 	//if sending OSC (not TCP)
 	if(bOSCMode){
-
-		cout << "OSC MODE" << endl;
 
 		ofxOscBundle b;
 
@@ -98,17 +93,15 @@ void TUIOOSC::sendOSC()
 
 	}else if(bTCPMode) //else, if TCP (flash) mode			
 	{
-		cout << "TCP MODE" << endl;
-
 		if(blobs.size() == 0){
 
-			m_tcpServer.sendToAll("<OSCPACKET ADDRESS=\"127.0.0.1\" PORT=\""+ofToString(TUIOPort)+"\" TIME=\"1\">" +   
+			m_tcpServer.sendToAll("<OSCPACKET ADDRESS=\"127.0.0.1\" PORT=\""+ofToString(TUIOPort)+"\" TIME=\""+ofToString(ofGetElapsedTimef())+"\">" +   
 							 "<MESSAGE NAME=\"/tuio/2Dcur\">"+ 
 							 "<ARGUMENT TYPE=\"s\" VALUE=\"alive\"/>"+
 							 "</MESSAGE>"+
 							 "<MESSAGE NAME=\"/tuio/2Dcur\">"+ 
 							 "<ARGUMENT TYPE=\"s\" VALUE=\"fseq\"/>"+
-							 "<ARGUMENT TYPE=\"i\" VALUE=\"0\"/>" +
+							 "<ARGUMENT TYPE=\"i\" VALUE=\""+ofToString(frameseq)+"\"/>" +
 							 "</MESSAGE>"+
 							 "</OSCPACKET>");
 		}
@@ -153,9 +146,9 @@ void TUIOOSC::sendOSC()
 							  
 			string aliveEndMsg = "</MESSAGE>";
 
-			string fseq = "<MESSAGE NAME=\"/tuio/2Dcur\"><ARGUMENT TYPE=\"s\" VALUE=\"fseq\"/><ARGUMENT TYPE=\"i\" VALUE=\"0\"/></MESSAGE>";
+			string fseq = "<MESSAGE NAME=\"/tuio/2Dcur\"><ARGUMENT TYPE=\"s\" VALUE=\"fseq\"/><ARGUMENT TYPE=\"i\" VALUE=\""+ofToString(frameseq)+"\"/></MESSAGE>";
 
-			m_tcpServer.sendToAll("<OSCPACKET ADDRESS=\"127.0.0.1\" PORT=\""+ofToString(TUIOPort)+"\" TIME=\"1\">" + 
+			m_tcpServer.sendToAll("<OSCPACKET ADDRESS=\"127.0.0.1\" PORT=\""+ofToString(TUIOPort)+"\" TIME=\""+ofToString(ofGetElapsedTimef())+"\">" + 
 									setBlobsMsg + aliveBeginMsg + aliveBlobsMsg + aliveEndMsg + fseq + "</OSCPACKET>");
 		}
 	}

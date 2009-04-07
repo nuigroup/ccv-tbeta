@@ -1,5 +1,5 @@
-#ifndef _TUIOOSC
-#define _TUIOOSC
+#ifndef _TUIO_
+#define _TUIO_
 
 #include "../Tracking/ofxTBetaCvContourFinder.h"
 #define OF_ADDON_USING_OFXOSC		   // OSC COMMUNICATION		
@@ -8,7 +8,7 @@
 
 #include <map>
 
-class TUIOOSC {
+class TUIO {
 
 private:
 
@@ -19,14 +19,13 @@ private:
 public:
 	
 	// constructors
-	TUIOOSC();
+	TUIO();
 	// destructor
-	~TUIOOSC();
+	~TUIO();
 	
 	// methods
 	void setup(const char* host, int port);
-	void update();
-	void sendOSC();
+	void sendTUIO();
 
 	//---------------------------------------FOR NETWORK 
 	ofxTCPServer 	m_tcpServer;

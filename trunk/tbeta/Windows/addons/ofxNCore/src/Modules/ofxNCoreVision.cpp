@@ -112,9 +112,6 @@ void ofxNCoreVision::setup()
 		bShowInterface = true;
 	}
 
-
-
-
     printf("Community Core Vision is setup!\n\n");
 }
 
@@ -162,7 +159,7 @@ void ofxNCoreVision::loadXMLSettings()
     filter->bDynamicBG			= XML.getValue("CONFIG:BOOLEAN:DYNAMICBG", 1);
     //MODES
     bGPUMode					= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
-	bMiniMode                    = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
+	bMiniMode                   = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
 	//CONTROLS
     tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
 	MIN_BLOB_SIZE				= XML.getValue("CONFIG:INT:MINBLOBSIZE",2);
@@ -176,8 +173,8 @@ void ofxNCoreVision::loadXMLSettings()
     filter->smooth				= XML.getValue("CONFIG:INT:SMOOTH",0);
     //--------------------------------------------------- TODO XML NETWORK SETTINGS
     bTUIOMode					= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
-	myTUIO.bOSCMode				= XML.getValue("CONFIG:BOOLEAN:TUIO",1);
-	myTUIO.bTCPMode				= XML.getValue("CONFIG:BOOLEAN:TUIO",1);
+	myTUIO.bOSCMode				= XML.getValue("CONFIG:BOOLEAN:OSCMODE",1);
+	myTUIO.bTCPMode				= XML.getValue("CONFIG:BOOLEAN:TCPMODE",1);
 	myTUIO.bHeightWidth			= XML.getValue("CONFIG:BOOLEAN:HEIGHTWIDTH",0);
     tmpLocalHost				= XML.getValue("CONFIG:NETWORK:LOCALHOST", "localhost");
     tmpPort						= XML.getValue("CONFIG:NETWORK:TUIOPORT_OUT", 3333);
@@ -196,8 +193,7 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:BOOLEAN:PRESSURE",bShowPressure);
     XML.setValue("CONFIG:BOOLEAN:LABELS",bShowLabels);
     XML.setValue("CONFIG:BOOLEAN:OUTLINES",bDrawOutlines);
-    XML.setValue("CONFIG:BOOLEAN:LEARNBG", filter->bLearnBakground);
-    XML.setValue("CONFIG:BOOLEAN:TUIO",bTUIOMode);
+    XML.setValue("CONFIG:BOOLEAN:LEARNBG", filter->bLearnBakground);    
     XML.setValue("CONFIG:BOOLEAN:VMIRROR", filter->bVerticalMirror);
     XML.setValue("CONFIG:BOOLEAN:HMIRROR", filter->bHorizontalMirror);
     XML.setValue("CONFIG:BOOLEAN:HIGHPASS", filter->bHighpass);
@@ -214,11 +210,11 @@ void ofxNCoreVision::saveConfiguration()
     XML.setValue("CONFIG:INT:HIGHPASSNOISE", filter->highpassNoise);
     XML.setValue("CONFIG:INT:HIGHPASSAMP", filter->highpassAmp);
     XML.setValue("CONFIG:INT:SMOOTH", filter->smooth);
-    XML.setValue("CONFIG:BOOLEAN:MINIMODE", bMiniMode);
-	
+    XML.setValue("CONFIG:BOOLEAN:MINIMODE", bMiniMode);	
+	XML.setValue("CONFIG:BOOLEAN:TUIO",bTUIOMode);
 	XML.setValue("CONFIG:BOOLEAN:HEIGHTWIDTH", myTUIO.bHeightWidth);
 	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bOSCMode);
-	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bTCPMode);
+	XML.setValue("CONFIG:BOOLEAN:TCPMODE", myTUIO.bTCPMode);
 	
     //	XML.setValue("CONFIG:NETWORK:LOCALHOST", *myTUIO.localHost);
     //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
@@ -235,26 +231,25 @@ void ofxNCoreVision::update()
 
     if (activeInput)
     {
-
-        if (bcamera)
+        if (bcamera) //if camera
         {
 			if(deviceID<=vidGrabber.getDeviceCount())
 			{
 				vidGrabber.grabFrame();
 				bNewFrame = vidGrabber.isFrameNew();
 			}
-			else{
+			else{//else firefly MV camera
 				ffmv.grabFrame();
 				bNewFrame = true;			
 			}
         }
-        else
+        else //if video
         {
             vidPlayer.idleMovie();
             bNewFrame = vidPlayer.isFrameNew();
         }
 
-        if (bNewFrame)
+        if (bNewFrame) //if new camera frame
         {
             ofBackground(0, 0, 0);
 
@@ -300,11 +295,8 @@ void ofxNCoreVision::update()
 
             if (bTUIOMode)
             {
-                //We're not using frameseq right now with OSC
-                //myTUIO.update();
-
                 //Start sending OSC
-                myTUIO.sendOSC();
+                myTUIO.sendTUIO();
             }
         }
     }
@@ -591,48 +583,22 @@ void ofxNCoreVision::keyPressed(int key)
             gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
             break;
         case 't':
-            if (myTUIO.bOSCMode)
-            {				
-				bTUIOMode = false;
-				myTUIO.bOSCMode = false;
-				myTUIO.bTCPMode = false;
-				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
-				//clear blobs
-				myTUIO.blobs.clear();		
-			}
-            else
-            {
-               	bTUIOMode = true;
-				myTUIO.bOSCMode = true;
-				myTUIO.bTCPMode = false;
-				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
-				//clear blobs
-				myTUIO.blobs.clear();
-			}
+           	myTUIO.bOSCMode = !myTUIO.bOSCMode;
+			myTUIO.bTCPMode = false;
+			bTUIOMode = myTUIO.bOSCMode;
+			gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			//clear blobs
+			myTUIO.blobs.clear();			
             break;
-		case 'f':
-            if (myTUIO.bTCPMode)
-            {				
-				bTUIOMode = false;
-				myTUIO.bOSCMode = false;
-				myTUIO.bTCPMode = false;
-				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
-				//clear blobs
-				myTUIO.blobs.clear();		
-			}
-            else
-            {
-               	bTUIOMode = true;
-				myTUIO.bOSCMode = false;
-				myTUIO.bTCPMode = true;
-				gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-				gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
-				//clear blobs
-				myTUIO.blobs.clear();
-			}
+		case 'f':           
+			myTUIO.bOSCMode = false;
+			myTUIO.bTCPMode = !myTUIO.bTCPMode;
+			bTUIOMode = myTUIO.bTCPMode;
+			gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			//clear blobs
+			myTUIO.blobs.clear();			
             break;
         case 'g':
             bGPUMode ? bGPUMode = false : bGPUMode = true;
@@ -697,7 +663,7 @@ void ofxNCoreVision::keyReleased(int key)
         }
     }
 
-    if ( key == '~' || key == '`') showConfiguration = !showConfiguration;
+    if ( key == '~' || key == '`' && !bMiniMode && !bCalibration) showConfiguration = !showConfiguration;
 }
 
 /*****************************************************************************
