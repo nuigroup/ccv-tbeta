@@ -3,17 +3,17 @@
 
 ofxPS3::ofxPS3() 
 {
-
 }
 
 void ofxPS3::listDevices()
 {
-    //PS3 Camera Testing
+    // PS3 Camera Testing
 	pCam = IPS3EyeLib::Create();
 	
 	// Query supported video formats
 	printf("printing formats...\n");
-	for(int i=0; i<IPS3EyeLib::GetNumFormats(); i++) {
+	for(int i=0; i<IPS3EyeLib::GetNumFormats(); i++) 
+	{
 		int width, height, rate;
 		char *description;
 		width=IPS3EyeLib::GetFormats()[i].width;
@@ -27,7 +27,6 @@ void ofxPS3::listDevices()
 
 void ofxPS3::setDeviceID(int id)
 {
-
 }
 
 int ofxPS3::getDeviceID()
