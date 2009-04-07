@@ -59,6 +59,10 @@
 #define PS3EYELIB_EXPORT __declspec(dllimport)
 #endif
 
+#ifndef PURE
+#define PURE = 0
+#endif
+
 typedef enum
 {
 	R320x240,
@@ -87,12 +91,12 @@ public:
 	static GUID PS3EyeLibGUID();
 
 	// camera format
-	virtual void SetFormat(int formatIdx);
-	virtual UINT GetWidth();
-	virtual UINT GetHeight();
-	virtual PS3EYE_RESOLUTION GetRes();
-	virtual DWORD GetRate();
-	
+	virtual void SetFormat(int formatIdx) PURE;
+	virtual UINT GetWidth() PURE;
+	virtual UINT GetHeight() PURE;
+	virtual PS3EYE_RESOLUTION GetRes() PURE;
+	virtual DWORD GetRate() PURE;
+
 	// supported formats
 	static PS3EYE_FORMAT *GetFormats();
 	static int GetNumFormats();
@@ -100,40 +104,41 @@ public:
 	static int GetFormatIndex(int width, int height, int rate);
 
 	// capture control
-	virtual void StartCapture();
+	virtual void StartCapture() PURE;
+	bool GetFrameRAW(PBYTE *pBuf, bool wait);
 	bool GetFrame(PBYTE buf, int bitsPerPixel, bool flip, bool wait=true);
-	virtual void StopCapture();
-	virtual bool IsCapturing();
+	virtual void StopCapture() PURE;
+	virtual bool IsCapturing() PURE;
 
 	// camera hardware
-	virtual void DumpEEPROM(LPCTSTR filename);
-	virtual void DumpRAM(LPCTSTR filename);
-	virtual void LED(bool on);
+	virtual void DumpEEPROM(LPCTSTR filename) PURE;
+	virtual void DumpRAM(LPCTSTR filename) PURE;
+	virtual void LED(bool on) PURE;
 
 	// camera version
-	virtual LPCTSTR GetCameraVersion();
+	virtual LPCTSTR GetCameraVersion() PURE;
 
 	// camera video control
 	// these settings are effective while camera 
 	// is capturing video frames
 	// the settings persist even between capture sessions
-	virtual bool IsAutoAGC();
-	virtual void AutoAGC(bool enable);
+	virtual bool IsAutoAGC() PURE;
+	virtual void AutoAGC(bool enable) PURE;
 	// Gain value [0..79]
-	virtual int GetGain();
-	virtual void SetGain(int value);
+	virtual int GetGain() PURE;
+	virtual void SetGain(int value) PURE;
 
-	virtual bool IsAutoAEC();
-	virtual void AutoAEC(bool enable);
-	// Exposure value [0..255]
-	virtual int GetExposure();
-	virtual void SetExposure(int value);
+	virtual bool IsAutoAEC() PURE;
+	virtual void AutoAEC(bool enable) PURE;
+	// Exposure value [0..511]
+	virtual int GetExposure() PURE;
+	virtual void SetExposure(int value) PURE;
 
-	virtual bool IsAutoAWB();
-	virtual void AutoAWB(bool enable);
-	virtual void GetWhiteBalance(BYTE *r, BYTE *g, BYTE *b);
-	virtual void SetWhiteBalance(BYTE r, BYTE g, BYTE b);
+	virtual bool IsAutoAWB() PURE;
+	virtual void AutoAWB(bool enable) PURE;
+	virtual void GetWhiteBalance(BYTE *r, BYTE *g, BYTE *b) PURE;
+	virtual void SetWhiteBalance(BYTE r, BYTE g, BYTE b) PURE;
 
-	virtual bool IsColorBar();
-	virtual void ColorBar(bool enable);
+	virtual bool IsColorBar() PURE;
+	virtual void ColorBar(bool enable) PURE;
 };
