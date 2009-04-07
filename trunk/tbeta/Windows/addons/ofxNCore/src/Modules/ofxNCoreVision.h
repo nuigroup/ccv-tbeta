@@ -14,7 +14,7 @@
 
 #define OF_ADDON_USING_OFXXMLSETTINGS  // LOAD CONFIG.XML
 #define OF_ADDON_USING_OFXOPENCV	   // COMPUTER VISION STUFF
-#define OF_ADDON_USING_OFXFFMV	   // COMPUTER VISION STUFF
+#define OF_ADDON_USING_OFXFFMV		   // COMPUTER VISION STUFF
 #define OF_ADDON_USING_OFXOSC		   // OSC COMMUNICATION
 #define OF_ADDON_USING_OFXDIRLIST	   // LOCAL DIRECTORY LISTING
 #define OF_ADDON_USING_OFXVECTORMATH   // VECTOR MATH/ARRAYS
@@ -28,11 +28,10 @@
 #include "ofAddons.h"
 #include "ofMain.h"
 
+#include "ofxPS3.h"
 #include "../Filters/CPUImageFilter.h"
 #include "../Filters/ProcessFilters.h"
 #include "../Calibration/Calibration.h"
-//#include "ConfigurationApp.h"
-
 
 class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchListener//, public BlobManager
 	{
@@ -186,7 +185,8 @@ class ofxNCoreVision : public ofSimpleApp, public ofxGuiListener, public TouchLi
 		 *						Video Settings
 		 ***************************************************************/
 		ofVideoGrabber 		vidGrabber;
-		ofxffmv             ffmv;//for firefly mv
+		ofxffmv             ffmv; //for firefly mv
+		ofxPS3				PS3;  //for ps3
 		ofVideoPlayer 		vidPlayer;
 
 		/****************************************************************

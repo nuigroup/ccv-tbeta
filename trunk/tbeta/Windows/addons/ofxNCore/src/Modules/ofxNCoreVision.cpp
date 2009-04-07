@@ -51,11 +51,19 @@ void ofxNCoreVision::setup()
         vidGrabber.initGrabber(camWidth,camHeight);
 		/////ffmv - firefly camera only//////
 		if(ffmv.getDeviceCount() > 0){
-			ffmv.listDevices();
+			ffmv.listDevices();		
+			ffmv.initFFMV(camWidth,camHeight);
 		}
-		ffmv.initFFMV(camWidth,camHeight);
+
+		/////PS3 - PS3 camera only//////
+
+	  //If(PS3.getNumDevices() > 0{
+//			PS3.listDevices();
+//			PS3.initPS3(camWidth, camHeight, camRate);
+	  //}
+
 		/////**************************//////
-        int grabW = vidGrabber.width;
+		int grabW = vidGrabber.width;
         int grabH = vidGrabber.height;
         printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
     }
@@ -242,6 +250,10 @@ void ofxNCoreVision::update()
 				ffmv.grabFrame();
 				bNewFrame = true;			
 			}
+/*			else{//else PS3 camera				
+				bNewFrame = PS3.isFrameNew();			
+			}
+*/
         }
         else //if video
         {
@@ -321,6 +333,15 @@ void ofxNCoreVision::grabFrameToCPU()
 			//convert to grayscale
 			processedImg = sourceImg;
 		}
+/*		else{
+			sourceImg.setFromPixels(PS3.getPixels(), camWidth, camHeight);
+
+			//maybe this should be?:  sourceImg.setFromPixels(PS3.pBuffer, camWidth, camHeight);
+
+			//convert to grayscale
+			processedImg = sourceImg;
+		}
+*/
 	}
     else
 	{
