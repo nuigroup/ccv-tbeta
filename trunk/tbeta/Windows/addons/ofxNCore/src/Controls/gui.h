@@ -209,18 +209,18 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						if(!bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
 							bcamera = true;
-							if(deviceID>vidGrabber.getDeviceCount())
+							if(deviceID > vidGrabber->getDeviceCount())
 							{
 								//vidGrabber.close();
 								ffmv.setDeviceID(deviceID);
 							}
 							else{
-								vidGrabber.close();
-								vidGrabber.setDeviceID(deviceID);
-								vidGrabber.setVerbose(false);
-								camWidth = vidGrabber.width;
-								camHeight = vidGrabber.height;
-								vidGrabber.initGrabber(camWidth,camHeight);
+								vidGrabber->close();
+								vidGrabber->setDeviceID(deviceID);
+								vidGrabber->setVerbose(false);
+								camWidth = vidGrabber->width;
+								camHeight = vidGrabber->height;
+								vidGrabber->initGrabber(camWidth,camHeight);
 							}
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
@@ -244,11 +244,11 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						if(bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
 							bcamera = false;
-							vidPlayer.loadMovie(videoFileName);
-							vidPlayer.play();
+							vidPlayer->loadMovie(videoFileName);
+							vidPlayer->play();
 							printf("Video Mode\n");
-							camHeight = vidPlayer.height;
-							camWidth = vidPlayer.width;
+							camHeight = vidPlayer->height;
+							camWidth = vidPlayer->width;
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
@@ -271,15 +271,15 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID += 1;
-						if(deviceID >= vidGrabber.getDeviceCount())
+						if(deviceID >= vidGrabber->getDeviceCount())
 						{
-							if(deviceID>=(vidGrabber.getDeviceCount()+ffmv.getDeviceCount()))
+							if(deviceID>=(vidGrabber->getDeviceCount()+ffmv.getDeviceCount()))
 							{
-								deviceID=vidGrabber.getDeviceCount()+ffmv.getDeviceCount();
+								deviceID=vidGrabber->getDeviceCount()+ffmv.getDeviceCount();
 							}
 							else
 							{
-								vidGrabber.close();
+								vidGrabber->close();
 								ffmv.setDeviceID(deviceID);
 								filter->exposureStartTime = ofGetElapsedTimeMillis();
 							}
@@ -287,9 +287,9 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						}
 						else{
 							//vidGrabber.close();
-							vidGrabber.setDeviceID(deviceID);
-							vidGrabber.setVerbose(true);
-							vidGrabber.initGrabber(camWidth,camHeight);
+							vidGrabber->setDeviceID(deviceID);
+							vidGrabber->setVerbose(true);
+							vidGrabber->initGrabber(camWidth,camHeight);
 							filter->exposureStartTime = ofGetElapsedTimeMillis();
 						}
 						activeInput = true;
@@ -304,14 +304,14 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID -= 1;
-						if(deviceID <= vidGrabber.getDeviceCount())
+						if(deviceID <= vidGrabber->getDeviceCount())
 						{
 							if(deviceID < 0) deviceID = 0;
 							else{
-								vidGrabber.close();
-								vidGrabber.setDeviceID(deviceID);
-								vidGrabber.setVerbose(true);
-								vidGrabber.initGrabber(camWidth,camHeight);
+								vidGrabber->close();
+								vidGrabber->setDeviceID(deviceID);
+								vidGrabber->setVerbose(true);
+								vidGrabber->initGrabber(camWidth,camHeight);
 								filter->exposureStartTime = ofGetElapsedTimeMillis();
 							}
 						}
@@ -330,7 +330,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 				{
 					if(*(bool*)data && bcamera)
 					{
-						vidGrabber.videoSettings();
+						vidGrabber->videoSettings();
 					}
 				}
 				break;

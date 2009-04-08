@@ -45,37 +45,46 @@ void ofxNCoreVision::setup()
 	if (bcamera)
 	{
 		activeInput = true;
-		//         vidGrabber.listDevices();
-		//         vidGrabber.setDeviceID(deviceID);
-		//         vidGrabber.setVerbose(true);
-		//         vidGrabber.initGrabber(camWidth,camHeight);
-		/////ffmv - firefly camera only//////
-		// 		if(ffmv.getDeviceCount() > 0){
-		// 			ffmv.listDevices();		
-		// 			ffmv.initFFMV(camWidth,camHeight);
-		// 		}
 
+/*		if( vidGrabber == NULL ) {
+            vidGrabber = new ofVideoGrabber();
+			vidGrabber->listDevices();
+            vidGrabber->setVerbose(true);
+            vidGrabber->initGrabber(cwidth,cheight);  
+			int grabW = vidGrabber->width;
+			int grabH = vidGrabber->height;
+			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
+        }
+		#ifdef TARGET_WIN32
+		/////ffmv - firefly camera only//////
+		if(ffmv.getDeviceCount() > 0){
+		   ffmv.listDevices();		
+		   ffmv.initFFMV(camWidth,camHeight);
+		   printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, camWidth, camHeight);
+		}
+*/
 		/////PS3 - PS3 camera only//////
 		if(ofxPS3::getDeviceCount() > 0)
 		{
 			PS3 = new ofxPS3();
 			PS3->listDevices();
 			PS3->initPS3(camWidth, camHeight, camRate);
+			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, camWidth, camHeight);
 		}
-
+//		#endif 
 		/////**************************//////
-		int grabW = vidGrabber.width;
-		int grabH = vidGrabber.height;
-		printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
-	}
+		}
 	else
 	{
-		activeInput = true;
-		vidPlayer.loadMovie(videoFileName);
-		vidPlayer.play();
-		printf("Video Mode\n\n");
-		camHeight = vidPlayer.height;
-		camWidth = vidPlayer.width;
+        if( vidPlayer == NULL ) {
+			activeInput = true;
+            vidPlayer = new ofVideoPlayer();            
+            vidPlayer->loadMovie( videoFileName );
+            vidPlayer->play(); 
+			printf("Video Mode\n\n");
+			camHeight = vidPlayer->height;
+			camWidth = vidPlayer->width;
+        }
 	}
 
 	/*****************************************************************************************************
@@ -145,17 +154,17 @@ void ofxNCoreVision::loadXMLSettings()
 	//--------------------------------------------------------------
 	//frameRate			= XML.getValue("CONFIG:APPLICATION:FRAMERATE",0);
 
-	winWidth			= XML.getValue("CONFIG:WINDOW:WIDTH", 950);
-	winHeight			= XML.getValue("CONFIG:WINDOW:HEIGHT", 600);
-	bcamera				= XML.getValue("CONFIG:CAMERA_0:USECAMERA", 1);
-	deviceID			= XML.getValue("CONFIG:CAMERA_0:DEVICE", 0);
-	camWidth			= XML.getValue("CONFIG:CAMERA_0:WIDTH", 320);
-	camHeight			= XML.getValue("CONFIG:CAMERA_0:HEIGHT", 240);
-	camRate				= XML.getValue("CONFIG:CAMERA_0:FRAMERATE", 0);
-	videoFileName		= XML.getValue("CONFIG:VIDEO:FILENAME", "RearDI.m4v");
-	maxBlobs			= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
-	bShowLabels			= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
-	bDrawOutlines		= XML.getValue("CONFIG:BOOLEAN:OUTLINES",0);
+	winWidth					= XML.getValue("CONFIG:WINDOW:WIDTH", 950);
+	winHeight					= XML.getValue("CONFIG:WINDOW:HEIGHT", 600);
+	bcamera						= XML.getValue("CONFIG:CAMERA_0:USECAMERA", 1);
+	deviceID					= XML.getValue("CONFIG:CAMERA_0:DEVICE", 0);
+	camWidth					= XML.getValue("CONFIG:CAMERA_0:WIDTH", 320);
+	camHeight					= XML.getValue("CONFIG:CAMERA_0:HEIGHT", 240);
+	camRate						= XML.getValue("CONFIG:CAMERA_0:FRAMERATE", 0);
+	videoFileName				= XML.getValue("CONFIG:VIDEO:FILENAME", "RearDI.m4v");
+	maxBlobs					= XML.getValue("CONFIG:BLOBS:MAXNUMBER", 20);
+	bShowLabels					= XML.getValue("CONFIG:BOOLEAN:LABELS",0);
+	bDrawOutlines				= XML.getValue("CONFIG:BOOLEAN:OUTLINES",0);
 	filter->bLearnBakground		= XML.getValue("CONFIG:BOOLEAN:LEARNBG",0);
 	filter->bVerticalMirror		= XML.getValue("CONFIG:BOOLEAN:VMIRROR",0);
 	filter->bHorizontalMirror	= XML.getValue("CONFIG:BOOLEAN:HMIRROR",0);
@@ -233,39 +242,40 @@ void ofxNCoreVision::saveConfiguration()
 * The update function runs continuously. Use it to update states and variables
 *****************************************************************************/
 void ofxNCoreVision::update()
-{
+{	
 	if(exited) return;
+
 	bNewFrame = false;
 
 	if (activeInput)
 	{
 		if (bcamera) //if camera
 		{
-			// 			if(deviceID<=vidGrabber.getDeviceCount())
-			// 			{
-			// 				vidGrabber.grabFrame();
-			// 				bNewFrame = vidGrabber.isFrameNew();
-			// 			}
-			// 			else{//else firefly MV camera
-			// 				ffmv.grabFrame();
-			// 				bNewFrame = true;			
-			// 			}
-			// 			else
-			// 			{
-			//else PS3 camera		
-			if(PS3!=NULL)
+			if(PS3!=NULL)//ps3 camera
+			{
 				bNewFrame = PS3->isFrameNew();	
-			else
-				return;
-			// 			}
-		}
+			}
+/*			else if(deviceID < = vidGrabber->getDeviceCount()) //videoInput camera
+ 			{
+ 				vidGrabber->grabFrame();
+ 				bNewFrame = vidGrabber->isFrameNew();
+ 			}
+ 			else{//else firefly MV camera
+ 				ffmv.grabFrame();
+ 				bNewFrame = true;			
+ 			}
+*/		}
 		else //if video
 		{
-			vidPlayer.idleMovie();
-			bNewFrame = vidPlayer.isFrameNew();
+			vidPlayer->idleMovie();
+			bNewFrame = vidPlayer->isFrameNew();
 		}
 
-		if (bNewFrame) //if new camera frame
+		//if no new frame, return		
+		if(!bNewFrame){
+			return;
+		}
+		else//else process camera frame
 		{
 			ofBackground(0, 0, 0);
 
@@ -328,28 +338,24 @@ void ofxNCoreVision::grabFrameToCPU()
 	//Set sourceImg as new camera/video frame
 	if (bcamera)
 	{
-		// 		if(deviceID>vidGrabber.getDeviceCount())
-		// 		{
-		// 			processedImg.setFromPixels(ffmv.fcImage[ffmv.getDeviceID()].pData,camWidth,camHeight);
-		// 		}
-		// 		else{
-		// 			sourceImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
-		// 			//convert to grayscale
-		// 			processedImg = sourceImg;
-		// 		}
-		// 		else{
-		if(PS3!=NULL)
+		if(PS3!=NULL){
 			sourceImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
-
-		//maybe this should be?:  sourceImg.setFromPixels(PS3.pBuffer, camWidth, camHeight);
-
-		//convert to grayscale
-		processedImg = sourceImg;
-		//}
-	}
+			//convert to grayscale
+ 			processedImg = sourceImg;
+		}
+/* 		else if(deviceID < = vidGrabber->getDeviceCount())
+ 		{
+ 			sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
+ 			//convert to grayscale
+ 			processedImg = sourceImg;
+ 		}
+ 		else{
+			processedImg.setFromPixels(ffmv.fcImage[ffmv.getDeviceID()].pData,camWidth,camHeight);
+ 		}
+*/	}
 	else
 	{
-		sourceImg.setFromPixels(vidPlayer.getPixels(), 	camWidth, camHeight);
+		sourceImg.setFromPixels(vidPlayer->getPixels(), camWidth, camHeight);
 		//convert to grayscale
 		processedImg = sourceImg;
 	}
@@ -361,24 +367,26 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 	//grab the frame to a raw openGL texture
 	if (bcamera)
 	{
+		glEnable(GL_TEXTURE_2D);
+		//glPixelStorei(1);
+		glBindTexture(GL_TEXTURE_2D, target);				
 		if(PS3!=NULL)
 		{
-			glEnable(GL_TEXTURE_2D);
-			//glPixelStorei(1);
-			glBindTexture(GL_TEXTURE_2D, target);
-			//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber.getPixels());
 			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, PS3->getPixels());
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glBindTexture(GL_TEXTURE_2D,0);
 		}
+		else if(deviceID <= vidGrabber->getDeviceCount())
+		{
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
+		}
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glBindTexture(GL_TEXTURE_2D,0);
 	}
 	else
 	{
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, target);
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, camWidth, camHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, vidPlayer.getPixels());
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidPlayer.getPixels());
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidPlayer->getPixels());
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glBindTexture(GL_TEXTURE_2D,0);
@@ -392,6 +400,7 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 void ofxNCoreVision::draw()
 {
 	if(exited) return;
+
 	if (showConfiguration)
 	{
 		//temporary. only auto draw if in fullscreen
@@ -485,7 +494,7 @@ void ofxNCoreVision::drawFullMode(){
 	else
 	{
 		string str2 = "Video [Res]:      ";
-		str2+= ofToString(vidPlayer.width, 0) + " x " + ofToString(vidPlayer.height, 0)  + "\n";
+		str2+= ofToString(vidPlayer->width, 0) + " x " + ofToString(vidPlayer->height, 0)  + "\n";
 		string str4 = "Video [fps]:       ";
 		str4+= ofToString(fps, 0)+"\n";
 		ofSetColor(0xFFFFFF);
@@ -582,8 +591,8 @@ void ofxNCoreVision::keyPressed(int key)
 	if(key==0x1b)
 	{
 		exited=true;
-//		if(PS3!=NULL) delete PS3;
 	}
+
 	if (showConfiguration)
 	{
 		switch (key)
@@ -638,7 +647,7 @@ void ofxNCoreVision::keyPressed(int key)
 			break;
 		case 'v':
 			if (bcamera)
-				vidGrabber.videoSettings();
+				vidGrabber->videoSettings();
 			break;
 		case 'l':
 			bShowLabels ? bShowLabels = false : bShowLabels = true;

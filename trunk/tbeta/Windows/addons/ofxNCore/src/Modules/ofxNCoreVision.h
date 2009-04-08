@@ -100,6 +100,8 @@ public:
 	{
 		exited=false;
 		PS3 = NULL;
+		vidGrabber = NULL;
+		vidPlayer = NULL;
 		//listen for Touch Events
 		TouchEvents.addListener(this);
 		//initialize filter
@@ -138,7 +140,15 @@ public:
 
 	~ofxNCoreVision()
 	{
-		if( filter != NULL )	delete filter;
+		if( filter != NULL ) {
+            delete filter;
+        }
+        if( vidGrabber != NULL ) {
+            delete vidGrabber;
+        }        
+        if( vidPlayer != NULL ) {
+            delete vidPlayer;
+        } 
 	}
 
 	/****************************************************************
@@ -185,10 +195,10 @@ public:
 	/***************************************************************
 	 *						Video Settings
 	 ***************************************************************/
-	ofVideoGrabber 		vidGrabber;
 	ofxffmv             ffmv; //for firefly mv
-	ofxPS3				*PS3;  //for ps3
-	ofVideoPlayer 		vidPlayer;
+	ofxPS3*				PS3;  //for ps3
+	ofVideoGrabber*		vidGrabber;
+    ofVideoPlayer*		vidPlayer;
 
 	/****************************************************************
 	 *            Variables in config.xml Settings file
