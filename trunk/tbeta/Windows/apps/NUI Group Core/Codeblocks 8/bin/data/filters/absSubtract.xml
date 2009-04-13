@@ -1,4 +1,0 @@
-<?xml version="1.0" ?>
-<Filter name="Subtraction">
-	<FragmentShader>shaders/absSubtract.fs</FragmentShader>
-</Filter>
