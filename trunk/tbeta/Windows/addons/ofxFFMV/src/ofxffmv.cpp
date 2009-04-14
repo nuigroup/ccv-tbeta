@@ -105,17 +105,19 @@ int ofxffmv::getCamHeight()
 //Clean up
 ofxffmv::~ofxffmv()
 {
-    for(int i=0;i<camNum;i++)
-    {
-    // Stop the camera. This does not destroy the context. This simply stops
-    // the grabbing of images from the camera. This should always be called
-    // prior to calling flycaptureDestroyContext().
-    //
-    flycaptureStop( context[i] );
-    //
-    // Destroy the context. This should always be called before exiting
-    // the application to prevent memory leaks.
-    //
-    flycaptureDestroyContext( context[i] );
-    }//end of for loop
+	if(getDeviceCount() > 0){
+		for(int i=0;i<camNum;i++)
+		{
+		// Stop the camera. This does not destroy the context. This simply stops
+		// the grabbing of images from the camera. This should always be called
+		// prior to calling flycaptureDestroyContext().
+		//
+		flycaptureStop( context[i] );
+		//
+		// Destroy the context. This should always be called before exiting
+		// the application to prevent memory leaks.
+		//
+		flycaptureDestroyContext( context[i] );
+		}//end of for loop
+	}
 }

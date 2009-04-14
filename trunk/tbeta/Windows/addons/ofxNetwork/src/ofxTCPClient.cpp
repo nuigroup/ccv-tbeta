@@ -94,7 +94,8 @@ bool ofxTCPClient::send(string message){
 	// note that you will receive a trailing [/TCP]\0
 	// if sending from here and receiving from receiveRaw or
 	// other applications
-	message = partialPrevMsg + message + STR_END_MSG;
+//	message = partialPrevMsg + message + STR_END_MSG;
+	message = partialPrevMsg + message;
 	message += (char)0; //for flash
 	int ret = TCPClient.SendAll( message.c_str(), message.length() );
 	if( ret == 0 ){
