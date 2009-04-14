@@ -1,20 +1,22 @@
-#ifndef OFX_CV_CPUImageFilter_IMAGE
-#define OFX_CV_CPUImageFilter_IMAGE
+/*
+*  CPUImageFilter.h
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
 
-//#include "ofxCvImage.h"
-//#include "ofxCvBlob.h"
-
-// for all the things ofxCvGrayscaleImage can do, check:
-// ofxCvImage.h
+#ifndef CPUImageFilter_H
+#define CPUImageFilter_H
 
 #include "ofxCvGrayscaleImage.h"
-
 
 class CPUImageFilter : public ofxCvGrayscaleImage {
 
   public:
 
-    CPUImageFilter() {};
+    CPUImageFilter(){};
 
     void operator = ( unsigned char* _pixels );
     void operator = ( ofxCvGrayscaleImage& mom );
@@ -23,10 +25,9 @@ class CPUImageFilter : public ofxCvGrayscaleImage {
 
 	//amplifies signal
 	void amplify( CPUImageFilter& mom, float level );
+	//picks out light spots from image
 	void highpass(float blur1, float blur2 );
 };
-
-
 
 #endif
 

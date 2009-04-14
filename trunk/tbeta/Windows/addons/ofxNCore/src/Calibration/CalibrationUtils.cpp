@@ -1,3 +1,12 @@
+/*
+*  CalibrationUtils.cpp
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
+
 #include "CalibrationUtils.h"
 
 //set some default values
@@ -278,8 +287,8 @@ void CalibrationUtils::transformDimension(float &width, float &height)
 	cameraToScreenPosition(lrX, lrY);
 
 	//Calculate new height/width
-	width = lrX - ulX;
-	height = ulY - lrY;
+	width = abs(lrX - ulX);
+	height = abs(ulY - lrY);
 }
 
 void CalibrationUtils::calculateBox()

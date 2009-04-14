@@ -1,8 +1,10 @@
 /*
-* Copyright 2008 NOR_/D <http://nortd.com>
+*  ProcessFilters.h
+*  
 *
-* * *
-* The default filter.
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
 */
 
 #ifndef PROCESS_FILTERS_H_

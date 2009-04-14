@@ -1,9 +1,10 @@
 /*
-* Copyright 2008 NOR_/D <http://nortd.com>
+*  Filters.h
+*  
 *
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
 *
-* * *
-* The base class of all filters.
 */
 
 #ifndef FILTERS_H_

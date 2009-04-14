@@ -1,3 +1,11 @@
+/*
+*  ContourFinder.cpp
+*  
+*
+*  Created on 2/2/09.
+*  Adapted from openframeworks ofxCvContourFinder
+*
+*/
 
 #include "ContourFinder.h"
 
@@ -71,7 +79,6 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 		}
 	}
 
-
 	CvSeq* contour_list = NULL;
 	contour_storage = cvCreateMemStorage( 1000 );
 	storage	= cvCreateMemStorage( 1000 );
@@ -96,12 +103,10 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 		contour_ptr = contour_ptr->h_next;
 	}
 
-
 	// sort the pointers based on size
 	if( nCvSeqsFound > 0 ) {
 		qsort( cvSeqBlobs, nCvSeqsFound, sizeof(CvSeq*), qsort_carea_compare);
 	}
-
 
 	// now, we have nCvSeqsFound contours, sorted by size in the array
     // cvSeqBlobs let's get the data out and into our structures that we like
@@ -158,6 +163,5 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 	if( storage != NULL ) { cvReleaseMemStorage(&storage); }
 
 	return nBlobs;
-//	return blobs;
 }
 

@@ -8,16 +8,14 @@
  * 08/15/08 -- Fixed a major bug in the track algorithm
  */
 
-#ifndef __TRACKING
-#define __TRACKING
+#ifndef _TRACKING_H
+#define _TRACKING_H
 
 #include <list>
 #include <map>
 
 #include "ContourFinder.h"
-
 #include "../Events/TouchMessenger.h"
-
 #include "../Calibration/CalibrationUtils.h"
 
 class BlobTracker : public TouchListener
@@ -26,27 +24,24 @@ class BlobTracker : public TouchListener
 public:
 
 	BlobTracker();
-
-	CalibrationUtils* calibrate;
-
-	bool isCalibrating;
-
-	int MIN_MOVEMENT_THRESHOLD;
-
-	void passInCalibration(CalibrationUtils* calibrate);
-
-	std::vector<Blob> getTrackedBlobs();
-
-
+	~BlobTracker();
 	//assigns IDs to each blob in the contourFinder
 	void track(ContourFinder* newBlobs);
-	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
+	void passInCalibration(CalibrationUtils* calibrate);
+
+	CalibrationUtils* calibrate;
+	bool isCalibrating;
+	int MIN_MOVEMENT_THRESHOLD;
+	std::vector<pair<int,Blob>> getTrackedBlobs();
 
 private:
 
+	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
 	int						IDCounter;	  //counter of last blob
 	int						fightMongrel;
-	std::vector<Blob>	trackedBlobs; //tracked blobs
+	std::vector<Blob>		trackedBlobs; //tracked blobs
+	std::map<int, Blob>     calibratedBlobs;
+	std::vector<pair<int,Blob>>		finalBlobs; //tracked blobs
 };
 
 #endif

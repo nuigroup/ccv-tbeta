@@ -1,16 +1,16 @@
 /*
- *  BlobManager.cpp
- *  tbeta
- *
- *  Created by Artem Titoulenko on 2/2/09.
- *  Copyright 2009 NUI Inc.. All rights reserved.
- *
- */
+*  BlobManager.cpp
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
 
 #include "BlobManager.h"
 
 BlobManager::BlobManager() {
-	//ctor
+
 }
 
 BlobManager::~BlobManager() {

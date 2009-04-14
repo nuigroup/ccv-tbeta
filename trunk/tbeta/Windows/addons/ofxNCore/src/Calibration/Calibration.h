@@ -1,108 +1,85 @@
-#ifndef _Calibration_H
-#define _Calibration_H
 /*
- *  Calibration.h
- *  tbeta
- *
- *  Created by Artem Titoulenko on 2/1/09.
- *  Copyright 2009 NUI Inc.. All rights reserved.
- *
- */
+*  Calibration.h
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
 
-// LOAD CONFIG.XML
-#include "ofxXmlSettings.h"
+#ifndef CALIBRATION_H
+#define CALIBRATION_H
 
+#include "ofxXmlSettings.h" // LOAD CONFIG.XML
 #include "ofMain.h"
-
 #include "CalibrationUtils.h"
 #include "../Events/TouchMessenger.h"
 #include "../Tracking/ContourFinder.h"
 #include "../Tracking/Tracking.h"
 
-
-class Calibration : public TouchListener, public ofSimpleApp {
+class Calibration : public TouchListener {
 
 	public:
 
 		Calibration() {
 			TouchEvents.addRAWListener(this);
-
             ofAddListener(ofEvents.keyPressed, this, &Calibration::_keyPressed);
             ofAddListener(ofEvents.keyReleased, this, &Calibration::_keyReleased);
-
-			calibrating = false;
-
 			calibrating = false;
 			bShowTargets = true;
 			bW			= false;
 			bA			= false;
 			bS			= false;
 			bD			= false;
-
-			downColor = 0xFF0000;
-			arcAngle = 0;
+			downColor   = 0xFF0000;
+			arcAngle    = 0;
 		}
 
-		/****************************************************************
-		 *						Public
-        ****************************************************************/
 		//Basic Methods
 		void setup(int _camWidth, int _camHeight, BlobTracker *trackerIn);
 		//Key Events
 		void _keyPressed(ofKeyEventArgs &e);
 		void _keyReleased(ofKeyEventArgs &e);
-
         //Touch Events
 		void RAWTouchDown( Blob b );
 		void RAWTouchMoved( Blob b );
 		void RAWTouchUp( Blob b );
 		void RAWTouchHeld( Blob b);
-
-		void drawFingerOutlines();
+		//other
         void doCalibration();
-		void drawCalibrationBlobs();
-		void drawCalibrationPointsAndBox();
-		void saveConfiguration();
-
 		void passInContourFinder(int numBlobs, vector<Blob> blobs);
         void passInTracker(BlobTracker *trackerIn);
 
-		ContourFinder	contourFinder;
 		bool                calibrating;
 
-		/****************************************************************
-		 *						Private
-        ****************************************************************/
-
 	private:
-
+		
+		void drawFingerOutlines();
+		void drawCalibrationBlobs();
+		void drawCalibrationPointsAndBox();
+		void saveConfiguration();
         void DrawCircleLoader(double xctr, double yctr, double radius, double startAngle, double endAngle);
 
-        bool				bW;
-		bool				bS;
-		bool				bA;
-		bool				bD;
-
-        int 				camWidth;
-		int 				camHeight;
-		float               arcAngle;
-
-		//---------------------------------------Fonts
-		ofTrueTypeFont		verdana;
-		ofTrueTypeFont		calibrationText;
-
-		//---------------------------------------Blob Tracker
-		BlobTracker*			tracker;
-
-		//---------------------------------------Calibration Stuff
-		ofImage calibrationParticle;
-		bool	bShowTargets;
-		float	downColor;
+        bool			bW;
+		bool			bS;
+		bool			bA;
+		bool			bD;
+		bool			bShowTargets;
+        int 			camWidth;
+		int 			camHeight;
+		float           arcAngle;
+		float			downColor;
 		std::map<int, int> blobcolor;
-
+		//Fonts
+		ofTrueTypeFont	verdana;
+		ofTrueTypeFont	calibrationText;
+		//Draw Particle Image
+		ofImage			calibrationParticle;		
+		//Blob Tracker
+		BlobTracker*	tracker;
 		CalibrationUtils calibrate;
-
-		ofxXmlSettings		calibrationXML;
+		ContourFinder	contourFinder;
+		ofxXmlSettings	calibrationXML;
 };
 
 #endif

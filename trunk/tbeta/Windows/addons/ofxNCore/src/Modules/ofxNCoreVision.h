@@ -188,9 +188,9 @@ public:
 	void TouchUp( Blob b );
 
 	//GUI
-	void setupGUI();
+	void setupControls();
 	void		handleGui(int parameterId, int task, void* data, int length);
-	ofxGui*		gui;
+	ofxGui*		controls;
 
 	//image processing stuff
 	void grabFrameToCPU();
@@ -205,6 +205,9 @@ public:
 	//Load/save settings
 	void loadXMLSettings();
 	void saveSettings();
+
+	//Getters
+	std::vector<pair<int,Blob>> getBlobs();
 
 	/***************************************************************
 	 *					Video Capture Devices

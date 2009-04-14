@@ -3,7 +3,7 @@
 *  NUI Group Community Core Vision
 *
 *  Created by NUI Group Dev Team A on 2/1/09.
-*  Copyright 2009 NUI Group/Inc. All rights reserved.
+*  Copyright 2009 NUI Group\Inc. All rights reserved.
 *
 */
 
@@ -18,7 +18,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//set the title to 'tbeta'
 	ofSetWindowTitle(" Community Core Vision ");
 
-	//ofSetBackgroundAuto(false);
+//	ofSetBackgroundAuto(false);
 
 	//create filter
 	if ( filter == NULL ){filter = new ProcessFilters();}
@@ -100,8 +100,8 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Static Images
 	background.loadImage("images/background.jpg"); //Main (Temp?) Background
 
-	gui = ofxGui::Instance(this);
-	setupGUI();
+	controls = ofxGui::Instance(this);
+	setupControls();
 
 	calib.setup(camWidth, camHeight, &tracker);
 
@@ -413,45 +413,34 @@ void ofxNCoreVision::_draw(ofEventArgs &e)
 {
 	if(exited) return;
 
-	if (showConfiguration)
+	if (showConfiguration) 
 	{
-		//temporary. only auto draw if in fullscreen
-		if (bNewFrame && bFullscreen == false)
+		//if calibration
+		if (bCalibration)
 		{
-			drawToScreen();
+			//Don't draw main interface
+			calib.passInContourFinder(contourFinder.nBlobs, contourFinder.blobs);
+			calib.doCalibration();
 		}
-		else
+		//if mini mode
+		else if (bMiniMode)
 		{
-			drawToScreen();
+			drawMiniMode();
 		}
-		if (!bCalibration && !bMiniMode)
-			gui->draw();
-	}
+		//if full mode
+		else if (bShowInterface)
+		{
+			drawFullMode();
+			if(bDrawOutlines || bShowLabels) drawFingerOutlines();
+		}
+		//draw gui controls
+		if (!bCalibration && !bMiniMode) {controls->draw();}
+	}	
 }
 
 void ofxNCoreVision::drawToScreen()
 {
-	//if calibration
-	if (bCalibration)
-	{
-		//Don't draw main interface
-		calib.passInContourFinder(contourFinder.nBlobs, contourFinder.blobs);
-		calib.doCalibration();
-	}
-	//if mini mode
-	else if (bMiniMode)
-	{
-		drawMiniMode();
-	}
-	//if full mode
-	else if (bShowInterface)
-	{
-		drawFullMode();
-
-		if(bDrawOutlines || bShowLabels){
-			drawFingerOutlines();
-		}
-	}
+	
 }
 
 
@@ -621,33 +610,33 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			// my main problem is that the slider doesn't move....
 		case 'a':
 			filter->threshold++;
-			gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
+			controls->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
 			break;
 		case 'z':
 			filter->threshold--;
-			gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
+			controls->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
 			break;
 		case 'b':
 			filter->bLearnBakground = true;
 			break;
 		case 'o':
 			bDrawOutlines ? bDrawOutlines = false : bDrawOutlines = true;
-			gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
+			controls->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
 			break;
 		case 'h':
 			filter->bHorizontalMirror ? filter->bHorizontalMirror = false : filter->bHorizontalMirror = true;
-			gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
+			controls->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
 			break;
 		case 'j':
 			filter->bVerticalMirror ? filter->bVerticalMirror = false : filter->bVerticalMirror = true;
-			gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
+			controls->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
 			break;
 		case 't':
 			myTUIO.bOSCMode = !myTUIO.bOSCMode;
 			myTUIO.bTCPMode = false;
 			bTUIOMode = myTUIO.bOSCMode;
-			gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-			gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
 			//clear blobs
 			myTUIO.blobs.clear();
 			break;
@@ -655,14 +644,14 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			myTUIO.bOSCMode = false;
 			myTUIO.bTCPMode = !myTUIO.bTCPMode;
 			bTUIOMode = myTUIO.bTCPMode;
-			gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-			gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
 			//clear blobs
 			myTUIO.blobs.clear();
 			break;
 		case 'g':
 			bGPUMode ? bGPUMode = false : bGPUMode = true;
-			gui->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
+			controls->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
 			filter->bLearnBakground = true;
 			break;
 		case 'v':
@@ -671,7 +660,7 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			break;
 		case 'l':
 			bShowLabels ? bShowLabels = false : bShowLabels = true;
-			gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
+			controls->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
 			break;
 		case 'p':
 			bShowPressure ? bShowPressure = false : bShowPressure = true;
@@ -700,7 +689,7 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			tracker.isCalibrating = false;
 			if (bFullscreen == true) ofToggleFullscreen();
 			bFullscreen = false;
-			ofSetBackgroundAuto(false);
+//			ofSetBackgroundAuto(false);
 			}
 			break;
 		}
@@ -720,10 +709,10 @@ void ofxNCoreVision::_keyReleased(ofKeyEventArgs &e)
 			tracker.isCalibrating = true;
 			if (bFullscreen == false) ofToggleFullscreen();
 			bFullscreen = true;
-			ofSetBackgroundAuto(true);
+//			ofSetBackgroundAuto(true);
 		}
 	}
-	if ( e.key == '~' || e.key == '`' && !bMiniMode && !bCalibration) showConfiguration = !showConfiguration;
+	if ( e.key == '~' || e.key == '`' /*&& !bMiniMode*/ && !bCalibration) showConfiguration = !showConfiguration;
 }
 
 /*****************************************************************************
@@ -771,14 +760,14 @@ void ofxNCoreVision::TouchMoved( Blob b)
 void ofxNCoreVision::_mouseDragged(ofMouseEventArgs &e)
 {
 	if (showConfiguration)
-		gui->mouseDragged(e.x, e.y, e.button); //guilistener
+		controls->mouseDragged(e.x, e.y, e.button); //guilistener
 }
 
 void ofxNCoreVision::_mousePressed(ofMouseEventArgs &e)
 {
 	if (showConfiguration)
 	{
-		gui->mousePressed(e.x, e.y, e.button); //guilistener
+		controls->mousePressed(e.x, e.y, e.button); //guilistener
 		if (e.x > ofGetWidth() - 230 && e.y > ofGetHeight() - 14){ofLaunchBrowser("http://www.openframeworks.cc/forum/viewtopic.php?p=9651#9651");}
 	}
 }
@@ -786,7 +775,16 @@ void ofxNCoreVision::_mousePressed(ofMouseEventArgs &e)
 void ofxNCoreVision::_mouseReleased(ofMouseEventArgs &e)
 {
 	if (showConfiguration)
-		gui->mouseReleased(e.x, e.y, 0); //guilistener
+		controls->mouseReleased(e.x, e.y, 0); //guilistener
+}
+
+/*****************************************************************************
+* Getters
+*****************************************************************************/
+
+std::vector<pair<int,Blob>> ofxNCoreVision::getBlobs(){
+
+	return tracker.getTrackedBlobs();
 }
 
 /*****************************************************************************

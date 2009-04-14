@@ -1,6 +1,6 @@
 /*
 * Blob.h
-* openFrameworks
+*
 *
 * A blob is a homogenous patch represented by a polygonal contour.
 * Typically a blob tracker uses the contour to figure out the blob's
@@ -9,34 +9,30 @@
 *
 */
 
-#ifndef _BLOB_H
-#define _BLOB_H
+#ifndef BLOB_H
+#define BLOB_H
 
 #include <vector>
 
 class Blob {
 
-    public:
+    public: 
 
-        float               area;
+        vector <ofPoint>    pts;     // the contour of the blob
+        int                 nPts;    // number of pts;
+		int					id;
+	    float               area;
         float               length;
-        ofRectangle         boundingRect;
-		ofRectangle         angleBoundingRect;
-		ofPoint             centroid, lastCentroid, D;
-        bool                hole;
-
-		float				age; //how long the blob has been at war
+		float               angle;
+		float				maccel;  //distance traveled since last frame
+		float				age;     //how long the blob has been at war
 		float				sitting; //how long hes been sitting in the same place
 		float				downTime;
-
+	    ofRectangle         boundingRect;
+		ofRectangle         angleBoundingRect;
+		ofPoint             centroid, lastCentroid, D;
 		bool				simulated;
-
-		float				maccel;
-
-        vector <ofPoint>    pts;    // the contour of the blob
-        int                 nPts;   // number of pts;
-		int					id;
-		float               angle;
+		bool                hole;
 
         //----------------------------------------
         Blob() {

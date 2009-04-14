@@ -1,12 +1,14 @@
 /*
- *  Tracking.cpp
- *
- *  Created by Ramsin Khoshabeh on 5/4/08.
- *  Copyright 2008 risenparadigm. All rights reserved.
- *
- * Changelog:
- * 08/15/08 -- Fixed a major bug in the track algorithm
- */
+*  Tracking.cpp
+*
+*  Created by Ramsin Khoshabeh on 5/4/08.
+*  Copyright 2008 risenparadigm. All rights reserved.
+*
+*  Changelog:
+*  08/15/08 -- Fixed a major bug in the track algorithm
+*
+*
+*/
 
 #include "Tracking.h"
 
@@ -16,12 +18,15 @@ BlobTracker::BlobTracker()
 	isCalibrating = false;
 }
 
+BlobTracker::~BlobTracker(){
+
+	delete calibrate;
+}
 
 void BlobTracker::passInCalibration(CalibrationUtils* calibrater) {
 
     calibrate = calibrater;
 }
-
 
 //assigns IDs to each blob in the contourFinder
 void BlobTracker::track(ContourFinder* newBlobs)
@@ -54,6 +59,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 			calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 			calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+			//erase calibrated blob from map
+			calibratedBlobs.erase(TouchEvents.messenger.id);
 
 			TouchEvents.notifyTouchUp(NULL);
 			//mark the blob for deletion
@@ -120,6 +127,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
                         calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                         calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+						//erase calibrated blob from map
+						calibratedBlobs.erase(TouchEvents.messenger.id);
 
      					TouchEvents.notifyTouchUp(NULL);
 						//mark the blob for deletion
@@ -138,6 +147,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
                         calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
                         calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+						//erase calibrated blob from map
+						calibratedBlobs.erase(TouchEvents.messenger.id);
 
 						TouchEvents.notifyTouchUp(NULL);
 						//mark the blob for deletion
@@ -222,14 +233,13 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
-						TouchEvents.notifyTouchHeld(NULL);
+						//update calibrated blob map
+						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
                         //held event only happens once so set to -1
                         trackedBlobs[i].sitting = -1;
 
-						//should print if holding
-						//printf("holding\n");
-
+						TouchEvents.notifyTouchHeld(NULL);
 					} else {
 						//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
@@ -243,6 +253,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+						//update calibrated blob map
+						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
 						TouchEvents.notifyTouchMoved(NULL);
 					}
@@ -271,6 +283,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
             calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
             calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
+			//add to calibrated blob map
+			calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
 			//Send Event
 			TouchEvents.notifyTouchDown(NULL);
@@ -280,9 +294,12 @@ void BlobTracker::track(ContourFinder* newBlobs)
 	}
 }
 
-std::vector<Blob> BlobTracker::getTrackedBlobs(){
-
-    return trackedBlobs;
+std::vector<pair<int,Blob>> BlobTracker::getTrackedBlobs(){
+	
+	//copy map to a vector??? we need a better way
+	finalBlobs.clear();
+    copy(calibratedBlobs.begin(), calibratedBlobs.end(), back_inserter(finalBlobs));
+    return finalBlobs;
 }
 
 /*************************************************************************

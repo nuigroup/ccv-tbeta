@@ -1,13 +1,15 @@
-#ifndef Touch_MESSENGER_H
-#define Touch_MESSENGER_H
 /*
- *  TouchMessenger.h
- *  tbeta
- *
- *  Created by Artem Titoulenko on 2/1/09.
- *  Copyright 2009 NUI Inc.. All rights reserved.
- *
- */
+*  TouchMessenger.h
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
+
+#ifndef TOUCH_MESSENGER_H
+#define TOUCH_MESSENGER_H
+
 #include "Poco/FIFOEvent.h"
 #include "Poco/Delegate.h"
 #include "ofTypes.h"
@@ -15,7 +17,7 @@
 #include "../Tracking/ContourFinder.h"
 
 // message code
-//	copied, adapted, practiced from ofMouseEvents.h
+// copied, adapted, practiced from ofMouseEvents.h
 
 /* THE DEAL WITH THE RAW
 
@@ -27,9 +29,9 @@
  get the calibrated blobs. Enjoy!
 
  News: Friday 13th, 8:29 PM EST ===
-	Now you can add a hold event to your apps. good stuff...
+ -Now you can add a hold event to your apps. good stuff...
 
- */
+*/
 
 class content
 	{
@@ -153,9 +155,6 @@ class TouchManager
 			RAWTouchHeld += Poco::Delegate<TouchListener, Blob>(listener, &TouchListener::RAWTouchHeld);
 		}
 
-
-
-
 		//message recievers ---
 		void notifyTouchDown(void* sender){ //TouchDown
 			TouchDown.notify(sender, messenger);
@@ -184,11 +183,6 @@ class TouchManager
 			RAWTouchHeld.notify(sender, RAWmessenger);
 		}
 
-
-
-
-
-
 		//events -------------- MONGREL
 	private:
 		Poco::FIFOEvent<Blob> TouchDown;
@@ -207,6 +201,5 @@ class TouchManager
 	};
 
 extern TouchManager TouchEvents;
-
 
 #endif

@@ -1,11 +1,11 @@
 /*
- *  Cali.cpp
- *  tbeta
- *
- *  Created by Artem Titoulenko on 2/1/09.
- *  Copyright 2009 NUI Inc.. All rights reserved.
- *
- */
+*  Calibration.cpp
+*  
+*
+*  Created on 2/1/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
 
 #include "Calibration.h"
 
@@ -85,10 +85,10 @@ void Calibration::drawCalibrationPointsAndBox(){
 
     //this all has to do with getting the angle for loading circle
     arcAngle = 0;
-    std::vector<Blob>	trackedBlobs; //tracked blobs
+    std::vector<pair<int,Blob>>	trackedBlobs; //tracked blobs
     trackedBlobs = tracker->getTrackedBlobs(); //get blobs from tracker
     for(int i=0; i< trackedBlobs.size(); i++){
-        if (trackedBlobs[i].sitting > arcAngle) {arcAngle = trackedBlobs[i].sitting;}
+        if (trackedBlobs[i].second.sitting > arcAngle) {arcAngle = trackedBlobs[i].second.sitting;}
     }//end loading circle angle
 
     //Get the screen points so we can make a grid
@@ -128,26 +128,22 @@ void Calibration::drawCalibrationPointsAndBox(){
 
 void Calibration::drawCalibrationBlobs(){
 
-    std::vector<Blob>	trackedBlobs; //tracked blobs
+    std::vector<pair<int,Blob>>	trackedBlobs; //tracked blobs
     trackedBlobs = tracker->getTrackedBlobs(); //get blobs from tracker
 
     //Find the blobs
     for(int i=0; i < trackedBlobs.size(); i++)
     {
         //temp blob to rescale and draw on screen
-        Blob drawBlob2;
-        drawBlob2 = trackedBlobs[i];
+        Blob drawBlob;
+        drawBlob = trackedBlobs[i].second;
 
         //transform height/width to calibrated space
-        calibrate.transformDimension(drawBlob2.boundingRect.width, drawBlob2.boundingRect.height);
-        drawBlob2.boundingRect.width *= calibrate.screenBB.getWidth() * ofGetWidth() * 4;
-        drawBlob2.boundingRect.height *= calibrate.screenBB.getHeight() * ofGetHeight() * 4 ;
-
-        //transform x/y position to calibrated space
-        calibrate.cameraToScreenPosition(drawBlob2.centroid.x, drawBlob2.centroid.y);
+        drawBlob.boundingRect.width *= calibrate.screenBB.getWidth() * ofGetWidth() * 4;
+        drawBlob.boundingRect.height *= calibrate.screenBB.getHeight() * ofGetHeight() * 4 ;
 
 		//Get a random color for each blob
-        if(blobcolor[drawBlob2.id] == 0)
+        if(blobcolor[drawBlob.id] == 0)
         {
             int r = ofRandom(0, 255);
             int g = ofRandom(0, 255);
@@ -155,16 +151,16 @@ void Calibration::drawCalibrationBlobs(){
             //Convert to hex
             int rgbNum = ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
             //Set hex into map position
-            blobcolor[drawBlob2.id] = rgbNum;
+            blobcolor[drawBlob.id] = rgbNum;
         }
 
         //Draw Fuzzy Circles
         ofEnableAlphaBlending();
         ofImage tempCalibrationParticle;
         tempCalibrationParticle.clone(calibrationParticle);
-        ofSetColor(blobcolor[drawBlob2.id]);
-        tempCalibrationParticle.draw(drawBlob2.centroid.x * ofGetWidth() - drawBlob2.boundingRect.width * .5, drawBlob2.centroid.y * ofGetHeight() - drawBlob2.boundingRect.height * .5,
-									 drawBlob2.boundingRect.width, drawBlob2.boundingRect.height);
+        ofSetColor(blobcolor[drawBlob.id]);
+        tempCalibrationParticle.draw(drawBlob.centroid.x * ofGetWidth() - drawBlob.boundingRect.width * .5, drawBlob.centroid.y * ofGetHeight() - drawBlob.boundingRect.height * .5,
+									 drawBlob.boundingRect.width, drawBlob.boundingRect.height);
         ofDisableAlphaBlending();
 
         //Draw Blob Targets
@@ -174,10 +170,10 @@ void Calibration::drawCalibrationBlobs(){
             glLineWidth(5);
             glPushMatrix();
 			//	glLoadIdentity();
-            glTranslatef(drawBlob2.centroid.x * ofGetWidth(), ((drawBlob2.centroid.y * ofGetHeight())), 0);
-			//  ofEllipse(0, 0, drawBlob2.boundingRect.width/2, drawBlob2.boundingRect.height/2);
-            ofLine(0, -drawBlob2.boundingRect.height/2, 0, drawBlob2.boundingRect.height/2);
-            ofLine(-drawBlob2.boundingRect.width/2, 0, drawBlob2.boundingRect.width/2, 0);
+            glTranslatef(drawBlob.centroid.x * ofGetWidth(), ((drawBlob.centroid.y * ofGetHeight())), 0);
+			//  ofEllipse(0, 0, drawBlob.boundingRect.width/2, drawBlob.boundingRect.height/2);
+            ofLine(0, -drawBlob.boundingRect.height/2, 0, drawBlob.boundingRect.height/2);
+            ofLine(-drawBlob.boundingRect.width/2, 0, drawBlob.boundingRect.width/2, 0);
             glPopMatrix();
         }
         //set line width back to normal
@@ -188,10 +184,6 @@ void Calibration::drawCalibrationBlobs(){
 /*****************************************************************************
  * TOUCH EVENTS
  *****************************************************************************/
-void Calibration::RAWTouchDown( Blob b)
-{
-}
-
 void Calibration::RAWTouchUp( Blob b)
 {
 	if(calibrate.bCalibrating)//If Calibrating, register the calibration point on blobOff
@@ -206,20 +198,13 @@ void Calibration::RAWTouchUp( Blob b)
 			}
             else{
 				printf("%d (%f, %f)\n", calibrate.GRID_POINTS, b.centroid.x, b.centroid.y);
-				printf("Calibration complete\n");
+				printf("Calibration complete\n\n");
 			}
 		}
 	}
 }
 
-void Calibration::RAWTouchMoved( Blob b)
-{
-}
-
 void Calibration::RAWTouchHeld( Blob b) {
-
-//	cout << "id " << b.id << " sitting " << b.sitting << endl;
-	//ofSetColor(0,b.age/1000*255,6);
 
 	if(calibrate.bCalibrating)//If Calibrating, register the calibration point on blobOff
 	{
@@ -227,6 +212,14 @@ void Calibration::RAWTouchHeld( Blob b) {
 		calibrate.bGoToNextStep = true;
 		downColor = 0xFFFFFF;
 	}
+}
+
+void Calibration::RAWTouchMoved( Blob b)
+{
+}
+
+void Calibration::RAWTouchDown( Blob b)
+{
 }
 
 /*****************************************************************************
@@ -423,15 +416,6 @@ void Calibration::_keyReleased(ofKeyEventArgs &e){
 				break;
 			case 'd':
 				bD = false;
-				break;
-			case '/':
-				if(calibrating) {
-					Blob tempBlob;
-					tempBlob.centroid.x = mouseX;
-					tempBlob.centroid.y = mouseY;
-					tempBlob.simulated = true;
-					RAWTouchDown(tempBlob);
-				}
 				break;
             case 'x': //Begin Calibrating
                 tracker->passInCalibration(&calibrate);

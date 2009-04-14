@@ -1,14 +1,17 @@
 /*
-* CvContourFinder.h
+* ContourFinder.h
 *
 * Finds white blobs in binary images and identifies
 * centroid, bounding box, area, length and polygonal contour
 * The result is placed in a vector of Blob objects.
 *
+* Created on 2/2/09.
+* Adapted from openframeworks ofxCvContourFinder
+*
 */
 
-#ifndef OFX_CONTOUR_FINDER
-#define OFX_CONTOUR_FINDER
+#ifndef CONTOUR_FINDER_H
+#define CONTOUR_FINDER_H
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
@@ -39,7 +42,6 @@ class ContourFinder {
 
     // this is stuff, not for general public to touch -- we need
     // this to do the blob detection, etc.
-
     ofxCvGrayscaleImage inputCopy;
     CvMemStorage*       contour_storage;
     CvMemStorage*       storage;

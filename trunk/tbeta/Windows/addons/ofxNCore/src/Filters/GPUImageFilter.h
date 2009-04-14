@@ -1,3 +1,12 @@
+/*
+*  GPUImageFilter.h
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
+
 #ifndef GPUIMAGEFILTER_H_
 #define GPUIMAGEFILTER_H_
 
@@ -5,8 +14,6 @@
 
 #include <map>
 #include <string>
-
-
 
 
 class FilterParameter{
@@ -23,8 +30,6 @@ public:
 	};
 
 };
-
-
 
 class GPUImageFilter
 {
@@ -58,7 +63,6 @@ class GPUImageFilter
 };
 
 
-
 //small helper function
 inline void drawGLTexture(float x, float y, float w, float h, GLuint t){
 		glEnable(GL_TEXTURE_2D);
@@ -75,6 +79,4 @@ inline void drawGLTexture(float x, float y, float w, float h, GLuint t){
 }
 
 
-
-
-#endif /*IMAGEFILTER_H_*/
+#endif /*GPUIMAGEFILTER_H_*/

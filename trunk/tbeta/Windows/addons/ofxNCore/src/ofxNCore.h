@@ -1,11 +1,11 @@
 /***************************************************************************
 *
- *  ofxNCore.h
- *  NUI Group Community Core Vision
- * 
- *  Created by NUI Group Dev Team A on 2/1/09.
- *  Copyright 2009 NUI Group/Inc. All rights reserved.       
-*   Version : 5.21
+*  ofxNCore.h
+*  NUI Group Community Core Vision
+* 
+*  Created by NUI Group Dev Team A on 3/1/09.
+*  Copyright 2009 NUI Group/Inc. All rights reserved.       
+*  Version : 1.20
 *
 *
 * Redistribution and use in source and binary forms, with or without
@@ -18,7 +18,7 @@
 * notice, this list of conditions and the following disclaimer in the
 * documentation and/or other materials provided with the distribution.
 *
-* THIS SOFTWARE IS PROVIDED BY BEN WOODHOUSE ``AS IS'' AND ANY EXPRESS OR
+* THIS SOFTWARE IS PROVIDED BY NUI GROUP ``AS IS'' AND ANY EXPRESS OR
 * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 * IN NO EVENT SHALL BEN WOODHOUSE BE LIABLE FOR ANY DIRECT, INDIRECT,

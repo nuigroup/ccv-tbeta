@@ -1,75 +1,84 @@
-#ifndef __GUI_DEFINITION
-#define __GUI_DEFINITION
+/*
+*  TUIO.h
+*  
+*
+*  Created on 2/2/09.
+*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*
+*/
+
+#ifndef GUI_CONTROLS_H
+#define GUI_CONTROLS_H
 
 #include "../Modules/ofxNCoreVision.h"
 
 ofxNCoreVision  *appPtr;
 
-void ofxNCoreVision ::setupGUI()
+void ofxNCoreVision::setupControls()
 {
 	appPtr = this;
 
 	//panel border color
-	gui->mGlobals->mBorderColor.r = 0;
-	gui->mGlobals->mBorderColor.g = 0;
-	gui->mGlobals->mBorderColor.b = 0;
-	gui->mGlobals->mBorderColor.a = .3;
+	controls->mGlobals->mBorderColor.r = 0;
+	controls->mGlobals->mBorderColor.g = 0;
+	controls->mGlobals->mBorderColor.b = 0;
+	controls->mGlobals->mBorderColor.a = .3;
 	//panel color
-	gui->mGlobals->mCoverColor.r = 1;
-	gui->mGlobals->mCoverColor.g = 1;
-	gui->mGlobals->mCoverColor.b = 1;
-	gui->mGlobals->mCoverColor.a = .4;
+	controls->mGlobals->mCoverColor.r = 1;
+	controls->mGlobals->mCoverColor.g = 1;
+	controls->mGlobals->mCoverColor.b = 1;
+	controls->mGlobals->mCoverColor.a = .4;
 	//control outline color
-	gui->mGlobals->mFrameColor.r = 0;
-	gui->mGlobals->mFrameColor.g = 0;
-	gui->mGlobals->mFrameColor.b = 0;
-	gui->mGlobals->mFrameColor.a = .3;
+	controls->mGlobals->mFrameColor.r = 0;
+	controls->mGlobals->mFrameColor.g = 0;
+	controls->mGlobals->mFrameColor.b = 0;
+	controls->mGlobals->mFrameColor.a = .3;
 	//text color
-	gui->mGlobals->mTextColor.r = 0;
-	gui->mGlobals->mTextColor.g = 0;
-	gui->mGlobals->mTextColor.b = 0;
-	gui->mGlobals->mTextColor.a = 1;
+	controls->mGlobals->mTextColor.r = 0;
+	controls->mGlobals->mTextColor.g = 0;
+	controls->mGlobals->mTextColor.b = 0;
+	controls->mGlobals->mTextColor.a = 1;
 	//button color
-	gui->mGlobals->mButtonColor.r = .9;
-	gui->mGlobals->mButtonColor.g = 1;
-	gui->mGlobals->mButtonColor.b = 0;
-	gui->mGlobals->mButtonColor.a = .8;
+	controls->mGlobals->mButtonColor.r = .9;
+	controls->mGlobals->mButtonColor.g = 1;
+	controls->mGlobals->mButtonColor.b = 0;
+	controls->mGlobals->mButtonColor.a = .8;
 	//slider tip color
-	gui->mGlobals->mHandleColor.r = 0;
-	gui->mGlobals->mHandleColor.g = 0;
-	gui->mGlobals->mHandleColor.b = 0;
+	controls->mGlobals->mHandleColor.r = 0;
+	controls->mGlobals->mHandleColor.g = 0;
+	controls->mGlobals->mHandleColor.b = 0;
 	//slider color
-	gui->mGlobals->mSliderColor.r = 1;
-	gui->mGlobals->mSliderColor.g = 0;
-	gui->mGlobals->mSliderColor.b = 0;
-	gui->mGlobals->mSliderColor.a = .8;
+	controls->mGlobals->mSliderColor.r = 1;
+	controls->mGlobals->mSliderColor.g = 0;
+	controls->mGlobals->mSliderColor.b = 0;
+	controls->mGlobals->mSliderColor.a = .8;
 
-	ofxGuiPanel* propPanel = gui->addPanel(appPtr->propertiesPanel, "Source Properties", 735, 10, 12, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* propPanel = controls->addPanel(appPtr->propertiesPanel, "Source Properties", 735, 10, 12, OFXGUI_PANEL_SPACING);
 	propPanel->addButton(appPtr->propertiesPanel_settings, "Camera Settings (v)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	propPanel->addButton(appPtr->propertiesPanel_flipV, "Flip Vertical (j)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	propPanel->addButton(appPtr->propertiesPanel_flipH, "Flip Horizontal (h)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	propPanel->mObjWidth = 200;
 
-	ofxGuiPanel* gPanel = gui->addPanel(appPtr->gpuPanel, "GPU Properties", 735, 110, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* gPanel = controls->addPanel(appPtr->gpuPanel, "GPU Properties", 735, 110, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	gPanel->addButton(appPtr->gpuPanel_use, "GPU Mode (g)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	gPanel->mObjWidth = 200;
 
-	ofxGuiPanel* oPanel = gui->addPanel(appPtr->optionPanel, "Communication", 735, 167, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* oPanel = controls->addPanel(appPtr->optionPanel, "Communication", 735, 167, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	oPanel->addButton(appPtr->optionPanel_tuio_osc, "Send TUIO OSC (t)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	oPanel->addButton(appPtr->optionPanel_tuio_tcp, "Send TUIO TCP | For Flash (f)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	oPanel->addButton(appPtr->optionPanel_tuio_height_width, "Send Height & Width ", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	oPanel->mObjWidth = 200;
 
-	ofxGuiPanel* cPanel = gui->addPanel(appPtr->calibrationPanel, "Calibration", 735, 264, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* cPanel = controls->addPanel(appPtr->calibrationPanel, "Calibration", 735, 264, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	cPanel->addButton(appPtr->calibrationPanel_calibrate, "Enter Calibration (c)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	cPanel->mObjWidth = 200;
 
-	ofxGuiPanel* panel2 = gui->addPanel(appPtr->savePanel, "Files", 735, 322, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* panel2 = controls->addPanel(appPtr->savePanel, "Files", 735, 322, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	panel2->addButton(appPtr->kParameter_SaveXml, "Save Settings (s)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	panel2->mObjWidth = 200;
 
 	//Tracked Image
-	ofxGuiPanel* trackPanel = gui->addPanel(appPtr->trackedPanel, "Tracked Image", 386, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* trackPanel = controls->addPanel(appPtr->trackedPanel, "Tracked Image", 386, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	trackPanel->addButton(appPtr->trackedPanel_outlines, "Show Outlines (o)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	trackPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	trackPanel->addSlider(appPtr->trackedPanel_threshold, "Image Threshold (a/z)", 140, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
@@ -91,7 +100,7 @@ void ofxNCoreVision ::setupGUI()
 	trackPanel->adjustToNewContent(100, 0);
 
 	//Source Image
-	ofxGuiPanel* srcPanel = gui->addPanel(appPtr->sourcePanel, "Source Image", 41, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	ofxGuiPanel* srcPanel = controls->addPanel(appPtr->sourcePanel, "Source Image", 41, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	srcPanel->addButton(appPtr->sourcePanel_cam, "Use Camera", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	srcPanel->addButton(appPtr->sourcePanel_previousCam, "Previous Camera", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	srcPanel->addButton(appPtr->sourcePanel_nextCam, "Next Camera", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
@@ -106,7 +115,7 @@ void ofxNCoreVision ::setupGUI()
 	srcPanel->adjustToNewContent(100, 0);
 
 	//Background Image
-	ofxGuiPanel* bkPanel1 = gui->addPanel(appPtr->backgroundPanel, "Background", 86, 487, 10, 7);
+	ofxGuiPanel* bkPanel1 = controls->addPanel(appPtr->backgroundPanel, "Background", 86, 487, 10, 7);
 	bkPanel1->addButton(backgroundPanel_remove, "Remove BG (b)", 10, 10, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	bkPanel1->addButton(backgroundPanel_dynamic, "Dynamic Subtract", 10, 10, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	bkPanel1->addSlider(appPtr->backgroundPanel_learn_rate, "Learn Speed", 110, 13, 1.0f, 500.0f, backgroundLearnRate, kofxGui_Display_Int, 0);
@@ -114,7 +123,7 @@ void ofxNCoreVision ::setupGUI()
 	bkPanel1->mObjHeight = 95;
 
 	//Smooth Image
-	ofxGuiPanel* sPanel = gui->addPanel(appPtr->smoothPanel, "Smooth", 236, 487, 10, 7);
+	ofxGuiPanel* sPanel = controls->addPanel(appPtr->smoothPanel, "Smooth", 236, 487, 10, 7);
 	sPanel->addButton(smoothPanel_use, "", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	sPanel->addSlider(smoothPanel_smooth, "Smooth", 110, 13, 0.0f, 15.0f, filter->smooth, kofxGui_Display_Int, 0);
 	sPanel->mObjects[0]->mObjX = 105;
@@ -124,7 +133,7 @@ void ofxNCoreVision ::setupGUI()
 	sPanel->mObjHeight = 65;
 
 	//Highpass Image
-	ofxGuiPanel* hpPanel = gui->addPanel(appPtr->highpassPanel, "Highpass", 386, 487, OFXGUI_PANEL_BORDER, 7);
+	ofxGuiPanel* hpPanel = controls->addPanel(appPtr->highpassPanel, "Highpass", 386, 487, OFXGUI_PANEL_BORDER, 7);
 	hpPanel->addButton(highpassPanel_use, "", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	hpPanel->addSlider(highpassPanel_blur, "Blur", 110, 13, 0.0f, 200.0f, filter->highpassBlur, kofxGui_Display_Int, 0);
 	hpPanel->addSlider(highpassPanel_noise, "Noise", 110, 13, 0.0f, 30.0f, filter->highpassNoise, kofxGui_Display_Int, 0);
@@ -136,7 +145,7 @@ void ofxNCoreVision ::setupGUI()
 	hpPanel->mObjHeight = 95;
 
 	//Amplify Image
-	ofxGuiPanel* ampPanel = gui->addPanel(appPtr->amplifyPanel, "Amplify", 536, 487, OFXGUI_PANEL_BORDER, 7);
+	ofxGuiPanel* ampPanel = controls->addPanel(appPtr->amplifyPanel, "Amplify", 536, 487, OFXGUI_PANEL_BORDER, 7);
 	ampPanel->addButton(amplifyPanel_use, "", 12, 12, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	ampPanel->addSlider(amplifyPanel_amp, "Amplify", 110, 13, 0.0f, 300.0f, filter->highpassAmp, kofxGui_Display_Int, 0);
 	ampPanel->mObjects[0]->mObjX = 105;
@@ -146,53 +155,53 @@ void ofxNCoreVision ::setupGUI()
 	ampPanel->mObjHeight = 65;
 
 	//do update while inactive
-	gui->forceUpdate(false);
-	gui->activate(true);
+	controls->forceUpdate(false);
+	controls->activate(true);
 
 	/****************************
 	* Set GUI values on startup
 	****************************/
-	gui->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
-	gui->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
-	gui->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
-	gui->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
+	controls->update(appPtr->propertiesPanel_flipV, kofxGui_Set_Bool, &appPtr->filter->bVerticalMirror, sizeof(bool));
+	controls->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
+	controls->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
+	controls->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
 	//Source
-	gui->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->bcamera, sizeof(bool));
+	controls->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->bcamera, sizeof(bool));
 	if(!bcamera){
 	bool bvideo = true;
-	gui->update(appPtr->sourcePanel_video, kofxGui_Set_Bool, &bvideo, sizeof(bool));
+	controls->update(appPtr->sourcePanel_video, kofxGui_Set_Bool, &bvideo, sizeof(bool));
 	}
 	//Calibration
-	gui->update(appPtr->calibrationPanel_calibrate, kofxGui_Set_Bool, &appPtr->bCalibration, sizeof(bool));
+	controls->update(appPtr->calibrationPanel_calibrate, kofxGui_Set_Bool, &appPtr->bCalibration, sizeof(bool));
 	//Dynamic Background
-	gui->update(appPtr->backgroundPanel_dynamic, kofxGui_Set_Bool, &appPtr->filter->bDynamicBG, sizeof(bool));
+	controls->update(appPtr->backgroundPanel_dynamic, kofxGui_Set_Bool, &appPtr->filter->bDynamicBG, sizeof(bool));
 	//Smooth
-	gui->update(appPtr->smoothPanel_use, kofxGui_Set_Bool, &appPtr->filter->bSmooth, sizeof(bool));
-	gui->update(appPtr->smoothPanel_smooth, kofxGui_Set_Bool, &appPtr->filter->smooth, sizeof(float));
+	controls->update(appPtr->smoothPanel_use, kofxGui_Set_Bool, &appPtr->filter->bSmooth, sizeof(bool));
+	controls->update(appPtr->smoothPanel_smooth, kofxGui_Set_Bool, &appPtr->filter->smooth, sizeof(float));
 	//Highpass
-	gui->update(appPtr->highpassPanel_use, kofxGui_Set_Bool, &appPtr->filter->bHighpass, sizeof(bool));
-	gui->update(appPtr->highpassPanel_blur, kofxGui_Set_Bool, &appPtr->filter->highpassBlur, sizeof(float));
-	gui->update(appPtr->highpassPanel_noise, kofxGui_Set_Bool, &appPtr->filter->highpassNoise, sizeof(float));
+	controls->update(appPtr->highpassPanel_use, kofxGui_Set_Bool, &appPtr->filter->bHighpass, sizeof(bool));
+	controls->update(appPtr->highpassPanel_blur, kofxGui_Set_Bool, &appPtr->filter->highpassBlur, sizeof(float));
+	controls->update(appPtr->highpassPanel_noise, kofxGui_Set_Bool, &appPtr->filter->highpassNoise, sizeof(float));
 	//Amplify
-	gui->update(appPtr->amplifyPanel_use, kofxGui_Set_Bool, &appPtr->filter->bAmplify, sizeof(bool));
-	gui->update(appPtr->amplifyPanel_amp, kofxGui_Set_Bool, &appPtr->filter->highpassAmp, sizeof(float));
+	controls->update(appPtr->amplifyPanel_use, kofxGui_Set_Bool, &appPtr->filter->bAmplify, sizeof(bool));
+	controls->update(appPtr->amplifyPanel_amp, kofxGui_Set_Bool, &appPtr->filter->highpassAmp, sizeof(float));
 	//Threshold
-	gui->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
+	controls->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
 	//Min Movement
-	gui->update(appPtr->trackedPanel_min_movement, kofxGui_Set_Bool, &appPtr->tracker.MIN_MOVEMENT_THRESHOLD, sizeof(float));
+	controls->update(appPtr->trackedPanel_min_movement, kofxGui_Set_Bool, &appPtr->tracker.MIN_MOVEMENT_THRESHOLD, sizeof(float));
 	//Min Blob Size
-	gui->update(appPtr->trackedPanel_min_blob_size, kofxGui_Set_Bool, &appPtr->MIN_BLOB_SIZE, sizeof(float));
+	controls->update(appPtr->trackedPanel_min_blob_size, kofxGui_Set_Bool, &appPtr->MIN_BLOB_SIZE, sizeof(float));
 	//Max Blob Size
-	gui->update(appPtr->trackedPanel_max_blob_size, kofxGui_Set_Bool, &appPtr->MAX_BLOB_SIZE, sizeof(float));
+	controls->update(appPtr->trackedPanel_max_blob_size, kofxGui_Set_Bool, &appPtr->MAX_BLOB_SIZE, sizeof(float));
 	//Background Learn Rate
-	gui->update(appPtr->backgroundPanel_learn_rate, kofxGui_Set_Bool, &appPtr->backgroundLearnRate, sizeof(float));
+	controls->update(appPtr->backgroundPanel_learn_rate, kofxGui_Set_Bool, &appPtr->backgroundLearnRate, sizeof(float));
 	//Send TUIO
-	gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
-	gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+	controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+	controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 	//TUIO Height Width
-	gui->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
+	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
 	//GPU Mode
-	gui->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
+	controls->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
 }
 
 void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int length)
@@ -244,7 +253,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 
 							//Turn off the video button;
 							bool setBool = false;
-							gui->update(sourcePanel_video, kofxGui_Set_Bool, &setBool, length);
+							controls->update(sourcePanel_video, kofxGui_Set_Bool, &setBool, length);
 						}
 					}
 				}
@@ -279,7 +288,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 							activeInput = true;
 							//Turn off the camera button;
 							bool setBool = false;
-							gui->update(sourcePanel_cam, kofxGui_Set_Bool, &setBool, length);
+							controls->update(sourcePanel_cam, kofxGui_Set_Bool, &setBool, length);
 						}
 					}
 				}
@@ -385,7 +394,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 					bTUIOMode = *(bool*)data;
 					//set tcp to opposite
 					myTUIO.bTCPMode = false;
-					gui->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+					controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 					//clear blobs
 					myTUIO.blobs.clear();
 				break;
@@ -395,7 +404,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 					bTUIOMode = *(bool*)data;
 					//set osc to opposite
 					myTUIO.bOSCMode = false;
-					gui->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+					controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
 					//clear blobs
 					myTUIO.blobs.clear();
 				break;
@@ -477,7 +486,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 				{
 					if(*(bool*)data)
 					{
-						gui->saveToXml(OFXGUI_XML);
+						controls->saveToXml(OFXGUI_XML);
 						saveSettings();
 					}
 				}
