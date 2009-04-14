@@ -11,8 +11,10 @@
 #define GUI_CONTROLS_H
 
 #include "../Modules/ofxNCoreVision.h"
+#include "../Camera/CameraUtils.h"
 
 ofxNCoreVision  *appPtr;
+CameraUtils		cameraCount;
 
 void ofxNCoreVision::setupControls()
 {
@@ -221,8 +223,8 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
                             if( vidPlayer != NULL ) {
                                 vidPlayer->close();
                             }
-
-							if(deviceID > vidGrabber->getDeviceCount())
+							//if(deviceID > vidGrabber->getDeviceCount())
+							if(deviceID > cameraCount.getDeviceCount())
 							{
 								//vidGrabber.close();
 								#ifdef TARGET_WIN32
@@ -301,7 +303,8 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID += 1;
-                        if(deviceID <= vidGrabber->getDeviceCount())
+                        //if(deviceID <= vidGrabber->getDeviceCount())
+						if(deviceID > cameraCount.getDeviceCount())
 						{
                                	vidGrabber->close();
 								vidGrabber->setDeviceID(deviceID);
@@ -312,9 +315,9 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						else
 						{
                             #ifdef TARGET_WIN32
-							if(deviceID>=(vidGrabber->getDeviceCount()+ffmv.getDeviceCount()))
+							if(deviceID>=(cameraCount.getDeviceCount()+ffmv.getDeviceCount()))
 							{
-								deviceID=vidGrabber->getDeviceCount()+ffmv.getDeviceCount();
+								deviceID=cameraCount.getDeviceCount()+ffmv.getDeviceCount();
 							}
 							else
 							{
@@ -336,7 +339,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID -= 1;
-						if(deviceID <= vidGrabber->getDeviceCount())
+						if(deviceID <= cameraCount.getDeviceCount())
 						{
 							if(deviceID < 0) deviceID = 0;
 							else{

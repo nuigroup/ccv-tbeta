@@ -252,7 +252,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				{
 					bNewFrame = PS3->isFrameNew();
 				}
-				else if(deviceID <= vidGrabber->getDeviceCount()) //videoInput camera
+				else if(deviceID <= cameraCount.getDeviceCount()) //videoInput camera
  				{
  					vidGrabber->grabFrame();
  					bNewFrame = vidGrabber->isFrameNew();
@@ -345,7 +345,7 @@ void ofxNCoreVision::grabFrameToCPU()
 				//convert to grayscale
  				processedImg = sourceImg;
 			}
-			else if(deviceID <= vidGrabber->getDeviceCount())
+			else if(deviceID <= cameraCount.getDeviceCount())
  			{
  				sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
  				//convert to grayscale
@@ -383,7 +383,7 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 		{
 			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, PS3->getPixels());
 		}
-		else if(deviceID <= vidGrabber->getDeviceCount())
+		else if(deviceID <= cameraCount.getDeviceCount())
 		{
 			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
 		}
