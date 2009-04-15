@@ -31,57 +31,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	ofSetFrameRate(camRate * 1.4);			//This will be based on camera fps in the future
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance?
 
-	//Pick the Source - camera or video
-	if (bcamera)
-	{
-		activeInput = true;
-
-		//check if a firefly, ps3 camera, or other is plugged in
-		#ifdef TARGET_WIN32
-			/****PS3 - PS3 camera only****/
-/*			if(ofxPS3::getDeviceCount() > 0){
-				PS3 = new ofxPS3();
-				PS3->listDevices();
-				PS3->initPS3(camWidth, camHeight, camRate);
-				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, PS3->getCamWidth(), PS3->getCamHeight());
-			}
-*/			/****ffmv - firefly camera only****/
-			//else if(ffmv.getDeviceCount() > 0){
-			if(ffmv.getDeviceCount() > 0){
-			   ffmv.listDevices();
-			   ffmv.initFFMV(camWidth,camHeight);
-			   printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, ffmv.getCamWidth(), ffmv.getCamHeight());
-			}
-			else if( vidGrabber == NULL ) {
-				vidGrabber = new ofVideoGrabber();
-				vidGrabber->listDevices();
-				vidGrabber->setVerbose(true);
-				vidGrabber->initGrabber(camWidth,camHeight);
-				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
-			}
-		#else
-		if( vidGrabber == NULL ) {
-            vidGrabber = new ofVideoGrabber();
-			vidGrabber->listDevices();
-            vidGrabber->setVerbose(true);
-            vidGrabber->initGrabber(camWidth,camHeight);
-			int grabW = vidGrabber->width;
-			int grabH = vidGrabber->height;
-			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
-        }
-		#endif
-	}else{
-        if( vidPlayer == NULL ) {
-			activeInput = true;
-            vidPlayer = new ofVideoPlayer();
-            vidPlayer->loadMovie( videoFileName );
-            vidPlayer->play();
-            vidPlayer->setLoopState(OF_LOOP_NORMAL);
-			printf("Video Mode\n\n");
-			camHeight = vidPlayer->height;
-			camWidth = vidPlayer->width;
-        }
-	}
+	initDevice();
 
 	/*****************************************************************************************************
 	* Allocate images (needed for drawing/processing images)
@@ -248,18 +198,24 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 		if (bcamera) //if camera
 		{
 		    #ifdef TARGET_WIN32
-				if(PS3!=NULL)//ps3 camera
+/*				if(PS3!=NULL)//ps3 camera
 				{
 					bNewFrame = PS3->isFrameNew();
 				}
-				else if(deviceID <= cameraCount.getDeviceCount()) //videoInput camera
+				else 
+*/				if(ffmv!=NULL)
  				{
+					ffmv->grabFrame();
+ 					bNewFrame = true;
+				}
+				else if(vidGrabber !=NULL)
+				{
  					vidGrabber->grabFrame();
  					bNewFrame = vidGrabber->isFrameNew();
  				}
- 				else{//else firefly MV camera
- 					ffmv.grabFrame();
- 					bNewFrame = true;
+				else if(dsvl !=NULL)
+				{
+ 					bNewFrame = dsvl->isFrameNew();
  				}
  			#else
                 vidGrabber->grabFrame();
@@ -330,8 +286,102 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 }
 
 /************************************************
-*				Frame Grab
+*				Init Device
 ************************************************/
+//Init Device (camera/video)
+void ofxNCoreVision::initDevice(){
+
+	//Pick the Source - camera or video
+	if (bcamera)
+	{
+		activeInput = true;
+
+		//check if a firefly, ps3 camera, or other is plugged in
+		#ifdef TARGET_WIN32
+			/****PS3 - PS3 camera only****/
+/*			if(ofxPS3::getDeviceCount() > 0){
+				PS3 = new ofxPS3();
+				PS3->listDevices();
+				PS3->initPS3(camWidth, camHeight, camRate);
+				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, PS3->getCamWidth(), PS3->getCamHeight());
+			}
+			/****ffmv - firefly camera only****/
+//			else
+			if(ffmv->getDeviceCount() > 0 && ffmv == NULL){
+			   ffmv = new ofxffmv();
+			   ffmv->listDevices();
+			   ffmv->initFFMV(camWidth,camHeight);
+			   printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, ffmv->getCamWidth(), ffmv->getCamHeight());
+			   camWidth = ffmv->getCamWidth();
+			   camHeight = ffmv->getCamHeight();
+			}
+			else if( vidGrabber == NULL ) {
+				vidGrabber = new ofVideoGrabber();
+				vidGrabber->listDevices();
+				vidGrabber->setVerbose(true);
+				vidGrabber->initGrabber(camWidth,camHeight);
+				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
+				camWidth = vidGrabber->width;
+				camHeight = vidGrabber->height;
+			}
+			else if( dsvl == NULL) {
+				dsvl = new ofxDSVL();
+				dsvl->initDSVL();
+				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, dsvl->getCamWidth(), dsvl->getCamHeight());
+				camWidth = dsvl->getCamWidth();
+				camHeight = dsvl->getCamHeight();
+			}
+		#else
+		if( vidGrabber == NULL ) {
+            vidGrabber = new ofVideoGrabber();
+			vidGrabber->listDevices();
+            vidGrabber->setVerbose(true);
+            vidGrabber->initGrabber(camWidth,camHeight);
+			int grabW = vidGrabber->width;
+			int grabH = vidGrabber->height;
+			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
+        }
+		#endif
+	}else{
+		if( vidPlayer == NULL ) {
+			activeInput = true;
+            vidPlayer = new ofVideoPlayer();
+            vidPlayer->loadMovie( videoFileName );
+            vidPlayer->play();
+            vidPlayer->setLoopState(OF_LOOP_NORMAL);
+			printf("Video Mode\n\n");
+			camHeight = vidPlayer->height;
+			camWidth = vidPlayer->width;
+        }
+	}
+}
+
+//get pixels from camera
+void ofxNCoreVision::getPixels(){
+
+/*	if(PS3!=NULL){
+		sourceImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
+		//convert to grayscale
+		processedImg = sourceImg;
+	}
+	else 
+*/	if(ffmv != NULL){
+		processedImg.setFromPixels(ffmv->fcImage[ffmv->getDeviceID()].pData, camWidth, camHeight);
+	}
+	else if(vidGrabber != NULL ) {
+		sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
+		//convert to grayscale
+		processedImg = sourceImg;
+	}
+	if(dsvl!=NULL)
+	{
+		//sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
+		sourceImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
+		//convert to grayscale
+		processedImg = sourceImg;
+	}
+}
+
 
 //Grab frame from CPU
 void ofxNCoreVision::grabFrameToCPU()
@@ -340,20 +390,7 @@ void ofxNCoreVision::grabFrameToCPU()
 	if (bcamera)
 	{
 	    #ifdef TARGET_WIN32
-			if(PS3!=NULL){
-				sourceImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
-				//convert to grayscale
- 				processedImg = sourceImg;
-			}
-			else if(deviceID <= cameraCount.getDeviceCount())
- 			{
- 				sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
- 				//convert to grayscale
- 				processedImg = sourceImg;
- 			}
- 			else{
-				processedImg.setFromPixels(ffmv.fcImage[ffmv.getDeviceID()].pData,camWidth,camHeight);
- 			}
+			getPixels();
  		#else
             sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
  			//convert to grayscale
@@ -379,14 +416,19 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 		glBindTexture(GL_TEXTURE_2D, target);
 
 		#ifdef TARGET_WIN32
-		if(PS3!=NULL)
-		{
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, PS3->getPixels());
-		}
-		else if(deviceID <= cameraCount.getDeviceCount())
-		{
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
-		}
+/*			if(PS3!=NULL)
+			{
+				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, PS3->getPixels());
+			}
+			else 
+*/			if(vidGrabber!=NULL)
+			{
+				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
+			}
+			else if(dsvl!=NULL)
+			{
+				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, dsvl->getPixels());
+			}
 		#else
             glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
 		#endif
@@ -438,12 +480,6 @@ void ofxNCoreVision::_draw(ofEventArgs &e)
 	}	
 }
 
-void ofxNCoreVision::drawToScreen()
-{
-	
-}
-
-
 void ofxNCoreVision::drawFullMode(){
 
 	ofSetColor(0xFFFFFF);
@@ -486,15 +522,7 @@ void ofxNCoreVision::drawFullMode(){
 	if (bcamera)
 	{
 		string str2 = "Camera [Res]:     ";
-
-		#ifdef TARGET_WIN32
-		if(PS3 != NULL)
-			str2+= ofToString(PS3->getCamWidth(), 0) + " x " + ofToString(PS3->getCamHeight(), 0)  + "\n";
-		else
-			str2+= ofToString(vidGrabber->width, 0) + " x " + ofToString(vidGrabber->height, 0)  + "\n";
-		#else
-        str2+= ofToString(vidGrabber->width, 0) + " x " + ofToString(vidGrabber->height, 0)  + "\n";
-		#endif
+        str2+= ofToString(camWidth, 0) + " x " + ofToString(camWidth, 0)  + "\n";
 		string str4 = "Camera [fps]:     ";
 		str4+= ofToString(fps, 0)+"\n";
 		ofSetColor(0xFFFFFF);
@@ -793,10 +821,16 @@ std::vector<pair<int,Blob>> ofxNCoreVision::getBlobs(){
 void ofxNCoreVision::_exit(ofEventArgs &e)
 {
     #ifdef TARGET_WIN32
-	if(PS3!=NULL) delete PS3;
+//	if(PS3!=NULL) delete PS3;
+	if(ffmv!=NULL) delete ffmv;
+	if(dsvl!=NULL) delete dsvl;	
 	#endif
+
+	if(vidGrabber!=NULL) delete vidGrabber;
+	if(vidPlayer !=NULL) delete vidGrabber;
 	// -------------------------------- SAVE STATE ON EXIT
 	saveSettings();
 
 	printf("Vision module has exited!\n");
 }
+

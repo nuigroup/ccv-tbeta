@@ -95,13 +95,36 @@ int ofVideoGrabber::getDeviceCount(){
 		SGGetChannelDeviceList (gVideoChannel, sgDeviceListIncludeInputs, &deviceList);
 		numDevices =  (*deviceList)->count;
 		return numDevices;
-
-	#else
-		return 0; 
 	//---------------------------------
 	#endif
 	//---------------------------------
 
+	//---------------------------------
+	#ifdef OF_VIDEO_CAPTURE_DIRECTSHOW
+	//---------------------------------
+
+		return VI.devicesFound;
+
+	//---------------------------------
+	#endif
+	//---------------------------------
+
+
+	//---------------------------------
+	#ifdef OF_VIDEO_CAPTURE_UNICAP
+	//--------------------------------
+
+        int status = STATUS_SUCCESS;
+        int dev_count = 0;
+        unicap_device_t devices[MAX_DEVICES];
+        for (dev_count = 0; SUCCESS (status) && (dev_count < MAX_DEVICES); dev_count++) {
+           status = unicap_enumerate_devices (NULL, &devices[dev_count], dev_count);
+        }
+        return dev_count - 1;
+
+   	//---------------------------------
+	#endif
+	//---------------------------------
 }
 
 //--------------------------------------------------------------------

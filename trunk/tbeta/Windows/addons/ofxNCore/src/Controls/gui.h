@@ -220,30 +220,21 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						if(!bcamera){
 							activeInput = false; //this stops the app from doing everything when changing source
 
-                            if( vidPlayer != NULL ) {
+							if( vidPlayer != NULL ) {
                                 vidPlayer->close();
                             }
-							//if(deviceID > vidGrabber->getDeviceCount())
-							if(deviceID > cameraCount.getDeviceCount())
-							{
-								//vidGrabber.close();
-								#ifdef TARGET_WIN32
-								//ffmv.setDeviceID(deviceID);
-								#endif
-							}
-							else{
-
-                                if( vidGrabber == NULL ) {
-                                    vidGrabber = new ofVideoGrabber();
-                                }
-                                //vidGrabber->close();
-                                vidGrabber->listDevices();
-                                vidGrabber->setDeviceID(deviceID);
-                                vidGrabber->setVerbose(false);
-                                vidGrabber->initGrabber(camWidth,camHeight);
-                                camWidth = vidGrabber->width;
-                                camHeight = vidGrabber->height;
-							}
+							if( vidGrabber == NULL ) {
+                                vidGrabber = new ofVideoGrabber();
+                            }
+                            
+							//vidGrabber->close();
+                            vidGrabber->listDevices();
+                            vidGrabber->setDeviceID(deviceID);
+                            vidGrabber->setVerbose(false);
+                            vidGrabber->initGrabber(camWidth,camHeight);
+                            camWidth = vidGrabber->width;
+                            camHeight = vidGrabber->height;
+							
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
@@ -304,14 +295,14 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 
 						deviceID += 1;
                         //if(deviceID <= vidGrabber->getDeviceCount())
-						if(deviceID > cameraCount.getDeviceCount())
-						{
-                               	vidGrabber->close();
-								vidGrabber->setDeviceID(deviceID);
-								vidGrabber->setVerbose(false);
-								vidGrabber->initGrabber(camWidth,camHeight);
-								filter->exposureStartTime = ofGetElapsedTimeMillis();
-						}
+//						if(deviceID > cameraCount.getDeviceCount())
+//						{
+                           	vidGrabber->close();
+							vidGrabber->setDeviceID(deviceID);
+							vidGrabber->setVerbose(false);
+							vidGrabber->initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
+/*						}
 						else
 						{
                             #ifdef TARGET_WIN32
@@ -327,7 +318,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 							}
 							#endif
 						}
-						activeInput = true;
+*/						activeInput = true;
 					}
 				}
 				break;
@@ -339,17 +330,17 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						activeInput = false; //this stops the app from doing everything when changing source
 
 						deviceID -= 1;
-						if(deviceID <= cameraCount.getDeviceCount())
-						{
+//						if(deviceID <= cameraCount.getDeviceCount())
+//						{
 							if(deviceID < 0) deviceID = 0;
-							else{
-								vidGrabber->close();
-								vidGrabber->setDeviceID(deviceID);
-								vidGrabber->setVerbose(true);
-								vidGrabber->initGrabber(camWidth,camHeight);
-								filter->exposureStartTime = ofGetElapsedTimeMillis();
-							}
-						}
+
+							vidGrabber->close();
+							vidGrabber->setDeviceID(deviceID);
+							vidGrabber->setVerbose(false);
+							vidGrabber->initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
+
+/*						}
 						else
 						{
 							//vidGrabber.close();
@@ -358,7 +349,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 							filter->exposureStartTime = ofGetElapsedTimeMillis();
 							#endif
 						}
-						activeInput = true;
+*/						activeInput = true;
 					}
 				}
 				break;

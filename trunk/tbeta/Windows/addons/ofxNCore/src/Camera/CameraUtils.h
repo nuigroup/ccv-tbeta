@@ -41,7 +41,6 @@ class CameraUtils {
 			//---------------------------------
 			#ifdef OF_VIDEO_CAPTURE_DIRECTSHOW
 			//---------------------------------
-				VI.listDevices();
 				return VI.devicesFound;
 
 			//---------------------------------

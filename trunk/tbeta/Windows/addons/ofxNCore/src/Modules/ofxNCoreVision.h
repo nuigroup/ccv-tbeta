@@ -16,7 +16,7 @@
 //Addons
 #ifdef TARGET_WIN32
     #include "ofxffmv.h"
-    #include "ofxPS3.h"
+//  #include "ofxPS3.h"
 #endif
 #include "ofxOpenCv.h"
 #include "ofxDirList.h"
@@ -25,6 +25,8 @@
 #include "ofxOsc.h"
 #include "ofxThread.h"
 #include "ofxXmlSettings.h"
+
+#include "ofxDSVL.h"
 
 //Our Addon
 #include "ofxNCore/src/ofxNCore.h"
@@ -112,7 +114,9 @@ public:
 		exited=false;
 
 		#ifdef TARGET_WIN32
-            PS3 = NULL;
+//          PS3  = NULL;
+			ffmv = NULL;
+			dsvl = NULL;
 		#endif
 
 		vidGrabber = NULL;
@@ -164,6 +168,12 @@ public:
         if( vidPlayer != NULL ) {
             delete vidPlayer;
         }
+		if( dsvl != NULL ) {
+            delete dsvl;
+        }
+		if( ffmv != NULL ) {
+            delete ffmv;
+        }
 	}
 
 	/****************************************************************
@@ -193,11 +203,12 @@ public:
 	ofxGui*		controls;
 
 	//image processing stuff
+	void initDevice();
+	void getPixels();
 	void grabFrameToCPU();
 	void grabFrameToGPU(GLuint target);
 
 	//drawing
-	void drawToScreen();
 	void drawFingerOutlines();
 	void drawMiniMode();
 	void drawFullMode();
@@ -213,8 +224,9 @@ public:
 	 *					Video Capture Devices
 	 ***************************************************************/
     #ifdef TARGET_WIN32
-        ofxffmv             ffmv; //for firefly mv
-        ofxPS3*				PS3;  //for ps3
+        ofxffmv*            ffmv; //for firefly mv
+//      ofxPS3*				PS3;  //for ps3
+		ofxDSVL*			dsvl;
 	#endif
 	ofVideoGrabber*		vidGrabber;
     ofVideoPlayer*		vidPlayer;
@@ -264,10 +276,10 @@ public:
 	bool				activeInput;
 
 	//FPS variables
-	int 					frames;
-	int  					fps;
-	float					lastFPSlog;
-	int						differenceTime;
+	int 				frames;
+	int  				fps;
+	float				lastFPSlog;
+	int					differenceTime;
 
 	//Fonts
 	ofTrueTypeFont		verdana;
