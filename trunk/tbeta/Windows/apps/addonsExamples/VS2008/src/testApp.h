@@ -7,7 +7,7 @@
 //main
 #include "ofMain.h"
 //addon
-#include "ofxNCore/src/ofxNCore.h"
+#include "ofxNCore.h"
 
 class testApp : public ofBaseApp, public TouchListener
 {
