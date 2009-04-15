@@ -18,7 +18,23 @@
 #define CAMERA_EXPOSURE_TIME  2200.0f
 
 class Filters {
-  public:
+  
+	public:
+
+	  Filters(){
+
+		camWidth = 320;
+		camHeight = 240;
+		exposureStartTime = CAMERA_EXPOSURE_TIME;
+
+		//filter values
+		threshold = 120;
+		smooth = 0;
+		highpassBlur = 0;
+		highpassNoise = 0;
+		highpassAmp = 0;
+		fLearnRate = 1;
+	  }
 
     int camWidth;
     int camHeight;

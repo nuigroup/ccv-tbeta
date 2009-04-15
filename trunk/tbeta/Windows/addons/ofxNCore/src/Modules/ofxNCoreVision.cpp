@@ -15,7 +15,7 @@
 *****************************************************************************/
 void ofxNCoreVision::_setup(ofEventArgs &e)
 {
-	//set the title to 'tbeta'
+	//set the title
 	ofSetWindowTitle(" Community Core Vision ");
 
 //	ofSetBackgroundAuto(false);
@@ -87,19 +87,13 @@ void ofxNCoreVision::loadXMLSettings()
 	message = "Loading config.xml...";
 	// Can this load via http?
 	if ( XML.loadFile("config.xml"))
-	{
-		message = "Settings Loaded!";
-	}
+		message = "Settings Loaded!\n\n";
 	else
-	{
-		//FAIL!
-		message = "No Settings Found...";
-	}
+		message = "No Settings Found...\n\n"; //FAIL
+	
 	//--------------------------------------------------------------
 	//  START BINDING XML TO VARS
 	//--------------------------------------------------------------
-	//frameRate			= XML.getValue("CONFIG:APPLICATION:FRAMERATE",0);
-
 	winWidth					= XML.getValue("CONFIG:WINDOW:WIDTH", 950);
 	winHeight					= XML.getValue("CONFIG:WINDOW:HEIGHT", 600);
 	bcamera						= XML.getValue("CONFIG:CAMERA_0:USECAMERA", 1);
@@ -252,13 +246,13 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 			{
 				grabFrameToGPU(filter->gpuSourceTex);
 				filter->applyGPUFilters();
-				contourFinder.findContours(filter->gpuReadBackImageGS,  (MIN_BLOB_SIZE * 2) + 1, (((camWidth * camHeight) * .0001) * MAX_BLOB_SIZE) - ((camWidth * camHeight) * .0001), maxBlobs, false);
+				contourFinder.findContours(filter->gpuReadBackImageGS,  (MIN_BLOB_SIZE * 2) + 1, ((camWidth * camHeight) * .4) * (MAX_BLOB_SIZE * .001), maxBlobs, false);
 			}
 			else
 			{
 				grabFrameToCPU();
 				filter->applyCPUFilters( processedImg );
-				contourFinder.findContours(processedImg,  (MIN_BLOB_SIZE * 2) + 1, (((camWidth * camHeight) * .0001) * MAX_BLOB_SIZE) - ((camWidth * camHeight) * .0001), maxBlobs, false);
+				contourFinder.findContours(processedImg,  (MIN_BLOB_SIZE * 2) + 1, ((camWidth * camHeight) * .4) * (MAX_BLOB_SIZE * .001), maxBlobs, false);
 			}
 
 			//Track found contours/blobss

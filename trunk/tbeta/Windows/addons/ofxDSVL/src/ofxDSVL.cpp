@@ -114,7 +114,7 @@ bool ofxDSVL::isFrameNew()
 
 	
 	//taken from reactivision source (dslibcamera.cpp), magic values?, better strategy?
-	DWORD wait_result = dsvl_vs->WaitForNextSample(/*INFINITE*/ (long)(15.f));
+	DWORD wait_result = dsvl_vs->WaitForNextSample(/*INFINITE*/ (long)(1000.0f/fps));
 	{
 		if (SUCCEEDED(dsvl_vs->CheckoutMemoryBuffer(&g_mbHandle, &buffer)))
 		{

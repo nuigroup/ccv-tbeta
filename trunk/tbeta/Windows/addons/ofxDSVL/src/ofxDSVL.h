@@ -4,7 +4,7 @@
 #include "dsvl.h"
 #include "stdio.h"
 
-#define hibyte(x) (unsigned char)((x)>>8)
+//#define hibyte(x) (unsigned char)((x)>>8)
 
 class ofxDSVL
 {
