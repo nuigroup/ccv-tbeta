@@ -210,6 +210,7 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 				else if(dsvl !=NULL)
 				{
  					bNewFrame = dsvl->isFrameNew();
+					cout << bNewFrame << endl;
  				}
  			#else
                 vidGrabber->grabFrame();
@@ -309,7 +310,7 @@ void ofxNCoreVision::initDevice(){
 			   camWidth = ffmv->getCamWidth();
 			   camHeight = ffmv->getCamHeight();
 			}
-			else if( vidGrabber == NULL ) {
+/*			else if( vidGrabber == NULL ) {
 				vidGrabber = new ofVideoGrabber();
 				vidGrabber->listDevices();
 				vidGrabber->setVerbose(true);
@@ -318,7 +319,8 @@ void ofxNCoreVision::initDevice(){
 				camWidth = vidGrabber->width;
 				camHeight = vidGrabber->height;
 			}
-			else if( dsvl == NULL) {
+			else 
+*/				if( dsvl == NULL) {
 				dsvl = new ofxDSVL();
 				dsvl->initDSVL();
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, dsvl->getCamWidth(), dsvl->getCamHeight());
@@ -367,12 +369,16 @@ void ofxNCoreVision::getPixels(){
 		//convert to grayscale
 		processedImg = sourceImg;
 	}
-	if(dsvl!=NULL)
+	else if(dsvl!=NULL)
 	{
-		//sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
-		sourceImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
-		//convert to grayscale
-		processedImg = sourceImg;
+		if(dsvl->getNumByes() != 1){ //if not grayscale
+			sourceImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
+			//convert to grayscale
+			processedImg = sourceImg;
+		}
+		else{//if grayscale
+			processedImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
+		}
 	}
 }
 

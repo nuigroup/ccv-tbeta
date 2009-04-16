@@ -5,6 +5,11 @@
 //========================================================================
 int main( ){
 
+    //get rid of the console
+    #ifdef TARGET_WIN32
+    //    FreeConsole();
+    #endif
+
     ofAppGlutWindow window;
 	ofSetupOpenGL(&window, 900, 900, OF_WINDOW);			// <-------- setup the GL context
 

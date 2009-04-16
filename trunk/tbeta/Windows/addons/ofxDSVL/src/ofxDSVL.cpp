@@ -120,7 +120,7 @@ bool ofxDSVL::isFrameNew()
 		{
 			g_Timestamp = dsvl_vs->GetCurrentTimestamp();
 			//prepare array
-			memcpy(pbuffer, buffer, camWidth*camHeight*bytes);    //3 works with RGB24
+			memcpy(pbuffer, buffer, camWidth*camHeight*bytes);
 			dsvl_vs->CheckinMemoryBuffer(g_mbHandle);
 			buffer = 0;
 
@@ -143,6 +143,11 @@ int ofxDSVL::getCamWidth()
 int ofxDSVL::getCamHeight()
 {
     return camHeight;
+}
+
+int ofxDSVL::getNumByes()
+{
+	return bytes;
 }
 
 void ofxDSVL::showSettingsDialog() {

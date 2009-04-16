@@ -14,6 +14,7 @@ class ofxDSVL
         void initDSVL();
         void setDeviceID(int id);
 		void showSettingsDialog();
+		int getNumByes();
         int getDeviceID();
         bool grabFrame();
         int getCamWidth();
