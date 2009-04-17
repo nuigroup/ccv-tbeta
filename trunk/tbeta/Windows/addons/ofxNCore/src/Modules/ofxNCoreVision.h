@@ -36,7 +36,7 @@
 #define MAIN_WINDOW_WIDTH  320.0f
 
 
-class ofxNCoreVision : public ofxGuiListener, public TouchListener//, public BlobManager
+class ofxNCoreVision : public ofxGuiListener//, public BlobManager
 {
 	//ofxGUI setup stuff
 	enum
@@ -121,8 +121,6 @@ public:
 
 		vidGrabber = NULL;
 		vidPlayer = NULL;
-		//listen for Touch Events
-		TouchEvents.addListener(this);
 		//initialize filter
 		filter = NULL;
 		//fps and dsp calculation
@@ -150,10 +148,10 @@ public:
 		MAX_BLOB_SIZE = 100;
         //if auto tracker is defined then the tracker automagically comes up
         //on startup..
-        #ifdef AUTOTRACKER
-            autoTracker = true;
+        #ifdef STANDALONE
+            bStandaloneMode = true;
         #else
-            autoTracker = false;
+            bStandaloneMode = false;
         #endif
 	}
 
@@ -192,11 +190,6 @@ public:
     void _keyPressed(ofKeyEventArgs &e);
     void _keyReleased(ofKeyEventArgs &e);
 
-	//Touch Events
-	void TouchDown( Blob b );
-	void TouchMoved( Blob b );
-	void TouchUp( Blob b );
-
 	//GUI
 	void setupControls();
 	void		handleGui(int parameterId, int task, void* data, int length);
@@ -218,7 +211,7 @@ public:
 	void saveSettings();
 
 	//Getters
-	std::vector<pair<int,Blob>> getBlobs();
+	std::map<int, Blob> getBlobs();
 
 	/***************************************************************
 	 *					Video Capture Devices
@@ -264,8 +257,8 @@ public:
 	//modes
 	bool				bGPUMode;
 
-	//auto ~
-	bool                autoTracker;
+	//auto ~ standalone/non-addon
+	bool                bStandaloneMode;
 
 	//exit
 	bool				exited;
@@ -273,8 +266,6 @@ public:
 	/****************************************************
 	 *End config.xml variables
 	 *****************************************************/
-	bool				activeInput;
-
 	//FPS variables
 	int 				frames;
 	int  				fps;
@@ -318,6 +309,7 @@ public:
 	TUIO				myTUIO;
 	string				tmpLocalHost;
     int					tmpPort;
+	int					tmpFlashPort;
 };
 
 #endif

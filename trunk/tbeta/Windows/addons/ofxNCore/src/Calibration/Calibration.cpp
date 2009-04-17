@@ -85,10 +85,12 @@ void Calibration::drawCalibrationPointsAndBox(){
 
     //this all has to do with getting the angle for loading circle
     arcAngle = 0;
-    std::vector<pair<int,Blob>>	trackedBlobs; //tracked blobs
+	std::map<int, Blob> trackedBlobs;
+	std::map<int, Blob>::iterator iter;
     trackedBlobs = tracker->getTrackedBlobs(); //get blobs from tracker
-    for(int i=0; i< trackedBlobs.size(); i++){
-        if (trackedBlobs[i].second.sitting > arcAngle) {arcAngle = trackedBlobs[i].second.sitting;}
+	for(iter=trackedBlobs.begin(); iter!=trackedBlobs.end(); iter++)
+	{
+        if (iter->second.sitting > arcAngle) {arcAngle = iter->second.sitting;}
     }//end loading circle angle
 
     //Get the screen points so we can make a grid
@@ -105,7 +107,7 @@ void Calibration::drawCalibrationPointsAndBox(){
 			glTranslatef(screenpts[i].X * ofGetWidth(), screenpts[i].Y * ofGetHeight(), 0.0f);
 			ofFill();
 			//draw red target circle
-			ofSetColor(downColor);
+			ofSetColor(targetColor);
 			ofCircle(0.f, 0.f, 40);
 			//draw loading circle
 			ofSetColor(0x00A4FF);
@@ -128,39 +130,28 @@ void Calibration::drawCalibrationPointsAndBox(){
 
 void Calibration::drawCalibrationBlobs(){
 
-    std::vector<pair<int,Blob>>	trackedBlobs; //tracked blobs
+	//find blobs
+	std::map<int, Blob> trackedBlobs;
+	std::map<int, Blob>::iterator iter;
     trackedBlobs = tracker->getTrackedBlobs(); //get blobs from tracker
-
-    //Find the blobs
-    for(int i=0; i < trackedBlobs.size(); i++)
-    {
-        //temp blob to rescale and draw on screen
+	for(iter=trackedBlobs.begin(); iter!=trackedBlobs.end(); iter++)
+    {		
         Blob drawBlob;
-        drawBlob = trackedBlobs[i].second;
+        drawBlob = iter->second;
 
         //transform height/width to calibrated space
         drawBlob.boundingRect.width *= calibrate.screenBB.getWidth() * ofGetWidth() * 4;
         drawBlob.boundingRect.height *= calibrate.screenBB.getHeight() * ofGetHeight() * 4 ;
 
-		//Get a random color for each blob
-        if(blobcolor[drawBlob.id] == 0)
-        {
-            int r = ofRandom(0, 255);
-            int g = ofRandom(0, 255);
-            int b = ofRandom(0, 255);
-            //Convert to hex
-            int rgbNum = ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
-            //Set hex into map position
-            blobcolor[drawBlob.id] = rgbNum;
-        }
-
         //Draw Fuzzy Circles
         ofEnableAlphaBlending();
         ofImage tempCalibrationParticle;
         tempCalibrationParticle.clone(calibrationParticle);
-        ofSetColor(blobcolor[drawBlob.id]);
-        tempCalibrationParticle.draw(drawBlob.centroid.x * ofGetWidth() - drawBlob.boundingRect.width * .5, drawBlob.centroid.y * ofGetHeight() - drawBlob.boundingRect.height * .5,
-									 drawBlob.boundingRect.width, drawBlob.boundingRect.height);
+        ofSetColor(drawBlob.color);
+        tempCalibrationParticle.draw(drawBlob.centroid.x * ofGetWidth() - drawBlob.boundingRect.width * .5, 
+									 drawBlob.centroid.y * ofGetHeight() - drawBlob.boundingRect.height * .5,
+									 drawBlob.boundingRect.width, 
+									 drawBlob.boundingRect.height);
         ofDisableAlphaBlending();
 
         //Draw Blob Targets
@@ -191,7 +182,7 @@ void Calibration::RAWTouchUp( Blob b)
 		if(calibrate.bGoToNextStep) {
 			calibrate.nextCalibrationStep();
 			calibrate.bGoToNextStep = false;
-            downColor = 0xFF0000;
+            targetColor = 0xFF0000;
 
 			if(calibrate.calibrationStep != 0){
 				printf("%d (%f, %f)\n", calibrate.calibrationStep, b.centroid.x, b.centroid.y);
@@ -210,7 +201,7 @@ void Calibration::RAWTouchHeld( Blob b) {
 	{
 		calibrate.cameraPoints[calibrate.calibrationStep] = vector2df(b.centroid.x, b.centroid.y);
 		calibrate.bGoToNextStep = true;
-		downColor = 0xFFFFFF;
+		targetColor = 0xFFFFFF;
 	}
 }
 

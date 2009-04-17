@@ -86,6 +86,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 					newBlobs->blobs[winner].age = trackedBlobs[i].age;
 					newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 					newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
+					newBlobs->blobs[winner].color = trackedBlobs[i].color;
 
 					trackedBlobs[i] = newBlobs->blobs[winner];
 				}
@@ -108,6 +109,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						newBlobs->blobs[winner].age = trackedBlobs[i].age;
 						newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 						newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
+						newBlobs->blobs[winner].color = trackedBlobs[i].color;
 
 //TODO--------------------------------------------------------------------------
 						//now the old winning blob has lost the win.
@@ -162,6 +164,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 				newBlobs->blobs[winner].age = trackedBlobs[i].age;
 				newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 				newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
+				newBlobs->blobs[winner].color = trackedBlobs[i].color;
 			}
 		}
 	}
@@ -273,6 +276,15 @@ void BlobTracker::track(ContourFinder* newBlobs)
 			newBlobs->blobs[i].id=IDCounter++;
 			newBlobs->blobs[i].downTime = ofGetElapsedTimef();
 
+			//random color for blob. Could be useful?
+			int r = ofRandom(0, 255);
+            int g = ofRandom(0, 255);
+            int b = ofRandom(0, 255);
+            //Convert to hex
+            int rgbNum = ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
+            //Set color
+            newBlobs->blobs[i].color = rgbNum;
+
 			//Add to blob messenger
 			TouchEvents.messenger = newBlobs->blobs[i];
 
@@ -294,12 +306,9 @@ void BlobTracker::track(ContourFinder* newBlobs)
 	}
 }
 
-std::vector<pair<int,Blob>> BlobTracker::getTrackedBlobs(){
+std::map<int, Blob> BlobTracker::getTrackedBlobs(){
 	
-	//copy map to a vector??? we need a better way
-	finalBlobs.clear();
-    copy(calibratedBlobs.begin(), calibratedBlobs.end(), back_inserter(finalBlobs));
-    return finalBlobs;
+    return calibratedBlobs;
 }
 
 /*************************************************************************

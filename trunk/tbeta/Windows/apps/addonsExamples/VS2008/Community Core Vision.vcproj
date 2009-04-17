@@ -744,14 +744,6 @@
 						Name="Calibration"
 						>
 						<File
-							RelativePath="..\..\..\addons\ofxNCore\src\Calibration\boxAlign.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\addons\ofxNCore\src\Calibration\boxAlign.h"
-							>
-						</File>
-						<File
 							RelativePath="..\..\..\addons\ofxNCore\src\Calibration\Calibration.cpp"
 							>
 						</File>

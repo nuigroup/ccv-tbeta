@@ -16,23 +16,21 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 
-	//ofSetColor(0, 255, 255);
-	//ofCircle( 200, 200, 100);
-
 	//draw blobs
-/*	std::vector<int, Blob>	blobs;
-    blobs = tbeta->getBlobs();//get blobs
-    for(int i=0; i < blobs.size(); i++)
-    {
+	std::map<int, Blob> blobs;
+	std::map<int, Blob>::iterator iter;
+    blobs = tbeta->getBlobs(); //get blobs from tracker
+	for(iter=blobs.begin(); iter!=blobs.end(); iter++)
+	{
 		Blob drawBlob;
-		drawBlob = blobs[i].second;
-		ofSetColor(0xFF0000);
+		drawBlob = iter->second;
+		ofSetColor(drawBlob.color);
 		ofFill();
 		ofEllipse( (drawBlob.centroid.x - drawBlob.boundingRect.width/2) * ofGetWidth() , 
 				   (drawBlob.centroid.y - drawBlob.boundingRect.height/2) * ofGetHeight(),
-				   drawBlob.boundingRect.width * ofGetWidth(), drawBlob.boundingRect.height * ofGetHeight());
+				    drawBlob.boundingRect.width * ofGetWidth(), 
+				    drawBlob.boundingRect.height * ofGetHeight());
 	}
-*/
 }
 
 //--------------------------------------------------------------
@@ -67,26 +65,32 @@ void testApp::mouseReleased(){
  *****************************************************************************/
 void testApp::TouchDown( Blob b)
 {
-    ofSetColor(0xFF0000);
-    ofFill();
+	b.color = 0xFF0000;
+  //  ofSetColor(0xFF0000);
+   /* ofFill();
 	ofEllipse( (b.centroid.x - b.boundingRect.width/2) * ofGetWidth() , (b.centroid.y - b.boundingRect.height/2) * ofGetHeight(),
 		       b.boundingRect.width * ofGetWidth(), b.boundingRect.height * ofGetHeight());
+   */
 }
 
 void testApp::TouchUp( Blob b)
-{
-    ofSetColor(0x0FFFFF);
-    ofFill();
+{	
+	b.color = 0xFFFFFF;
+    //ofSetColor(0x0FFFFF);
+   /* ofFill();
 	ofEllipse( (b.centroid.x - b.boundingRect.width/2) * ofGetWidth() , (b.centroid.y - b.boundingRect.height/2) * ofGetHeight(),
 		       b.boundingRect.width * ofGetWidth(), b.boundingRect.height * ofGetHeight());
+   */
 }
 
 void testApp::TouchMoved( Blob b)
 {
-	ofSetColor(0xFFFFFF);
-    ofFill();
+	b.color = 0xFFFF00;
+	//ofSetColor(0xFFFFFF);
+   /* ofFill();
 	ofEllipse( (b.centroid.x - b.boundingRect.width/2) * ofGetWidth() , (b.centroid.y - b.boundingRect.height/2) * ofGetHeight(),
 		       b.boundingRect.width * ofGetWidth(), b.boundingRect.height * ofGetHeight());
+   */
 }
 
 

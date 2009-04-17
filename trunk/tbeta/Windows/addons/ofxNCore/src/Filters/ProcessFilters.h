@@ -84,6 +84,7 @@ class ProcessFilters : public Filters {
         //Dynamic background with learn rate
         if(bDynamicBG){
             fiLearn.addWeighted( img, fLearnRate);
+			grayBg.setFromPixels(fiLearn.getPixels(), grayBg.width, grayBg.height);
         }
 
         //recapature the background until image/camera is fully exposed
@@ -92,21 +93,9 @@ class ProcessFilters : public Filters {
         //Capture full background
         if (bLearnBakground == true){
             fiLearn = img;
-			grayBg = img;
+			grayBg.setFromPixels(fiLearn.getPixels(), grayBg.width, grayBg.height);
             bLearnBakground = false;
         }
-
-        //grayBg.set(100);
-
-		//grayBg = fiLearn;
-
-		//cvConvert(fiLearn.getCvImage(), grayBg.getCvImage());
-
-       // cvConvert(fiLearn.getCvImage(), img.getCvImage());
-
-   //     cvConvert(fiLearn.getCvImage(), grayBg.getCvImage());
-  //      grayBg.flagImageChanged();
-
 
         img.absDiff(grayBg, img); //Background Subtraction
         //cvAbs(img.getCvImage(), grayBg.getCvImage(), img.getCvImage() );
@@ -130,15 +119,10 @@ class ProcessFilters : public Filters {
         }
 
         img.threshold(threshold); //Threshold
+		//img.adaptiveThreshold(threshold, -3);
+
         if(!bMiniMode)
         grayDiff = img; //for drawing
-    }
-
-    void learnBackground( ofxCvGrayscaleImage& live, ofxCvGrayscaleImage& _grayBg, ofxCvFloatImage& fLearn, float learnRate )
-    {
-        fLearn.addWeighted( live, learnRate);
-        //_grayBg = fLearn;
-        cvConvert(fLearn.getCvImage(), grayBg.getCvImage());
     }
 
 /****************************************************************

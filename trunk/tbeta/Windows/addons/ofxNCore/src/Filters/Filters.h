@@ -62,7 +62,7 @@ class Filters {
 	bool bMiniMode;
 
     //CPU
-    ofxCvFloatImage  floatBgImg;
+    ofxCvShortImage  floatBgImg;
     ofxCvGrayscaleImage  grayBgImg;
     ofxCvColorImage		sourceImg;
     ofxCvGrayscaleImage grayImg;
@@ -77,7 +77,7 @@ class Filters {
     GLuint			gpuBGTex;
     GLuint			gpuSourceTex;
     ofxCvGrayscaleImage gpuReadBackImageGS;
-	unsigned char * gpuReadBackBuffer;
+	unsigned char  * gpuReadBackBuffer;
     GPUImageFilter * contrastFilter;
     GPUImageFilter * subtractFilter;
     GPUImageFilter * subtractFilter2; //we need 2 because we are showing the output of each
@@ -91,7 +91,6 @@ class Filters {
 
     virtual void allocate( int w, int h ) = 0;
     virtual void applyCPUFilters(CPUImageFilter& img) = 0;
-    virtual void learnBackground( ofxCvGrayscaleImage& live, ofxCvGrayscaleImage& _grayBg, ofxCvFloatImage& fLearn, float learnRate ) = 0;
     virtual void draw() = 0;
 
     virtual void allocateGPU() = 0;

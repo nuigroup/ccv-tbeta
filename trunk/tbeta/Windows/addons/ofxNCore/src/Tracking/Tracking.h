@@ -32,7 +32,7 @@ public:
 	CalibrationUtils* calibrate;
 	bool isCalibrating;
 	int MIN_MOVEMENT_THRESHOLD;
-	std::vector<pair<int,Blob>> getTrackedBlobs();
+	std::map<int, Blob> getTrackedBlobs();
 
 private:
 
@@ -41,7 +41,7 @@ private:
 	int						fightMongrel;
 	std::vector<Blob>		trackedBlobs; //tracked blobs
 	std::map<int, Blob>     calibratedBlobs;
-	std::vector<pair<int,Blob>>		finalBlobs; //tracked blobs
+	//std::vector<pair<int,Blob>>		finalBlobs; //tracked blobs
 };
 
 #endif

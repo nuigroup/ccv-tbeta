@@ -31,7 +31,7 @@ class Calibration : public TouchListener {
 			bA			= false;
 			bS			= false;
 			bD			= false;
-			downColor   = 0xFF0000;
+			targetColor = 0xFF0000;
 			arcAngle    = 0;
 		}
 
@@ -68,8 +68,7 @@ class Calibration : public TouchListener {
         int 			camWidth;
 		int 			camHeight;
 		float           arcAngle;
-		float			downColor;
-		std::map<int, int> blobcolor;
+		float			targetColor;
 		//Fonts
 		ofTrueTypeFont	verdana;
 		ofTrueTypeFont	calibrationText;

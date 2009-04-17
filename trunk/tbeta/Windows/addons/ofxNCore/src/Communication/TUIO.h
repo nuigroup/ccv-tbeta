@@ -14,8 +14,6 @@
 #include "ofxOsc.h"
 #include "ofxNetwork.h"
 
-#include <map>
-
 class TUIO {
 
 	public:		
@@ -24,27 +22,24 @@ class TUIO {
 		~TUIO();
 		
 		//methods
-		void setup(const char* host, int port);
-		void sendTUIO();
+		void setup(const char* host, int port, int flashport);
+		void sendTUIO(std::map<int, Blob> * blobs);
 
 		//TCP Network 
 		ofxTCPServer 	m_tcpServer;
 		//OSC Network 
 		ofxOscSender	TUIOSocket; 
 		const char*		localHost;
-		char			remoteHost[255];
-		int				TUIOPort;			
+		int				TUIOPort;	
+		int				TUIOFlashPort;
 		bool 			bHeightWidth;
 		bool 			bOSCMode;
 		bool			bTCPMode;
 
-		std::map<int, Blob> blobs;
-
 	private:
-
-		int    frameseq;
-		bool   send(string message);
-		string partialPrevMsg;
+		int				frameseq;
+		bool			send(string message);
+		string			partialPrevMsg;
 };
 
 #endif

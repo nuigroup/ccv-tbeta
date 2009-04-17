@@ -33,6 +33,7 @@ class Blob {
 		ofPoint             centroid, lastCentroid, D;
 		bool				simulated;
 		bool                hole;
+		int					color;				
 
         //----------------------------------------
         Blob() {
@@ -40,9 +41,10 @@ class Blob {
             length 		= 0.0f;
             hole 		= false;
             nPts        = 0;
-			simulated = false;
-			age = 0.0f;
-			sitting = 0.0f;
+			simulated	= false;
+			age			= 0.0f;
+			sitting		= 0.0f;
+			color		= 0xFFFFFF;
         }
 
         //----------------------------------------

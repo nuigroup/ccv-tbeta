@@ -208,284 +208,289 @@ void ofxNCoreVision::setupControls()
 
 void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int length)
 {
-	if(activeInput)
+	switch(parameterId)
 	{
-		switch(parameterId)
-		{
-			case sourcePanel_cam:
-				if(length == sizeof(bool))
+		case sourcePanel_cam:
+			if(length == sizeof(bool))
+			{
+				if(*(bool*)data)
 				{
-					if(*(bool*)data)
+					if(!bcamera)
 					{
-						if(!bcamera){
-							activeInput = false; //this stops the app from doing everything when changing source
-
-							if( vidPlayer != NULL ) {
-                                vidPlayer->close();
-                            }
-							if( vidGrabber == NULL ) {
-                                vidGrabber = new ofVideoGrabber();
-                            }
-                            
-							//vidGrabber->close();
-                            vidGrabber->listDevices();
-                            vidGrabber->setDeviceID(deviceID);
-                            vidGrabber->setVerbose(false);
-                            vidGrabber->initGrabber(camWidth,camHeight);
-                            camWidth = vidGrabber->width;
-                            camHeight = vidGrabber->height;
-							
+						if( vidPlayer != NULL ) {
+                            vidPlayer->close();
+                        }
+						if( vidGrabber == NULL ) {
+                            vidGrabber = new ofVideoGrabber();
+                        }
+						
+                        vidGrabber->listDevices();
+                        vidGrabber->setDeviceID(deviceID);
+                        vidGrabber->setVerbose(false);
+                        vidGrabber->initGrabber(camWidth,camHeight);
+						filter->exposureStartTime = ofGetElapsedTimeMillis();
+						
+						bool bReallocate;
+						if(camWidth == vidGrabber->width && camHeight == vidGrabber->height)
+						{
+							bReallocate = false;
+						}
+                        camHeight = vidGrabber->height;
+                        camWidth = vidGrabber->width;
+						if(bReallocate){
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
 							sourceImg.allocate(camWidth, camHeight);    //Source Image
 							sourceImg.setUseTexture(false);
 							filter->allocate(camWidth, camHeight);
-							activeInput = true;		//set to active again
-							bcamera = true;
-
-							//Turn off the video button;
-							bool setBool = false;
-							controls->update(sourcePanel_video, kofxGui_Set_Bool, &setBool, length);
 						}
+						bcamera = true;
+						//Turn off the video button;
+						bool setBool = false;
+						controls->update(sourcePanel_video, kofxGui_Set_Bool, &setBool, length);
 					}
 				}
-				break;
-			case sourcePanel_video:
-				if(length == sizeof(bool))
+			}
+			break;
+		case sourcePanel_video:
+			if(length == sizeof(bool))
+			{
+				if(*(bool*)data)
 				{
-					if(*(bool*)data)
+					if(bcamera)
 					{
-						if(bcamera){
-							activeInput = false; //this stops the app from doing everything when changing source
-							bcamera = false;
+						bcamera = false;
 
-							if( vidPlayer == NULL ) {
-                                activeInput = true;
-                                vidPlayer = new ofVideoPlayer();
-                            }
+						if( vidPlayer == NULL ) {
+                            vidPlayer = new ofVideoPlayer();
+                        }
+						if( vidGrabber != NULL ) {
+							vidGrabber->close();
+                        }
 
-                            vidPlayer->loadMovie(videoFileName);
-                            vidPlayer->play();
-                            vidPlayer->setLoopState(OF_LOOP_NORMAL);
-                            printf("Video Mode\n");
-                            camHeight = vidPlayer->height;
-                            camWidth = vidPlayer->width;
+                        vidPlayer->loadMovie(videoFileName);
+                        vidPlayer->play();
+                        vidPlayer->setLoopState(OF_LOOP_NORMAL);
+						filter->exposureStartTime = ofGetElapsedTimeMillis();
+                        printf("Video Mode\n");
 
+						bool bReallocate;
+						if(camWidth == vidPlayer->width && camHeight == vidPlayer->height)
+						{
+							bReallocate = false;
+						}
+                        camHeight = vidPlayer->height;
+                        camWidth = vidPlayer->width;
+						if(bReallocate){
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
 							processedImg.setUseTexture(false);
 							sourceImg.allocate(camWidth, camHeight);    //Source Image
 							sourceImg.setUseTexture(false);
 							filter->allocate(camWidth, camHeight);
-							activeInput = true;
-							//Turn off the camera button;
-							bool setBool = false;
-							controls->update(sourcePanel_cam, kofxGui_Set_Bool, &setBool, length);
 						}
+						//Turn off the camera button;
+						bool setBool = false;
+						controls->update(sourcePanel_cam, kofxGui_Set_Bool, &setBool, length);
 					}
 				}
-				break;
-			case sourcePanel_nextCam:
-				if(length == sizeof(bool))
+			}
+			break;
+		case sourcePanel_nextCam:
+			if(length == sizeof(bool))
+			{
+				if(*(bool*)data)
 				{
-					if(*(bool*)data)
-					{
-						activeInput = false; //this stops the app from doing everything when changing source
-
-						deviceID += 1;
-                        //if(deviceID <= vidGrabber->getDeviceCount())
+					deviceID += 1;
+                    //if(deviceID <= vidGrabber->getDeviceCount())
 //						if(deviceID > cameraCount.getDeviceCount())
 //						{
-                           	vidGrabber->close();
-							vidGrabber->setDeviceID(deviceID);
-							vidGrabber->setVerbose(false);
-							vidGrabber->initGrabber(camWidth,camHeight);
-							filter->exposureStartTime = ofGetElapsedTimeMillis();
+                       	vidGrabber->close();
+						vidGrabber->setDeviceID(deviceID);
+						vidGrabber->setVerbose(false);
+						vidGrabber->initGrabber(camWidth,camHeight);
+						filter->exposureStartTime = ofGetElapsedTimeMillis();
 /*						}
-						else
-						{
-                            #ifdef TARGET_WIN32
-							if(deviceID>=(cameraCount.getDeviceCount()+ffmv.getDeviceCount()))
-							{
-								deviceID=cameraCount.getDeviceCount()+ffmv.getDeviceCount();
-							}
-							else
-							{
-								vidGrabber->close();
-								ffmv.setDeviceID(deviceID);
-								filter->exposureStartTime = ofGetElapsedTimeMillis();
-							}
-							#endif
-						}
-*/						activeInput = true;
-					}
-				}
-				break;
-			case sourcePanel_previousCam:
-				if(length == sizeof(bool))
-				{
-					if(*(bool*)data)
+					else
 					{
-						activeInput = false; //this stops the app from doing everything when changing source
-
-						deviceID -= 1;
-//						if(deviceID <= cameraCount.getDeviceCount())
-//						{
-							if(deviceID < 0) deviceID = 0;
-
-							vidGrabber->close();
-							vidGrabber->setDeviceID(deviceID);
-							vidGrabber->setVerbose(false);
-							vidGrabber->initGrabber(camWidth,camHeight);
-							filter->exposureStartTime = ofGetElapsedTimeMillis();
-
-/*						}
+                        #ifdef TARGET_WIN32
+						if(deviceID>=(cameraCount.getDeviceCount()+ffmv.getDeviceCount()))
+						{
+							deviceID=cameraCount.getDeviceCount()+ffmv.getDeviceCount();
+						}
 						else
 						{
-							//vidGrabber.close();
-							#ifdef TARGET_WIN32
+							vidGrabber->close();
 							ffmv.setDeviceID(deviceID);
 							filter->exposureStartTime = ofGetElapsedTimeMillis();
-							#endif
 						}
-*/						activeInput = true;
+						#endif
 					}
-				}
-				break;
-			case propertiesPanel_settings:
-				if(length == sizeof(bool))
+*/					}
+			}
+			break;
+		case sourcePanel_previousCam:
+			if(length == sizeof(bool))
+			{
+				if(*(bool*)data)
 				{
-					if(*(bool*)data && bcamera)
+					deviceID -= 1;
+//						if(deviceID <= cameraCount.getDeviceCount())
+//						{
+						if(deviceID < 0) deviceID = 0;
+
+						vidGrabber->close();
+						vidGrabber->setDeviceID(deviceID);
+						vidGrabber->setVerbose(false);
+						vidGrabber->initGrabber(camWidth,camHeight);
+						filter->exposureStartTime = ofGetElapsedTimeMillis();
+
+/*						}
+					else
 					{
-						vidGrabber->videoSettings();
+						//vidGrabber.close();
+						#ifdef TARGET_WIN32
+						ffmv.setDeviceID(deviceID);
+						filter->exposureStartTime = ofGetElapsedTimeMillis();
+						#endif
 					}
-				}
-				break;
-			//Calibration
-			case calibrationPanel_calibrate:
-					bCalibration = true;
-					bFullscreen = true;
-				break;
-			//Source
-			case propertiesPanel_flipH:
-				if(length == sizeof(bool))
-					filter->bHorizontalMirror = *(bool*)data;
-				break;
-			case propertiesPanel_flipV:
-				if(length == sizeof(bool))
-					filter->bVerticalMirror = *(bool*)data;
-				break;
-			//GPU
-			case gpuPanel_use:
-				if(length == sizeof(bool))
-					bGPUMode= *(bool*)data;
-				break;
-			//Communication
-			case optionPanel_tuio_osc:
-				if(length == sizeof(bool))
-					myTUIO.bOSCMode = *(bool*)data;
-					bTUIOMode = *(bool*)data;
-					//set tcp to opposite
-					myTUIO.bTCPMode = false;
-					controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
-					//clear blobs
-					myTUIO.blobs.clear();
-				break;
-			case optionPanel_tuio_tcp:
-				if(length == sizeof(bool))
-					myTUIO.bTCPMode = *(bool*)data;
-					bTUIOMode = *(bool*)data;
-					//set osc to opposite
-					myTUIO.bOSCMode = false;
-					controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
-					//clear blobs
-					myTUIO.blobs.clear();
-				break;
-			case optionPanel_tuio_height_width:
-				if(length == sizeof(bool))
-					myTUIO.bHeightWidth = *(bool*)data;
-				break;
-			//Background
-			case backgroundPanel_dynamic:
-				if(length == sizeof(bool))
-					filter->bDynamicBG = *(bool*)data;
-				break;
-			case backgroundPanel_remove:
-				if(length == sizeof(bool))
-					filter->bLearnBakground = *(bool*)data;
-				break;
-			case backgroundPanel_learn_rate:
-				if(length == sizeof(float))
-					backgroundLearnRate = *(float*)data;
-				break;
-			//Highpass
-			case highpassPanel_use:
-				if(length == sizeof(bool))
-					filter->bHighpass = *(bool*)data;
-				break;
-			case highpassPanel_blur:
-				if(length == sizeof(float))
-					filter->highpassBlur = *(float*)data;
-				break;
-			case highpassPanel_noise:
-				if(length == sizeof(float))
-					filter->highpassNoise = *(float*)data;
-				break;
-			//Amplify
-			case amplifyPanel_use:
-				if(length == sizeof(bool))
-					filter->bAmplify = *(bool*)data;
-				break;
-			case amplifyPanel_amp:
-				if(length == sizeof(float))
-					filter->highpassAmp = *(float*)data;
-				break;
-			case trackedPanel_threshold:
-				if(length == sizeof(float))
-					filter->threshold = *(float*)data;
-				break;
-			case trackedPanel_min_movement:
-				if(length == sizeof(float))
-					tracker.MIN_MOVEMENT_THRESHOLD = *(float*)data;
-				break;
-			case trackedPanel_min_blob_size:
-				if(length == sizeof(float))
-					MIN_BLOB_SIZE = *(float*)data;
-				break;
-			case trackedPanel_max_blob_size:
-				if(length == sizeof(float))
-					MAX_BLOB_SIZE = *(float*)data;
-				break;
-			case trackedPanel_outlines:
-				if(length == sizeof(bool))
-					bDrawOutlines = *(bool*)data;
-				break;
-			case trackedPanel_ids:
-				if(length == sizeof(bool))
-					bShowLabels = *(bool*)data;
-				break;
-			//smooth
-			case smoothPanel_smooth:
-				if(length == sizeof(float))
-					filter->smooth = *(float*)data;
-				break;
-			case smoothPanel_use:
-				if(length == sizeof(bool))
-					filter->bSmooth = *(bool*)data;
-				break;
-			//Save Settings
-			case kParameter_SaveXml:
-				if(length == sizeof(bool))
+*/					}
+			}
+			break;
+		case propertiesPanel_settings:
+			if(length == sizeof(bool))
+			{
+				if(*(bool*)data && bcamera)
 				{
-					if(*(bool*)data)
-					{
-						controls->saveToXml(OFXGUI_XML);
-						saveSettings();
-					}
+					vidGrabber->videoSettings();
 				}
-				break;
-		}
+			}
+			break;
+		//Calibration
+		case calibrationPanel_calibrate:
+				bCalibration = true;
+				bFullscreen = true;
+			break;
+		//Source
+		case propertiesPanel_flipH:
+			if(length == sizeof(bool))
+				filter->bHorizontalMirror = *(bool*)data;
+			break;
+		case propertiesPanel_flipV:
+			if(length == sizeof(bool))
+				filter->bVerticalMirror = *(bool*)data;
+			break;
+		//GPU
+		case gpuPanel_use:
+			if(length == sizeof(bool))
+				bGPUMode= *(bool*)data;
+			break;
+		//Communication
+		case optionPanel_tuio_osc:
+			if(length == sizeof(bool))
+				myTUIO.bOSCMode = *(bool*)data;
+				bTUIOMode = *(bool*)data;
+				//set tcp to opposite
+				myTUIO.bTCPMode = false;
+				controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+				//clear blobs
+//				myTUIO.blobs.clear();
+			break;
+		case optionPanel_tuio_tcp:
+			if(length == sizeof(bool))
+				myTUIO.bTCPMode = *(bool*)data;
+				bTUIOMode = *(bool*)data;
+				//set osc to opposite
+				myTUIO.bOSCMode = false;
+				controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+				//clear blobs
+//				myTUIO.blobs.clear();
+			break;
+		case optionPanel_tuio_height_width:
+			if(length == sizeof(bool))
+				myTUIO.bHeightWidth = *(bool*)data;
+			break;
+		//Background
+		case backgroundPanel_dynamic:
+			if(length == sizeof(bool))
+				filter->bDynamicBG = *(bool*)data;
+			break;
+		case backgroundPanel_remove:
+			if(length == sizeof(bool))
+				filter->bLearnBakground = *(bool*)data;
+			break;
+		case backgroundPanel_learn_rate:
+			if(length == sizeof(float))
+				backgroundLearnRate = *(float*)data;
+			break;
+		//Highpass
+		case highpassPanel_use:
+			if(length == sizeof(bool))
+				filter->bHighpass = *(bool*)data;
+			break;
+		case highpassPanel_blur:
+			if(length == sizeof(float))
+				filter->highpassBlur = *(float*)data;
+			break;
+		case highpassPanel_noise:
+			if(length == sizeof(float))
+				filter->highpassNoise = *(float*)data;
+			break;
+		//Amplify
+		case amplifyPanel_use:
+			if(length == sizeof(bool))
+				filter->bAmplify = *(bool*)data;
+			break;
+		case amplifyPanel_amp:
+			if(length == sizeof(float))
+				filter->highpassAmp = *(float*)data;
+			break;
+		case trackedPanel_threshold:
+			if(length == sizeof(float))
+				filter->threshold = *(float*)data;
+			break;
+		case trackedPanel_min_movement:
+			if(length == sizeof(float))
+				tracker.MIN_MOVEMENT_THRESHOLD = *(float*)data;
+			break;
+		case trackedPanel_min_blob_size:
+			if(length == sizeof(float))
+				MIN_BLOB_SIZE = *(float*)data;
+			break;
+		case trackedPanel_max_blob_size:
+			if(length == sizeof(float))
+				MAX_BLOB_SIZE = *(float*)data;
+			break;
+		case trackedPanel_outlines:
+			if(length == sizeof(bool))
+				bDrawOutlines = *(bool*)data;
+			break;
+		case trackedPanel_ids:
+			if(length == sizeof(bool))
+				bShowLabels = *(bool*)data;
+			break;
+		//smooth
+		case smoothPanel_smooth:
+			if(length == sizeof(float))
+				filter->smooth = *(float*)data;
+			break;
+		case smoothPanel_use:
+			if(length == sizeof(bool))
+				filter->bSmooth = *(bool*)data;
+			break;
+		//Save Settings
+		case kParameter_SaveXml:
+			if(length == sizeof(bool))
+			{
+				if(*(bool*)data)
+				{
+					controls->saveToXml(OFXGUI_XML);
+					saveSettings();
+				}
+			}
+			break;
+
 	}
 }
 #endif //__GUI_DEFINITION

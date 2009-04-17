@@ -17,19 +17,20 @@ TUIO::~TUIO() {
 	// this could be useful for whenever we get rid of an object
 }
 
-void TUIO::setup(const char* host, int port) {
+void TUIO::setup(const char* host, int port, int flashport) {
 
 	localHost = host;
 	TUIOPort = port;
+	TUIOFlashPort = flashport;
 	frameseq = 0;
 
 	//FOR TCP
-	m_tcpServer.setup(TUIOPort);
+	m_tcpServer.setup(TUIOFlashPort);
 	//FOR OSC
 	TUIOSocket.setup(localHost, TUIOPort);
 }
 
-void TUIO::sendTUIO()
+void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 {
 	frameseq += 1;
 
@@ -38,7 +39,7 @@ void TUIO::sendTUIO()
 
 		ofxOscBundle b;
 
-		if(blobs.size() == 0)
+		if(blobs->size() == 0)
 		{
 			//Sends alive message - saying 'Hey, there's no alive blobs'
 			ofxOscMessage alive;
@@ -58,7 +59,7 @@ void TUIO::sendTUIO()
 		else //actually send the blobs
 		{
 			map<int, Blob>::iterator this_blob;
-			for(this_blob = blobs.begin(); this_blob != blobs.end(); this_blob++)
+			for(this_blob = blobs->begin(); this_blob != blobs->end(); this_blob++)
 			{
 				//Set Message
 				ofxOscMessage set;
@@ -83,7 +84,7 @@ void TUIO::sendTUIO()
 			alive.addStringArg("alive");
 
 			std::map<int, Blob>::iterator this_blobID;
-			for(this_blobID = blobs.begin(); this_blobID != blobs.end(); this_blobID++)
+			for(this_blobID = blobs->begin(); this_blobID != blobs->end(); this_blobID++)
 			{
 				alive.addIntArg(this_blobID->second.id); //Get list of ALL active IDs
 			}
@@ -102,7 +103,7 @@ void TUIO::sendTUIO()
 
 	}else if(bTCPMode) //else, if TCP (flash) mode
 	{
-		if(blobs.size() == 0){
+		if(blobs->size() == 0){
 
 			m_tcpServer.sendToAll("<OSCPACKET ADDRESS=\"127.0.0.1\" PORT=\""+ofToString(TUIOPort)+"\" TIME=\""+ofToString(ofGetElapsedTimef())+"\">" +
 							 "<MESSAGE NAME=\"/tuio/2Dcur\">"+
@@ -119,7 +120,7 @@ void TUIO::sendTUIO()
 			string setBlobsMsg;
 
 			map<int, Blob>::iterator this_blob;
-			for(this_blob = blobs.begin(); this_blob != blobs.end(); this_blob++)
+			for(this_blob = blobs->begin(); this_blob != blobs->end(); this_blob++)
 			{
 				//if sending height and width
 				if(bHeightWidth){
@@ -148,7 +149,7 @@ void TUIO::sendTUIO()
 
 			string aliveBlobsMsg;
 			std::map<int, Blob>::iterator this_blobID;
-			for(this_blobID = blobs.begin(); this_blobID != blobs.end(); this_blobID++)
+			for(this_blobID = blobs->begin(); this_blobID != blobs->end(); this_blobID++)
 			{
 				aliveBlobsMsg += "<ARGUMENT TYPE=\"i\" VALUE=\""+ofToString(this_blobID->second.id)+"\"/>";
 			}

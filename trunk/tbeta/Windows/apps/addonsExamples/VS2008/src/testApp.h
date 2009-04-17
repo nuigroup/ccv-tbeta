@@ -1,8 +1,8 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-//if standalone mode
-//#define AUTOTRACKER
+//if standalone mode/non-addon
+#define STANDALONE
 
 //main
 #include "ofMain.h"
