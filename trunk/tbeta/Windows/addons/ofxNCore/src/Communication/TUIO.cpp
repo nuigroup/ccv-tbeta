@@ -25,7 +25,7 @@ void TUIO::setup(const char* host, int port, int flashport) {
 	frameseq = 0;
 
 	//FOR TCP
-	m_tcpServer.setup(TUIOFlashPort);
+	bIsConnected = m_tcpServer.setup(TUIOFlashPort);
 	//FOR OSC
 	TUIOSocket.setup(localHost, TUIOPort);
 }

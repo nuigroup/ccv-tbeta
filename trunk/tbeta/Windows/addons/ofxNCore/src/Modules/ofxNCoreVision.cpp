@@ -540,7 +540,15 @@ void ofxNCoreVision::drawFullMode(){
 		//Draw Port and IP to screen
 		ofSetColor(0xffffff);
 		char buf[256];
-		sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+		if(myTUIO.bOSCMode)
+			sprintf(buf, "Sending OSC messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+		else{
+			if(myTUIO.bIsConnected)
+			sprintf(buf, "Sending TCP messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+			else
+			sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
+		}		
+		
 		verdana.drawString(buf, 740, 480);
 	}
 
@@ -582,14 +590,13 @@ void ofxNCoreVision::drawMiniMode()
 	verdana.drawString("Sending TUIO:  " ,10, ofGetHeight() - 9 );
 
 	//draw green tuio circle
-	if (bTUIOMode)
-	{
-		//Draw GREEN CIRCLE 'ON' LIGHT
-		ofSetColor(0x00FF00);
-		ofFill();
-		ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
-		ofNoFill();
-	}
+	if((myTUIO.bIsConnected || myTUIO.bOSCMode) && bTUIOMode)//green = connected
+	ofSetColor(0x00FF00);
+	else
+	ofSetColor(0xFF0000); //red = not connected
+	ofFill();
+	ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
+	ofNoFill();
 }
 
 void ofxNCoreVision::drawFingerOutlines()
@@ -631,8 +638,6 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 	{
 		switch (e.key)
 		{
-			// ughhh!!!!
-			// my main problem is that the slider doesn't move....
 		case 'a':
 			filter->threshold++;
 			controls->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
