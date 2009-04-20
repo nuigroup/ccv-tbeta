@@ -233,16 +233,27 @@ void BlobTracker::track(ContourFinder* newBlobs)
 							TouchEvents.RAWmessenger = trackedBlobs[i];
 							TouchEvents.notifyRAWTouchHeld(NULL);
 						}
-
+						
+						//calibrated values
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
-						//update calibrated blob map
+						calibrate->cameraToScreenPosition(TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.lastCentroid.y);
+						
+						//Calibrated dx/dy
+						TouchEvents.messenger.D.set(TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y);
+						
+						//calibrated accelleration
+						ofPoint tD2 = TouchEvents.messenger.D;
+						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y));						
+						
+						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
                         //held event only happens once so set to -1
                         trackedBlobs[i].sitting = -1;
 
 						TouchEvents.notifyTouchHeld(NULL);
+
 					} else {
 						//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
@@ -254,9 +265,19 @@ void BlobTracker::track(ContourFinder* newBlobs)
 							TouchEvents.notifyRAWTouchMoved(NULL);
 						}
 
+						//calibrated values
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
-						//update calibrated blob map
+						calibrate->cameraToScreenPosition(TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.lastCentroid.y);
+						
+						//Calibrated dx/dy
+						TouchEvents.messenger.D.set(TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y);
+						
+						//calibrated accelleration
+						ofPoint tD2 = TouchEvents.messenger.D;
+						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y));						
+						
+						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
 						TouchEvents.notifyTouchMoved(NULL);
