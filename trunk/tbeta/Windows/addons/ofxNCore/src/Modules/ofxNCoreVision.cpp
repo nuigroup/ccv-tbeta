@@ -189,20 +189,24 @@ void ofxNCoreVision::initDevice(){
 		//check if a firefly, ps3 camera, or other is plugged in
 		#ifdef TARGET_WIN32
 			/****PS3 - PS3 camera only****/
-		    if(ofxPS3::getDeviceCount() > 0){
+		    if(ofxPS3::getDeviceCount() > 0 && PS3 == NULL){
 				PS3 = new ofxPS3();
 				PS3->listDevices();
 				PS3->initPS3(camWidth, camHeight, camRate);
+				camWidth = PS3->getCamWidth();
+			    camHeight = PS3->getCamHeight();
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, PS3->getCamWidth(), PS3->getCamHeight());
+				return;
 			}
 			/****ffmv - firefly camera only****/
-			else if(ofxffmv::getDeviceCount() > 0){
+			else if(ofxffmv::getDeviceCount() > 0 && ffmv == NULL){
 			   ffmv = new ofxffmv();
 			   ffmv->listDevices();
 			   ffmv->initFFMV(camWidth,camHeight);
 			   printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, ffmv->getCamWidth(), ffmv->getCamHeight());
 			   camWidth = ffmv->getCamWidth();
 			   camHeight = ffmv->getCamHeight();
+			   return;
 			}
 			else if( vidGrabber == NULL ) {
 				vidGrabber = new ofVideoGrabber();
@@ -212,6 +216,7 @@ void ofxNCoreVision::initDevice(){
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
 				camWidth = vidGrabber->width;
 				camHeight = vidGrabber->height;
+				return;
 			}
 			else if( dsvl == NULL) {
 				dsvl = new ofxDSVL();
@@ -219,16 +224,18 @@ void ofxNCoreVision::initDevice(){
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, dsvl->getCamWidth(), dsvl->getCamHeight());
 				camWidth = dsvl->getCamWidth();
 				camHeight = dsvl->getCamHeight();
+				return;
 			}
-		#else
-		if( vidGrabber == NULL ) {
-            vidGrabber = new ofVideoGrabber();
+		#else 
+			if( vidGrabber == NULL ) {
+			vidGrabber = new ofVideoGrabber();
 			vidGrabber->listDevices();
-            vidGrabber->setVerbose(true);
-            vidGrabber->initGrabber(camWidth,camHeight);
-			int grabW = vidGrabber->width;
-			int grabH = vidGrabber->height;
-			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
+			vidGrabber->setVerbose(true);
+			vidGrabber->initGrabber(camWidth,camHeight);
+			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
+			camWidth = vidGrabber->width;
+			camHeight = vidGrabber->height;
+			return;
         }
 		#endif
 	}else{
@@ -240,6 +247,7 @@ void ofxNCoreVision::initDevice(){
 			printf("Video Mode\n\n");
 			camHeight = vidPlayer->height;
 			camWidth = vidPlayer->width;
+			return;
         }
 	}
 }
@@ -681,7 +689,7 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			filter->bLearnBakground = true;
 			break;
 		case 'v':
-			if (bcamera)
+			if (bcamera && vidGrabber != NULL)
 				vidGrabber->videoSettings();
 			break;
 		case 'l':

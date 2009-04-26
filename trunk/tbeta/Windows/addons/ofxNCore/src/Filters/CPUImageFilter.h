@@ -19,9 +19,9 @@ class CPUImageFilter : public ofxCvGrayscaleImage {
     CPUImageFilter(){};
 
     void operator = ( unsigned char* _pixels );
-    void operator = ( ofxCvGrayscaleImage& mom );
-    void operator = ( ofxCvColorImage& mom );
-    void operator = ( ofxCvFloatImage& mom );
+    void operator = ( const ofxCvGrayscaleImage& mom );
+    void operator = ( const ofxCvColorImage& mom );
+    void operator = ( const ofxCvFloatImage& mom );
 
 	//amplifies signal
 	void amplify( CPUImageFilter& mom, float level );
