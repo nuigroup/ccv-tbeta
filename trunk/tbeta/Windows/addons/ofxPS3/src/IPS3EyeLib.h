@@ -1,16 +1,24 @@
 //////////////////////////////////////////////////////////////////////////////////////
 // The library allows you to integrate and use this great 
-// Sony PS3Eye camera in your applications.
+// Sony PS3Eye camera in your own applications.
 //
 // For updates and file downloads go:
-// http://alexpopovich.wordpress.com/category/sony-ps3eye-hacks/
+// http://www.alexpopovich.com/blog/?cat=5
 //
-// Copyright 2008 (c) AlexP.  All rights reserved.
+// Copyright 2008,2009 (c) AlexP.  All rights reserved.
 //
 // PS3EyeLib Usage Example:
 //
-// 	// Create PS3EyeLib object
-// 	IPS3EyeLib *pCam=IPS3EyeLib::Create();
+//  // Query for PS3Eye cameras 
+//  // Returns 0 if no cams are detected and 1 if there is a camera
+//  int cnum = IPS3EyeLib::GetNumCameras();
+//  if(cnum==0)
+//  {
+//      // No cameras installed
+//      return;
+//  }
+// 	// Create PS3EyeLib camera object
+// 	IPS3EyeLib *pCam=IPS3EyeLib::Create(0);
 // 	// Query supported video formats
 // 	for(int i=0; i<IPS3EyeLib::GetNumFormats(); i++)
 // 	{
@@ -33,7 +41,7 @@
 // 	bool done=false;
 // 	while(!done)
 // 	{
-// 		// This function will block until a new frame is available
+// 		// This function call will block until a new frame is available
 // 		// It will then fill the buffer with frame image data
 // 		if(pCam->GetFrame(pBuffer, 24, false))
 // 		{
@@ -59,16 +67,19 @@
 #define PS3EYELIB_EXPORT __declspec(dllimport)
 #endif
 
+// pure function macro
 #ifndef PURE
 #define PURE = 0
 #endif
 
+// camera resolution
 typedef enum
 {
 	R320x240,
 	R640x480,
 }PS3EYE_RESOLUTION;
 
+// camera format structure
 typedef struct tFormat
 {
 	PS3EYE_RESOLUTION res;	// resolution
@@ -82,7 +93,10 @@ typedef struct tFormat
 class PS3EYELIB_EXPORT IPS3EyeLib
 {
 public:
-	static IPS3EyeLib *Create();
+	// get number of connected PS3Eye cameras
+	static int GetNumCameras();
+	// create PS3Eye camera object
+	static IPS3EyeLib *Create(int CameraIndex);
 
 public:
 	virtual ~IPS3EyeLib();
@@ -96,7 +110,7 @@ public:
 	virtual UINT GetHeight() PURE;
 	virtual PS3EYE_RESOLUTION GetRes() PURE;
 	virtual DWORD GetRate() PURE;
-
+	
 	// supported formats
 	static PS3EYE_FORMAT *GetFormats();
 	static int GetNumFormats();

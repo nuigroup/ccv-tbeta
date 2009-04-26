@@ -19,7 +19,7 @@ class ofxffmv
         int getCamWidth();
         int getCamHeight();
         void listDevices();
-        int getDeviceCount();
+        static int getDeviceCount();
         FlyCaptureImage fcImage[_MAX_CAMS];
 
 

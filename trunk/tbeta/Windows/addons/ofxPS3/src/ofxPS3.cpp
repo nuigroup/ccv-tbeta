@@ -11,7 +11,7 @@ ofxPS3::ofxPS3()
 void ofxPS3::listDevices()
 {
 	// PS3 Camera Testing
-	pCam = IPS3EyeLib::Create();
+	pCam = IPS3EyeLib::Create(0);
 
 	// Query supported video formats
 	printf("printing formats...\n");
@@ -68,6 +68,7 @@ void ofxPS3::initPS3(int width,int height, int framerate)
 
 int ofxPS3::getDeviceCount()
 {
+	camNum = IPS3EyeLib::GetNumCameras();
 	return camNum;
 }
 

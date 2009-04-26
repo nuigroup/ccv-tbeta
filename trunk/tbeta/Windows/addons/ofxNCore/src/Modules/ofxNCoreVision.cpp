@@ -172,7 +172,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:HEIGHTWIDTH", myTUIO.bHeightWidth);
 	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bOSCMode);
 	XML.setValue("CONFIG:BOOLEAN:TCPMODE", myTUIO.bTCPMode);
-//	XML.setValue("CONFIG:NETWORK:LOCALHOST", *myTUIO.localHost);
+//	XML.setValue("CONFIG:NETWORK:LOCALHOST", myTUIO.localHost);
 //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
 	XML.saveFile("config.xml");
 }
@@ -189,15 +189,14 @@ void ofxNCoreVision::initDevice(){
 		//check if a firefly, ps3 camera, or other is plugged in
 		#ifdef TARGET_WIN32
 			/****PS3 - PS3 camera only****/
-/*			if(ofxPS3::getDeviceCount() > 0){
+		    if(ofxPS3::getDeviceCount() > 0){
 				PS3 = new ofxPS3();
 				PS3->listDevices();
 				PS3->initPS3(camWidth, camHeight, camRate);
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, PS3->getCamWidth(), PS3->getCamHeight());
 			}
 			/****ffmv - firefly camera only****/
-//			else
-			if(ffmv->getDeviceCount() > 0 && ffmv == NULL){
+			else if(ofxffmv::getDeviceCount() > 0){
 			   ffmv = new ofxffmv();
 			   ffmv->listDevices();
 			   ffmv->initFFMV(camWidth,camHeight);
@@ -257,12 +256,11 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 	if (bcamera) //if camera
 	{
 		#ifdef TARGET_WIN32
-	/*				if(PS3!=NULL)//ps3 camera
+			if(PS3!=NULL)//ps3 camera
 			{
 				bNewFrame = PS3->isFrameNew();
 			}
-			else 
-	*/				if(ffmv!=NULL)
+			else if(ffmv!=NULL)
 			{
 				ffmv->grabFrame();
 				bNewFrame = true;
@@ -351,13 +349,12 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 void ofxNCoreVision::getPixels(){
 
 #ifdef TARGET_WIN32
-/*	if(PS3!=NULL){
+	if(PS3!=NULL){
 		sourceImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
 		//convert to grayscale
 		processedImg = sourceImg;
 	}
-	else 
-*/	if(ffmv != NULL){
+	else if(ffmv != NULL){
 		processedImg.setFromPixels(ffmv->fcImage[ffmv->getDeviceID()].pData, camWidth, camHeight);
 	}
 	else if(vidGrabber != NULL ) {
@@ -413,12 +410,11 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 		glBindTexture(GL_TEXTURE_2D, target);
 
 		#ifdef TARGET_WIN32
-/*			if(PS3!=NULL)
+			if(PS3!=NULL)
 			{
 				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, PS3->getPixels());
 			}
-			else 
-*/			if(vidGrabber!=NULL)
+			else if(vidGrabber!=NULL)
 			{
 				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
 			}
@@ -781,17 +777,18 @@ std::map<int, Blob> ofxNCoreVision::getBlobs(){
 *****************************************************************************/
 void ofxNCoreVision::_exit(ofEventArgs &e)
 {
+	saveSettings();
+
     #ifdef TARGET_WIN32
-//	if(PS3!=NULL) delete PS3;
-	if(ffmv!=NULL) delete ffmv;
-	if(dsvl!=NULL) delete dsvl;	
+		if(PS3!=NULL) delete PS3;
+		if(ffmv!=NULL) delete ffmv;
+		if(dsvl!=NULL) delete dsvl;	
 	#endif
 
 	if(vidGrabber!=NULL) delete vidGrabber;
 	if(vidPlayer !=NULL) delete vidPlayer;
 	// -------------------------------- SAVE STATE ON EXIT
-	saveSettings();
-
+	
 	printf("Vision module has exited!\n");
 }
 

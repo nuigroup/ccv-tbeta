@@ -16,7 +16,7 @@
 //Addons
 #ifdef TARGET_WIN32
     #include "ofxffmv.h"
-//  #include "ofxPS3.h"
+    #include "ofxPS3.h"
 	#include "ofxDSVL.h"
 #endif
 #include "ofxOpenCv.h"
@@ -113,7 +113,7 @@ public:
 		exited=false;
 
 		#ifdef TARGET_WIN32
-//          PS3  = NULL;
+            PS3  = NULL;
 			ffmv = NULL;
 			dsvl = NULL;
 		#endif
@@ -219,7 +219,7 @@ public:
 	 ***************************************************************/
     #ifdef TARGET_WIN32
         ofxffmv*            ffmv; //for firefly mv
-//      ofxPS3*				PS3;  //for ps3
+        ofxPS3*				PS3;  //for ps3
 		ofxDSVL*			dsvl;
 	#endif
 	ofVideoGrabber*		vidGrabber;

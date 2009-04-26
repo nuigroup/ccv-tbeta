@@ -1,5 +1,5 @@
 /*
-*  TUIO.h
+*  GUI.h
 *  
 *
 *  Created on 2/2/09.
@@ -302,32 +302,15 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			{
 				if(*(bool*)data)
 				{
-					deviceID += 1;
-                    //if(deviceID <= vidGrabber->getDeviceCount())
-//						if(deviceID > cameraCount.getDeviceCount())
-//						{
-                       	vidGrabber->close();
+					if(bcamera && vidGrabber != NULL){
+						deviceID += 1;
+                      	vidGrabber->close();
 						vidGrabber->setDeviceID(deviceID);
 						vidGrabber->setVerbose(false);
 						vidGrabber->initGrabber(camWidth,camHeight);
 						filter->exposureStartTime = ofGetElapsedTimeMillis();
-/*						}
-					else
-					{
-                        #ifdef TARGET_WIN32
-						if(deviceID>=(cameraCount.getDeviceCount()+ffmv.getDeviceCount()))
-						{
-							deviceID=cameraCount.getDeviceCount()+ffmv.getDeviceCount();
-						}
-						else
-						{
-							vidGrabber->close();
-							ffmv.setDeviceID(deviceID);
-							filter->exposureStartTime = ofGetElapsedTimeMillis();
-						}
-						#endif
 					}
-*/					}
+				}
 			}
 			break;
 		case sourcePanel_previousCam:
@@ -335,27 +318,21 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			{
 				if(*(bool*)data)
 				{
-					deviceID -= 1;
-//						if(deviceID <= cameraCount.getDeviceCount())
-//						{
-						if(deviceID < 0) deviceID = 0;
-
-						vidGrabber->close();
-						vidGrabber->setDeviceID(deviceID);
-						vidGrabber->setVerbose(false);
-						vidGrabber->initGrabber(camWidth,camHeight);
-						filter->exposureStartTime = ofGetElapsedTimeMillis();
-
-/*						}
-					else
+					if(bcamera && vidGrabber != NULL)
 					{
-						//vidGrabber.close();
-						#ifdef TARGET_WIN32
-						ffmv.setDeviceID(deviceID);
-						filter->exposureStartTime = ofGetElapsedTimeMillis();
-						#endif
+						deviceID -= 1;
+						if(deviceID < 0) {
+							deviceID = 0;
+						}
+						else{
+							vidGrabber->close();
+							vidGrabber->setDeviceID(deviceID);
+							vidGrabber->setVerbose(false);
+							vidGrabber->initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
+						}
 					}
-*/					}
+				}
 			}
 			break;
 		case propertiesPanel_settings:
@@ -493,5 +470,5 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 
 	}
 }
-#endif //__GUI_DEFINITION
+#endif //GUI_CONTROLS_H
 
