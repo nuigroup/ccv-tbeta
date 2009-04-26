@@ -35,6 +35,7 @@ class TUIO {
 		bool 			bHeightWidth;
 		bool 			bOSCMode;
 		bool			bTCPMode;
+		bool			bIsConnected;
 
 	private:
 		int				frameseq;

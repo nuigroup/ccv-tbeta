@@ -1,5 +1,5 @@
 /*
-*  TUIO.h
+*  GUI.h
 *  
 *
 *  Created on 2/2/09.
@@ -220,31 +220,22 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						if( vidPlayer != NULL ) {
                             vidPlayer->close();
                         }
-						if( vidGrabber == NULL ) {
-                            vidGrabber = new ofVideoGrabber();
-                        }
-						
-                        vidGrabber->listDevices();
-                        vidGrabber->setDeviceID(deviceID);
-                        vidGrabber->setVerbose(false);
-                        vidGrabber->initGrabber(camWidth,camHeight);
-						filter->exposureStartTime = ofGetElapsedTimeMillis();
-						
-						bool bReallocate;
-						if(camWidth == vidGrabber->width && camHeight == vidGrabber->height)
-						{
-							bReallocate = false;
-						}
-                        camHeight = vidGrabber->height;
-                        camWidth = vidGrabber->width;
-						if(bReallocate){
-							//reset gpu textures and filters
-							processedImg.allocate(camWidth, camHeight); //Processed Image
-							processedImg.setUseTexture(false);
-							sourceImg.allocate(camWidth, camHeight);    //Source Image
-							sourceImg.setUseTexture(false);
-							filter->allocate(camWidth, camHeight);
-						}
+						if( vidGrabber != NULL ) {                  				
+							vidGrabber->listDevices();
+							vidGrabber->setDeviceID(deviceID);
+							vidGrabber->setVerbose(false);
+							vidGrabber->initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
+						}						
+
+						initDevice();
+						//reset gpu textures and filters
+						processedImg.allocate(camWidth, camHeight); //Processed Image
+						processedImg.setUseTexture(false);
+						sourceImg.allocate(camWidth, camHeight);    //Source Image
+						sourceImg.setUseTexture(false);
+						filter->allocate(camWidth, camHeight);
+
 						bcamera = true;
 						//Turn off the video button;
 						bool setBool = false;
@@ -275,13 +266,15 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						filter->exposureStartTime = ofGetElapsedTimeMillis();
                         printf("Video Mode\n");
 
-						bool bReallocate;
+						bool bReallocate = true;
 						if(camWidth == vidPlayer->width && camHeight == vidPlayer->height)
 						{
 							bReallocate = false;
 						}
+
                         camHeight = vidPlayer->height;
                         camWidth = vidPlayer->width;
+
 						if(bReallocate){
 							//reset gpu textures and filters
 							processedImg.allocate(camWidth, camHeight); //Processed Image
@@ -302,32 +295,15 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			{
 				if(*(bool*)data)
 				{
-					deviceID += 1;
-                    //if(deviceID <= vidGrabber->getDeviceCount())
-//						if(deviceID > cameraCount.getDeviceCount())
-//						{
-                       	vidGrabber->close();
+					if(bcamera && vidGrabber != NULL){
+						deviceID += 1;
+                      	vidGrabber->close();
 						vidGrabber->setDeviceID(deviceID);
 						vidGrabber->setVerbose(false);
 						vidGrabber->initGrabber(camWidth,camHeight);
 						filter->exposureStartTime = ofGetElapsedTimeMillis();
-/*						}
-					else
-					{
-                        #ifdef TARGET_WIN32
-						if(deviceID>=(cameraCount.getDeviceCount()+ffmv.getDeviceCount()))
-						{
-							deviceID=cameraCount.getDeviceCount()+ffmv.getDeviceCount();
-						}
-						else
-						{
-							vidGrabber->close();
-							ffmv.setDeviceID(deviceID);
-							filter->exposureStartTime = ofGetElapsedTimeMillis();
-						}
-						#endif
 					}
-*/					}
+				}
 			}
 			break;
 		case sourcePanel_previousCam:
@@ -335,27 +311,21 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			{
 				if(*(bool*)data)
 				{
-					deviceID -= 1;
-//						if(deviceID <= cameraCount.getDeviceCount())
-//						{
-						if(deviceID < 0) deviceID = 0;
-
-						vidGrabber->close();
-						vidGrabber->setDeviceID(deviceID);
-						vidGrabber->setVerbose(false);
-						vidGrabber->initGrabber(camWidth,camHeight);
-						filter->exposureStartTime = ofGetElapsedTimeMillis();
-
-/*						}
-					else
+					if(bcamera && vidGrabber != NULL)
 					{
-						//vidGrabber.close();
-						#ifdef TARGET_WIN32
-						ffmv.setDeviceID(deviceID);
-						filter->exposureStartTime = ofGetElapsedTimeMillis();
-						#endif
+						deviceID -= 1;
+						if(deviceID < 0) {
+							deviceID = 0;
+						}
+						else{
+							vidGrabber->close();
+							vidGrabber->setDeviceID(deviceID);
+							vidGrabber->setVerbose(false);
+							vidGrabber->initGrabber(camWidth,camHeight);
+							filter->exposureStartTime = ofGetElapsedTimeMillis();
+						}
 					}
-*/					}
+				}
 			}
 			break;
 		case propertiesPanel_settings:
@@ -363,6 +333,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			{
 				if(*(bool*)data && bcamera)
 				{
+					if(vidGrabber != NULL)
 					vidGrabber->videoSettings();
 				}
 			}
@@ -493,5 +464,5 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 
 	}
 }
-#endif //__GUI_DEFINITION
+#endif //GUI_CONTROLS_H
 

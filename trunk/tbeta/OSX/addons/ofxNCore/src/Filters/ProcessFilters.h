@@ -33,7 +33,7 @@ class ProcessFilters : public Filters {
         grayDiff.allocate(camWidth, camHeight);		//Difference Image between Background and Source
         highpassImg.allocate(camWidth, camHeight);  //Highpass Image
         ampImg.allocate(camWidth, camHeight);		//Amplied Image
-        fiLearn.allocate(camWidth, camHeight);		//ofxFloatImage used for simple dynamic background subtraction
+        floatBgImg.allocate(camWidth, camHeight);	//ofxShortImage used for simple dynamic background subtraction
 
         //GPU Setup
 		gpuReadBackBuffer = new unsigned char[camWidth*camHeight*3];
@@ -83,8 +83,10 @@ class ProcessFilters : public Filters {
 
         //Dynamic background with learn rate
         if(bDynamicBG){
-            fiLearn.addWeighted( img, fLearnRate);
-			grayBg.setFromPixels(fiLearn.getPixels(), grayBg.width, grayBg.height);
+            floatBgImg.addWeighted( img, fLearnRate);
+			//grayBg = floatBgImg;  // not yet implemented
+			 cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
+			 grayBg.flagImageChanged();
         }
 
         //recapature the background until image/camera is fully exposed
@@ -92,8 +94,10 @@ class ProcessFilters : public Filters {
 
         //Capture full background
         if (bLearnBakground == true){
-            fiLearn = img;
-			grayBg.setFromPixels(fiLearn.getPixels(), grayBg.width, grayBg.height);
+            floatBgImg = img;
+			//grayBg = floatBgImg;  // not yet implemented
+			cvConvertScale( floatBgImg.getCvImage(), grayBg.getCvImage(), 255.0f/65535.0f, 0 );       
+			grayBg.flagImageChanged();
             bLearnBakground = false;
         }
 
@@ -185,7 +189,7 @@ class ProcessFilters : public Filters {
     {
         grayImg.draw(40, 30, 320, 240);
         grayDiff.draw(385, 30, 320, 240);
-        fiLearn.draw(85, 392, 128, 96);
+        floatBgImg.draw(85, 392, 128, 96);
         subtractBg.draw(235, 392, 128, 96);
         highpassImg.draw(385, 392, 128, 96);
         ampImg.draw(535, 392, 128, 96);

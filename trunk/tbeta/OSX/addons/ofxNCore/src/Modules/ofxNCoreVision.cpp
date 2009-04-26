@@ -172,7 +172,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:HEIGHTWIDTH", myTUIO.bHeightWidth);
 	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bOSCMode);
 	XML.setValue("CONFIG:BOOLEAN:TCPMODE", myTUIO.bTCPMode);
-//	XML.setValue("CONFIG:NETWORK:LOCALHOST", *myTUIO.localHost);
+//	XML.setValue("CONFIG:NETWORK:LOCALHOST", myTUIO.localHost);
 //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
 	XML.saveFile("config.xml");
 }
@@ -189,21 +189,24 @@ void ofxNCoreVision::initDevice(){
 		//check if a firefly, ps3 camera, or other is plugged in
 		#ifdef TARGET_WIN32
 			/****PS3 - PS3 camera only****/
-/*			if(ofxPS3::getDeviceCount() > 0){
+		    if(ofxPS3::getDeviceCount() > 0 && PS3 == NULL){
 				PS3 = new ofxPS3();
 				PS3->listDevices();
 				PS3->initPS3(camWidth, camHeight, camRate);
+				camWidth = PS3->getCamWidth();
+			    camHeight = PS3->getCamHeight();
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, PS3->getCamWidth(), PS3->getCamHeight());
+				return;
 			}
 			/****ffmv - firefly camera only****/
-//			else
-			if(ffmv->getDeviceCount() > 0 && ffmv == NULL){
+			else if(ofxffmv::getDeviceCount() > 0 && ffmv == NULL){
 			   ffmv = new ofxffmv();
 			   ffmv->listDevices();
 			   ffmv->initFFMV(camWidth,camHeight);
 			   printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, ffmv->getCamWidth(), ffmv->getCamHeight());
 			   camWidth = ffmv->getCamWidth();
 			   camHeight = ffmv->getCamHeight();
+			   return;
 			}
 			else if( vidGrabber == NULL ) {
 				vidGrabber = new ofVideoGrabber();
@@ -213,6 +216,7 @@ void ofxNCoreVision::initDevice(){
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
 				camWidth = vidGrabber->width;
 				camHeight = vidGrabber->height;
+				return;
 			}
 			else if( dsvl == NULL) {
 				dsvl = new ofxDSVL();
@@ -220,16 +224,18 @@ void ofxNCoreVision::initDevice(){
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, dsvl->getCamWidth(), dsvl->getCamHeight());
 				camWidth = dsvl->getCamWidth();
 				camHeight = dsvl->getCamHeight();
+				return;
 			}
-		#else
-		if( vidGrabber == NULL ) {
-            vidGrabber = new ofVideoGrabber();
+		#else 
+			if( vidGrabber == NULL ) {
+			vidGrabber = new ofVideoGrabber();
 			vidGrabber->listDevices();
-            vidGrabber->setVerbose(true);
-            vidGrabber->initGrabber(camWidth,camHeight);
-			int grabW = vidGrabber->width;
-			int grabH = vidGrabber->height;
-			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, grabW, grabH);
+			vidGrabber->setVerbose(true);
+			vidGrabber->initGrabber(camWidth,camHeight);
+			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
+			camWidth = vidGrabber->width;
+			camHeight = vidGrabber->height;
+			return;
         }
 		#endif
 	}else{
@@ -241,6 +247,7 @@ void ofxNCoreVision::initDevice(){
 			printf("Video Mode\n\n");
 			camHeight = vidPlayer->height;
 			camWidth = vidPlayer->width;
+			return;
         }
 	}
 }
@@ -257,12 +264,11 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 	if (bcamera) //if camera
 	{
 		#ifdef TARGET_WIN32
-	/*				if(PS3!=NULL)//ps3 camera
+			if(PS3!=NULL)//ps3 camera
 			{
 				bNewFrame = PS3->isFrameNew();
 			}
-			else 
-	*/				if(ffmv!=NULL)
+			else if(ffmv!=NULL)
 			{
 				ffmv->grabFrame();
 				bNewFrame = true;
@@ -351,13 +357,12 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 void ofxNCoreVision::getPixels(){
 
 #ifdef TARGET_WIN32
-/*	if(PS3!=NULL){
+	if(PS3!=NULL){
 		sourceImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
 		//convert to grayscale
 		processedImg = sourceImg;
 	}
-	else 
-*/	if(ffmv != NULL){
+	else if(ffmv != NULL){
 		processedImg.setFromPixels(ffmv->fcImage[ffmv->getDeviceID()].pData, camWidth, camHeight);
 	}
 	else if(vidGrabber != NULL ) {
@@ -413,12 +418,11 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 		glBindTexture(GL_TEXTURE_2D, target);
 
 		#ifdef TARGET_WIN32
-/*			if(PS3!=NULL)
+			if(PS3!=NULL)
 			{
 				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, PS3->getPixels());
 			}
-			else 
-*/			if(vidGrabber!=NULL)
+			else if(vidGrabber!=NULL)
 			{
 				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, camWidth, camHeight, GL_RGB, GL_UNSIGNED_BYTE, vidGrabber->getPixels());
 			}
@@ -540,7 +544,15 @@ void ofxNCoreVision::drawFullMode(){
 		//Draw Port and IP to screen
 		ofSetColor(0xffffff);
 		char buf[256];
-		sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+		if(myTUIO.bOSCMode)
+			sprintf(buf, "Sending OSC messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+		else{
+			if(myTUIO.bIsConnected)
+			sprintf(buf, "Sending TCP messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+			else
+			sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
+		}		
+		
 		verdana.drawString(buf, 740, 480);
 	}
 
@@ -582,14 +594,13 @@ void ofxNCoreVision::drawMiniMode()
 	verdana.drawString("Sending TUIO:  " ,10, ofGetHeight() - 9 );
 
 	//draw green tuio circle
-	if (bTUIOMode)
-	{
-		//Draw GREEN CIRCLE 'ON' LIGHT
-		ofSetColor(0x00FF00);
-		ofFill();
-		ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
-		ofNoFill();
-	}
+	if((myTUIO.bIsConnected || myTUIO.bOSCMode) && bTUIOMode)//green = connected
+	ofSetColor(0x00FF00);
+	else
+	ofSetColor(0xFF0000); //red = not connected
+	ofFill();
+	ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
+	ofNoFill();
 }
 
 void ofxNCoreVision::drawFingerOutlines()
@@ -631,8 +642,6 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 	{
 		switch (e.key)
 		{
-			// ughhh!!!!
-			// my main problem is that the slider doesn't move....
 		case 'a':
 			filter->threshold++;
 			controls->update(appPtr->trackedPanel_threshold, kofxGui_Set_Int, &appPtr->filter->threshold, sizeof(int));
@@ -680,7 +689,7 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			filter->bLearnBakground = true;
 			break;
 		case 'v':
-			if (bcamera)
+			if (bcamera && vidGrabber != NULL)
 				vidGrabber->videoSettings();
 			break;
 		case 'l':
@@ -776,17 +785,18 @@ std::map<int, Blob> ofxNCoreVision::getBlobs(){
 *****************************************************************************/
 void ofxNCoreVision::_exit(ofEventArgs &e)
 {
+	saveSettings();
+
     #ifdef TARGET_WIN32
-//	if(PS3!=NULL) delete PS3;
-	if(ffmv!=NULL) delete ffmv;
-	if(dsvl!=NULL) delete dsvl;	
+		if(PS3!=NULL) delete PS3;
+		if(ffmv!=NULL) delete ffmv;
+		if(dsvl!=NULL) delete dsvl;	
 	#endif
 
 	if(vidGrabber!=NULL) delete vidGrabber;
 	if(vidPlayer !=NULL) delete vidPlayer;
 	// -------------------------------- SAVE STATE ON EXIT
-	saveSettings();
-
+	
 	printf("Vision module has exited!\n");
 }
 

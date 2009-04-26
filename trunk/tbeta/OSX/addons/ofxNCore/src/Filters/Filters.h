@@ -62,16 +62,14 @@ class Filters {
 	bool bMiniMode;
 
     //CPU
-    ofxCvShortImage  floatBgImg;
-    ofxCvGrayscaleImage  grayBgImg;
-    ofxCvColorImage		sourceImg;
     ofxCvGrayscaleImage grayImg;
     ofxCvGrayscaleImage grayBg;
     ofxCvGrayscaleImage subtractBg;
     ofxCvGrayscaleImage grayDiff;
     ofxCvGrayscaleImage highpassImg;
     ofxCvGrayscaleImage ampImg;
-    ofxCvFloatImage		fiLearn;
+	ofxCvShortImage		floatBgImg;
+
 
     //GPU
     GLuint			gpuBGTex;
