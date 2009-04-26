@@ -20,8 +20,6 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
     //removes the 'x' button on windows which causes a crash due to a GLUT bug
 	#ifdef TARGET_WIN32
-	    //get rid of the console
-        FreeConsole();
 		//Get rid of 'x' button
 		HWND hwndConsole = FindWindowA(NULL, " Community Core Vision ");
 		HMENU hMnu = ::GetSystemMenu(hwndConsole, FALSE);
@@ -31,7 +29,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	/*****************************************************************************************************
 	* LOGGING
 	******************************************************************************************************/
-    /* alright first we need to get time and date so our logs can be ordered*/
+    /* alright first we need to get time and date so our logs can be ordered */
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
     strftime (fileName,80,"logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
@@ -102,6 +100,12 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 		bShowInterface = true;
 		printf("Starting in full mode...\n\n");
 	}
+	
+	#ifdef TARGET_WIN32
+	    //get rid of the console window
+        FreeConsole();
+	#endif
+
 	printf("Community Core Vision is setup!\n\n");
 }
 
