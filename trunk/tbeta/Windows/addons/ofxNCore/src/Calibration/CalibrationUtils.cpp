@@ -3,7 +3,7 @@
 *
 *
 *  Created on 2/2/09.
-*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*  Copyright 2009 NUI Group. All rights reserved.
 *
 */
 
@@ -71,8 +71,6 @@ void CalibrationUtils::loadXMLSettings(){
 	{
 		//lets see how many <STROKE> </STROKE> tags there are in the xml file
 		int numDragTags = calibrationXML.getNumTags("SCREEN:POINT");
-
-			printf("Points: %i \n", numDragTags);
 
 			//if there is at least one <POINT> tag we can read the list of points
 			if(numDragTags > 0){

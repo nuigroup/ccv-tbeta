@@ -956,14 +956,6 @@
 						Name="Modules"
 						>
 						<File
-							RelativePath="..\..\..\addons\ofxNCore\src\Modules\ofxNCoreBase.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\addons\ofxNCore\src\Modules\ofxNCoreBase.h"
-							>
-						</File>
-						<File
 							RelativePath="..\..\..\addons\ofxNCore\src\Modules\ofxNCoreVision.cpp"
 							>
 						</File>
@@ -977,14 +969,6 @@
 						>
 						<File
 							RelativePath="..\..\..\addons\ofxNCore\src\Tracking\Blob.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\addons\ofxNCore\src\Tracking\BlobManager.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\addons\ofxNCore\src\Tracking\BlobManager.h"
 							>
 						</File>
 						<File

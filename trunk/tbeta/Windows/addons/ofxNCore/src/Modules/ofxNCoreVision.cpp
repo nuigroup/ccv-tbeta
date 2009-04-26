@@ -3,7 +3,7 @@
 *  NUI Group Community Core Vision
 *
 *  Created by NUI Group Dev Team A on 2/1/09.
-*  Copyright 2009 NUI Group\Inc. All rights reserved.
+*  Copyright 2009 NUI Group. All rights reserved.
 *
 */
 
@@ -18,6 +18,27 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//set the title
 	ofSetWindowTitle(" Community Core Vision ");
 
+    //removes the 'x' button on windows which causes a crash due to a GLUT bug
+	#ifdef TARGET_WIN32
+	    //get rid of the console
+        FreeConsole();
+		//Get rid of 'x' button
+		HWND hwndConsole = FindWindowA(NULL, " Community Core Vision ");
+		HMENU hMnu = ::GetSystemMenu(hwndConsole, FALSE);
+		RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
+	#endif
+
+	/*****************************************************************************************************
+	* LOGGING
+	******************************************************************************************************/
+    /* alright first we need to get time and date so our logs can be ordered*/
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+    strftime (fileName,80,"logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
+    FILE *stream ;
+    if((stream = freopen(fileName, "w", stdout)) == NULL){}
+	/******************************************************************************************************/
+
 	//create filter
 	if ( filter == NULL ){filter = new ProcessFilters();}
 
@@ -28,9 +49,11 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	ofSetWindowShape(winWidth,winHeight);
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance?
 
+	//load camera/video
 	initDevice();
 
-	ofSetFrameRate(camRate * 1.5);			//This will be based on camera fps in the future
+	//set framerate
+	ofSetFrameRate(camRate * 1.3);			//This will be based on camera fps in the future
 
 	/*****************************************************************************************************
 	* Allocate images (needed for drawing/processing images)
@@ -44,14 +67,18 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Fonts - Is there a way to dynamically change font size?
 	verdana.loadFont("verdana.ttf", 8, true, true);	   //Font used for small images
 	bigvideo.loadFont("verdana.ttf", 13, true, true);  //Font used for big images.
+
 	//Static Images
 	background.loadImage("images/background.jpg"); //Main (Temp?) Background
+
 	//GUI Controls
 	controls = ofxGui::Instance(this);
 	setupControls();
-	//Calibration
+
+	//Setup Calibration
 	calib.setup(camWidth, camHeight, &tracker);
-	//Filters
+
+	//Allocate Filters
 	filter->allocate( camWidth, camHeight );
 
 	/*****************************************************************************************************
@@ -183,6 +210,9 @@ void ofxNCoreVision::saveSettings()
 //Init Device (camera/video)
 void ofxNCoreVision::initDevice(){
 
+	//save/update log file
+	if((stream = freopen(fileName, "a", stdout)) == NULL){}
+
 	//Pick the Source - camera or video
 	if (bcamera)
 	{
@@ -257,6 +287,9 @@ void ofxNCoreVision::initDevice(){
 *****************************************************************************/
 void ofxNCoreVision::_update(ofEventArgs &e)
 {
+	//save/update log file
+	if((stream = freopen(fileName, "a", stdout)) == NULL){}
+
 	if(exited) return;
 
 	bNewFrame = false;
@@ -785,6 +818,9 @@ std::map<int, Blob> ofxNCoreVision::getBlobs(){
 *****************************************************************************/
 void ofxNCoreVision::_exit(ofEventArgs &e)
 {
+	//save/update log file
+	if((stream = freopen(fileName, "a", stdout)) == NULL){}
+
 	saveSettings();
 
     #ifdef TARGET_WIN32

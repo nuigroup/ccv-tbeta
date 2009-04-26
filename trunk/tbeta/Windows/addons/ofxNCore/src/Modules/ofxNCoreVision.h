@@ -311,6 +311,15 @@ public:
 	string				tmpLocalHost;
     int					tmpPort;
 	int					tmpFlashPort;
+
+	//Logging
+	char				dateStr [9];
+	char				timeStr [9];
+	time_t				rawtime;
+	struct tm *			timeinfo;
+	char				fileName [80];
+	FILE *				stream ;
+
 };
 
 #endif
