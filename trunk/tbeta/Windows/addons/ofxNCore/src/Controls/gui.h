@@ -344,7 +344,12 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			break;
 		//Calibration
 		case calibrationPanel_calibrate:
+				bShowInterface = false;
+				//Enter/Exit Calibration
 				bCalibration = true;
+				calib.calibrating = true;
+				tracker.isCalibrating = true;
+				if (bFullscreen == false) ofToggleFullscreen();
 				bFullscreen = true;
 			break;
 		//Source
