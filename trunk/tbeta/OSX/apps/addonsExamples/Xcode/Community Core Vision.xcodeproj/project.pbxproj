@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		79DF3FDC0F9A3E02002B2741 /* boxAlign.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3F960F9A3E01002B2741 /* boxAlign.cpp */; };
 		79DF3FDD0F9A3E02002B2741 /* Calibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3F980F9A3E01002B2741 /* Calibration.cpp */; };
 		79DF3FDE0F9A3E02002B2741 /* CalibrationUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3F9A0F9A3E01002B2741 /* CalibrationUtils.cpp */; };
 		79DF3FDF0F9A3E02002B2741 /* TUIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FA10F9A3E01002B2741 /* TUIO.cpp */; };
@@ -29,7 +28,6 @@
 		79DF3FEF0F9A3E02002B2741 /* CPUImageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FC60F9A3E02002B2741 /* CPUImageFilter.cpp */; };
 		79DF3FF00F9A3E02002B2741 /* GPUImageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FC90F9A3E02002B2741 /* GPUImageFilter.cpp */; };
 		79DF3FF10F9A3E02002B2741 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FCC0F9A3E02002B2741 /* ShaderProgram.cpp */; };
-		79DF3FF20F9A3E02002B2741 /* ofxNCoreBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FCF0F9A3E02002B2741 /* ofxNCoreBase.cpp */; };
 		79DF3FF30F9A3E02002B2741 /* ofxNCoreVision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FD10F9A3E02002B2741 /* ofxNCoreVision.cpp */; };
 		79DF3FF40F9A3E02002B2741 /* BlobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FD60F9A3E02002B2741 /* BlobManager.cpp */; };
 		79DF3FF50F9A3E02002B2741 /* ContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79DF3FD80F9A3E02002B2741 /* ContourFinder.cpp */; };
@@ -107,8 +105,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		79DF3F960F9A3E01002B2741 /* boxAlign.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = boxAlign.cpp; sourceTree = "<group>"; };
-		79DF3F970F9A3E01002B2741 /* boxAlign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = boxAlign.h; sourceTree = "<group>"; };
 		79DF3F980F9A3E01002B2741 /* Calibration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Calibration.cpp; sourceTree = "<group>"; };
 		79DF3F990F9A3E01002B2741 /* Calibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calibration.h; sourceTree = "<group>"; };
 		79DF3F9A0F9A3E01002B2741 /* CalibrationUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CalibrationUtils.cpp; sourceTree = "<group>"; };
@@ -158,8 +154,6 @@
 		79DF3FCB0F9A3E02002B2741 /* ProcessFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcessFilters.h; sourceTree = "<group>"; };
 		79DF3FCC0F9A3E02002B2741 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgram.cpp; sourceTree = "<group>"; };
 		79DF3FCD0F9A3E02002B2741 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
-		79DF3FCF0F9A3E02002B2741 /* ofxNCoreBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxNCoreBase.cpp; sourceTree = "<group>"; };
-		79DF3FD00F9A3E02002B2741 /* ofxNCoreBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNCoreBase.h; sourceTree = "<group>"; };
 		79DF3FD10F9A3E02002B2741 /* ofxNCoreVision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxNCoreVision.cpp; sourceTree = "<group>"; };
 		79DF3FD20F9A3E02002B2741 /* ofxNCoreVision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNCoreVision.h; sourceTree = "<group>"; };
 		79DF3FD30F9A3E02002B2741 /* ofxNCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxNCore.h; path = ofxNCore/src/ofxNCore.h; sourceTree = "<group>"; };
@@ -491,8 +485,6 @@
 		79DF3F950F9A3E01002B2741 /* Calibration */ = {
 			isa = PBXGroup;
 			children = (
-				79DF3F960F9A3E01002B2741 /* boxAlign.cpp */,
-				79DF3F970F9A3E01002B2741 /* boxAlign.h */,
 				79DF3F980F9A3E01002B2741 /* Calibration.cpp */,
 				79DF3F990F9A3E01002B2741 /* Calibration.h */,
 				79DF3F9A0F9A3E01002B2741 /* CalibrationUtils.cpp */,
@@ -590,8 +582,6 @@
 		79DF3FCE0F9A3E02002B2741 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				79DF3FCF0F9A3E02002B2741 /* ofxNCoreBase.cpp */,
-				79DF3FD00F9A3E02002B2741 /* ofxNCoreBase.h */,
 				79DF3FD10F9A3E02002B2741 /* ofxNCoreVision.cpp */,
 				79DF3FD20F9A3E02002B2741 /* ofxNCoreVision.h */,
 			);
@@ -1569,7 +1559,6 @@
 				E4D946820F5F492F00B90D9D /* ofxVec2f.cpp in Sources */,
 				E4D946830F5F492F00B90D9D /* ofxVec3f.cpp in Sources */,
 				E4D946840F5F492F00B90D9D /* ofxVec4f.cpp in Sources */,
-				79DF3FDC0F9A3E02002B2741 /* boxAlign.cpp in Sources */,
 				79DF3FDD0F9A3E02002B2741 /* Calibration.cpp in Sources */,
 				79DF3FDE0F9A3E02002B2741 /* CalibrationUtils.cpp in Sources */,
 				79DF3FDF0F9A3E02002B2741 /* TUIO.cpp in Sources */,
@@ -1591,7 +1580,6 @@
 				79DF3FEF0F9A3E02002B2741 /* CPUImageFilter.cpp in Sources */,
 				79DF3FF00F9A3E02002B2741 /* GPUImageFilter.cpp in Sources */,
 				79DF3FF10F9A3E02002B2741 /* ShaderProgram.cpp in Sources */,
-				79DF3FF20F9A3E02002B2741 /* ofxNCoreBase.cpp in Sources */,
 				79DF3FF30F9A3E02002B2741 /* ofxNCoreVision.cpp in Sources */,
 				79DF3FF40F9A3E02002B2741 /* BlobManager.cpp in Sources */,
 				79DF3FF50F9A3E02002B2741 /* ContourFinder.cpp in Sources */,

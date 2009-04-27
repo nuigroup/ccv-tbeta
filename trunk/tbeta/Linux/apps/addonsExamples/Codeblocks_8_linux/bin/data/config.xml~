@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<CONFIG>
+    <!--/////////////////////////////////////////
+
+        YOU CAN MANUALLY EDIT THE FEATURES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <!--// CAMERA SETTINGS // -->
+    <CAMERA_0>
+        <USECAMERA>1</USECAMERA>
+        <DEVICE>1</DEVICE>
+        <WIDTH>640</WIDTH>
+        <HEIGHT>480</HEIGHT>
+        <FRAMERATE>125</FRAMERATE>
+    </CAMERA_0>
+    <!--// NETWORK COMMUNICATION SETTINGS //-->
+    <NETWORK>
+        <LOCALHOST>127.0.0.1</LOCALHOST>
+        <TUIO>0</TUIO>
+        <TUIOPORT_OUT>3000</TUIOPORT_OUT>
+        <TUIOPORT_IN>3000</TUIOPORT_IN>
+    </NETWORK>
+    <!--// VIDEO SETTINGS // -->
+    <VIDEO>
+        <FILENAME>test_videos/RearDI.m4v</FILENAME>
+    </VIDEO>
+    <!--// BLOB SETTINGS // -->
+    <BLOBS>
+        <MAXNUMBER>20</MAXNUMBER>
+    </BLOBS>
+    <!--/////////////////////////////////////////
+
+        DO NOT EDIT THE VALUES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <APPLICATION>
+        <TITLE>Community Core Visision</TITLE>
+        <VERSION>1.2.0</VERSION>
+    </APPLICATION>
+    <WINDOW>
+        <WIDTH>950</WIDTH>
+        <HEIGHT>600</HEIGHT>
+    </WINDOW>
+    <BOOLEAN>
+        <PRESSURE>0</PRESSURE>
+        <LABELS>1</LABELS>
+        <OUTLINES>1</OUTLINES>
+        <LEARNBG>0</LEARNBG>
+        <TUIO>0</TUIO>
+        <VMIRROR>0</VMIRROR>
+        <HMIRROR>0</HMIRROR>
+        <HIGHPASS>0</HIGHPASS>
+        <AMPLIFY>0</AMPLIFY>
+        <SMOOTH>0</SMOOTH>
+        <GPU>0</GPU>
+        <DYNAMICBG>0</DYNAMICBG>
+        <SNAPSHOT>0</SNAPSHOT>
+        <MINIMODE>0</MINIMODE>
+        <HEIGHTWIDTH>0</HEIGHTWIDTH>
+        <OSCMODE>0</OSCMODE>
+        <TCPMODE>0</TCPMODE>
+    </BOOLEAN>
+    <INT>
+        <MINMOVEMENT>4</MINMOVEMENT>
+        <MINBLOBSIZE>1</MINBLOBSIZE>
+        <MAXBLOBSIZE>1000</MAXBLOBSIZE>
+        <!--// FILTERS SETTERS //-->
+        <THRESHOLD>173</THRESHOLD>
+        <HIGHPASSBLUR>36</HIGHPASSBLUR>
+        <HIGHPASSNOISE>3</HIGHPASSNOISE>
+        <HIGHPASSAMP>8</HIGHPASSAMP>
+        <SMOOTH>0</SMOOTH>
+        <BGLEARNRATE>69.045456</BGLEARNRATE>
+    </INT>
+</CONFIG>
