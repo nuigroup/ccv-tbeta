@@ -3,7 +3,7 @@
 *  
 *
 *  Created on 2/1/09.
-*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*  Copyright 2009 NUI Group. All rights reserved.
 *
 */
 
@@ -31,7 +31,7 @@ void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 	tracker = trackerIn;
 	tracker->passInCalibration(&calibrate);
 
-	printf("Calibration is setup!\n");
+	printf("Calibration is setup!\n\n");
 }
 
 void Calibration::passInContourFinder(int numBlobs, vector<Blob> blobs) {

@@ -83,6 +83,7 @@ class ofxNCoreVision : public ofxGuiListener//, public BlobManager
 		highpassPanel_noise,
 
 		trackedPanel,
+		trackedPanel_darkblobs,
 		trackedPanel_use,
 		trackedPanel_threshold,
 		trackedPanel_min_movement,
@@ -311,6 +312,15 @@ public:
 	string				tmpLocalHost;
     int					tmpPort;
 	int					tmpFlashPort;
+
+	//Logging
+	char				dateStr [9];
+	char				timeStr [9];
+	time_t				rawtime;
+	struct tm *			timeinfo;
+	char				fileName [80];
+	FILE *				stream ;
+
 };
 
 #endif
