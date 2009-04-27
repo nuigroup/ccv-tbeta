@@ -32,8 +32,9 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
     /* alright first we need to get time and date so our logs can be ordered */
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
-    strftime (fileName,80,"logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
+    strftime (fileName,80,"../logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
     FILE *stream ;
+	sprintf(fileName, ofToDataPath(fileName).c_str());
     if((stream = freopen(fileName, "w", stdout)) == NULL){}
 	/******************************************************************************************************/
 
