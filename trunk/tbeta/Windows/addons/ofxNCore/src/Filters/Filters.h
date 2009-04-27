@@ -58,6 +58,7 @@ class Filters {
 	bool bHighpass;
 	bool bAmplify;
     bool bThreshold;
+	bool bTrackDark;
     bool bLearnBakground;
 	bool bMiniMode;
 

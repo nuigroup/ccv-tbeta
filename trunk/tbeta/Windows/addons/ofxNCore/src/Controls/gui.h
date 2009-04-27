@@ -81,8 +81,7 @@ void ofxNCoreVision::setupControls()
 
 	//Tracked Image
 	ofxGuiPanel* trackPanel = controls->addPanel(appPtr->trackedPanel, "Tracked Image", 386, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
-	trackPanel->addButton(appPtr->trackedPanel_outlines, "Show Outlines (o)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
-	trackPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+	trackPanel->addButton(appPtr->trackedPanel_darkblobs, "Track Draw Blobs", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	trackPanel->addSlider(appPtr->trackedPanel_threshold, "Image Threshold", 140, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
 	trackPanel->addSlider(appPtr->trackedPanel_min_movement, "Movement Threshold", 140, 13, 0.0f, 15.0f, tracker.MIN_MOVEMENT_THRESHOLD, kofxGui_Display_Int, 0);
 	trackPanel->addSlider(appPtr->trackedPanel_min_blob_size, "Min Blob Size", 140, 13, 1.0f, 500.0f, MIN_BLOB_SIZE, kofxGui_Display_Int, 0);
@@ -91,29 +90,34 @@ void ofxNCoreVision::setupControls()
 	trackPanel->mObjWidth = 319;
 	trackPanel->mObjects[0]->mObjX = 120;
 	trackPanel->mObjects[0]->mObjY = 11;
-	trackPanel->mObjects[1]->mObjX = 235;
-	trackPanel->mObjects[1]->mObjY = 11;
+	trackPanel->mObjects[1]->mObjY = 32;
+	trackPanel->mObjects[2]->mObjX = 165;
 	trackPanel->mObjects[2]->mObjY = 32;
-	trackPanel->mObjects[3]->mObjX = 165;
-	trackPanel->mObjects[3]->mObjY = 32;
+	trackPanel->mObjects[3]->mObjY = 67;
+	trackPanel->mObjects[4]->mObjX = 165;
 	trackPanel->mObjects[4]->mObjY = 67;
-	trackPanel->mObjects[5]->mObjX = 165;
-	trackPanel->mObjects[5]->mObjY = 67;
 	trackPanel->adjustToNewContent(100, 0);
 
 	//Source Image
 	ofxGuiPanel* srcPanel = controls->addPanel(appPtr->sourcePanel, "Source Image", 41, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
+	srcPanel->addButton(appPtr->trackedPanel_outlines, "Show Outlines (o)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+	srcPanel->addButton(appPtr->trackedPanel_ids, "Show IDs (i)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	srcPanel->addButton(appPtr->sourcePanel_cam, "Use Camera", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	srcPanel->addButton(appPtr->sourcePanel_previousCam, "Previous Camera", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	srcPanel->addButton(appPtr->sourcePanel_nextCam, "Next Camera", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Trigger, "");
 	srcPanel->addButton(appPtr->sourcePanel_video, "Use Video", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	srcPanel->mObjHeight = 85;
 	srcPanel->mObjWidth = 319;
-	srcPanel->mObjects[1]->mObjX = 100;
-	srcPanel->mObjects[1]->mObjY = 32;
-	srcPanel->mObjects[2]->mObjX = 214;
-	srcPanel->mObjects[2]->mObjY = 32;
-	srcPanel->mObjects[3]->mObjY = 55;
+	srcPanel->mObjects[0]->mObjX = 110;
+	srcPanel->mObjects[0]->mObjY = 11;
+	srcPanel->mObjects[1]->mObjX = 230;
+	srcPanel->mObjects[1]->mObjY = 11;
+	srcPanel->mObjects[2]->mObjY = 42;
+	srcPanel->mObjects[3]->mObjX = 110;
+	srcPanel->mObjects[3]->mObjY = 42;
+	srcPanel->mObjects[4]->mObjX = 230;
+	srcPanel->mObjects[4]->mObjY = 42;
+	srcPanel->mObjects[5]->mObjY = 65;
 	srcPanel->adjustToNewContent(100, 0);
 
 	//Background Image
@@ -167,6 +171,7 @@ void ofxNCoreVision::setupControls()
 	controls->update(appPtr->propertiesPanel_flipH, kofxGui_Set_Bool, &appPtr->filter->bHorizontalMirror, sizeof(bool));
 	controls->update(appPtr->trackedPanel_outlines, kofxGui_Set_Bool, &appPtr->bDrawOutlines, sizeof(bool));
 	controls->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
+	controls->update(appPtr->trackedPanel_darkblobs, kofxGui_Set_Bool, &appPtr->filter->bTrackDark, sizeof(bool));	
 	//Source
 	controls->update(appPtr->sourcePanel_cam, kofxGui_Set_Bool, &appPtr->bcamera, sizeof(bool));
 	if(!bcamera){
@@ -228,6 +233,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 							filter->exposureStartTime = ofGetElapsedTimeMillis();
 						}						
 
+						bcamera = true;
 						initDevice();
 						//reset gpu textures and filters
 						processedImg.allocate(camWidth, camHeight); //Processed Image
@@ -235,8 +241,6 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 						sourceImg.allocate(camWidth, camHeight);    //Source Image
 						sourceImg.setUseTexture(false);
 						filter->allocate(camWidth, camHeight);
-
-						bcamera = true;
 						//Turn off the video button;
 						bool setBool = false;
 						controls->update(sourcePanel_video, kofxGui_Set_Bool, &setBool, length);
@@ -416,6 +420,10 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 		case amplifyPanel_amp:
 			if(length == sizeof(float))
 				filter->highpassAmp = *(float*)data;
+			break;
+		case trackedPanel_darkblobs:
+			if(length == sizeof(bool))
+				filter->bTrackDark = *(bool*)data;
 			break;
 		case trackedPanel_threshold:
 			if(length == sizeof(float))

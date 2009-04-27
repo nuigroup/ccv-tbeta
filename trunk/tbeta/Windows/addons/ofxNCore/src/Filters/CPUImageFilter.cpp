@@ -25,6 +25,7 @@ void CPUImageFilter::amplify ( CPUImageFilter& mom, float level ) {
 void CPUImageFilter::highpass ( float blur1, float blur2 ) {
 
 	//Blur Original Image
+	if(blur1 > 0)
 	cvSmooth( cvImage, cvImageTemp, CV_BLUR , (blur1 * 2) + 1);
 
 	//Original Image - Blur Image = Highpass Image

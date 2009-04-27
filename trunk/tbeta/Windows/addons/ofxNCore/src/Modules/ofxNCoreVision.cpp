@@ -140,6 +140,7 @@ void ofxNCoreVision::loadXMLSettings()
 	filter->bVerticalMirror		= XML.getValue("CONFIG:BOOLEAN:VMIRROR",0);
 	filter->bHorizontalMirror	= XML.getValue("CONFIG:BOOLEAN:HMIRROR",0);
 	//Filters
+	filter->bTrackDark			= XML.getValue("CONFIG:BOOLEAN:TRACKDARK", 0);
 	filter->bHighpass			= XML.getValue("CONFIG:BOOLEAN:HIGHPASS",1);
 	filter->bAmplify			= XML.getValue("CONFIG:BOOLEAN:AMPLIFY", 1);
 	filter->bSmooth				= XML.getValue("CONFIG:BOOLEAN:SMOOTH", 1);
@@ -184,6 +185,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:LEARNBG", filter->bLearnBakground);
 	XML.setValue("CONFIG:BOOLEAN:VMIRROR", filter->bVerticalMirror);
 	XML.setValue("CONFIG:BOOLEAN:HMIRROR", filter->bHorizontalMirror);
+	XML.setValue("CONFIG:BOOLEAN:TRACKDARK", filter->bTrackDark);
 	XML.setValue("CONFIG:BOOLEAN:HIGHPASS", filter->bHighpass);
 	XML.setValue("CONFIG:BOOLEAN:AMPLIFY", filter->bAmplify);
 	XML.setValue("CONFIG:BOOLEAN:SMOOTH", filter->bSmooth);

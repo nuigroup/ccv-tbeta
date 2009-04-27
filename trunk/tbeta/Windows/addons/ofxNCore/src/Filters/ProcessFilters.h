@@ -101,10 +101,17 @@ class ProcessFilters : public Filters {
             bLearnBakground = false;
         }
 
-        img.absDiff(grayBg, img); //Background Subtraction
-        //cvAbs(img.getCvImage(), grayBg.getCvImage(), img.getCvImage() );
+		//Background Subtraction
+        //img.absDiff(grayBg, img); 		
+		if(bTrackDark)
+			cvSub(grayBg.getCvImage(), img.getCvImage(), img.getCvImage());
+		else
+			cvSub(img.getCvImage(), grayBg.getCvImage(), img.getCvImage());
 
-        if(bSmooth){//Smooth
+		img.flagImageChanged();
+    
+		
+		if(bSmooth){//Smooth
             img.blur((smooth * 2) + 1); //needs to be an odd number
             if(!bMiniMode)
             subtractBg = img; //for drawing
