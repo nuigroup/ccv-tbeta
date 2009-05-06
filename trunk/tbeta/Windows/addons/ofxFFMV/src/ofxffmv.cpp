@@ -90,7 +90,8 @@ int ofxffmv::getDeviceCount()
 {
 	// Get number of PGRCameras
 	unsigned int uiPGRCameraCount;
-	return flycaptureBusCameraCount(&uiPGRCameraCount);
+	flycaptureBusCameraCount(&uiPGRCameraCount);
+	return uiPGRCameraCount;
 }
 int ofxffmv::getCamWidth()
 {
