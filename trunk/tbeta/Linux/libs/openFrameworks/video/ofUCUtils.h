@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
+//#include <avformat.h>
 
 struct AVPicture;
 
@@ -50,7 +51,7 @@ private:
 
 	AVPicture * 			src;
 	AVPicture * 			dst;
-	int 					src_pix_fmt;
+	int				src_pix_fmt;
 	int						d_width, d_height;
 	struct SwsContext *		toRGB_convert_ctx;
 

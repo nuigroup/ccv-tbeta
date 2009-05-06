@@ -16,8 +16,7 @@
 // to avoid the warnings
 extern "C"
 {
-#include <avformat.h>
-#include <swscale.h>
+#include <libswscale/swscale.h>
 #include <libavformat/avformat.h>
 }
 
@@ -229,7 +228,7 @@ void ofUCUtils::set_format(int w, int h) {
 		format = formats[selected_format];
 
 		src_pix_fmt=fourcc_to_pix_fmt(format.fourcc);
-		if( src_pix_fmt==-1){
+		if( (PixelFormat)src_pix_fmt==-1){
 			ofLog(OF_LOG_ERROR,"ofUCUtils : Format not suported\n");
 			return;
 		}
@@ -289,15 +288,15 @@ void ofUCUtils::set_format(int w, int h) {
 
 
 
-		if(src_pix_fmt!=PIX_FMT_RGB24 || !exactMatch){
+		if((PixelFormat)src_pix_fmt!=PIX_FMT_RGB24 || !exactMatch){
 			doConversion = true;
 			src=new AVPicture;
-			avpicture_alloc(src,src_pix_fmt,format.size.width,format.size.height);
+			avpicture_alloc(src, (PixelFormat)src_pix_fmt,format.size.width,format.size.height);
 			dst=new AVPicture;
 			avpicture_alloc(dst,PIX_FMT_RGB24,d_width,d_height);
 
 			toRGB_convert_ctx = sws_getContext(
-							format.size.width, format.size.height, src_pix_fmt,
+							format.size.width, format.size.height, (PixelFormat)src_pix_fmt,
 							d_width, d_height, PIX_FMT_RGB24,
 							VIDEOGRABBER_RESIZE_FLAGS, NULL, NULL, NULL);
 
@@ -385,7 +384,7 @@ void ofUCUtils::new_frame (unicap_data_buffer_t * buffer)
 		return;
 
 	if(doConversion){
-		avpicture_fill(src,buffer->data,src_pix_fmt,format.size.width,format.size.height);
+		avpicture_fill(src,buffer->data, (PixelFormat)src_pix_fmt,format.size.width,format.size.height);
 
 		if(sws_scale(toRGB_convert_ctx,
 			src->data, src->linesize, 0, buffer->format.size.height,
@@ -444,7 +443,7 @@ void ofUCUtils::close_unicap() {
 	unicap_stop_capture(handle);
 	bUCFrameNew=false;
 
-	if( src_pix_fmt != PIX_FMT_RGB24 ){
+	if( (PixelFormat)src_pix_fmt != PIX_FMT_RGB24 ){
 
 		if ( dst != NULL ){
 			avpicture_free(dst);

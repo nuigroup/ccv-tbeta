@@ -17,7 +17,7 @@ void testApp::update(){
 void testApp::draw(){
 
 	//draw blobs
-	std::map<int, Blob> blobs;
+/*	std::map<int, Blob> blobs;
 	std::map<int, Blob>::iterator iter;
     blobs = tbeta->getBlobs(); //get blobs from tracker
 	for(iter=blobs.begin(); iter!=blobs.end(); iter++)
@@ -31,6 +31,7 @@ void testApp::draw(){
 				    drawBlob.boundingRect.width * ofGetWidth(), 
 				    drawBlob.boundingRect.height * ofGetHeight());
 	}
+*/
 }
 
 //--------------------------------------------------------------
@@ -65,32 +66,14 @@ void testApp::mouseReleased(){
  *****************************************************************************/
 void testApp::TouchDown( Blob b)
 {
-	b.color = 0xFF0000;
-  //  ofSetColor(0xFF0000);
-   /* ofFill();
-	ofEllipse( (b.centroid.x - b.boundingRect.width/2) * ofGetWidth() , (b.centroid.y - b.boundingRect.height/2) * ofGetHeight(),
-		       b.boundingRect.width * ofGetWidth(), b.boundingRect.height * ofGetHeight());
-   */
 }
 
 void testApp::TouchUp( Blob b)
 {	
-	b.color = 0xFFFFFF;
-    //ofSetColor(0x0FFFFF);
-   /* ofFill();
-	ofEllipse( (b.centroid.x - b.boundingRect.width/2) * ofGetWidth() , (b.centroid.y - b.boundingRect.height/2) * ofGetHeight(),
-		       b.boundingRect.width * ofGetWidth(), b.boundingRect.height * ofGetHeight());
-   */
 }
 
 void testApp::TouchMoved( Blob b)
 {
-	b.color = 0xFFFF00;
-	//ofSetColor(0xFFFFFF);
-   /* ofFill();
-	ofEllipse( (b.centroid.x - b.boundingRect.width/2) * ofGetWidth() , (b.centroid.y - b.boundingRect.height/2) * ofGetHeight(),
-		       b.boundingRect.width * ofGetWidth(), b.boundingRect.height * ofGetHeight());
-   */
 }
 
 
