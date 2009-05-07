@@ -12,7 +12,7 @@ class ofxffmv
     public:
         ofxffmv();
 		~ofxffmv();
-        void initFFMV(int wid,int hei);
+        void initFFMV(int wid,int hei,int startX=0,int startY=0);
         void setDeviceID(int id);
         int getDeviceID();
         void grabFrame();

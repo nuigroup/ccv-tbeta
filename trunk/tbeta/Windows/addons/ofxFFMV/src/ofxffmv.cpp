@@ -16,8 +16,7 @@ void ofxffmv::listDevices()
     // cameras. The index of a given FlyCaptureInfoEx structure in the array
     // parInfo is the device number.
    flycaptureBusEnumerateCamerasEx( arInfo, &camNum );
-
-   for( unsigned int uiBusIndex = 0; uiBusIndex < camNum; uiBusIndex++ )
+	for( unsigned int uiBusIndex = 0; uiBusIndex < camNum; uiBusIndex++ )
    {
       FlyCaptureInfoEx* pinfo = &arInfo[ uiBusIndex ];
       printf(
@@ -36,7 +35,7 @@ int ofxffmv::getDeviceID()
 {
     return fcCameraID;
 }
-void ofxffmv::initFFMV(int wid,int hei)
+void ofxffmv::initFFMV(int wid,int hei,int startX,int startY)
 {
     for(int i=0;i<camNum;i++)
     {
@@ -66,9 +65,9 @@ void ofxffmv::initFFMV(int wid,int hei)
 	// point, images will be constantly grabbed by the camera and stored
 	// in the buffers on the PC.
 	if(wid==640)
-	flycaptureStartCustomImage(context[i],0,0,0,640,480,100,FLYCAPTURE_MONO8);
+	flycaptureStartCustomImage(context[i],0,startX,startY,640,480,100,FLYCAPTURE_MONO8);
 	else if(wid==320)
-	flycaptureStartCustomImage(context[i],1,0,0,320,240,100,FLYCAPTURE_MONO8);
+	flycaptureStartCustomImage(context[i],1,startX,startY,320,240,100,FLYCAPTURE_MONO8);
 	flycaptureGrabImage2( context[i], &fcImage[i] );
 	//camWidth=fcImage.iCols;
 	//camHeight=fcImage.iRows;
