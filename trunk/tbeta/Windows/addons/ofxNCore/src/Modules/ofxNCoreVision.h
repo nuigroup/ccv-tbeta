@@ -138,6 +138,7 @@ public:
 		bGPUMode = 0;
 		bTUIOMode = 0;
 		showConfiguration = 0;
+		printfToFile = 0;
 		//camera
 		camRate = 30;
 		camWidth = 320;
@@ -243,6 +244,8 @@ public:
 	float				backgroundLearnRate;
 
 	bool				showConfiguration;
+	
+	bool				printfToFile;
 
 	bool				bcamera;
 	bool  				bMiniMode;

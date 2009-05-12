@@ -14,9 +14,15 @@
 * The setup function is run once to perform initializations in the application
 *****************************************************************************/
 void ofxNCoreVision::_setup(ofEventArgs &e)
-{
+{	
 	//set the title
 	ofSetWindowTitle(" Community Core Vision ");
+	
+	//create filter
+	if ( filter == NULL ){filter = new ProcessFilters();}
+	
+	//Load Settings from config.xml file
+	loadXMLSettings();
 
     //removes the 'x' button on windows which causes a crash due to a GLUT bug
 	#ifdef TARGET_WIN32
@@ -26,30 +32,34 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 		RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
 	#endif
 
-	/*****************************************************************************************************
-	* LOGGING
-	******************************************************************************************************/
-    /* alright first we need to get time and date so our logs can be ordered */
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-    strftime (fileName,80,"../logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
-    FILE *stream ;
-	sprintf(fileName, ofToDataPath(fileName).c_str());
-    if((stream = freopen(fileName, "w", stdout)) == NULL){}
-	/******************************************************************************************************/
+	
+	if(printfToFile) {
+		/*****************************************************************************************************
+		* LOGGING
+		******************************************************************************************************/
+		/* alright first we need to get time and date so our logs can be ordered */
+		time ( &rawtime );
+		timeinfo = localtime ( &rawtime );
+		strftime (fileName,80,"../logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
+		FILE *stream ;
+		sprintf(fileName, ofToDataPath(fileName).c_str());
+		if((stream = freopen(fileName, "w", stdout)) == NULL){}
+		/******************************************************************************************************/
+	}
+	
+	printf("printfToFile %i!\n", printfToFile);
 
-	//create filter
-	if ( filter == NULL ){filter = new ProcessFilters();}
-
-	//Load Settings from config.xml file
-	loadXMLSettings();
+	
 
 	//Setup Window Properties
 	ofSetWindowShape(winWidth,winHeight);
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance?
+	
+	printf("freedom?");
 
 	//load camera/video
 	initDevice();
+	printf("freedom2?");
 
 	//set framerate
 	ofSetFrameRate(camRate * 1.3);			//This will be based on camera fps in the future
@@ -70,9 +80,12 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Static Images
 	background.loadImage("images/background.jpg"); //Main (Temp?) Background
 
+	printf("freedom3?");
 	//GUI Controls
 	controls = ofxGui::Instance(this);
 	setupControls();
+	
+	printf("freedom4?");
 
 	//Setup Calibration
 	calib.setup(camWidth, camHeight, &tracker);
@@ -140,6 +153,10 @@ void ofxNCoreVision::loadXMLSettings()
 	filter->bLearnBakground		= XML.getValue("CONFIG:BOOLEAN:LEARNBG",0);
 	filter->bVerticalMirror		= XML.getValue("CONFIG:BOOLEAN:VMIRROR",0);
 	filter->bHorizontalMirror	= XML.getValue("CONFIG:BOOLEAN:HMIRROR",0);
+	
+	//Logging
+	printfToFile				= XML.getValue("CONFIG:BOOLEAN:PRINTFTOFILE",0);
+	
 	//Filters
 	filter->bTrackDark			= XML.getValue("CONFIG:BOOLEAN:TRACKDARK", 0);
 	filter->bHighpass			= XML.getValue("CONFIG:BOOLEAN:HIGHPASS",1);
@@ -186,6 +203,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:LEARNBG", filter->bLearnBakground);
 	XML.setValue("CONFIG:BOOLEAN:VMIRROR", filter->bVerticalMirror);
 	XML.setValue("CONFIG:BOOLEAN:HMIRROR", filter->bHorizontalMirror);
+	XML.setValue("CONFIG:BOOLEAN:PRINTFTOFILE", printfToFile);
 	XML.setValue("CONFIG:BOOLEAN:TRACKDARK", filter->bTrackDark);
 	XML.setValue("CONFIG:BOOLEAN:HIGHPASS", filter->bHighpass);
 	XML.setValue("CONFIG:BOOLEAN:AMPLIFY", filter->bAmplify);
@@ -218,7 +236,7 @@ void ofxNCoreVision::saveSettings()
 void ofxNCoreVision::initDevice(){
 
 	//save/update log file
-	if((stream = freopen(fileName, "a", stdout)) == NULL){}
+	if(printfToFile) if((stream = freopen(fileName, "a", stdout)) == NULL){}
 
 	//Pick the Source - camera or video
 	if (bcamera)
@@ -295,7 +313,8 @@ void ofxNCoreVision::initDevice(){
 void ofxNCoreVision::_update(ofEventArgs &e)
 {
 	//save/update log file
-	if((stream = freopen(fileName, "a", stdout)) == NULL){}
+	if(printfToFile) if((stream = freopen(fileName, "a", stdout)) == NULL){}
+
 
 	if(exited) return;
 
