@@ -582,7 +582,7 @@ void ofxNCoreVision::drawFullMode(){
 	if (bcamera)
 	{
 		string str2 = "Camera [Res]:     ";
-        str2+= ofToString(camWidth, 0) + " x " + ofToString(camWidth, 0)  + "\n";
+        str2+= ofToString(camWidth, 0) + " x " + ofToString(camHeight, 0)  + "\n";
 		string str4 = "Camera [fps]:     ";
 		str4+= ofToString(fps, 0)+"\n";
 		ofSetColor(0xFFFFFF);
