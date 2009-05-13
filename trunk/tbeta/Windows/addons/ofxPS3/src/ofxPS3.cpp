@@ -62,8 +62,8 @@ void ofxPS3::initPS3(int width,int height, int framerate)
 	pCam->StartCapture();
 	pCam->AutoAGC(false);
 	pCam->AutoAEC(false);
-	pCam->SetExposure(511);
-	pCam->SetGain(0);
+	//pCam->SetExposure(511);
+	//pCam->SetGain(0);
 }
 
 int ofxPS3::getDeviceCount()
