@@ -217,7 +217,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 					
 					//calculate the accelleration
 					ofPoint tD = trackedBlobs[i].D;
-					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)/(ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked);
+					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)/(ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked));
 					
 					trackedBlobs[i].lastTimeTimeWasChecked = ofGetElapsedTimef();
 
