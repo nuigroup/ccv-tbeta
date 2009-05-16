@@ -28,6 +28,7 @@ class Blob {
 		float				age;     //how long the blob has been at war
 		float				sitting; //how long hes been sitting in the same place
 		float				downTime;
+		float				lastTimeTimeWasChecked;
 	    ofRectangle         boundingRect;
 		ofRectangle         angleBoundingRect;
 		ofPoint             centroid, lastCentroid, D;
@@ -45,6 +46,9 @@ class Blob {
 			age			= 0.0f;
 			sitting		= 0.0f;
 			color		= 0xFFFFFF;
+			
+			//freakishly long variable name (ala Apple)
+			lastTimeTimeWasChecked = ofGetElapsedTimef(); //get current time as of creation
         }
 
         //----------------------------------------

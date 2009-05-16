@@ -87,6 +87,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 					newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 					newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
 					newBlobs->blobs[winner].color = trackedBlobs[i].color;
+					newBlobs->blobs[winner].lastTimeTimeWasChecked = trackedBlobs[i].lastTimeTimeWasChecked;
 
 					trackedBlobs[i] = newBlobs->blobs[winner];
 				}
@@ -110,6 +111,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 						newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
 						newBlobs->blobs[winner].color = trackedBlobs[i].color;
+						newBlobs->blobs[winner].lastTimeTimeWasChecked = trackedBlobs[i].lastTimeTimeWasChecked;
 
 //TODO--------------------------------------------------------------------------
 						//now the old winning blob has lost the win.
@@ -165,6 +167,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 				newBlobs->blobs[winner].sitting = trackedBlobs[i].sitting;
 				newBlobs->blobs[winner].downTime = trackedBlobs[i].downTime;
 				newBlobs->blobs[winner].color = trackedBlobs[i].color;
+				newBlobs->blobs[winner].lastTimeTimeWasChecked = trackedBlobs[i].lastTimeTimeWasChecked;
 			}
 		}
 	}
@@ -194,11 +197,29 @@ void BlobTracker::track(ContourFinder* newBlobs)
 					trackedBlobs[i].lastCentroid = tempLastCentroid;
 
 					//get the Differences in position
-					trackedBlobs[i].D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
+					trackedBlobs[i].D.set((trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x) / (ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked), 
+										  (trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y) / (ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked));
 
+					//printf("D(%f, %f)\n", trackedBlobs[i].D.x, trackedBlobs[i].D.y);
+					
+					//if( abs((int)trackedBlobs[i].D.x) > 1 || abs((int)trackedBlobs[i].D.y) > 1) {
+//						printf("\nUNUSUAL BLOB @ %f\n-----------------------\ntrackedBlobs[%i]\nD = (%f, %f)\nXY= (%f, %f)\nlastTimeTimeWasChecked = %f\nsitting = %f\n",
+//							   ofGetElapsedTimef(),
+//							   i,
+//							   trackedBlobs[i].D.x,  trackedBlobs[i].D.y,
+//							   trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y,
+//							   trackedBlobs[i].lastTimeTimeWasChecked,
+//							   trackedBlobs[i].downTime,
+//							   trackedBlobs[i].sitting
+//						);
+//					}
+					
+					
 					//calculate the accelleration
 					ofPoint tD = trackedBlobs[i].D;
-					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y));
+					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)/(ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked);
+					
+					trackedBlobs[i].lastTimeTimeWasChecked = ofGetElapsedTimef();
 
 					//calculate the age
 					trackedBlobs[i].age = ofGetElapsedTimef() - trackedBlobs[i].downTime;
@@ -240,11 +261,17 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.lastCentroid.y);
 						
 						//Calibrated dx/dy
-						TouchEvents.messenger.D.set(TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y);
+						TouchEvents.messenger.D.set((TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x) / (ofGetElapsedTimef() - TouchEvents.messenger.lastTimeTimeWasChecked), 
+													(TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y) / (ofGetElapsedTimef() - TouchEvents.messenger.lastTimeTimeWasChecked));
+						
+						TouchEvents.messenger.lastTimeTimeWasChecked = ofGetElapsedTimef();
+						
+						
+
 						
 						//calibrated accelleration
 						ofPoint tD2 = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y));						
+						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y)/(ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked));						
 						
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
@@ -255,6 +282,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						TouchEvents.notifyTouchHeld(NULL);
 
 					} else {
+						
 						//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
 						//SEND BLOB MOVED EVENT
@@ -271,11 +299,20 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.lastCentroid.y);
 						
 						//Calibrated dx/dy
-						TouchEvents.messenger.D.set(TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y);
+						TouchEvents.messenger.D.set((TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x) / (ofGetElapsedTimef() - TouchEvents.messenger.lastTimeTimeWasChecked), 
+													(TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y) / (ofGetElapsedTimef() - TouchEvents.messenger.lastTimeTimeWasChecked));
+	
 						
+						TouchEvents.messenger.lastTimeTimeWasChecked = ofGetElapsedTimef();
+						
+						
+						//printf("d(%0.4f, %0.4f)\n", TouchEvents.messenger.D.x, TouchEvents.messenger.D.y);
+
+						
+												
 						//calibrated accelleration
 						ofPoint tD2 = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y));						
+						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y)/(ofGetElapsedTimef() - trackedBlobs[i].lastTimeTimeWasChecked));						
 						
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
@@ -296,6 +333,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 			//add new track
 			newBlobs->blobs[i].id=IDCounter++;
 			newBlobs->blobs[i].downTime = ofGetElapsedTimef();
+			//newBlobs->blobs[i].lastTimeTimeWasChecked = ofGetElapsedTimef();
 
 			//random color for blob. Could be useful?
 			int r = ofRandom(0, 255);
