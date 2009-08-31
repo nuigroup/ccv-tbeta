@@ -48,7 +48,7 @@ class Blob {
 			color		= 0xFFFFFF;
 			
 			//freakishly long variable name (ala Apple)
-			lastTimeTimeWasChecked = ofGetElapsedTimef(); //get current time as of creation
+			lastTimeTimeWasChecked = ofGetElapsedTimeMillis(); //get current time as of creation
         }
 
         //----------------------------------------
