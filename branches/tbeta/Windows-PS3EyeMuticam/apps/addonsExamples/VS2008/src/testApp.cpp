@@ -4,7 +4,7 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
-	tbeta = new ofxNCoreVision;
+	ccv = new ofxNCoreVision;
 }
 
 
@@ -16,10 +16,11 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 
-	//draw blobs
-/*	std::map<int, Blob> blobs;
+//draw blobs
+/*
+	std::map<int, Blob> blobs;
 	std::map<int, Blob>::iterator iter;
-    blobs = tbeta->getBlobs(); //get blobs from tracker
+    blobs = ccv->getBlobs(); //get blobs from tracker
 	for(iter=blobs.begin(); iter!=blobs.end(); iter++)
 	{
 		Blob drawBlob;
@@ -31,7 +32,7 @@ void testApp::draw(){
 				    drawBlob.boundingRect.width * ofGetWidth(), 
 				    drawBlob.boundingRect.height * ofGetHeight());
 	}
-*/
+*/	
 }
 
 //--------------------------------------------------------------

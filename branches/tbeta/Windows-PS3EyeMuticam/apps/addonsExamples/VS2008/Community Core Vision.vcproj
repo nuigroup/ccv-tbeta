@@ -1044,6 +1044,22 @@
 				</Filter>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="res"
+			>
+			<File
+				RelativePath=".\Community Core Vision.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\icon1.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

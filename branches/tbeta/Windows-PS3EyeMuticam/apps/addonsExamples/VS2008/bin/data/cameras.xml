@@ -49,7 +49,7 @@
 </section>
 <section name="stitching">
     <subsection name="cameras">
-        <item name="position" value="0" />
-        <item name="overlap" value="0" />
+        <item name="position" value="1" />
+        <item name="overlap" value="27" />
     </subsection>
 </section>

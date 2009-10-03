@@ -34,7 +34,7 @@
     <OBJECT>
         <ID>0</ID>
         <TYPE>PANEL</TYPE>
-        <NAME>Source Properties</NAME>
+        <NAME>Camera Properties</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>10.000000</TOP>
         <WIDTH>165.000000</WIDTH>
@@ -117,8 +117,8 @@
         <NAME>Communication</NAME>
         <LEFT>735.000000</LEFT>
         <TOP>167.000000</TOP>
-        <WIDTH>235.000000</WIDTH>
-        <HEIGHT>82.000000</HEIGHT>
+        <WIDTH>157.000000</WIDTH>
+        <HEIGHT>62.000000</HEIGHT>
         <MODE>0</MODE>
         <DISPLAY>2</DISPLAY>
         <STEPS>0</STEPS>
@@ -127,7 +127,7 @@
         <OBJECT>
             <ID>8</ID>
             <TYPE>BUTTON</TYPE>
-            <NAME>Send TUIO OSC (t)</NAME>
+            <NAME>Send TUIO UDP (t)</NAME>
             <LEFT>10.000000</LEFT>
             <TOP>32.000000</TOP>
             <WIDTH>10.000000</WIDTH>
@@ -140,22 +140,9 @@
         <OBJECT>
             <ID>9</ID>
             <TYPE>BUTTON</TYPE>
-            <NAME>Send TUIO TCP | For Flash (f)</NAME>
+            <NAME>Send Flash XML (f)</NAME>
             <LEFT>10.000000</LEFT>
             <TOP>52.000000</TOP>
-            <WIDTH>10.000000</WIDTH>
-            <HEIGHT>10.000000</HEIGHT>
-            <MODE>2</MODE>
-            <DISPLAY>2</DISPLAY>
-            <STEPS>0</STEPS>
-            <VALUE>0</VALUE>
-        </OBJECT>
-        <OBJECT>
-            <ID>10</ID>
-            <TYPE>BUTTON</TYPE>
-            <NAME>Send Height &amp; Width </NAME>
-            <LEFT>10.000000</LEFT>
-            <TOP>72.000000</TOP>
             <WIDTH>10.000000</WIDTH>
             <HEIGHT>10.000000</HEIGHT>
             <MODE>2</MODE>
@@ -192,7 +179,7 @@
         </OBJECT>
     </OBJECT>
     <OBJECT>
-        <ID>41</ID>
+        <ID>42</ID>
         <TYPE>PANEL</TYPE>
         <NAME>Files</NAME>
         <LEFT>735.000000</LEFT>
@@ -205,7 +192,7 @@
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
-            <ID>42</ID>
+            <ID>43</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Save Settings (s)</NAME>
             <LEFT>10.000000</LEFT>
@@ -232,23 +219,10 @@
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
-            <ID>39</ID>
+            <ID>34</ID>
             <TYPE>BUTTON</TYPE>
-            <NAME>Show Outlines (o)</NAME>
+            <NAME>Inverse</NAME>
             <LEFT>120.000000</LEFT>
-            <TOP>11.000000</TOP>
-            <WIDTH>10.000000</WIDTH>
-            <HEIGHT>10.000000</HEIGHT>
-            <MODE>2</MODE>
-            <DISPLAY>2</DISPLAY>
-            <STEPS>0</STEPS>
-            <VALUE>1</VALUE>
-        </OBJECT>
-        <OBJECT>
-            <ID>40</ID>
-            <TYPE>BUTTON</TYPE>
-            <NAME>Show IDs (i)</NAME>
-            <LEFT>235.000000</LEFT>
             <TOP>11.000000</TOP>
             <WIDTH>10.000000</WIDTH>
             <HEIGHT>10.000000</HEIGHT>
@@ -258,9 +232,9 @@
             <VALUE>0</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>35</ID>
+            <ID>36</ID>
             <TYPE>SLIDER</TYPE>
-            <NAME>Image Threshold (a/z)</NAME>
+            <NAME>Image Threshold</NAME>
             <LEFT>10.000000</LEFT>
             <TOP>32.000000</TOP>
             <WIDTH>140.000000</WIDTH>
@@ -270,10 +244,10 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>255.000000</MAX>
-            <VALUE>9.000000</VALUE>
+            <VALUE>18.000000</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>36</ID>
+            <ID>37</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Movement Threshold</NAME>
             <LEFT>165.000000</LEFT>
@@ -285,10 +259,10 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>15.000000</MAX>
-            <VALUE>3.107143</VALUE>
+            <VALUE>2.000000</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>37</ID>
+            <ID>38</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Min Blob Size</NAME>
             <LEFT>10.000000</LEFT>
@@ -300,10 +274,10 @@
             <STEPS>0</STEPS>
             <MIN>1.000000</MIN>
             <MAX>500.000000</MAX>
-            <VALUE>8.128572</VALUE>
+            <VALUE>61.000000</VALUE>
         </OBJECT>
         <OBJECT>
-            <ID>38</ID>
+            <ID>39</ID>
             <TYPE>SLIDER</TYPE>
             <NAME>Max Blob Size</NAME>
             <LEFT>165.000000</LEFT>
@@ -315,7 +289,7 @@
             <STEPS>0</STEPS>
             <MIN>1.000000</MIN>
             <MAX>1000.000000</MAX>
-            <VALUE>1000.000000</VALUE>
+            <VALUE>157.000000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -332,11 +306,37 @@
         <BORDER>10</BORDER>
         <SPACING>10</SPACING>
         <OBJECT>
+            <ID>40</ID>
+            <TYPE>BUTTON</TYPE>
+            <NAME>Show Outlines (o)</NAME>
+            <LEFT>110.000000</LEFT>
+            <TOP>11.000000</TOP>
+            <WIDTH>10.000000</WIDTH>
+            <HEIGHT>10.000000</HEIGHT>
+            <MODE>2</MODE>
+            <DISPLAY>2</DISPLAY>
+            <STEPS>0</STEPS>
+            <VALUE>1</VALUE>
+        </OBJECT>
+        <OBJECT>
+            <ID>41</ID>
+            <TYPE>BUTTON</TYPE>
+            <NAME>Show IDs (i)</NAME>
+            <LEFT>230.000000</LEFT>
+            <TOP>11.000000</TOP>
+            <WIDTH>10.000000</WIDTH>
+            <HEIGHT>10.000000</HEIGHT>
+            <MODE>2</MODE>
+            <DISPLAY>2</DISPLAY>
+            <STEPS>0</STEPS>
+            <VALUE>1</VALUE>
+        </OBJECT>
+        <OBJECT>
             <ID>15</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Use Camera</NAME>
             <LEFT>10.000000</LEFT>
-            <TOP>32.000000</TOP>
+            <TOP>42.000000</TOP>
             <WIDTH>10.000000</WIDTH>
             <HEIGHT>10.000000</HEIGHT>
             <MODE>2</MODE>
@@ -348,8 +348,8 @@
             <ID>17</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Previous Camera</NAME>
-            <LEFT>100.000000</LEFT>
-            <TOP>32.000000</TOP>
+            <LEFT>110.000000</LEFT>
+            <TOP>42.000000</TOP>
             <WIDTH>10.000000</WIDTH>
             <HEIGHT>10.000000</HEIGHT>
             <MODE>3</MODE>
@@ -361,8 +361,8 @@
             <ID>16</ID>
             <TYPE>BUTTON</TYPE>
             <NAME>Next Camera</NAME>
-            <LEFT>214.000000</LEFT>
-            <TOP>32.000000</TOP>
+            <LEFT>230.000000</LEFT>
+            <TOP>42.000000</TOP>
             <WIDTH>10.000000</WIDTH>
             <HEIGHT>10.000000</HEIGHT>
             <MODE>3</MODE>
@@ -375,7 +375,7 @@
             <TYPE>BUTTON</TYPE>
             <NAME>Use Video</NAME>
             <LEFT>10.000000</LEFT>
-            <TOP>55.000000</TOP>
+            <TOP>65.000000</TOP>
             <WIDTH>10.000000</WIDTH>
             <HEIGHT>10.000000</HEIGHT>
             <MODE>2</MODE>
@@ -436,7 +436,7 @@
             <STEPS>0</STEPS>
             <MIN>1.000000</MIN>
             <MAX>500.000000</MAX>
-            <VALUE>150.700012</VALUE>
+            <VALUE>118.945450</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -478,7 +478,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>15.000000</MAX>
-            <VALUE>4.000000</VALUE>
+            <VALUE>0.000000</VALUE>
         </OBJECT>
     </OBJECT>
     <OBJECT>
@@ -520,7 +520,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>200.000000</MAX>
-            <VALUE>16.000000</VALUE>
+            <VALUE>58.000000</VALUE>
         </OBJECT>
         <OBJECT>
             <ID>32</ID>
@@ -577,7 +577,7 @@
             <STEPS>0</STEPS>
             <MIN>0.000000</MIN>
             <MAX>300.000000</MAX>
-            <VALUE>40.909092</VALUE>
+            <VALUE>35.000000</VALUE>
         </OBJECT>
     </OBJECT>
 </UI>
