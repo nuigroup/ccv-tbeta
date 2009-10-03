@@ -18,8 +18,10 @@
 class ofPoint;
 class ofBaseApp;
 
-class ofAppGlutWindow : public ofAppBaseWindow {
-
+class ofAppGlutWindow : public ofAppBaseWindow 
+{
+	// AlexP
+	int wndId;	// used to store window id (for clean opengl exit)
 public:
 
 	ofAppGlutWindow();
@@ -35,8 +37,6 @@ public:
 	void setFullscreen(bool fullScreen);
 	void toggleFullscreen();
 	
-	static void exitApp();
-
 	void setWindowTitle(string title);
 	void setWindowPosition(int x, int y);
 	void setWindowShape(int w, int h);
@@ -64,9 +64,5 @@ public:
 	static void special_key_cb(int key, int x, int y) ;
 	static void special_key_up_cb(int key, int x, int y) ;
 	static void resize_cb(int w, int h);
-
-
-	
-	 
 };
 

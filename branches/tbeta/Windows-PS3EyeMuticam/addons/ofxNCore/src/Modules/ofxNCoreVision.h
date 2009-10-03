@@ -96,7 +96,6 @@ class ofxNCoreVision : public ofxGuiListener//, public BlobManager
 	};
 
 public:
-
 	ofxNCoreVision()
 	{
 		ofAddListener(ofEvents.mousePressed, this, &ofxNCoreVision::_mousePressed);
@@ -108,8 +107,6 @@ public:
 		ofAddListener(ofEvents.update, this, &ofxNCoreVision::_update);
 		ofAddListener(ofEvents.draw, this, &ofxNCoreVision::_draw);
 		ofAddListener(ofEvents.exit, this, &ofxNCoreVision::_exit);
-
-		exited=false;
 
 		#ifdef TARGET_WIN32
             PS3  = NULL;
@@ -258,9 +255,6 @@ public:
 
 	//auto ~ standalone/non-addon
 	bool                bStandaloneMode;
-
-	//exit
-	bool				exited;
 
 	/****************************************************
 	 *End config.xml variables

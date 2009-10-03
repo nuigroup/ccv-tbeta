@@ -2,9 +2,9 @@
 #include "stdio.h"
 #include "ofUtils.h"
 //--------------------------------------------------------------
-void testApp::setup(){
-
-	tbeta = new ofxNCoreVision();
+void testApp::setup()
+{
+	tbeta = new ofxNCoreVision;
 }
 
 

@@ -24,14 +24,6 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	//Load Settings from config.xml file
 	loadXMLSettings();
 
-    //removes the 'x' button on windows which causes a crash due to a GLUT bug
-	#ifdef TARGET_WIN32
-		//Get rid of 'x' button
-		HWND hwndConsole = FindWindowA(NULL, " Community Core Vision ");
-		HMENU hMnu = ::GetSystemMenu(hwndConsole, FALSE);
-		RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
-	#endif
-
 	//Setup Window Properties
 	ofSetWindowShape(winWidth,winHeight);
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance?
@@ -294,8 +286,6 @@ void ofxNCoreVision::initDevice()
 *****************************************************************************/
 void ofxNCoreVision::_update(ofEventArgs &e)
 {
-	if(exited) return;
-
 	bNewFrame = false;
 
 	if(bcamera) //if camera
@@ -495,8 +485,6 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 *****************************************************************************/
 void ofxNCoreVision::_draw(ofEventArgs &e)
 {
-	if(exited) return;
-
 	if (showConfiguration) 
 	{
 		//if calibration
@@ -674,12 +662,6 @@ void ofxNCoreVision::drawFingerOutlines()
 *****************************************************************************/
 void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 {
-	// detect escape key
-	if(e.key==0x1b)
-	{
-		exited=true;
-	}
-
 	if (showConfiguration)
 	{
 		switch (e.key)
