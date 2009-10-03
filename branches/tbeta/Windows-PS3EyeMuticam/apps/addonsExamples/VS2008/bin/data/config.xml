@@ -7,11 +7,11 @@
     ///////////////////////////////////////////// -->
     <!--// CAMERA SETTINGS // -->
     <CAMERA_0>
-        <USECAMERA>0</USECAMERA>
+        <USECAMERA>1</USECAMERA>
         <DEVICE>0</DEVICE>
-        <WIDTH>320</WIDTH>
+        <WIDTH>640</WIDTH>
         <HEIGHT>240</HEIGHT>
-        <FRAMERATE>120</FRAMERATE>
+        <FRAMERATE>30</FRAMERATE>
     </CAMERA_0>
     <!--// NETWORK COMMUNICATION SETTINGS //-->
     <NETWORK>
@@ -42,14 +42,13 @@
         <HEIGHT>600</HEIGHT>
     </WINDOW>
     <BOOLEAN>
-        <PRESSURE>193</PRESSURE>
+        <PRESSURE>0</PRESSURE>
         <LABELS>1</LABELS>
         <OUTLINES>1</OUTLINES>
         <LEARNBG>0</LEARNBG>
         <TUIO>0</TUIO>
         <VMIRROR>0</VMIRROR>
         <HMIRROR>0</HMIRROR>
-        <PRINTFTOFILE>0</PRINTFTOFILE>
         <HIGHPASS>1</HIGHPASS>
         <AMPLIFY>1</AMPLIFY>
         <SMOOTH>0</SMOOTH>
@@ -67,7 +66,7 @@
         <MINBLOBSIZE>11</MINBLOBSIZE>
         <MAXBLOBSIZE>157</MAXBLOBSIZE>
         <!--// FILTERS SETTERS //-->
-        <THRESHOLD>42</THRESHOLD>
+        <THRESHOLD>134</THRESHOLD>
         <HIGHPASSBLUR>10</HIGHPASSBLUR>
         <HIGHPASSNOISE>6</HIGHPASSNOISE>
         <HIGHPASSAMP>136</HIGHPASSAMP>

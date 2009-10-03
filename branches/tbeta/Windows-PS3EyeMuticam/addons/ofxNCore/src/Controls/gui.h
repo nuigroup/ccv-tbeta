@@ -337,8 +337,10 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			{
 				if(*(bool*)data && bcamera)
 				{
-					if(vidGrabber != NULL)
-					vidGrabber->videoSettings();
+					if(PS3)
+						PS3->showSettings();
+					else if(vidGrabber)
+						vidGrabber->videoSettings();
 				}
 			}
 			break;

@@ -15,6 +15,7 @@
 #include <map>
 #include <string>
 
+#pragma warning(disable : 4244)	// 'conversion' conversion from 'type1' to 'type2' possible loss of data
 
 class FilterParameter{
 public:

@@ -12,6 +12,8 @@
 #include "tinyxml.h"
 #include "ofUtils.h"
 
+#pragma warning(disable : 4244)	// 'conversion' conversion from 'type1' to 'type2' possible loss of data
+
 //helper functon, should go somewhere else
 void getFrameBufferForTexture(GLuint* fbo, GLuint* tex, int sizeX, int sizeY){
     GLenum status;
@@ -42,10 +44,6 @@ void getFrameBufferForTexture(GLuint* fbo, GLuint* tex, int sizeX, int sizeY){
     status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
     printf("Frame buffer status: %d\n", status);
 }
-
-
-
-
 
 
 GPUImageFilter::GPUImageFilter(const char* fname, int sx, int sy){

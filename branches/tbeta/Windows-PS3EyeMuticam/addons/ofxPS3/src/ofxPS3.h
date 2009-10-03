@@ -1,32 +1,24 @@
 #ifndef OFXPS3_H
 #define OFXPS3_H
 
-#include "IPS3EyeLib.h"
+#include "PS3EyeMulticam.h"
 
 class ofxPS3
 {
-    public:
-        ofxPS3();
-		~ofxPS3();
-        void initPS3(int width,int height, int framerate);
-        void setDeviceID(int id);
-        int getDeviceID();
-        int getCamWidth();
-        int getCamHeight();
-        void listDevices();
-        static int getDeviceCount();
-		bool isFrameNew();
-		PBYTE getPixels();
-
-		IPS3EyeLib	*pCam;
-		PBYTE		pBuffer;
-
-    private:
-        // This acts as a handle to the camera.
-		int fcCameraID;
-        int camWidth;
-        int camHeight;
-        // Enumerate the cameras on the bus.
-        static unsigned int	camNum;
+	// Enumerate the cameras on the bus.
+	static unsigned int	camNum;
+	int camWidth, camHeight;
+	PBYTE pBuffer;
+public:
+	ofxPS3();
+	~ofxPS3();
+	void initPS3(int width,int height, int framerate);
+	int getCamWidth();
+	int getCamHeight();
+	void listDevices();
+	static int getDeviceCount();
+	void showSettings();
+	bool isFrameNew();
+	PBYTE getPixels();
 };
 #endif // OFXPS3_H_
