@@ -555,7 +555,7 @@ void ofxNCoreVision::drawFullMode()
 	ofFill();
 	ofRect(721, 586, 228, 14);
 	ofSetColor(0xFFFFFF);
-	ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", 725, 596);
+	ofDrawBitmapString("  ccv.nuigroup.com    v1.3 ", 725, 596);
 
 	//Display Application information in bottom right
 	string str = "Calc. Time [ms]:  ";

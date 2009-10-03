@@ -28,7 +28,7 @@ bool ofxPS3::isFrameNew()
 void ofxPS3::initPS3(int width,int height, int framerate)
 {
 	printf("selecting format...\n");
-	PS3EyeMulticamOpen(camNum, width==640?VGA:QVGA, framerate);
+	PS3EyeMulticamOpen(camNum, height==480?VGA:QVGA, framerate);
 	PS3EyeMulticamLoadSettings(".\\data\\multicam.xml");
 	// get stitched image width
 	PS3EyeMulticamGetFrameDimensions(camWidth, camHeight);

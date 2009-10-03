@@ -64,7 +64,8 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 	windowMode = screenMode;
 	bNewScreenMode = true;
 
-	if (windowMode != OF_GAME_MODE){
+	if (windowMode != OF_GAME_MODE)
+	{
 		glutInitWindowSize(w, h);
 		glutCreateWindow("");
 
@@ -83,7 +84,9 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 
 		requestedWidth  = glutGet(GLUT_WINDOW_WIDTH);
 		requestedHeight = glutGet(GLUT_WINDOW_HEIGHT);
-	} else {
+	} 
+	else 
+	{
 		glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
     	// w x h, 32bit pixel depth, 60Hz refresh rate
 		char gameStr[64];
@@ -91,7 +94,8 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 
     	glutGameModeString(gameStr);
 
-    	if (!glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)){
+    	if (!glutGameModeGet(GLUT_GAME_MODE_POSSIBLE))
+		{
     		ofLog(OF_LOG_ERROR,"game mode error: selected format (%s) not available \n", gameStr);
     	}
     	// start fullscreen game mode
@@ -100,9 +104,8 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::initializeWindow(){
-
-
+void ofAppGlutWindow::initializeWindow()
+{
 	 //----------------------
 	 // setup the callbacks
 
@@ -118,7 +121,6 @@ void ofAppGlutWindow::initializeWindow(){
 	 glutSpecialUpFunc(special_key_up_cb);
 
 	 glutReshapeFunc(resize_cb);
-
 }
 
 //------------------------------------------------------------
