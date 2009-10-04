@@ -10,7 +10,7 @@ ofxPS3::ofxPS3()
 
 void ofxPS3::listDevices()
 {
-	// Enumerate the cameras on the bus.
+	// Enumerate the cameras on the USB bus
 	camNum = PS3EyeMulticamGetCameraCount();
  	printf("\nFound %d PS3Eye camera(s)...\n", camNum);
 }
@@ -27,9 +27,8 @@ bool ofxPS3::isFrameNew()
 
 void ofxPS3::initPS3(int width,int height, int framerate)
 {
-	printf("selecting format...\n");
 	PS3EyeMulticamOpen(camNum, height==480?VGA:QVGA, framerate);
-	PS3EyeMulticamLoadSettings(".\\data\\multicam.xml");
+	PS3EyeMulticamLoadSettings(".\\data\\cameras.xml");
 	// get stitched image width
 	PS3EyeMulticamGetFrameDimensions(camWidth, camHeight);
 	// Allocate image buffer for grayscale image
@@ -64,7 +63,9 @@ ofxPS3::~ofxPS3()
 	// Stop capturing
 	PS3EyeMulticamStop();
 	Sleep(50);
-	PS3EyeMulticamSaveSettings(".\\data\\multicam.xml");
+	PS3EyeMulticamSaveSettings(".\\data\\cameras.xml");
 	PS3EyeMulticamClose();
 	delete [] pBuffer;
+	// this delete the temp settings.xml which is saved to data/cameras.xml
+	remove("settings.xml");
 }
