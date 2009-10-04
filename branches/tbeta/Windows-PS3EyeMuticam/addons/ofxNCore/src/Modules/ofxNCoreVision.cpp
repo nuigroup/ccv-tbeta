@@ -707,7 +707,7 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			filter->bLearnBakground = true;
 			break;
 		case 'v':
-			if (bcamera && vidGrabber != NULL)
+			if (bcamera)
 				//vidGrabber->videoSettings();
 				if(PS3)
 					PS3->showSettings();
