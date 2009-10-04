@@ -43,12 +43,19 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 		{
 			//Sends alive message - saying 'Hey, there's no alive blobs'
 			ofxOscMessage alive;
-			alive.setAddress("/tuio/2Dcur");
+			
+			// TUIO v1.0
+			//alive.setAddress("/tuio/2Dcur");
+			
+			// TUIO v1.1
+			alive.setAddress("/tuio/2Dcur source ccv@localhost");
 			alive.addStringArg("alive");
 
 			//Send fseq message
 			ofxOscMessage fseq;
-			fseq.setAddress( "/tuio/2Dcur" );
+
+			fseq.setAddress( "/tuio/2Dcur source ccv@localhost" );
+
 			fseq.addStringArg( "fseq" );
 			fseq.addIntArg(frameseq);
 
@@ -63,7 +70,8 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 			{
 				//Set Message
 				ofxOscMessage set;
-				set.setAddress("/tuio/2Dcur");
+	
+				set.setAddress( "/tuio/2Dcur source ccv@localhost" );
 				set.addStringArg("set");
 				set.addIntArg(this_blob->second.id); //id
 				set.addFloatArg(this_blob->second.centroid.x);  // x
@@ -80,7 +88,7 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 
 			//Send alive message of all alive IDs
 			ofxOscMessage alive;
-			alive.setAddress("/tuio/2Dcur");
+			alive.setAddress("/tuio/2Dcur source ccv@localhost");
 			alive.addStringArg("alive");
 
 			std::map<int, Blob>::iterator this_blobID;
@@ -91,7 +99,7 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 
 			//Send fseq message
 			ofxOscMessage fseq;
-			fseq.setAddress( "/tuio/2Dcur" );
+			fseq.setAddress( "/tuio/2Dcur source ccv@localhost" );
 			fseq.addStringArg( "fseq" );
 			fseq.addIntArg(frameseq);
 

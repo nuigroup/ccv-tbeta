@@ -28,12 +28,10 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	ofSetWindowShape(winWidth,winHeight);
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance?
 	
-	printf("freedom?");
+	//printf("Application Loaded...\n?");
 
 	//load camera/video
 	initDevice();
-	printf("freedom2?");
-
 	//set framerate
 	ofSetFrameRate(camRate * 1.3);			//This will be based on camera fps in the future
 
@@ -45,6 +43,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	sourceImg.allocate(camWidth, camHeight);    //Source Image
 	sourceImg.setUseTexture(false);				//We don't need to draw this so don't create a texture
 	/******************************************************************************************************/
+	//printf("Cameras Loaded...\n");
 
 	//Fonts - Is there a way to dynamically change font size?
 	verdana.loadFont("verdana.ttf", 8, true, true);	   //Font used for small images
@@ -52,13 +51,13 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
 	//Static Images
 	background.loadImage("images/background.jpg"); //Main (Temp?) Background
-
-	printf("freedom3?");
+	//printf("freedom3?");
+	
 	//GUI Controls
 	controls = ofxGui::Instance(this);
 	setupControls();
 	
-	printf("freedom4?");
+	//printf("Controls Loaded...\n");
 
 	//Setup Calibration
 	calib.setup(camWidth, camHeight, &tracker);
@@ -527,43 +526,37 @@ void ofxNCoreVision::drawFullMode()
 	if (bGPUMode) filter->drawGPU();
 	else filter->draw();
 
-	ofSetColor(0x000000);
-	if (bShowPressure)
-	{
-		bigvideo.drawString("Pressure Map", 140, 20);
-	}
-	else
-	{
-		bigvideo.drawString("Source Image", 140, 20);
-	}
-	bigvideo.drawString("Tracked Image", 475, 20);
+	ofSetColor(0x969696);
+
+	bigvideo.drawString("Source", 168, 20);
+	bigvideo.drawString("Tracked", 509, 20);
 
 	//draw link to tbeta website
 	ofSetColor(79, 79, 79);
 	ofFill();
-	ofRect(721, 586, 228, 14);
+	ofRect(721, 584, 228, 16);
 	ofSetColor(0xFFFFFF);
-	ofDrawBitmapString("  ccv.nuigroup.com    v1.3 ", 725, 596);
+	ofDrawBitmapString(" www.nuigroup.com/ccv - 1.3 ", 725, 596);
 
 	//Display Application information in bottom right
-	string str = "Calc. Time [ms]:  ";
-	str+= ofToString(differenceTime, 0)+"\n\n";
+	string str = "Calculation Time: ";
+	str+= ofToString(differenceTime, 0)+" ms \n\n";
 
 	if (bcamera)
 	{
-		string str2 = "Camera [Res]:     ";
+		string str2 = "Camera Resolution: ";
         str2+= ofToString(camWidth, 0) + " x " + ofToString(camHeight, 0)  + "\n";
-		string str4 = "Camera [fps]:     ";
-		str4+= ofToString(fps, 0)+"\n";
+		string str4 = "Camera Framerate: ";
+		str4+= ofToString(fps, 0)+" FPS \n";
 		ofSetColor(0xFFFFFF);
 		verdana.drawString(str + str2 + str4, 740, 410);
 	}
 	else
 	{
-		string str2 = "Video [Res]:       ";
+		string str2 = "Video Resolution: ";
 		str2+= ofToString(vidPlayer->width, 0) + " x " + ofToString(vidPlayer->height, 0)  + "\n";
-		string str4 = "Video [fps]:        ";
-		str4+= ofToString(fps, 0)+"\n";
+		string str4 = "Video Framerate: ";
+		str4+= ofToString(fps, 0)+" FPS \n";
 		ofSetColor(0xFFFFFF);
 		verdana.drawString(str + str2 + str4, 740, 410);
 	}
@@ -574,17 +567,18 @@ void ofxNCoreVision::drawFullMode()
 		ofSetColor(0xffffff);
 		char buf[256];
 		if(myTUIO.bOSCMode)
-			sprintf(buf, "Sending OSC messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+			sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
 		else{
 			if(myTUIO.bIsConnected)
-			sprintf(buf, "Sending TCP messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+			//sprintf(buf, "Sending XML messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+			sprintf(buf, "Sending XML messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOFlashPort);
 			else
 			sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
 		}		
 		verdana.drawString(buf, 740, 480);
 	}
 	ofSetColor(0xFF0000);
-	verdana.drawString("Press spacebar to toggle fast mode", 730, 572);
+	verdana.drawString("Press spacebar for mini mode", 748, 572);
 }
 
 void ofxNCoreVision::drawMiniMode()
@@ -621,7 +615,7 @@ void ofxNCoreVision::drawMiniMode()
 		verdana.drawString("Video [fps]:              " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	verdana.drawString("Blob Count:               " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 29 );
-	verdana.drawString("Sending TUIO:  " ,10, ofGetHeight() - 9 );
+	verdana.drawString("Communication:  " ,10, ofGetHeight() - 9 );
 
 	//draw green tuio circle
 	if((myTUIO.bIsConnected || myTUIO.bOSCMode) && bTUIOMode)
@@ -714,8 +708,13 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			break;
 		case 'v':
 			if (bcamera && vidGrabber != NULL)
-				vidGrabber->videoSettings();
-			break;
+				//vidGrabber->videoSettings();
+				if(PS3)
+					PS3->showSettings();
+				else if(vidGrabber)
+					vidGrabber->videoSettings();
+
+				break;
 		case 'l':
 			bShowLabels ? bShowLabels = false : bShowLabels = true;
 			controls->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
@@ -786,7 +785,7 @@ void ofxNCoreVision::_mousePressed(ofMouseEventArgs &e)
 	{
 		controls->mousePressed(e.x, e.y, e.button); //guilistener
 		if (e.x > 722 && e.y > 586)
-			ofLaunchBrowser("http://tbeta.nuigroup.com");
+			ofLaunchBrowser("http://ccv.nuigroup.com");
 	}
 }
 
