@@ -26,14 +26,14 @@
 #include "ofxThread.h"
 #include "ofxXmlSettings.h"
 
-//Our Addon
+// Our Addon
 #include "ofxNCore.h"
 
-//height and width of the source/tracked draw window
+// height and width of the source/tracked draw window
 #define MAIN_WINDOW_HEIGHT 240.0f
 #define MAIN_WINDOW_WIDTH  320.0f
 
-class ofxNCoreVision : public ofxGuiListener//, public BlobManager
+class ofxNCoreVision : public ofxGuiListener
 {
 	//ofxGUI setup stuff
 	enum
@@ -152,22 +152,15 @@ public:
 
 	~ofxNCoreVision()
 	{
-		if( filter != NULL ) {
-            delete filter;
-        }
-        if( vidGrabber != NULL ) {
-            delete vidGrabber;
-        }
-        if( vidPlayer != NULL ) {
-            delete vidPlayer;
-        }
+		// AlexP
+		// C++ guarantees that operator delete checks its argument for null-ness
+		delete filter;		filter=NULL;
+		delete vidGrabber;	vidGrabber=NULL;
+		delete vidPlayer;	vidPlayer=NULL;
 		#ifdef TARGET_WIN32
-		if( dsvl != NULL ) {
-            delete dsvl;
-        }
-		if( ffmv != NULL ) {
-            delete ffmv;
-        }
+			delete PS3;		PS3=NULL;
+			delete ffmv; 	ffmv=NULL;
+			delete dsvl;	dsvl=NULL;
 		#endif
 	}
 

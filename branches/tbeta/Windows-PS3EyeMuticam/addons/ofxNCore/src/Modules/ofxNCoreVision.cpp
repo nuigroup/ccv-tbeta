@@ -19,7 +19,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	ofSetWindowTitle(" Community Core Vision ");
 	
 	//create filter
-	if ( filter == NULL ){filter = new ProcessFilters();}
+	if ( filter == NULL )	filter = new ProcessFilters();
 	
 	//Load Settings from config.xml file
 	loadXMLSettings();
@@ -82,7 +82,8 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 		ofSetWindowShape(190, 200); //minimized size
 		filter->bMiniMode = bMiniMode;
 	}
-	else{
+	else
+	{
 		bShowInterface = true;
 		printf("Starting in full mode...\n\n");
 	}
@@ -401,7 +402,9 @@ void ofxNCoreVision::getPixels()
 	}
 	else if(dsvl!=NULL)
 	{
-		if(dsvl->getNumByes() != 1){ //if not grayscale
+		if(dsvl->getNumByes() != 1)
+		{ 	
+			//if not grayscale
 			sourceImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
 			//convert to grayscale
 			processedImg = sourceImg;
@@ -810,14 +813,16 @@ std::map<int, Blob> ofxNCoreVision::getBlobs()
 void ofxNCoreVision::_exit(ofEventArgs &e)
 {
 	saveSettings();
-    #ifdef TARGET_WIN32
-		if(PS3!=NULL) delete PS3;
-		if(ffmv!=NULL) delete ffmv;
-		if(dsvl!=NULL) delete dsvl;	
+	// AlexP
+	// C++ guarantees that operator delete checks its argument for null-ness
+	delete filter;		filter=NULL;
+	delete vidGrabber;	vidGrabber=NULL;
+	delete vidPlayer;	vidPlayer=NULL;
+	#ifdef TARGET_WIN32
+		delete PS3;		PS3=NULL;
+		delete ffmv; 	ffmv=NULL;
+		delete dsvl;	dsvl=NULL;
 	#endif
-
-	if(vidGrabber!=NULL) delete vidGrabber;
-	if(vidPlayer !=NULL) delete vidPlayer;
 	// -------------------------------- SAVE STATE ON EXIT
 	printf("Vision module has exited!\n");
 }

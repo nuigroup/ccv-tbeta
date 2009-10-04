@@ -5,12 +5,11 @@
 
 class ofBaseApp;
 
-class ofAppBaseWindow{
-
+class ofAppBaseWindow
+{
 public:
-
-	ofAppBaseWindow(){};
-	virtual ~ofAppBaseWindow(){};
+	ofAppBaseWindow() {}
+	virtual ~ofAppBaseWindow() {}
 
 	virtual void setupOpenGL(int w, int h, int screenMode) {}
 	virtual void initializeWindow() {}
@@ -23,23 +22,22 @@ public:
 	virtual void	setWindowShape(int w, int h) {}
 
 	virtual int		getFrameNum() { return 0; }
-	virtual	float	getFrameRate() {return 0; }
+	virtual	float	getFrameRate() { return 0; }
 
-	virtual ofPoint	getWindowPosition() {return ofPoint(); }
-	virtual ofPoint	getWindowSize(){return ofPoint(); }
-	virtual ofPoint	getScreenSize(){return ofPoint(); }
+	virtual ofPoint	getWindowPosition() { return ofPoint(); }
+	virtual ofPoint	getWindowSize() { return ofPoint(); }
+	virtual ofPoint	getScreenSize() { return ofPoint(); }
 
-	virtual void	setFrameRate(float targetRate){}
-	virtual void	setWindowTitle(string title){}
+	virtual void	setFrameRate(float targetRate) {}
+	virtual void	setWindowTitle(string title) {}
 
-	virtual int		getWindowMode() {return 0;}
+	virtual int		getWindowMode() { return 0; }
 
-	virtual void	setFullscreen(bool fullscreen){}
-	virtual void	toggleFullscreen(){}
+	virtual void	setFullscreen(bool fullscreen) {}
+	virtual void	toggleFullscreen() {}
 
-	virtual void	enableSetupScreen(){}
-	virtual void	disableSetupScreen(){}
-
+	virtual void	enableSetupScreen() {}
+	virtual void	disableSetupScreen() {}
 };
 
 #endif

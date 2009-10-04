@@ -30,7 +30,8 @@ ofBaseApp *		ofAppPtr;
 
 
 //----------------------------------------------------------
-ofAppGlutWindow::ofAppGlutWindow(){
+ofAppGlutWindow::ofAppGlutWindow()
+{
 	timeNow				= 0;
 	timeThen			= 0;
 	fps					= 60; //give a realistic starting value - win32 issues
@@ -139,6 +140,8 @@ void ofAppGlutWindow::runAppViaInfiniteLoop(ofBaseApp * appPtr)
 		ofNotifyEvent( ofEvents.setup, voidEventArgs );
 		ofNotifyEvent( ofEvents.update, voidEventArgs );
 	#endif
+
+	// AlexP this fix allows for clean opengl mail loop exit
 	try
 	{
 		glutMainLoop();
@@ -260,22 +263,27 @@ void ofAppGlutWindow::setFullscreen(bool fullscreen)
 {
     if( windowMode == OF_GAME_MODE)return;
 
-    if(fullscreen && windowMode != OF_FULLSCREEN){
+    if(fullscreen && windowMode != OF_FULLSCREEN)
+	{
         bNewScreenMode  = true;
         windowMode      = OF_FULLSCREEN;
-    }else if(!fullscreen && windowMode != OF_WINDOW) {
+    }
+	else if(!fullscreen && windowMode != OF_WINDOW) 
+	{
         bNewScreenMode  = true;
         windowMode      = OF_WINDOW;
     }
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::enableSetupScreen(){
+void ofAppGlutWindow::enableSetupScreen()
+{
 	bEnableSetupScreen = true;
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::disableSetupScreen(){
+void ofAppGlutWindow::disableSetupScreen()
+{
 	bEnableSetupScreen = false;
 }
 
@@ -286,7 +294,7 @@ void ofAppGlutWindow::display(void)
 
 	//--------------------------------
 	// when I had "glutFullScreen()"
-	// in the initOpenGl, I was gettings a "heap" allocation error
+	// in the initOpenGl, I was getting a "heap" allocation error
 	// when debugging via visual studio.  putting it here, changes that.
 	// maybe it's voodoo, or I am getting rid of the problem
 	// by removing something unrelated, but everything seems
@@ -316,7 +324,7 @@ void ofAppGlutWindow::display(void)
 				glutReshapeWindow(requestedWidth, requestedHeight);
 
 				//----------------------------------------------------
-				// if we have recorded the screen posion, put it there
+				// if we have recorded the screen position, put it there
 				// if not, better to let the system do it (and put it where it wants)
 				if (nFrameCount > 0)
 				{
@@ -327,10 +335,13 @@ void ofAppGlutWindow::display(void)
 				#ifdef TARGET_OSX
 					SetSystemUIMode(kUIModeNormal,NULL);
 				#endif
-				// AlexP (remove minimize, maximize, close buttons, no resize)
-				HWND hwnd=FindWindowA("GLUT", NULL);
-				SetWindowLongPtr(hwnd, GWL_STYLE, WS_BORDER|WS_CAPTION);
-				SetWindowPos(hwnd, NULL, 100, 100, 0, 0, SWP_NOZORDER|SWP_NOSIZE|SWP_SHOWWINDOW);
+
+				#ifdef TARGET_WIN32
+					// AlexP (remove minimize, maximize, close buttons, no resize)
+					HWND hwnd=FindWindowA("GLUT", NULL);
+					SetWindowLongPtr(hwnd, GWL_STYLE, WS_BORDER|WS_CAPTION);
+					SetWindowPos(hwnd, NULL, 100, 100, 0, 0, SWP_NOZORDER|SWP_NOSIZE|SWP_SHOWWINDOW);
+				#endif
 			}
 			bNewScreenMode = false;
 		}
@@ -357,14 +368,16 @@ void ofAppGlutWindow::display(void)
 
 	#ifdef TARGET_WIN32
 		//windows doesn't get accumulation in window mode
-		if ((bClearAuto == true || windowMode == OF_WINDOW) || nFrameCount < 3){
+		if ((bClearAuto == true || windowMode == OF_WINDOW) || nFrameCount < 3)
+		{
 	#else
 		//mac and linux does :)
-		if ( bClearAuto == true || nFrameCount < 3){
+		if ( bClearAuto == true || nFrameCount < 3)
+		{
 	#endif
-		glClearColor(bgPtr[0],bgPtr[1],bgPtr[2], bgPtr[3]);
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	}
+			glClearColor(bgPtr[0],bgPtr[1],bgPtr[2], bgPtr[3]);
+			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
 
 	if( bEnableSetupScreen )	ofSetupScreen();
 
@@ -391,23 +404,25 @@ void ofAppGlutWindow::display(void)
   	}
   	nFramesForFPS++;
   	// --------------
-
 	nFrameCount++;		// increase the overall frame count
-
 	//setFrameNum(nFrameCount); // get this info to ofUtils for people to access
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y) {
+void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y) 
+{
 	static ofMouseEventArgs mouseEventArgs;
 
-	if (nFrameCount > 0){
-		if(ofAppPtr){
-		ofAppPtr->mouseX = x;
-		ofAppPtr->mouseY = y;
+	if (nFrameCount > 0)
+	{
+		if(ofAppPtr)
+		{
+			ofAppPtr->mouseX = x;
+			ofAppPtr->mouseY = y;
 		}
 
-		if (state == GLUT_DOWN) {
+		if (state == GLUT_DOWN) 
+		{
 			if(ofAppPtr)
 				ofAppPtr->mousePressed(x,y,button);
 
@@ -417,8 +432,11 @@ void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y) {
 				mouseEventArgs.button = button;
 				ofNotifyEvent( ofEvents.mousePressed, mouseEventArgs );
 			#endif
-		} else if (state == GLUT_UP) {
-			if(ofAppPtr){
+		} 
+		else if (state == GLUT_UP) 
+		{
+			if(ofAppPtr)
+			{
 				ofAppPtr->mouseReleased(x,y,button);
 				ofAppPtr->mouseReleased();
 			}
@@ -435,13 +453,16 @@ void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y) {
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::motion_cb(int x, int y) {
+void ofAppGlutWindow::motion_cb(int x, int y) 
+{
 	static ofMouseEventArgs mouseEventArgs;
 
-	if (nFrameCount > 0){
-		if(ofAppPtr){
-		ofAppPtr->mouseX = x;
-		ofAppPtr->mouseY = y;
+	if (nFrameCount > 0)
+	{
+		if(ofAppPtr)
+		{
+			ofAppPtr->mouseX = x;
+			ofAppPtr->mouseY = y;
 			ofAppPtr->mouseDragged(x,y,buttonInUse);
 		}
 
@@ -455,13 +476,16 @@ void ofAppGlutWindow::motion_cb(int x, int y) {
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::passive_motion_cb(int x, int y) {
+void ofAppGlutWindow::passive_motion_cb(int x, int y) 
+{
 	static ofMouseEventArgs mouseEventArgs;
 
-	if (nFrameCount > 0){
-		if(ofAppPtr){
-		ofAppPtr->mouseX = x;
-		ofAppPtr->mouseY = y;
+	if (nFrameCount > 0)
+	{
+		if(ofAppPtr)
+		{
+			ofAppPtr->mouseX = x;
+			ofAppPtr->mouseY = y;
 			ofAppPtr->mouseMoved(x,y);
 		}
 
@@ -526,11 +550,15 @@ void ofAppGlutWindow::keyboard_cb(unsigned char key, int x, int y)
 	#endif
 
 	if (key == OF_KEY_ESC)
+		// AlexP this exception will cause the opengl main loop to exit
+		// after which the opengl window will be destroyed and
+		// with this the opengl hang issue is solved
 		throw "Exit OpenGL Main Loop";
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::keyboard_up_cb(unsigned char key, int x, int y) {
+void ofAppGlutWindow::keyboard_up_cb(unsigned char key, int x, int y) 
+{
 	static ofKeyEventArgs keyEventArgs;
 
 	if(ofAppPtr)
@@ -543,7 +571,8 @@ void ofAppGlutWindow::keyboard_up_cb(unsigned char key, int x, int y) {
 }
 
 //------------------------------------------------------
-void ofAppGlutWindow::special_key_cb(int key, int x, int y) {
+void ofAppGlutWindow::special_key_cb(int key, int x, int y)
+{
 	static ofKeyEventArgs keyEventArgs;
 
 	if(ofAppPtr)
@@ -556,7 +585,8 @@ void ofAppGlutWindow::special_key_cb(int key, int x, int y) {
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::special_key_up_cb(int key, int x, int y) {
+void ofAppGlutWindow::special_key_up_cb(int key, int x, int y) 
+{
 	static ofKeyEventArgs keyEventArgs;
 
 	if(ofAppPtr)
@@ -569,7 +599,8 @@ void ofAppGlutWindow::special_key_up_cb(int key, int x, int y) {
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::resize_cb(int w, int h) {
+void ofAppGlutWindow::resize_cb(int w, int h) 
+{
 	static ofResizeEventArgs resizeEventArgs;
 
 	if(ofAppPtr)
