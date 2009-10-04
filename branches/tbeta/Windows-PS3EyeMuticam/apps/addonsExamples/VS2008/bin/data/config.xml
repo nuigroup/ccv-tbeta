@@ -45,7 +45,7 @@
         <PRESSURE>0</PRESSURE>
         <LABELS>0</LABELS>
         <OUTLINES>1</OUTLINES>
-        <LEARNBG>0</LEARNBG>
+        <LEARNBG>1</LEARNBG>
         <TUIO>0</TUIO>
         <VMIRROR>0</VMIRROR>
         <HMIRROR>0</HMIRROR>

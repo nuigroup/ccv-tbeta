@@ -608,14 +608,14 @@ void ofxNCoreVision::drawMiniMode()
 
 	//draw text
 	ofSetColor(250,250,250);
-	verdana.drawString("Calc. Time  [ms]:        " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
+	verdana.drawString("Calculation Time:         " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
 	if (bcamera)
 	{
-		verdana.drawString("Camera [fps]:            " + ofToString(fps,0),10, ofGetHeight() - 50 );
+		verdana.drawString("Camera Framerate:       " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	else 
 	{
-		verdana.drawString("Video [fps]:              " + ofToString(fps,0),10, ofGetHeight() - 50 );
+		verdana.drawString("Video Framerate:        " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	verdana.drawString("Blob Count:               " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 29 );
 	verdana.drawString("Communication:  " ,10, ofGetHeight() - 9 );

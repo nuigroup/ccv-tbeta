@@ -335,7 +335,6 @@ void ofAppGlutWindow::display(void)
 				#ifdef TARGET_OSX
 					SetSystemUIMode(kUIModeNormal,NULL);
 				#endif
-
 				#ifdef TARGET_WIN32
 					// AlexP (remove minimize, maximize, close buttons, no resize)
 					HWND hwnd=FindWindowA("GLUT", NULL);
