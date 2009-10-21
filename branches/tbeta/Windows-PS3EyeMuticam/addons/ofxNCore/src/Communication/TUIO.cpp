@@ -24,7 +24,7 @@ void TUIO::setup(const char* host, int port, int flashport) {
 	TUIOFlashPort = flashport;
 	frameseq = 0;
 
-	//FOR TCP
+	//FOR Flash/XML
 	bIsConnected = m_tcpServer.setup(TUIOFlashPort);
 	//FOR OSC
 	TUIOSocket.setup(localHost, TUIOPort);
@@ -41,37 +41,56 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 
 		if(blobs->size() == 0)
 		{
+			ofxOscMessage source;
+			source.setAddress("/tuio/2Dcur");
+			source.addStringArg("source");
+			source.addStringArg("CCV");
+			
 			//Sends alive message - saying 'Hey, there's no alive blobs'
 			ofxOscMessage alive;
-			
-			// TUIO v1.0
-			//alive.setAddress("/tuio/2Dcur");
-			
-			// TUIO v1.1
-			alive.setAddress("/tuio/2Dcur source ccv@localhost");
+			alive.setAddress("/tuio/2Dcur");
 			alive.addStringArg("alive");
 
 			//Send fseq message
 			ofxOscMessage fseq;
-
-			fseq.setAddress( "/tuio/2Dcur source ccv@localhost" );
-
+			fseq.setAddress("/tuio/2Dcur" );
 			fseq.addStringArg( "fseq" );
 			fseq.addIntArg(frameseq);
 
+			b.addMessage( source ); //add message to bundle
 			b.addMessage( alive ); //add message to bundle
 			b.addMessage( fseq ); //add message to bundle
 			TUIOSocket.sendBundle( b ); //send bundle
 		}
 		else //actually send the blobs
 		{
+			
+			ofxOscMessage source;
+			source.setAddress("/tuio/2Dcur");
+			source.addStringArg("source");
+			source.addStringArg("CCV");
+			b.addMessage( source ); //add message to bundle
+		
+			//Send alive message of all alive IDs
+			ofxOscMessage alive;
+			alive.setAddress("/tuio/2Dcur");
+			alive.addStringArg("alive");
+			
+			std::map<int, Blob>::iterator this_blobID;
+			for(this_blobID = blobs->begin(); this_blobID != blobs->end(); this_blobID++)
+			{
+				alive.addIntArg(this_blobID->second.id); //Get list of ALL active IDs
+			}
+			
+			b.addMessage( alive ); //add message to bundle
+			
 			map<int, Blob>::iterator this_blob;
 			for(this_blob = blobs->begin(); this_blob != blobs->end(); this_blob++)
 			{
 				//Set Message
 				ofxOscMessage set;
 	
-				set.setAddress( "/tuio/2Dcur source ccv@localhost" );
+				set.setAddress( "/tuio/2Dcur" );
 				set.addStringArg("set");
 				set.addIntArg(this_blob->second.id); //id
 				set.addFloatArg(this_blob->second.centroid.x);  // x
@@ -79,6 +98,7 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 				set.addFloatArg(this_blob->second.D.x); //dX
 				set.addFloatArg(this_blob->second.D.y); //dY
 				set.addFloatArg(this_blob->second.maccel); //m
+				// this proprietary message extension includes the ABB width & height
 				if(bHeightWidth){
 					set.addFloatArg(this_blob->second.boundingRect.width); // wd
 					set.addFloatArg(this_blob->second.boundingRect.height);// ht
@@ -86,30 +106,17 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 				b.addMessage( set ); //add message to bundle
 			}
 
-			//Send alive message of all alive IDs
-			ofxOscMessage alive;
-			alive.setAddress("/tuio/2Dcur source ccv@localhost");
-			alive.addStringArg("alive");
-
-			std::map<int, Blob>::iterator this_blobID;
-			for(this_blobID = blobs->begin(); this_blobID != blobs->end(); this_blobID++)
-			{
-				alive.addIntArg(this_blobID->second.id); //Get list of ALL active IDs
-			}
-
 			//Send fseq message
 			ofxOscMessage fseq;
-			fseq.setAddress( "/tuio/2Dcur source ccv@localhost" );
+			fseq.setAddress( "/tuio/2Dcur" );
 			fseq.addStringArg( "fseq" );
 			fseq.addIntArg(frameseq);
-
-			b.addMessage( alive ); //add message to bundle
 			b.addMessage( fseq ); //add message to bundle
 
 			TUIOSocket.sendBundle( b ); //send bundle
 		}
 
-	}else if(bTCPMode) //else, if TCP (flash) mode
+	}else if(bTCPMode) //else, if Flash/XML mode
 	{
 		if(blobs->size() == 0){
 
