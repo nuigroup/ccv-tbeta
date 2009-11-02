@@ -358,9 +358,9 @@ void CalibrationUtils::cameraToScreenSpace(float &x, float &y)
 		return;
 	}
 
-	x = 0;
-	y = 0;
-	// FIXME: what to do in the case that it's outside the mesh?
+	// If not in the mesh then set the position to something identifiable so we can remove it later
+	x = -1;
+        y = -1;
 }
 
 bool CalibrationUtils::isPointInTriangle(vector2df p, vector2df a, vector2df b, vector2df c)
