@@ -34,13 +34,14 @@ void Calibration::setup(int _camWidth, int _camHeight, BlobTracker *trackerIn)
 	printf("Calibration is setup!\n\n");
 }
 
-void Calibration::passInContourFinder(int numBlobs, vector<Blob> blobs) {
-
+void Calibration::passInContourFinder(int numBlobs, vector<Blob> blobs) 
+{
     contourFinder.nBlobs = numBlobs;
 	contourFinder.blobs  = blobs;
 }
 
-void Calibration::passInTracker(BlobTracker *trackerIn) {
+void Calibration::passInTracker(BlobTracker *trackerIn) 
+{
 	tracker = trackerIn;
 	tracker->passInCalibration(&calibrate);
 }
@@ -49,8 +50,8 @@ void Calibration::passInTracker(BlobTracker *trackerIn) {
 /******************************
  *		  CALIBRATION
  *******************************/
-void Calibration::doCalibration(){
-
+void Calibration::doCalibration()
+{
 	//Change the background color to black
 	ofSetColor(0x000000);
 	ofFill();
@@ -81,8 +82,8 @@ void Calibration::doCalibration(){
 	}
 }
 
-void Calibration::drawCalibrationPointsAndBox(){
-
+void Calibration::drawCalibrationPointsAndBox()
+{
     //this all has to do with getting the angle for loading circle
     arcAngle = 0;
 	std::map<int, Blob> trackedBlobs;
@@ -128,8 +129,8 @@ void Calibration::drawCalibrationPointsAndBox(){
 		   calibrate.screenBB.getWidth() * ofGetWidth(), calibrate.screenBB.getHeight() * ofGetHeight());
 }
 
-void Calibration::drawCalibrationBlobs(){
-
+void Calibration::drawCalibrationBlobs()
+{
 	//find blobs
 	std::map<int, Blob> trackedBlobs;
 	std::map<int, Blob>::iterator iter;

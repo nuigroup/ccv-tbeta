@@ -35,7 +35,7 @@
 
 class ofxNCoreVision : public ofxGuiListener
 {
-	//ofxGUI setup stuff
+	// ofxGUI setup stuff
 	enum
 	{
 		propertiesPanel,
@@ -154,13 +154,13 @@ public:
 	{
 		// AlexP
 		// C++ guarantees that operator delete checks its argument for null-ness
-		delete filter;		filter=NULL;
-		delete vidGrabber;	vidGrabber=NULL;
-		delete vidPlayer;	vidPlayer=NULL;
+		delete filter;		filter = NULL;
+		delete vidGrabber;	vidGrabber = NULL;
+		delete vidPlayer;	vidPlayer = NULL;
 		#ifdef TARGET_WIN32
-			delete PS3;		PS3=NULL;
-			delete ffmv; 	ffmv=NULL;
-			delete dsvl;	dsvl=NULL;
+		delete PS3;		PS3 = NULL;
+		delete ffmv; 	ffmv = NULL;
+		delete dsvl;	dsvl = NULL;
 		#endif
 	}
 

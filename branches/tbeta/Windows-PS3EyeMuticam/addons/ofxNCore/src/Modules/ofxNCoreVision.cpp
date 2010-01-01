@@ -19,7 +19,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	ofSetWindowTitle(" Community Core Vision ");
 	
 	//create filter
-	if ( filter == NULL )	filter = new ProcessFilters();
+	if(filter == NULL)	filter = new ProcessFilters();
 	
 	//Load Settings from config.xml file
 	loadXMLSettings();
@@ -82,8 +82,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 		ofSetWindowShape(190, 200); //minimized size
 		filter->bMiniMode = bMiniMode;
 	}
-	else
-	{
+	else{
 		bShowInterface = true;
 		printf("Starting in full mode...\n\n");
 	}
@@ -137,7 +136,7 @@ void ofxNCoreVision::loadXMLSettings()
 	bGPUMode					= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
 	bMiniMode                   = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
 	//CONTROLS
-	tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
+	tracker.MOVEMENT_FILTERING	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
 	MIN_BLOB_SIZE				= XML.getValue("CONFIG:INT:MINBLOBSIZE",2);
 	MAX_BLOB_SIZE				= XML.getValue("CONFIG:INT:MAXBLOBSIZE",100);
 	backgroundLearnRate			= XML.getValue("CONFIG:INT:BGLEARNRATE", 0.01f);
@@ -179,7 +178,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:SMOOTH", filter->bSmooth);
 	XML.setValue("CONFIG:BOOLEAN:DYNAMICBG", filter->bDynamicBG);
 	XML.setValue("CONFIG:BOOLEAN:GPU", bGPUMode);
-	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MIN_MOVEMENT_THRESHOLD);
+	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MOVEMENT_FILTERING);
 	XML.setValue("CONFIG:INT:MINBLOBSIZE", MIN_BLOB_SIZE);
 	XML.setValue("CONFIG:INT:MAXBLOBSIZE", MAX_BLOB_SIZE);
 	XML.setValue("CONFIG:INT:BGLEARNRATE", backgroundLearnRate);
@@ -402,9 +401,7 @@ void ofxNCoreVision::getPixels()
 	}
 	else if(dsvl!=NULL)
 	{
-		if(dsvl->getNumByes() != 1)
-		{ 	
-			//if not grayscale
+		if(dsvl->getNumByes() != 1){ //if not grayscale
 			sourceImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
 			//convert to grayscale
 			processedImg = sourceImg;
@@ -608,14 +605,14 @@ void ofxNCoreVision::drawMiniMode()
 
 	//draw text
 	ofSetColor(250,250,250);
-	verdana.drawString("Calculation Time:         " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
+	verdana.drawString("Calc. Time  [ms]:        " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
 	if (bcamera)
 	{
-		verdana.drawString("Camera Framerate:       " + ofToString(fps,0),10, ofGetHeight() - 50 );
+		verdana.drawString("Camera [fps]:            " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	else 
 	{
-		verdana.drawString("Video Framerate:        " + ofToString(fps,0),10, ofGetHeight() - 50 );
+		verdana.drawString("Video [fps]:              " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	verdana.drawString("Blob Count:               " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 29 );
 	verdana.drawString("Communication:  " ,10, ofGetHeight() - 9 );
@@ -710,14 +707,12 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			filter->bLearnBakground = true;
 			break;
 		case 'v':
-			if (bcamera)
-				//vidGrabber->videoSettings();
+			if (bcamera && vidGrabber != NULL)
 				if(PS3)
 					PS3->showSettings();
 				else if(vidGrabber)
 					vidGrabber->videoSettings();
-
-				break;
+			break;
 		case 'l':
 			bShowLabels ? bShowLabels = false : bShowLabels = true;
 			controls->update(appPtr->trackedPanel_ids, kofxGui_Set_Bool, &appPtr->bShowLabels, sizeof(bool));
@@ -815,14 +810,14 @@ void ofxNCoreVision::_exit(ofEventArgs &e)
 	saveSettings();
 	// AlexP
 	// C++ guarantees that operator delete checks its argument for null-ness
-	delete filter;		filter=NULL;
-	delete vidGrabber;	vidGrabber=NULL;
-	delete vidPlayer;	vidPlayer=NULL;
-	#ifdef TARGET_WIN32
-		delete PS3;		PS3=NULL;
-		delete ffmv; 	ffmv=NULL;
-		delete dsvl;	dsvl=NULL;
+    #ifdef TARGET_WIN32
+		delete PS3;		PS3 = NULL;
+		delete ffmv; 	ffmv = NULL;
+		delete dsvl;	dsvl = NULL;
 	#endif
+	delete filter;		filter = NULL;
+	delete vidGrabber;	vidGrabber = NULL;
+	delete vidPlayer;	vidPlayer = NULL;
 	// -------------------------------- SAVE STATE ON EXIT
 	printf("Vision module has exited!\n");
 }

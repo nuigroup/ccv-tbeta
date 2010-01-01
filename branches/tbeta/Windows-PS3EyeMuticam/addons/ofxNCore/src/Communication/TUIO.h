@@ -14,10 +14,9 @@
 #include "ofxOsc.h"
 #include "ofxNetwork.h"
 
-class TUIO {
-
+class TUIO 
+{
 	public:		
-
 		TUIO();
 		~TUIO();
 		

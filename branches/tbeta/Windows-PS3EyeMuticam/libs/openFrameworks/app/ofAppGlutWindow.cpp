@@ -140,8 +140,7 @@ void ofAppGlutWindow::runAppViaInfiniteLoop(ofBaseApp * appPtr)
 		ofNotifyEvent( ofEvents.setup, voidEventArgs );
 		ofNotifyEvent( ofEvents.update, voidEventArgs );
 	#endif
-
-	// AlexP this fix allows for clean opengl mail loop exit
+	// AlexP this fix allows for clean opengl main loop exit
 	try
 	{
 		glutMainLoop();
@@ -403,7 +402,9 @@ void ofAppGlutWindow::display(void)
   	}
   	nFramesForFPS++;
   	// --------------
+
 	nFrameCount++;		// increase the overall frame count
+
 	//setFrameNum(nFrameCount); // get this info to ofUtils for people to access
 }
 
@@ -411,7 +412,6 @@ void ofAppGlutWindow::display(void)
 void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y) 
 {
 	static ofMouseEventArgs mouseEventArgs;
-
 	if (nFrameCount > 0)
 	{
 		if(ofAppPtr)
@@ -419,7 +419,6 @@ void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y)
 			ofAppPtr->mouseX = x;
 			ofAppPtr->mouseY = y;
 		}
-
 		if (state == GLUT_DOWN) 
 		{
 			if(ofAppPtr)
@@ -439,7 +438,6 @@ void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y)
 				ofAppPtr->mouseReleased(x,y,button);
 				ofAppPtr->mouseReleased();
 			}
-
 			#ifdef OF_USING_POCO
 				mouseEventArgs.x = x;
 				mouseEventArgs.y = y;
@@ -455,7 +453,6 @@ void ofAppGlutWindow::mouse_cb(int button, int state, int x, int y)
 void ofAppGlutWindow::motion_cb(int x, int y) 
 {
 	static ofMouseEventArgs mouseEventArgs;
-
 	if (nFrameCount > 0)
 	{
 		if(ofAppPtr)
@@ -464,7 +461,6 @@ void ofAppGlutWindow::motion_cb(int x, int y)
 			ofAppPtr->mouseY = y;
 			ofAppPtr->mouseDragged(x,y,buttonInUse);
 		}
-
 		#ifdef OF_USING_POCO
 			mouseEventArgs.x = x;
 			mouseEventArgs.y = y;
@@ -478,7 +474,6 @@ void ofAppGlutWindow::motion_cb(int x, int y)
 void ofAppGlutWindow::passive_motion_cb(int x, int y) 
 {
 	static ofMouseEventArgs mouseEventArgs;
-
 	if (nFrameCount > 0)
 	{
 		if(ofAppPtr)
@@ -487,7 +482,6 @@ void ofAppGlutWindow::passive_motion_cb(int x, int y)
 			ofAppPtr->mouseY = y;
 			ofAppPtr->mouseMoved(x,y);
 		}
-
 		#ifdef OF_USING_POCO
 			mouseEventArgs.x = x;
 			mouseEventArgs.y = y;
@@ -495,7 +489,6 @@ void ofAppGlutWindow::passive_motion_cb(int x, int y)
 		#endif
 	}
 }
-
 
 //------------------------------------------------------------
 void ofAppGlutWindow::idle_cb(void) 
@@ -548,16 +541,15 @@ void ofAppGlutWindow::keyboard_cb(unsigned char key, int x, int y)
 		ofNotifyEvent( ofEvents.keyPressed, keyEventArgs );
 	#endif
 
+	// AlexP this exception will cause the opengl main loop to exit
+	// after which the opengl window will be destroyed and
+	// with this the opengl hang issue is solved
 	if (key == OF_KEY_ESC)
-		// AlexP this exception will cause the opengl main loop to exit
-		// after which the opengl window will be destroyed and
-		// with this the opengl hang issue is solved
 		throw "Exit OpenGL Main Loop";
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::keyboard_up_cb(unsigned char key, int x, int y) 
-{
+void ofAppGlutWindow::keyboard_up_cb(unsigned char key, int x, int y) {
 	static ofKeyEventArgs keyEventArgs;
 
 	if(ofAppPtr)
@@ -570,8 +562,7 @@ void ofAppGlutWindow::keyboard_up_cb(unsigned char key, int x, int y)
 }
 
 //------------------------------------------------------
-void ofAppGlutWindow::special_key_cb(int key, int x, int y)
-{
+void ofAppGlutWindow::special_key_cb(int key, int x, int y) {
 	static ofKeyEventArgs keyEventArgs;
 
 	if(ofAppPtr)
@@ -584,8 +575,7 @@ void ofAppGlutWindow::special_key_cb(int key, int x, int y)
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::special_key_up_cb(int key, int x, int y) 
-{
+void ofAppGlutWindow::special_key_up_cb(int key, int x, int y) {
 	static ofKeyEventArgs keyEventArgs;
 
 	if(ofAppPtr)
@@ -598,8 +588,7 @@ void ofAppGlutWindow::special_key_up_cb(int key, int x, int y)
 }
 
 //------------------------------------------------------------
-void ofAppGlutWindow::resize_cb(int w, int h) 
-{
+void ofAppGlutWindow::resize_cb(int w, int h) {
 	static ofResizeEventArgs resizeEventArgs;
 
 	if(ofAppPtr)

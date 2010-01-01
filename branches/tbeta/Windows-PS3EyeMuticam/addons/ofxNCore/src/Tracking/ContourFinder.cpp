@@ -10,7 +10,8 @@
 #include "ContourFinder.h"
 
 //--------------------------------------------------------------------------------
-static int qsort_carea_compare( const void* _a, const void* _b) {
+static int qsort_carea_compare( const void* _a, const void* _b) 
+{
 	int out = 0;
 	// pointers, ugh.... sorry about this
 	CvSeq* a = *((CvSeq **)_a);
@@ -20,24 +21,27 @@ static int qsort_carea_compare( const void* _a, const void* _b) {
 	float areab = fabs(cvContourArea(b, CV_WHOLE_SEQ));
 	// note, based on the -1 / 1 flip
 	// we sort biggest to smallest, not smallest to biggest
-	if( areaa > areab ) { out = -1; }
-	else {                out =  1; }
+	if( areaa > areab )		out = -1;
+	else					out =  1;
 	return out;
 }
 
 //--------------------------------------------------------------------------------
-ContourFinder::ContourFinder() {
+ContourFinder::ContourFinder()
+{
 	myMoments = (CvMoments*)malloc( sizeof(CvMoments) );
 	reset();
 }
 
 //--------------------------------------------------------------------------------
-ContourFinder::~ContourFinder() {
+ContourFinder::~ContourFinder() 
+{
 	free( myMoments );
 }
 
 //--------------------------------------------------------------------------------
-void ContourFinder::reset() {
+void ContourFinder::reset() 
+{
     blobs.clear();
     nBlobs = 0;
 }
@@ -48,7 +52,8 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 									  int maxArea,
 									  int nConsidered,
 									  bool bFindHoles,
-                                      bool bUseApproximation) {
+                                      bool bUseApproximation) 
+{
 	reset();
 
 	// opencv will clober the image it detects contours on, so we want to
@@ -61,13 +66,17 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
     // 320x240 image better to make two ContourFinder objects then to use
     // one, because you will get penalized less.
 
-	if( inputCopy.width == 0 ) {
+	if( inputCopy.width == 0 ) 
+	{
 		inputCopy.allocate( input.width, input.height );
 		inputCopy = input;
-	} else {
-		if( inputCopy.width == input.width && inputCopy.height == input.height ) {
+	} 
+	else 
+	{
+		if( inputCopy.width == input.width && inputCopy.height == input.height ) 
 			inputCopy = input;
-		} else {
+		else 
+		{
 			// we are allocated, but to the wrong size --
 			// been checked for memory leaks, but a warning:
 			// be careful if you call this function with alot of different
@@ -92,10 +101,13 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 	nCvSeqsFound = 0;
 
 	// put the contours from the linked list, into an array for sorting
-	while( (contour_ptr != NULL) ) {
+	while( (contour_ptr != NULL) ) 
+	{
 		float area = fabs( cvContourArea(contour_ptr, CV_WHOLE_SEQ) );
-		if( (area > minArea) && (area < maxArea) ) {
-                if (nCvSeqsFound < TOUCH_MAX_CONTOUR_LENGTH){
+		if( (area > minArea) && (area < maxArea) ) 
+		{
+                if (nCvSeqsFound < TOUCH_MAX_CONTOUR_LENGTH)
+				{
 				cvSeqBlobs[nCvSeqsFound] = contour_ptr;	 // copy the pointer
                 nCvSeqsFound++;
 				}
@@ -104,13 +116,15 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 	}
 
 	// sort the pointers based on size
-	if( nCvSeqsFound > 0 ) {
+	if( nCvSeqsFound > 0 ) 
+	{
 		qsort( cvSeqBlobs, nCvSeqsFound, sizeof(CvSeq*), qsort_carea_compare);
 	}
 
 	// now, we have nCvSeqsFound contours, sorted by size in the array
     // cvSeqBlobs let's get the data out and into our structures that we like
-	for( int i = 0; i < MIN(nConsidered, nCvSeqsFound); i++ ) {
+	for( int i = 0; i < MIN(nConsidered, nCvSeqsFound); i++ ) 
+	{
 		blobs.push_back( Blob() );
 		float area = cvContourArea( cvSeqBlobs[i], CV_WHOLE_SEQ );
 
@@ -136,23 +150,27 @@ int ContourFinder::findContours( ofxCvGrayscaleImage&  input,
 		// assign other parameters
 		blobs[i].area                = fabs(area);
 		blobs[i].hole                = area < 0 ? true : false;
-		blobs[i].length 			 = cvArcLength(cvSeqBlobs[i]);		
-		blobs[i].centroid.x			 = (int) (myMoments->m10 / myMoments->m00);
-		blobs[i].centroid.y 		 = (int) (myMoments->m01 / myMoments->m00);
-		blobs[i].lastCentroid.x 	 = (int) 0;
-		blobs[i].lastCentroid.y 	 = (int) 0;
+		blobs[i].length 			 = cvArcLength(cvSeqBlobs[i]);
+		// AlexP
+		// The cast to int causes errors in tracking since centroids are calculated in
+		// floats and they migh land between integer pixel values (which is what we really want)
+		// This not only makes tracking more accurate but also more fluid
+		blobs[i].centroid.x			 = (myMoments->m10 / myMoments->m00);
+		blobs[i].centroid.y 		 = (myMoments->m01 / myMoments->m00);
+		blobs[i].lastCentroid.x 	 = 0;
+		blobs[i].lastCentroid.y 	 = 0;
 
 		// get the points for the blob:
 		CvPoint           pt;
 		CvSeqReader       reader;
 		cvStartReadSeq( cvSeqBlobs[i], &reader, 0 );
 
-    	for( int j=0; j < min(TOUCH_MAX_CONTOUR_LENGTH, cvSeqBlobs[i]->total); j++ ) {
+    	for( int j=0; j < min(TOUCH_MAX_CONTOUR_LENGTH, cvSeqBlobs[i]->total); j++ ) 
+		{
 			CV_READ_SEQ_ELEM( pt, reader );
             blobs[i].pts.push_back( ofPoint((float)pt.x, (float)pt.y) );
 		}
 		blobs[i].nPts = blobs[i].pts.size();
-
 	}
 
     nBlobs = blobs.size();

@@ -41,8 +41,8 @@ void ofxNCoreVision::setupControls()
 	controls->mGlobals->mTextColor.b = 0;
 	controls->mGlobals->mTextColor.a = 1;
 	//button color
-	controls->mGlobals->mButtonColor.r = .9;
-	controls->mGlobals->mButtonColor.g = 1;
+	controls->mGlobals->mButtonColor.r = 1;
+	controls->mGlobals->mButtonColor.g = 0;
 	controls->mGlobals->mButtonColor.b = 0;
 	controls->mGlobals->mButtonColor.a = .8;
 	//slider tip color
@@ -85,7 +85,7 @@ void ofxNCoreVision::setupControls()
 	ofxGuiPanel* trackPanel = controls->addPanel(appPtr->trackedPanel, "Tracked Image", 386, 270, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	trackPanel->addButton(appPtr->trackedPanel_darkblobs, "Inverse", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	trackPanel->addSlider(appPtr->trackedPanel_threshold, "Image Threshold", 140, 13, 0.0f, 255.0f, filter->threshold, kofxGui_Display_Int, 0);
-	trackPanel->addSlider(appPtr->trackedPanel_min_movement, "Movement Threshold", 140, 13, 0.0f, 15.0f, tracker.MIN_MOVEMENT_THRESHOLD, kofxGui_Display_Int, 0);
+	trackPanel->addSlider(appPtr->trackedPanel_min_movement, "Movement Filtering", 140, 13, 0.0f, 15.0f, tracker.MOVEMENT_FILTERING, kofxGui_Display_Int, 0);
 	trackPanel->addSlider(appPtr->trackedPanel_min_blob_size, "Min Blob Size", 140, 13, 1.0f, 500.0f, MIN_BLOB_SIZE, kofxGui_Display_Int, 0);
 	trackPanel->addSlider(appPtr->trackedPanel_max_blob_size, "Max Blob Size", 140, 13, 1.0f, 1000.0f, MAX_BLOB_SIZE, kofxGui_Display_Int, 0);
 	trackPanel->mObjHeight = 100;
@@ -197,7 +197,7 @@ void ofxNCoreVision::setupControls()
 	//Threshold
 	controls->update(appPtr->trackedPanel_threshold, kofxGui_Set_Bool, &appPtr->filter->threshold, sizeof(float));
 	//Min Movement
-	controls->update(appPtr->trackedPanel_min_movement, kofxGui_Set_Bool, &appPtr->tracker.MIN_MOVEMENT_THRESHOLD, sizeof(float));
+	controls->update(appPtr->trackedPanel_min_movement, kofxGui_Set_Bool, &appPtr->tracker.MOVEMENT_FILTERING, sizeof(float));
 	//Min Blob Size
 	controls->update(appPtr->trackedPanel_min_blob_size, kofxGui_Set_Bool, &appPtr->MIN_BLOB_SIZE, sizeof(float));
 	//Max Blob Size
@@ -440,7 +440,7 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 			break;
 		case trackedPanel_min_movement:
 			if(length == sizeof(float))
-				tracker.MIN_MOVEMENT_THRESHOLD = *(float*)data;
+				tracker.MOVEMENT_FILTERING = *(float*)data;
 			break;
 		case trackedPanel_min_blob_size:
 			if(length == sizeof(float))

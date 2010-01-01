@@ -7,11 +7,8 @@ void testApp::setup()
 	ccv = new ofxNCoreVision;
 }
 
-
 //--------------------------------------------------------------
-void testApp::update()
-{
-}
+void testApp::update(){}
 
 //--------------------------------------------------------------
 void testApp::draw()
@@ -36,48 +33,30 @@ void testApp::draw()
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key)
-{
-}
+void testApp::keyPressed  (int key){}
 
 //--------------------------------------------------------------
-void testApp::keyReleased  (int key)
-{
-}
+void testApp::keyReleased  (int key){}
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y )
-{
-}
+void testApp::mouseMoved(int x, int y ){}
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button)
-{
-}
+void testApp::mouseDragged(int x, int y, int button){}
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button)
-{
-}
+void testApp::mousePressed(int x, int y, int button){}
 
 //--------------------------------------------------------------
-void testApp::mouseReleased()
-{
-}
+void testApp::mouseReleased(){}
 
 /*****************************************************************************
  *	TOUCH EVENTS
  *****************************************************************************/
-void testApp::TouchDown( Blob b)
-{
-}
+void testApp::TouchDown(Blob b){}
 
-void testApp::TouchUp( Blob b)
-{	
-}
+void testApp::TouchUp(Blob b){}
 
-void testApp::TouchMoved( Blob b)
-{
-}
+void testApp::TouchMoved( Blob b){}
 
 

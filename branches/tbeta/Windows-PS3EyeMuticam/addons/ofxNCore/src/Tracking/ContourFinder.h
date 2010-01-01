@@ -17,11 +17,11 @@
 #include "ofxOpenCv.h"
 #include "Blob.h"
 
-#define TOUCH_MAX_CONTOURS 128
-#define TOUCH_MAX_CONTOUR_LENGTH 1024
+#define TOUCH_MAX_CONTOURS			128
+#define TOUCH_MAX_CONTOUR_LENGTH	1024
 
-class ContourFinder {
-
+class ContourFinder 
+{
   public:
 
     ContourFinder();

@@ -18,9 +18,10 @@
 #include "../Events/TouchMessenger.h"
 #include "../Calibration/CalibrationUtils.h"
 
+
+
 class BlobTracker : public TouchListener
 {
-
 public:
 
 	BlobTracker();
@@ -31,7 +32,7 @@ public:
 
 	CalibrationUtils* calibrate;
 	bool isCalibrating;
-	int MIN_MOVEMENT_THRESHOLD;
+	int MOVEMENT_FILTERING;
 	std::map<int, Blob> getTrackedBlobs();
 
 private:
