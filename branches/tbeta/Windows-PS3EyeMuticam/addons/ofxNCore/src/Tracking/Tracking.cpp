@@ -187,11 +187,10 @@ void BlobTracker::track(ContourFinder* newBlobs)
 	//find every track that's alive and copy it's data from newBlobs
 	for(int i = 0; i < trackedBlobs.size(); i++)
 	{
-		if(trackedBlobs[i].id==-1) //dead
+		if(trackedBlobs[i].id == -1) //dead
 		{
 			//erase track
 			trackedBlobs.erase(trackedBlobs.begin()+i, trackedBlobs.begin()+i+1);
-
 			i--; //decrement one since we removed an element
 		}
 		else //living, so update it's data
@@ -205,11 +204,20 @@ void BlobTracker::track(ContourFinder* newBlobs)
 					trackedBlobs[i] = newBlobs->blobs[j];
 					trackedBlobs[i].lastCentroid = tempLastCentroid;
 
+					ofPoint tD;
+					//get the Differences in position
+					tD.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
+							trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
+					//calculate the acceleration
+					float posDelta = sqrtf((tD.x*tD.x)+(tD.y*tD.y));
+
 					// AlexP
 					// now, filter the blob position based on MOVEMENT_FILTERING value
 					// the MOVEMENT_FILTERING ranges [0,15] so we will have that many filtering steps
-					// Here we have a simple weighted low-pass filter
-					float a = 1.0f - (float)MOVEMENT_FILTERING / 15.0f;
+					// Here we have a weighted low-pass filter
+					// adaptively adjust the blob position filtering strength based on blob movement
+					// http://www.wolframalpha.com/input/?i=plot+1/exp(x/15)+and+1/exp(x/10)+and+1/exp(x/5)+from+0+to+100
+					float a = 1.0f - 1.0f / expf(posDelta / (1.0f + (float)MOVEMENT_FILTERING*10));
 					trackedBlobs[i].centroid.x = a * trackedBlobs[i].centroid.x + (1-a) * trackedBlobs[i].lastCentroid.x;
 					trackedBlobs[i].centroid.y = a * trackedBlobs[i].centroid.y + (1-a) * trackedBlobs[i].lastCentroid.y;
 
@@ -229,9 +237,9 @@ void BlobTracker::track(ContourFinder* newBlobs)
 //						);
 //					}
 
-					//calculate the acceleration
-					ofPoint tD = trackedBlobs[i].D;
-					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)/(now - trackedBlobs[i].lastTimeTimeWasChecked));
+					//calculate the acceleration again
+					tD = trackedBlobs[i].D;
+					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)) / (now - trackedBlobs[i].lastTimeTimeWasChecked);
 
 					//calculate the age
 					trackedBlobs[i].age = ofGetElapsedTimef() - trackedBlobs[i].downTime;
@@ -259,7 +267,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 							TouchEvents.RAWmessenger = trackedBlobs[i];
 							TouchEvents.notifyRAWTouchHeld(NULL);
 						}
-						
+
 						//calibrated values
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
@@ -268,13 +276,12 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						//Calibrated dx/dy
 						TouchEvents.messenger.D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
 												trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
-						
-					
+
 						//calibrated acceleration
-						ofPoint tD2 = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y)/(now - TouchEvents.messenger.lastTimeTimeWasChecked));						
+						ofPoint tD = TouchEvents.messenger.D;
+						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (now - TouchEvents.messenger.lastTimeTimeWasChecked);
 						TouchEvents.messenger.lastTimeTimeWasChecked = now;
-						
+
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
@@ -303,15 +310,15 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 						//Calibrated dx/dy
 						TouchEvents.messenger.D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
-											trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
+												trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
 
 						//printf("d(%0.4f, %0.4f)\n", TouchEvents.messenger.D.x, TouchEvents.messenger.D.y);
-												
+				
 						//calibrated acceleration
-						ofPoint tD2 = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y)/(now - TouchEvents.messenger.lastTimeTimeWasChecked));						
+						ofPoint tD = TouchEvents.messenger.D;
+						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (now - TouchEvents.messenger.lastTimeTimeWasChecked);
 						TouchEvents.messenger.lastTimeTimeWasChecked = now;
-						
+
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
@@ -324,7 +331,7 @@ void BlobTracker::track(ContourFinder* newBlobs)
 			}
 		}
 	}
-	
+
 	// STEP 3: add tracked blobs to TouchEvents
 	//--Add New Living Tracks
 	//now every new blob should be either labeled with a tracked ID or\
@@ -382,7 +389,6 @@ std::map<int, Blob> BlobTracker::getTrackedBlobs()
 *			  must always be an odd number to avoid tying
 * thresh	= threshold for optimization
 **************************************************************************/
-
 int BlobTracker::trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh = 0)
 {
 

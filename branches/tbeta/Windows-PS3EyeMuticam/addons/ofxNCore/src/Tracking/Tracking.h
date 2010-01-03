@@ -18,12 +18,9 @@
 #include "../Events/TouchMessenger.h"
 #include "../Calibration/CalibrationUtils.h"
 
-
-
 class BlobTracker : public TouchListener
 {
 public:
-
 	BlobTracker();
 	~BlobTracker();
 	//assigns IDs to each blob in the contourFinder
@@ -36,13 +33,11 @@ public:
 	std::map<int, Blob> getTrackedBlobs();
 
 private:
-
 	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
 	int						IDCounter;	  //counter of last blob
 	int						fightMongrel;
 	std::vector<Blob>		trackedBlobs; //tracked blobs
 	std::map<int, Blob>     calibratedBlobs;
-	//std::vector<pair<int,Blob>>		finalBlobs; //tracked blobs
 };
 
 #endif
