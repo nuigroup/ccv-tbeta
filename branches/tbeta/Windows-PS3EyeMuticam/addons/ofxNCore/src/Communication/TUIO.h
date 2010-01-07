@@ -34,6 +34,7 @@ class TUIO
 		bool 			bHeightWidth;
 		bool 			bOSCMode;
 		bool			bTCPMode;
+		bool			bBinaryMode;
 		bool			bIsConnected;
 
 	private:

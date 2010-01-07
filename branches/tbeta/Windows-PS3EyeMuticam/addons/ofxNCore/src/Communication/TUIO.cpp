@@ -172,4 +172,37 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 									setBlobsMsg + aliveBeginMsg + aliveBlobsMsg + aliveEndMsg + fseq + "</OSCPACKET>");
 		}
 	}
+	else if(bBinaryMode) // else, if TCP (binary) mode
+	{
+		uchar buf[1024*8];
+		uchar *p = buf;
+		if(blobs->size() == 0)
+		{
+			memset(p, 0, 4);	p+=4;
+		}
+		else
+		{
+			int count = blobs->size();
+			memcpy(p, &count, 4);	p+=4;
+			map<int, Blob>::iterator blob;
+			for(blob = blobs->begin(); blob != blobs->end(); blob++)
+			{
+				// omit point (0,0) since this means that we are outside of the range
+				if(blob->second.centroid.x == 0 && blob->second.centroid.y == 0)
+					continue;
+				memcpy(p, &blob->second.id, 4);				p+=4;
+				memcpy(p, &blob->second.centroid.x, 4);		p+=4;
+				memcpy(p, &blob->second.centroid.y, 4);		p+=4;
+				memcpy(p, &blob->second.D.x, 4);			p+=4;
+				memcpy(p, &blob->second.D.y, 4);			p+=4;
+				memcpy(p, &blob->second.maccel, 4);			p+=4;
+				if(bHeightWidth)
+				{
+					memcpy(p, &blob->second.boundingRect.width, 4);		p+=4;
+					memcpy(p, &blob->second.boundingRect.height, 4);	p+=4;
+				}
+			}
+		}
+		m_tcpServer.sendRawBytesToAll((const char*)buf, p-buf);
+	}
 }

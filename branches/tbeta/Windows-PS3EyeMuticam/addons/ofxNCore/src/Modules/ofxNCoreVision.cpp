@@ -150,6 +150,7 @@ void ofxNCoreVision::loadXMLSettings()
 	bTUIOMode					= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
 	myTUIO.bOSCMode				= XML.getValue("CONFIG:BOOLEAN:OSCMODE",1);
 	myTUIO.bTCPMode				= XML.getValue("CONFIG:BOOLEAN:TCPMODE",1);
+	myTUIO.bBinaryMode			= XML.getValue("CONFIG:BOOLEAN:BINMODE",1);
 	myTUIO.bHeightWidth			= XML.getValue("CONFIG:BOOLEAN:HEIGHTWIDTH",0);
 	tmpLocalHost				= XML.getValue("CONFIG:NETWORK:LOCALHOST", "localhost");
 	tmpPort						= XML.getValue("CONFIG:NETWORK:TUIOPORT_OUT", 3333); 
@@ -192,6 +193,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:HEIGHTWIDTH", myTUIO.bHeightWidth);
 	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bOSCMode);
 	XML.setValue("CONFIG:BOOLEAN:TCPMODE", myTUIO.bTCPMode);
+	XML.setValue("CONFIG:BOOLEAN:BINMODE", myTUIO.bBinaryMode);
 //	XML.setValue("CONFIG:NETWORK:LOCALHOST", myTUIO.localHost);
 //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
 	XML.saveFile("config.xml");
@@ -568,13 +570,22 @@ void ofxNCoreVision::drawFullMode()
 		char buf[256];
 		if(myTUIO.bOSCMode)
 			sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
-		else{
+		else if(myTUIO.bTCPMode)
+		{
 			if(myTUIO.bIsConnected)
-			//sprintf(buf, "Sending XML messages to:\nPort: %i", myTUIO.TUIOFlashPort);
-			sprintf(buf, "Sending XML messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOFlashPort);
+				//sprintf(buf, "Sending XML messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+				sprintf(buf, "Sending XML messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOFlashPort);
 			else
-			sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
-		}		
+				sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
+		}
+		else if(myTUIO.bBinaryMode)
+		{
+			if(myTUIO.bIsConnected)
+				//sprintf(buf, "Sending XML messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+				sprintf(buf, "Sending BINARY messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOFlashPort);
+			else
+				sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
+		}
 		verdana.drawString(buf, 740, 480);
 	}
 	ofSetColor(0xFF0000);
@@ -686,20 +697,35 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 		case 't':
 			myTUIO.bOSCMode = !myTUIO.bOSCMode;
 			myTUIO.bTCPMode = false;
+			myTUIO.bBinaryMode = false;
 			bTUIOMode = myTUIO.bOSCMode;
 			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 			//clear blobs
 //			myTUIO.blobs.clear();
 			break;
 		case 'f':
 			myTUIO.bOSCMode = false;
 			myTUIO.bTCPMode = !myTUIO.bTCPMode;
+			myTUIO.bBinaryMode = false;
 			bTUIOMode = myTUIO.bTCPMode;
 			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 			//clear blobs
 //			myTUIO.blobs.clear();
+			break;
+		case 'n':
+			myTUIO.bOSCMode = false;
+			myTUIO.bTCPMode = false;
+			myTUIO.bBinaryMode = !myTUIO.bBinaryMode;
+			bTUIOMode = myTUIO.bBinaryMode;
+			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
+			//clear blobs
+			//			myTUIO.blobs.clear();
 			break;
 		case 'g':
 			bGPUMode ? bGPUMode = false : bGPUMode = true;

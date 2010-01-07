@@ -68,6 +68,7 @@ void ofxNCoreVision::setupControls()
 	ofxGuiPanel* oPanel = controls->addPanel(appPtr->optionPanel, "Communication", 735, 167, OFXGUI_PANEL_BORDER, OFXGUI_PANEL_SPACING);
 	oPanel->addButton(appPtr->optionPanel_tuio_osc, "TUIO UDP (t)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	oPanel->addButton(appPtr->optionPanel_tuio_tcp, "Flash XML (f)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
+	oPanel->addButton(appPtr->optionPanel_bin_tcp, "Binary TCP (n)", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	//oPanel->addButton(appPtr->optionPanel_tuio_height_width, "Send TUIO LC", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	//oPanel->addButton(appPtr->optionPanel_tuio_height_width, "Send Height & Width ", OFXGUI_BUTTON_HEIGHT, OFXGUI_BUTTON_HEIGHT, kofxGui_Button_Off, kofxGui_Button_Switch, "");
 	oPanel->mObjHeight = 90;
@@ -207,8 +208,9 @@ void ofxNCoreVision::setupControls()
 	//Send TUIO
 	controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
 	controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+	controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 	//TUIO Height Width
-	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
+//	controls->update(appPtr->optionPanel_tuio_height_width, kofxGui_Set_Bool, &appPtr->myTUIO.bHeightWidth, sizeof(bool));
 	//GPU Mode
 	controls->update(appPtr->gpuPanel_use, kofxGui_Set_Bool, &appPtr->bGPUMode, sizeof(bool));
 }
@@ -378,6 +380,8 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 				//set tcp to opposite
 				myTUIO.bTCPMode = false;
 				controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+				myTUIO.bBinaryMode = false;
+				controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 				//clear blobs
 //				myTUIO.blobs.clear();
 			break;
@@ -388,13 +392,27 @@ void ofxNCoreVision ::handleGui(int parameterId, int task, void* data, int lengt
 				//set osc to opposite
 				myTUIO.bOSCMode = false;
 				controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+				myTUIO.bBinaryMode = false;
+				controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 				//clear blobs
 //				myTUIO.blobs.clear();
 			break;
-		case optionPanel_tuio_height_width:
+		case optionPanel_bin_tcp:
 			if(length == sizeof(bool))
-				myTUIO.bHeightWidth = *(bool*)data;
+				myTUIO.bBinaryMode = *(bool*)data;
+			bTUIOMode = *(bool*)data;
+			//set tcp & osc to opposite
+			myTUIO.bTCPMode = false;
+			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			myTUIO.bOSCMode = false;
+			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			//clear blobs
+//				myTUIO.blobs.clear();
 			break;
+// 		case optionPanel_tuio_height_width:
+// 			if(length == sizeof(bool))
+// 				myTUIO.bHeightWidth = *(bool*)data;
+// 			break;
 		//Background
 		case backgroundPanel_dynamic:
 			if(length == sizeof(bool))

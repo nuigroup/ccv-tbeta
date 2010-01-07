@@ -50,7 +50,7 @@ class ofxNCoreVision : public ofxGuiListener
 		optionPanel,
 		optionPanel_tuio_osc,
 		optionPanel_tuio_tcp,
-		optionPanel_tuio_height_width,
+		optionPanel_bin_tcp,
 
 		calibrationPanel,
 		calibrationPanel_calibrate,
