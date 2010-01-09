@@ -208,15 +208,10 @@ void ofxTCPServer::threadedFunction(){
 			if(verbose)printf("ofxTCPServer: Accept() failed\n");
 			continue;
 		}else{
-			TCPConnections[count].setup(count, bClientBlocking);
+			TCPConnections[count].setup(count, bClientBlocking, true);
 			count++;
 			if(verbose)printf("ofxTCPServer: client %i connected on port %i\n", count, TCPConnections[count].getPort());
 		}
 	}
 	if(verbose)printf("ofxTCPServer: listen thread ended\n");
 }
-
-
-
-
-

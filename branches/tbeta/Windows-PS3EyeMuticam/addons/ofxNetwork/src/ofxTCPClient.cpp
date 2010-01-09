@@ -52,7 +52,7 @@ bool ofxTCPClient::setup(string ip, int _port, bool blocking){
 //don't use this one
 //for server to use internally only!
 //--------------------------
-bool ofxTCPClient::setup(int _index, bool blocking){
+bool ofxTCPClient::setup(int _index, bool blocking, bool noDelay){
 	index = _index;
 
 	//this fetches the port that the server
@@ -65,6 +65,7 @@ bool ofxTCPClient::setup(int _index, bool blocking){
 	}
 
 	TCPClient.SetNonBlocking(!blocking);
+	TCPClient.SetNoDelay(noDelay);
 	connected 	= true;
 	return true;
 }

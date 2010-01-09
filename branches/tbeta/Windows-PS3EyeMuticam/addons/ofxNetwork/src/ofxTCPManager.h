@@ -197,6 +197,7 @@ public:
 	int  GetSendBufferSize();
 	int  GetMaxConnections();
 	bool SetNonBlocking(bool useNonBlocking);
+	bool SetNoDelay(bool useNoDelay);
 	bool CheckHost(const char *pAddrStr);
 	void CleanUp();
 
