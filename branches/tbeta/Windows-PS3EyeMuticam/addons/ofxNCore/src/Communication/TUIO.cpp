@@ -176,6 +176,8 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 	{
 		uchar buf[1024*8];
 		uchar *p = buf;
+		// Add "CCV" as a data header
+		*p++ = 'C';	*p++ = 'C';	*p++ = 'V';	*p++ = '\0';
 		if(blobs->size() == 0)
 		{
 			memset(p, 0, 4);	p += 4;
