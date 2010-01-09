@@ -178,31 +178,42 @@ void TUIO::sendTUIO(std::map<int, Blob> * blobs)
 		uchar *p = buf;
 		if(blobs->size() == 0)
 		{
-			memset(p, 0, 4);	p+=4;
+			memset(p, 0, 4);	p += 4;
 		}
 		else
 		{
-			int count = blobs->size();
-			memcpy(p, &count, 4);	p+=4;
+			int count = 0;
 			map<int, Blob>::iterator blob;
+			// count the blobs that are non (0,0)
 			for(blob = blobs->begin(); blob != blobs->end(); blob++)
 			{
 				// omit point (0,0) since this means that we are outside of the range
 				if(blob->second.centroid.x == 0 && blob->second.centroid.y == 0)
 					continue;
-				memcpy(p, &blob->second.id, 4);				p+=4;
-				memcpy(p, &blob->second.centroid.x, 4);		p+=4;
-				memcpy(p, &blob->second.centroid.y, 4);		p+=4;
-				memcpy(p, &blob->second.D.x, 4);			p+=4;
-				memcpy(p, &blob->second.D.y, 4);			p+=4;
-				memcpy(p, &blob->second.maccel, 4);			p+=4;
+				count++;
+			}
+			// send blob count first
+			memcpy(p, &count, 4);	p += 4;
+			// send blob information
+			for(blob = blobs->begin(); blob != blobs->end(); blob++)
+			{
+				// omit point (0,0) since this means that we are outside of the range
+				if(blob->second.centroid.x == 0 && blob->second.centroid.y == 0)
+					continue;
+				memcpy(p, &blob->second.id, 4);							p += 4;
+				memcpy(p, &blob->second.centroid.x, 4);					p += 4;
+				memcpy(p, &blob->second.centroid.y, 4);					p += 4;
+				memcpy(p, &blob->second.D.x, 4);						p += 4;
+				memcpy(p, &blob->second.D.y, 4);						p += 4;
+				memcpy(p, &blob->second.maccel, 4);						p += 4;
 				if(bHeightWidth)
 				{
-					memcpy(p, &blob->second.boundingRect.width, 4);		p+=4;
-					memcpy(p, &blob->second.boundingRect.height, 4);	p+=4;
+					memcpy(p, &blob->second.boundingRect.width, 4);		p += 4;
+					memcpy(p, &blob->second.boundingRect.height, 4);	p += 4;
 				}
 			}
 		}
+		// send blob data to clients
 		m_tcpServer.sendRawBytesToAll((const char*)buf, p-buf);
 	}
 }
