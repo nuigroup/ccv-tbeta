@@ -1,0 +1,181 @@
+<?xml version="1.0" ?>
+<CONFIG>
+    <!--/////////////////////////////////////////
+
+        YOU CAN MANUALLY EDIT THE FEATURES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <!--// CAMERA SETTINGS // -->
+    <CAMERA_0>
+        <USECAMERA>1</USECAMERA>
+        <!--//DEVICE_MODEL  choose from :
+	 PS3 	(Sony PS3),
+	 FFMV 	(Pointgrey Firefly) .
+	 For other cameras you could leave this empty or make a value of your choice as it will be ignored at this time
+	 //-->
+        <DEVICE_MODEL>Unibrain</DEVICE_MODEL>
+        <DEVICE>0</DEVICE>
+        <WIDTH>640</WIDTH>
+        <HEIGHT>480</HEIGHT>
+        <FRAMERATE>30</FRAMERATE>
+    </CAMERA_0>
+    <!--POINTGREY CAMERASETTINGS LOADING //-->
+    <FFMV>
+        <MEMORY_CHANNEL>1</MEMORY_CHANNEL>
+    </FFMV>
+    <!--// NETWORK COMMUNICATION SETTINGS //-->
+    <NETWORK>
+        <LOCALHOST>127.0.0.1</LOCALHOST>
+        <TUIOPORT_OUT>3333</TUIOPORT_OUT>
+        <TUIOFLASHPORT_OUT>3000</TUIOFLASHPORT_OUT>
+        <!-- Application name for the TUIO source messages -->
+        <TUIO_SOURCE_APPLICATION>MYSourceName</TUIO_SOURCE_APPLICATION>
+        <CALIBRATION_UDP_PORT>11999</CALIBRATION_UDP_PORT>
+        <CALIBRATION_HOST>127.0.0.1</CALIBRATION_HOST>
+        <!--Number of the interface on this machine(sometimes you have more networkdapters) 0 for 127.0.0.1, for others you might have to use 1 -->
+        <NETWORK_INTERFACE_NR>0</NETWORK_INTERFACE_NR>
+        <!-- UDP Connection to trigger a 'alive' message from the application to test if its still running  -->
+        <!-- IN String : <command id="getstatus"></command> -->
+        <!-- OUT String : <command id="status" wert="alive" ip="[your IP(comes from the NETWORK_INTERFACE_NR Adapter automatically)]" ></command> -->
+        <UDP_ALIVE>
+            <IN_PORT>10100</IN_PORT>
+            <OUT_PORT>10101</OUT_PORT>
+            <OUT_HOST>127.0.0.1</OUT_HOST>
+        </UDP_ALIVE>
+    </NETWORK>
+    <!--// VIDEO SETTINGS // -->
+    <VIDEO>
+        <FILENAME>test_videos/RearDI.m4v</FILENAME>
+    </VIDEO>
+    <!--// BLOB SETTINGS // -->
+    <BLOBS>
+        <MAXNUMBER>20</MAXNUMBER>
+    </BLOBS>
+    <!--/////////////////////////////////////////
+
+        DO NOT EDIT THE VALUES BELOW
+ 
+    ///////////////////////////////////////////// -->
+    <APPLICATION>
+        <TITLE>Community Core Visision</TITLE>
+        <VERSION>1.2.0</VERSION>
+    </APPLICATION>
+    <WINDOW>
+        <WIDTH>950</WIDTH>
+        <HEIGHT>600</HEIGHT>
+    </WINDOW>
+    <BACKGROUND>
+        <!-- MODES are:  
+	    AUTO: automatic background set on startup time
+	    NONE: no setting at startup 
+	    LOAD: Image is loaded as background (uses the path specified in <IMAGE>)
+	    -->
+        <STARTUPMODE>AUTO</STARTUPMODE>
+        <!--Path to a saved BackgroundImage./ name of BackgroundImage to be saved    -->
+        <IMAGE>referenceBackground.png</IMAGE>
+    </BACKGROUND>
+    <BOOLEAN>
+        <PRESSURE>0</PRESSURE>
+        <LABELS>1</LABELS>
+        <OUTLINES>1</OUTLINES>
+        <!--<LEARNBG>0</LEARNBG>-->
+        <TUIO>1</TUIO>
+        <VMIRROR>1</VMIRROR>
+        <HMIRROR>1</HMIRROR>
+        <PRINTFTOFILE>0</PRINTFTOFILE>
+        <HIGHPASS>1</HIGHPASS>
+        <AMPLIFY>1</AMPLIFY>
+        <SMOOTH>1</SMOOTH>
+        <GPU>0</GPU>
+        <DYNAMICBG>0</DYNAMICBG>
+        <SNAPSHOT>0</SNAPSHOT>
+        <MINIMODE>1</MINIMODE>
+        <HEIGHTWIDTH>1</HEIGHTWIDTH>
+        <OSCMODE>1</OSCMODE>
+        <TCPMODE>0</TCPMODE>
+        <TRACKDARK>1</TRACKDARK>
+        <UNDISTORT>1</UNDISTORT>
+    </BOOLEAN>
+    <PROPERTIESPANEL>
+        <SOURCE_PROPERTIES>
+            <X>735</X>
+            <Y>10</Y>
+        </SOURCE_PROPERTIES>
+        <GPU_PROPERTIES>
+            <X>735</X>
+            <Y>110</Y>
+        </GPU_PROPERTIES>
+        <COMMUNICATION>
+            <X>735</X>
+            <Y>167</Y>
+        </COMMUNICATION>
+        <CALIBRATION>
+            <X>735</X>
+            <Y>264</Y>
+        </CALIBRATION>
+        <FILES>
+            <X>735</X>
+            <Y>322</Y>
+        </FILES>
+    </PROPERTIESPANEL>
+    <FIDUCIAL>
+        <!-- for pure finger tracking mode you should turn tracking off, you get better performance -->
+        <TRACKING>1</TRACKING>
+        <TREE_FILE>data/fiducials2.trees</TREE_FILE>
+        <WINDOW>
+            <WIDTH>1280</WIDTH>
+            <HEIGHT>600</HEIGHT>
+        </WINDOW>
+        <BOOLEAN>
+            <HIGHPASS>0</HIGHPASS>
+            <AMPLIFY>0</AMPLIFY>
+            <SMOOTH>0</SMOOTH>
+        </BOOLEAN>
+        <INT>
+            <MINMOVEMENT>2</MINMOVEMENT>
+            <MINBLOBSIZE>8</MINBLOBSIZE>
+            <MAXBLOBSIZE>36</MAXBLOBSIZE>
+            <!--// FILTERS SETTERS //-->
+            <THRESHOLD>14</THRESHOLD>
+            <HIGHPASSBLUR>10</HIGHPASSBLUR>
+            <HIGHPASSNOISE>1</HIGHPASSNOISE>
+            <HIGHPASSAMP>60</HIGHPASSAMP>
+            <SMOOTH>1</SMOOTH>
+            <BGLEARNRATE>118.945450</BGLEARNRATE>
+        </INT>
+        <PROPERTIESPANEL>
+            <SOURCE_PROPERTIES>
+                <X>1070</X>
+                <Y>10</Y>
+            </SOURCE_PROPERTIES>
+            <GPU_PROPERTIES>
+                <X>1070</X>
+                <Y>110</Y>
+            </GPU_PROPERTIES>
+            <COMMUNICATION>
+                <X>1070</X>
+                <Y>167</Y>
+            </COMMUNICATION>
+            <CALIBRATION>
+                <X>1070</X>
+                <Y>264</Y>
+            </CALIBRATION>
+            <FILES>
+                <X>1070</X>
+                <Y>322</Y>
+            </FILES>
+        </PROPERTIESPANEL>
+    </FIDUCIAL>
+    <INT>
+        <MINMOVEMENT>0</MINMOVEMENT>
+        <MINBLOBSIZE>4</MINBLOBSIZE>
+        <MAXBLOBSIZE>8</MAXBLOBSIZE>
+        <!--// FILTERS SETTERS //-->
+        <THRESHOLD>27</THRESHOLD>
+        <HIGHPASSBLUR>10</HIGHPASSBLUR>
+        <HIGHPASSNOISE>5</HIGHPASSNOISE>
+        <HIGHPASSAMP>240</HIGHPASSAMP>
+        <SMOOTH>2</SMOOTH>
+        <BGLEARNRATE>109.872726</BGLEARNRATE>
+    </INT>
+</CONFIG>

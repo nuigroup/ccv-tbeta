@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+	<tuio_sources>
+		<source nr="0" name="MYSourceName_0" address="127.0.0.1" >
+			<rotation deg="90"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="1" name="MYSourceName_1" address="127.0.0.1" >
+			<rotation deg="135"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="2" name="MYSourceName_2" address="127.0.0.1" >
+			<rotation deg="180"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="3" name="MYSourceName_3" address="127.0.0.1" >
+			<rotation deg="225"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="4" name="MYSourceName_4" address="127.0.0.1" >
+			<rotation deg="270"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="5" name="MYSourceName_5" address="127.0.0.1" >
+			<rotation deg="315"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="6" name="MYSourceName_6" address="127.0.0.1" >
+			 <rotation deg="0"></rotation>
+			 <width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="255" g="0" b="0"/>		
+		</source>
+		<source nr="7" name="MYSourceName" address="127.0.0.1" >
+			<rotation deg="45"></rotation>
+			<width >288</width>
+			<height>216</height>
+			<radius_offset>0</radius_offset>
+			<color r="0" g="255" b="0"/>
+		</source>
+	</tuio_sources>
+	
+	<!-- Screen dimension of your complete application surface in pixels -->
+	<!-- modes: circle / square-->
+	<screen mode="circle">
+		<circle>
+			<diameter >768</diameter>
+		</circle>
+	</screen>
+
+	<!-- the UDP port for the calibration communication -->
+	<calibrate>
+		<CALIBRATION_UDP_PORT>11999</CALIBRATION_UDP_PORT>
+	</calibrate>
+	<!-- the UDP Port for the application monitoring  
+	In message: <command id=“getstatus“ ></command>
+	Out message: <command id=“status“ wert=“alive“ ip=“[your IP]“ ></command> -->
+	<alive>
+		<UDP_IN_PORT>10100</UDP_IN_PORT>
+		<UDP_OUT_PORT>10101</UDP_OUT_PORT>
+		<OUT_HOST>127.0.0.1</OUT_HOST>
+	</alive>
+	
+	<!--host and port for the TUIO messages that are send to some application  -->
+	<tuioServer>
+		<host>127.0.0.1</host>
+		<port>3334</port>
+		<tuio_source_application>TUIOFILTER</tuio_source_application>
+		<!--<flashport_out>3000</flashport_out> not in this version-->
+	</tuioServer>
+	
+	<!-- port where we listen from CCV -->
+	<tuioClient>
+		<port>3333</port>
+	</tuioClient>
+	<!-- hostadapter from wich this application gets his ipaddress for the sourceaddress message 0 is the Loopback adress 127.0.0.1-->
+	 <network_interface_nr>1</network_interface_nr>
+	 <!--scalefactor has to be 1 if we do calibration!! For performance you should use 4 . If you use higher values the blobtracking may fail or will be less accurate-->
+	 <scalefactor>1</scalefactor>	 
+	<!--  size of the internal blobs for the FBO in pixels. if the calibration is bad a higher value might be usefull in the overlap regions, but less accurate-->
+	<!-- the multiplexer tracks bobs with a minimal size of (blobSize/scalefactor)+1 pixel  so beware of to small values -->
+	<blobSize>8</blobSize>	
+	<!--Position of the Window at start -->
+	<position x="50" y="100"/>
+	<!--visible==0 => hidden Window   1==Visible-->
+	<visible>1</visible>
+	<!-- for Debugging look at ./logs/-->
+	<printToFile>0</printToFile>
+	<!-- OpenGL bug on some ATI cards causes a memory Leak, so set a max memory allocation in MB after that the application should shutdown and restart -->
+	<maxMemoryAllocation>250</maxMemoryAllocation>
+</CONFIG>

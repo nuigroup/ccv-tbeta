@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+	<tuio_sources>
+		<source nr="0" name="MYSourceName" address="127.0.0.1" >
+			<!-- Here you could translate the local source position to world position(pixel) only in squaremode!!-->
+			<translation x="0" y="0"></translation>
+			<rotation deg="0"></rotation>
+			<width >640</width>
+			<height>480</height>
+			<color r="255" g="0" b="0"/>
+		</source>
+		<source nr="1" name="MYSourceName_1" address="127.0.0.1" >
+			<translation x="620" y="0"></translation>
+			<rotation deg="0"></rotation>
+			<width >660</width>
+			<height>480</height>
+			<color r="0" g="255" b="0"/>
+		</source>
+		 
+	</tuio_sources>
+	
+	<!-- Screen dimension of the application screen in pixels -->
+	<!-- modes: circle , square-->
+	<screen mode="square">
+		<square>			
+			<width>1280</width>
+			<height>480</height>
+		</square>	
+	</screen>
+	<!-- the UDP port for the calibration communication with CCV-->
+	<calibrate>
+		<CALIBRATION_UDP_PORT>11999</CALIBRATION_UDP_PORT>
+	</calibrate>
+	<!-- the UDP Port for the application monitoring  
+	In message: <command id=“getstatus“ ></command>
+	Out message: <command id=“status“ wert=“alive“ ip=“[your IP]“ ></command> -->
+	<alive>
+		<UDP_IN_PORT>10100</UDP_IN_PORT>
+		<UDP_OUT_PORT>10101</UDP_OUT_PORT>
+		<OUT_HOST>127.0.0.1</OUT_HOST>
+	</alive>
+		
+	<!--host and port for the TUIO messages that are send to some application  -->
+	<tuioServer>
+		<host>127.0.0.1</host>
+		<port>3334</port>
+		<tuio_source_application>TUIOFILTER</tuio_source_application>
+		<!--<flashport_out>3000</flashport_out> not in this version-->
+	</tuioServer>
+	
+	<!-- port where we listen from CCV -->
+	<tuioClient>
+		<port>3333</port>
+	</tuioClient>
+	<!-- hostadapter from wich this application gets his ipaddress for the sourceaddress message 0 is the Loopback adress 127.0.0.1-->
+	 <network_interface_nr>1</network_interface_nr>
+	 <!--scalefactor has to be 1 if we do calibration!! For performance you should use 4 . If you use higher values the blobtracking may fail or will be less accurate-->
+	 <scalefactor>4</scalefactor>	 
+	<!--  size of the internal blobs for the FBO in pixels. if the calibration is bad a higher value might be usefull in the overlap regions, but less accurate-->
+	<!-- the multiplexer tracks bobs with a minimal size of (blobSize/scalefactor)+1 pixel  so beware of to small values -->
+	<blobSize>8</blobSize>	
+	<!--Position of the Window at start -->
+	<position x="50" y="100"/>
+	<!--visible==0 => hidden Window   1==Visible-->
+	<visible>1</visible>
+	<!-- for Debugging look at ./logs/-->
+	<printToFile>0</printToFile>
+	<!-- OpenGL bug on some ATI cards causes a memory Leak, so set a max memory allocation in MB after that the application should shutdown and restart -->
+	<maxMemoryAllocation>250</maxMemoryAllocation>
+</CONFIG>
