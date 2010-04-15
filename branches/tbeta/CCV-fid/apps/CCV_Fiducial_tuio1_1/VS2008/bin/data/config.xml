@@ -13,16 +13,18 @@
 	 FFMV 	(Pointgrey Firefly) .
 	 For other cameras you could leave this empty or make a value of your choice as it will be ignored at this time
 	 //-->
-        <DEVICE_MODEL>Unibrain</DEVICE_MODEL>
+        <DEVICE_MODEL>PS3</DEVICE_MODEL>
         <DEVICE>0</DEVICE>
         <WIDTH>640</WIDTH>
-        <HEIGHT>480</HEIGHT>
+        <HEIGHT>240</HEIGHT>
         <FRAMERATE>30</FRAMERATE>
     </CAMERA_0>
     <!--POINTGREY CAMERASETTINGS LOADING //-->
     <FFMV>
         <MEMORY_CHANNEL>1</MEMORY_CHANNEL>
     </FFMV>
+    <!-- delay time in seconds for startup to circumvent OSC/UDP connection problems if we start multiple CCV instances at the same time via Autostart-->
+    <STARTUP_DELAY_TIME>0</STARTUP_DELAY_TIME>
     <!--// NETWORK COMMUNICATION SETTINGS //-->
     <NETWORK>
         <LOCALHOST>127.0.0.1</LOCALHOST>
@@ -82,7 +84,7 @@
         <TUIO>1</TUIO>
         <VMIRROR>1</VMIRROR>
         <HMIRROR>1</HMIRROR>
-        <PRINTFTOFILE>0</PRINTFTOFILE>
+        <PRINTFTOFILE>1</PRINTFTOFILE>
         <HIGHPASS>1</HIGHPASS>
         <AMPLIFY>1</AMPLIFY>
         <SMOOTH>1</SMOOTH>
@@ -93,8 +95,9 @@
         <HEIGHTWIDTH>1</HEIGHTWIDTH>
         <OSCMODE>1</OSCMODE>
         <TCPMODE>0</TCPMODE>
+        <BINMODE>0</BINMODE>
         <TRACKDARK>1</TRACKDARK>
-        <UNDISTORT>1</UNDISTORT>
+        <UNDISTORT>0</UNDISTORT>
     </BOOLEAN>
     <PROPERTIESPANEL>
         <SOURCE_PROPERTIES>
@@ -128,18 +131,18 @@
         </WINDOW>
         <BOOLEAN>
             <HIGHPASS>0</HIGHPASS>
-            <AMPLIFY>0</AMPLIFY>
-            <SMOOTH>0</SMOOTH>
+            <AMPLIFY>1</AMPLIFY>
+            <SMOOTH>1</SMOOTH>
         </BOOLEAN>
         <INT>
             <MINMOVEMENT>2</MINMOVEMENT>
             <MINBLOBSIZE>8</MINBLOBSIZE>
             <MAXBLOBSIZE>36</MAXBLOBSIZE>
             <!--// FILTERS SETTERS //-->
-            <THRESHOLD>14</THRESHOLD>
+            <THRESHOLD>16</THRESHOLD>
             <HIGHPASSBLUR>10</HIGHPASSBLUR>
             <HIGHPASSNOISE>1</HIGHPASSNOISE>
-            <HIGHPASSAMP>60</HIGHPASSAMP>
+            <HIGHPASSAMP>54</HIGHPASSAMP>
             <SMOOTH>1</SMOOTH>
             <BGLEARNRATE>118.945450</BGLEARNRATE>
         </INT>
@@ -169,12 +172,12 @@
     <INT>
         <MINMOVEMENT>0</MINMOVEMENT>
         <MINBLOBSIZE>4</MINBLOBSIZE>
-        <MAXBLOBSIZE>8</MAXBLOBSIZE>
+        <MAXBLOBSIZE>229</MAXBLOBSIZE>
         <!--// FILTERS SETTERS //-->
-        <THRESHOLD>27</THRESHOLD>
-        <HIGHPASSBLUR>10</HIGHPASSBLUR>
-        <HIGHPASSNOISE>5</HIGHPASSNOISE>
-        <HIGHPASSAMP>240</HIGHPASSAMP>
+        <THRESHOLD>16</THRESHOLD>
+        <HIGHPASSBLUR>12</HIGHPASSBLUR>
+        <HIGHPASSNOISE>3</HIGHPASSNOISE>
+        <HIGHPASSAMP>215</HIGHPASSAMP>
         <SMOOTH>2</SMOOTH>
         <BGLEARNRATE>109.872726</BGLEARNRATE>
     </INT>
