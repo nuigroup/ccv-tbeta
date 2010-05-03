@@ -85,8 +85,8 @@ x) Close()
 	#include <sys/time.h>
 	#include <sys/ioctl.h>
 
-    #ifdef TARGET_LINUX
-        // linux needs this:
+    #if defined (TARGET_LINUX) || defined (TARGET_OSX)
+        // linux and osx needs this:
         #include <netinet/tcp.h>		/* for TCP_MAXSEG value */
     #endif
 
