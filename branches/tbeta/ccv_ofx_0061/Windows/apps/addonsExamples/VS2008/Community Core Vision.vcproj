@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut;..\..\..\libs\rtAudio\includes;..\..\..\libs\QTDevWin\CIncludes;..\..\..\libs\free_type_2.1.4\include;..\..\..\libs\free_type_2.1.4\include\freetype2;..\..\..\libs\freeImage;..\..\..\libs\fmodex\inc;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxPS3\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxNCore\src;..\..\..\addons\ofxDSVL\src"
+				AdditionalIncludeDirectories="..\..\..\libs\openFrameworks;..\..\..\libs\openFrameworks\graphics;..\..\..\libs\openFrameworks\app;..\..\..\libs\openFrameworks\sound;..\..\..\libs\openFrameworks\utils;..\..\..\libs\openFrameworks\communication;..\..\..\libs\openFrameworks\video;..\..\..\libs\openFrameworks\events;..\..\..\libs\glut\include;..\..\..\libs\rtAudio\include;..\..\..\libs\freetype\include;..\..\..\libs\freetype\include\freetype2;..\..\..\libs\freeImage\include;..\..\..\libs\fmodex\include;..\..\..\libs\videoInput\include;..\..\..\libs\glee\include;..\..\..\libs\glu\include;..\..\..\libs\quicktime\include;..\..\..\libs\Poco\include;..\..\..\addons;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxDirList\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxOpenCv\src;..\..\..\addons\ofxOpenCv\libs\opencv\include;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxOsc\libs\oscpack\include\ip;..\..\..\addons\ofxOsc\libs\oscpack\include\osc;..\..\..\addons\ofxThread\src;..\..\..\addons\ofxVectorGraphics\src;..\..\..\addons\ofxVectorGraphics\libs;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxXMLSettings\libs;..\..\..\addons\ofxXMLSettings\src;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;..\..\..\addons\ofxPS3\src;..\..\..\addons\ofxFFMV\src;..\..\..\addons\ofxNCore\src;..\..\..\addons\ofxDSVL\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;POCO_STATIC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,10 +62,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmtd.lib PocoNetmtd.lib PocoUtilmtd.lib PocoXMLmtd.lib Ws2_32.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cv110d.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cvaux110d.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\win32\cxcore110d.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\win32\oscpackd.lib ..\..\..\addons\ofxPS3\lib\PS3EyeMulticam.lib ..\..\..\addons\ofxFFMV\lib\PGRFlyCapture.lib ..\..\..\addons\ofxDSVL\lib\dsvl.lib"
+				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmtd.lib PocoNetmtd.lib PocoUtilmtd.lib PocoXMLmtd.lib Ws2_32.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cv110d.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cvaux110d.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cxcore110d.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\vs2008\oscpackd.lib ..\..\..\addons\ofxPS3\lib\PS3EyeMulticam.lib ..\..\..\addons\ofxFFMV\lib\PGRFlyCapture.lib ..\..\..\addons\ofxDSVL\lib\dsvl.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_debug.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\libs\glut;..\..\..\libs\rtAudio\libs\vs2008;..\..\..\libs\freeImage;..\..\..\libs\free_type_2.1.4\lib;..\..\..\libs\QTDevWin\Libraries;..\..\..\libs\fmodex\lib;..\..\..\libs\videoInput\lib;..\..\..\libs\glee\lib;..\..\..\libs\glu;..\..\..\libs\Poco\lib"
+				AdditionalLibraryDirectories="..\..\..\libs\glut\lib\vs2008;..\..\..\libs\rtAudio\lib\vs2008;..\..\..\libs\freeImage\lib\vs2008;..\..\..\libs\freetype\lib\vs2008;..\..\..\libs\fmodex\lib\vs2008;..\..\..\libs\videoInput\lib\vs2008;..\..\..\libs\glee\lib\vs2008;..\..\..\libs\glu\lib\vs2008;..\..\..\libs\Poco\lib\vs2008;..\..\..\libs\quicktime\lib\vs2008"
 				GenerateManifest="true"
 				IgnoreDefaultLibraryNames="atlthunk.lib; LIBC.lib; LIBCMT;"
 				GenerateDebugInformation="true"
@@ -381,14 +381,6 @@
 						RelativePath="..\..\..\libs\openFrameworks\communication\ofSerial.h"
 						>
 					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\communication\ofStandardFirmata.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\communication\ofStandardFirmata.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="events"
@@ -626,15 +618,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxPoint2f.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxPoint2f.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxPoint3f.cpp"
 						>
 					</File>
 					<File
@@ -642,15 +626,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxPoint4f.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxPoint4f.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxVec2f.cpp"
 						>
 					</File>
 					<File
@@ -658,15 +634,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxVec3f.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxVec3f.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\addons\ofxVectorMath\src\ofxVec4f.cpp"
 						>
 					</File>
 					<File
