@@ -14,10 +14,9 @@
 #include "ofxOsc.h"
 #include "ofxNetwork.h"
 
-class TUIO {
-
+class TUIO 
+{
 	public:		
-
 		TUIO();
 		~TUIO();
 		
@@ -35,6 +34,7 @@ class TUIO {
 		bool 			bHeightWidth;
 		bool 			bOSCMode;
 		bool			bTCPMode;
+		bool			bBinaryMode;
 		bool			bIsConnected;
 
 	private:

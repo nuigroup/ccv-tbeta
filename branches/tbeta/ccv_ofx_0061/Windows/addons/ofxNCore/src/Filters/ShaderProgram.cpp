@@ -6,10 +6,11 @@
 *  Copyright 2009 NUI Group. All rights reserved.
 *
 */
-
 #include "ShaderProgram.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+#pragma warning(disable: 4996)  // unsafe fopen warning
 
 //some helper functions...for reading textfile, compiling shader source and printing compile logs
 //TODO:  either integrate them into the class or put them somewhere else
@@ -92,7 +93,6 @@ GLuint loadShader( const char* sourceFile, GLenum shaderType){
     
 }
 
-
 //ShaderProgram class implementation
 ShaderProgram::ShaderProgram(const char* vertexSourceFile, const char* geometrySourceFile, const char* fragmentSourceFile){
 
@@ -100,12 +100,10 @@ ShaderProgram::ShaderProgram(const char* vertexSourceFile, const char* geometryS
     
     printf("loading Shaders vs:%s, gs:%s, fs:%s\n", vertexSourceFile, geometrySourceFile, fragmentSourceFile);
     
-    
     //compile and attach vertex shader
     if (vertexSourceFile != 0){
         this->vertex_shader_id = loadShader(vertexSourceFile, GL_VERTEX_SHADER);
         glAttachShader(this->program ,this->vertex_shader_id);
-
     }    
     
     //compile and attach geometry shader (sets default input/output type to GL_POINTS)
@@ -121,22 +119,17 @@ ShaderProgram::ShaderProgram(const char* vertexSourceFile, const char* geometryS
     } 
     
     //compile and attach fragment shader
-    if (fragmentSourceFile != 0){
+    if (fragmentSourceFile != 0)
+	{
         fragment_shader_id = loadShader(fragmentSourceFile, GL_FRAGMENT_SHADER);
         glAttachShader(this->program ,fragment_shader_id);
         
     } 
-    
-        glLinkProgram(program);
-        printProgramInfoLog(program);
-
-
-
+    glLinkProgram(program);
+    printProgramInfoLog(program);
 }
 
-
-
-
-ShaderProgram::~ShaderProgram(){
- //TODO: free resources
+ShaderProgram::~ShaderProgram()
+{
+	//TODO: free resources
 }

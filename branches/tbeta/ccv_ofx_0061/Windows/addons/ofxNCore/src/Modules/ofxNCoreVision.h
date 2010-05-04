@@ -7,7 +7,6 @@
  *  Copyright 2009 NUI Group/Inc. All rights reserved.
  *
  */
-
 #ifndef _ofxNCoreVision_H
 #define _ofxNCoreVision_H
 
@@ -27,17 +26,16 @@
 #include "ofxThread.h"
 #include "ofxXmlSettings.h"
 
-//Our Addon
+// Our Addon
 #include "ofxNCore.h"
 
-//height and width of the source/tracked draw window
+// height and width of the source/tracked draw window
 #define MAIN_WINDOW_HEIGHT 240.0f
 #define MAIN_WINDOW_WIDTH  320.0f
 
-
-class ofxNCoreVision : public ofxGuiListener//, public BlobManager
+class ofxNCoreVision : public ofxGuiListener
 {
-	//ofxGUI setup stuff
+	// ofxGUI setup stuff
 	enum
 	{
 		propertiesPanel,
@@ -52,7 +50,7 @@ class ofxNCoreVision : public ofxGuiListener//, public BlobManager
 		optionPanel,
 		optionPanel_tuio_osc,
 		optionPanel_tuio_tcp,
-		optionPanel_tuio_height_width,
+		optionPanel_bin_tcp,
 
 		calibrationPanel,
 		calibrationPanel_calibrate,
@@ -98,7 +96,6 @@ class ofxNCoreVision : public ofxGuiListener//, public BlobManager
 	};
 
 public:
-
 	ofxNCoreVision()
 	{
 		ofAddListener(ofEvents.mousePressed, this, &ofxNCoreVision::_mousePressed);
@@ -110,8 +107,6 @@ public:
 		ofAddListener(ofEvents.update, this, &ofxNCoreVision::_update);
 		ofAddListener(ofEvents.draw, this, &ofxNCoreVision::_draw);
 		ofAddListener(ofEvents.exit, this, &ofxNCoreVision::_exit);
-
-		exited=false;
 
 		#ifdef TARGET_WIN32
             PS3  = NULL;
@@ -138,7 +133,6 @@ public:
 		bGPUMode = 0;
 		bTUIOMode = 0;
 		showConfiguration = 0;
-		printfToFile = 0;
 		//camera
 		camRate = 30;
 		camWidth = 320;
@@ -158,22 +152,15 @@ public:
 
 	~ofxNCoreVision()
 	{
-		if( filter != NULL ) {
-            delete filter;
-        }
-        if( vidGrabber != NULL ) {
-            delete vidGrabber;
-        }
-        if( vidPlayer != NULL ) {
-            delete vidPlayer;
-        }
+		// AlexP
+		// C++ guarantees that operator delete checks its argument for null-ness
+		delete filter;		filter = NULL;
+		delete vidGrabber;	vidGrabber = NULL;
+		delete vidPlayer;	vidPlayer = NULL;
 		#ifdef TARGET_WIN32
-		if( dsvl != NULL ) {
-            delete dsvl;
-        }
-		if( ffmv != NULL ) {
-            delete ffmv;
-        }
+		delete PS3;		PS3 = NULL;
+		delete ffmv; 	ffmv = NULL;
+		delete dsvl;	dsvl = NULL;
 		#endif
 	}
 
@@ -244,9 +231,6 @@ public:
 	float				backgroundLearnRate;
 
 	bool				showConfiguration;
-	
-	bool				printfToFile;
-
 	bool				bcamera;
 	bool  				bMiniMode;
 	bool				bShowInterface;
@@ -264,9 +248,6 @@ public:
 
 	//auto ~ standalone/non-addon
 	bool                bStandaloneMode;
-
-	//exit
-	bool				exited;
 
 	/****************************************************
 	 *End config.xml variables
@@ -323,7 +304,5 @@ public:
 	struct tm *			timeinfo;
 	char				fileName [80];
 	FILE *				stream ;
-
 };
-
 #endif

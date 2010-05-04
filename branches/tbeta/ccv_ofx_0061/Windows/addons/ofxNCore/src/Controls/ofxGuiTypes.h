@@ -24,7 +24,7 @@
 //	----------------------------------------------------------------------------------------------------
 
 #define OFXGUI_VERSION			"0.06"
-#define OFXGUI_XML				"ofxGui.xml"
+#define OFXGUI_XML				"gui.xml"
 
 #define OFXGUI_PANEL_BORDER		10
 #define OFXGUI_PANEL_SPACING	10

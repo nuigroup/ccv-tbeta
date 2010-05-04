@@ -1,7 +1,6 @@
 #ifndef _OF_APP_RUNNER
 #define _OF_APP_RUNNER
 
-
 #include "ofMain.h"
 #include "ofBaseApp.h"
 #include "ofAppBaseWindow.h"

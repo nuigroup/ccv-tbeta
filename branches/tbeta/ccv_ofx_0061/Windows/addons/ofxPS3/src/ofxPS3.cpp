@@ -1,8 +1,8 @@
+// Multicam version of PS3Eye fix
 #include "ofxPS3.h"
 #include <stdio.h>
 
-// TODO: move this quiery to the PS3EyeLib driver
-unsigned int ofxPS3::camNum=1;
+unsigned int ofxPS3::camNum=0;
 
 ofxPS3::ofxPS3() 
 {
@@ -10,31 +10,9 @@ ofxPS3::ofxPS3()
 
 void ofxPS3::listDevices()
 {
-	// PS3 Camera Testing
-	pCam = IPS3EyeLib::Create(0);
-
-	// Query supported video formats
-	printf("printing formats...\n");
-	for(int i=0; i<IPS3EyeLib::GetNumFormats(); i++) 
-	{
-		int width, height, rate;
-		char *description;
-		width=IPS3EyeLib::GetFormats()[i].width;
-		height=IPS3EyeLib::GetFormats()[i].height;
-		rate=IPS3EyeLib::GetFormats()[i].rate;
-		description=IPS3EyeLib::GetFormats()[i].formatTxt;
-		printf(description);
-		printf("\n");
-	}
-}
-
-void ofxPS3::setDeviceID(int id)
-{
-}
-
-int ofxPS3::getDeviceID()
-{
-	return 0;
+	// Enumerate the cameras on the bus.
+	camNum = PS3EyeMulticamGetCameraCount();
+ 	printf("\nFound %d PS3Eye camera(s)...\n", camNum);
 }
 
 PBYTE ofxPS3::getPixels()
@@ -44,52 +22,52 @@ PBYTE ofxPS3::getPixels()
 
 bool ofxPS3::isFrameNew()
 {
-	return pCam->GetFrame(pBuffer, 24, false);
+	return PS3EyeMulticamGetFrame(pBuffer);
 }
 
-void ofxPS3::initPS3(int width,int height, int framerate)
+void ofxPS3::initPS3(int width, int height, int framerate)
 {
 	printf("selecting format...\n");
-
-	//select format
-	pCam->SetFormat(IPS3EyeLib::GetFormatIndex(width, height, framerate));
-
-	// Allocate image buffer (we are going to capture 24bit RGB images)
-	// The supported color depths are 16, 24 and 32     
-	pBuffer = new BYTE[(width*height*24)/8];
-
+	PS3EyeMulticamOpen(camNum, (height==480) ? VGA:QVGA, framerate);
+	PS3EyeMulticamLoadSettings(".\\data\\cameras.xml");
+	// get stitched image width
+	PS3EyeMulticamGetFrameDimensions(camWidth, camHeight);
+	// Allocate image buffer for grayscale image
+	pBuffer = new BYTE[camWidth*camHeight];
 	// Start capturing
-	pCam->StartCapture();
-	pCam->AutoAGC(false);
-	pCam->AutoAEC(false);
-	//pCam->SetExposure(511);
-	//pCam->SetGain(0);
+	PS3EyeMulticamStart();
 }
 
 int ofxPS3::getDeviceCount()
 {
-	camNum = IPS3EyeLib::GetNumCameras();
-	return camNum;
+	return PS3EyeMulticamGetCameraCount();
 }
 
 int ofxPS3::getCamWidth()
 {
-	return pCam->GetWidth();
+	return camWidth;
 }
 
 int ofxPS3::getCamHeight()
 {
-	return pCam->GetHeight();
+	return camHeight;
 }
 
-//Clean up
+void ofxPS3::showSettings()
+{
+	PS3EyeMulticamShowSettings();
+}
+
+// Clean up
 ofxPS3::~ofxPS3()
 {
 	// Stop capturing
-	pCam->StopCapture();
+	PS3EyeMulticamStop();
 	Sleep(50);
-	// Free the
-	delete pCam;
-	// Free the image buffer
+	PS3EyeMulticamSaveSettings(".\\data\\cameras.xml");
+	PS3EyeMulticamClose();	
 	delete [] pBuffer;
+
+	// this delete the temp settings.xml which is saved to data/cameras.xml
+	remove("settings.xml");
 }

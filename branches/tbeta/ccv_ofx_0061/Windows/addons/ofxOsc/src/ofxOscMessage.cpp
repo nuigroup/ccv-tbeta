@@ -23,6 +23,8 @@
 #include <iostream>
 #include <assert.h>
 
+#pragma warning(disable : 4244)	// 'conversion' conversion from 'type1' to 'type2' possible loss of data
+
 ofxOscMessage::ofxOscMessage()
 
 {

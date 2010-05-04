@@ -1,4 +1,7 @@
 #include "ofxffmv.h"
+
+#pragma warning(disable : 4018)	// signed/unsigned mismatch
+
 ofxffmv::ofxffmv()
 {
     fcCameraID=0;

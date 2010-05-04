@@ -37,7 +37,8 @@ class Blob {
 		int					color;				
 
         //----------------------------------------
-        Blob() {
+        Blob() 
+		{
             area 		= 0.0f;
             length 		= 0.0f;
             hole 		= false;
@@ -52,8 +53,8 @@ class Blob {
         }
 
         //----------------------------------------
-        void drawContours(float x = 0, float y = 0, float inputWidth = ofGetWidth(), float inputHeight = ofGetHeight(), float outputWidth = ofGetWidth(), float outputHeight = ofGetHeight()) {
-            
+        void drawContours(float x = 0, float y = 0, float inputWidth = ofGetWidth(), float inputHeight = ofGetHeight(), float outputWidth = ofGetWidth(), float outputHeight = ofGetHeight()) 
+		{
             glPushMatrix();
                 glTranslatef(x + angleBoundingRect.x/inputWidth * outputWidth, y + angleBoundingRect.y/inputHeight * outputHeight, 0.0f);
                 glRotatef(-angle, 0.0f, 0.0f, 1.0f);
@@ -73,9 +74,8 @@ class Blob {
 			ofNoFill();
             ofSetColor(0xFF0099);
             ofBeginShape();
-            for (int i = 0; i < nPts; i++){
+            for (int i = 0; i < nPts; i++)
                    ofVertex(x + pts[i].x/inputWidth * outputWidth, y + pts[i].y/(inputHeight) * outputHeight);
-            }
             ofEndShape(true);	
         }
 };

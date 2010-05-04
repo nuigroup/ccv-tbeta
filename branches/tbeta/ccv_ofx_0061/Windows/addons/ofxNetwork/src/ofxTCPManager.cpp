@@ -157,6 +157,15 @@ bool ofxTCPManager::SetNonBlocking(bool useNonBlocking)
 
 	return (retVal >= 0);
 }
+// Alex added
+bool ofxTCPManager::SetNoDelay(bool useNoDelay)
+{
+#ifdef TARGET_WIN32
+	return (setsockopt(m_hSocket, SOL_SOCKET, TCP_NODELAY, (char*)&useNoDelay, sizeof(useNoDelay)) != SOCKET_ERROR);
+#else
+	return false;
+#endif
+}
 
 //--------------------------------------------------------------------------------
 int ofxTCPManager::Write(const char* pBuff, const int iSize)
