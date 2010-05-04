@@ -50,10 +50,8 @@ void CPUImageFilter::operator = ( const ofxCvGrayscaleImage& _mom ) {
         // cast non-const,  no worries, we will reverse any chages
         ofxCvGrayscaleImage& mom = const_cast<ofxCvGrayscaleImage&>(_mom); 
             
-        if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
-            cvCopy( mom.getCvImage(), cvImage, 0 );
-            popROI();       //restore prevoius ROI
-            mom.popROI();   //restore prevoius ROI              
+        if( matchingROI(getROI(), mom.getROI()) ) {
+            cvCopy( mom.getCvImage(), cvImage, 0 );           
             flagImageChanged();
         } else {
             ofLog(OF_LOG_ERROR, "in =, ROI mismatch");
@@ -67,10 +65,8 @@ void CPUImageFilter::operator = ( const ofxCvGrayscaleImage& _mom ) {
 void CPUImageFilter::operator = ( const ofxCvColorImage& _mom ) {
     // cast non-const,  no worries, we will reverse any chages
     ofxCvColorImage& mom = const_cast<ofxCvColorImage&>(_mom); 
-	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+	if( matchingROI(getROI(), mom.getROI()) ) {
 		cvCvtColor( mom.getCvImage(), cvImage, CV_RGB2GRAY );
-        popROI();       //restore prevoius ROI
-        mom.popROI();   //restore prevoius ROI         
         flagImageChanged();
 	} else {
         ofLog(OF_LOG_ERROR, "in =, ROI mismatch");
@@ -81,11 +77,9 @@ void CPUImageFilter::operator = ( const ofxCvColorImage& _mom ) {
 void CPUImageFilter::operator = ( const ofxCvFloatImage& _mom ) {
     // cast non-const,  no worries, we will reverse any chages
     ofxCvFloatImage& mom = const_cast<ofxCvFloatImage&>(_mom); 
-	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+	if( matchingROI(getROI(), mom.getROI()) ) {
 		//cvConvertScale( mom.getCvImage(), cvImage, 1.0f, 0);
-        cvConvert( mom.getCvImage(), cvImage );
-        popROI();       //restore prevoius ROI
-        mom.popROI();   //restore prevoius ROI          
+        cvConvert( mom.getCvImage(), cvImage );        
         flagImageChanged();
 	} else {
         ofLog(OF_LOG_ERROR, "in =, ROI mismatch");
