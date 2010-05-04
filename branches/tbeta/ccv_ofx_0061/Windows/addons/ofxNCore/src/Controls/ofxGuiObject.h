@@ -41,7 +41,6 @@ public:
 	
 	string			floatToString(float value, int display);
 	string			pointToString(ofxPoint2f value, int display);
-	string			rgbaToString(ofRGBA value, int display);
 	
 	bool			isPointInsideMe(int x, int y);
 	bool			isPointInsideMe(ofxPoint2f point);
@@ -55,9 +54,9 @@ public:
 	int				saveObjectData();
 	string			getTagName();
 	
-	int				mParamId, mParamType, mMode, mDisplay, mSteps;
-	string			mParamName, mDisplaySting;
-
+	int				mParamId, mParamType, mDisplay, mSteps;
+	string			mParamName;
+	
 	float			mObjX, mObjY, mObjWidth, mObjHeight;
 	float			mCtrX, mCtrY, mCtrWidth, mCtrHeight, mCtrRight, mCtrBottom;
 		

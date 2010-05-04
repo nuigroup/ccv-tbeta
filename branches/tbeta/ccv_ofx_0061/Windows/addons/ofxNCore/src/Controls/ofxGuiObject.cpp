@@ -24,13 +24,13 @@ ofxGuiObject::ofxGuiObject()
 	mObjWidth		= 0; 
 	mObjHeight		= 0;
 	
-	mMode			= 0;
 	mDisplay		= kofxGui_Display_Float2;
 	mSteps			= 0;
 	
 	mMouseIsDown	= false;
 		
 	mGlobals		= ofxGuiGlobals::Instance();
+	
 	
 	setControlRegion(0, 0, 0, 0);
 }
@@ -124,13 +124,6 @@ string ofxGuiObject::pointToString(ofxPoint2f value, int display)
 
 //	----------------------------------------------------------------------------------------------------
 
-string ofxGuiObject::rgbaToString(ofRGBA value, int display)
-{
-	return value.toString(display);	
-}
-
-//	----------------------------------------------------------------------------------------------------
-
 bool ofxGuiObject::isPointInsideMe(int x, int y) 
 {	
 	return (x >= mCtrX && x <= mCtrRight && y >= mCtrY && y <= mCtrBottom);
@@ -174,8 +167,8 @@ ofxPoint2f ofxGuiObject::fractionToLocal(ofxPoint2f p)
 
 void ofxGuiObject::setControlRegion(int x, int y, int width, int height)
 {
-	mCtrX	= x;
-	mCtrY	= y;
+	mCtrX		= x;
+	mCtrY		= y;
 	mCtrWidth	= width;
 	mCtrHeight	= height;
 	mCtrRight	= mCtrX + mCtrWidth; 
@@ -203,7 +196,6 @@ int ofxGuiObject::saveObjectData()
 	mGlobals->mXml.setValue("OBJECT:WIDTH", mCtrWidth, id);
 	mGlobals->mXml.setValue("OBJECT:HEIGHT", mCtrHeight, id);
 	
-	mGlobals->mXml.setValue("OBJECT:MODE", mMode, id);
 	mGlobals->mXml.setValue("OBJECT:DISPLAY", mDisplay, id);
 	mGlobals->mXml.setValue("OBJECT:STEPS", mSteps, id);
 	

@@ -231,7 +231,7 @@ void ofxGui::saveToXml(string file)
 {
 	if(!mXmlDone)
 		return;
- 
+
 	mXmlDone = false;
 
 	mGlobals->mXml.clear();

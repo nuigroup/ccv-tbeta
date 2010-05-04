@@ -49,15 +49,9 @@ void ofxGuiRadar::setValue(float value)
 	{
 		float	fraction	= valueToFraction(value);
 		float	steps		= (float)mSteps - 1;
-		float	slice		= roundInt(fraction * steps) / steps;
+		float	slice		= long(fraction * steps + 0.5) / steps;
 		
 		value = mMinVal + mValDlt * slice;
-		
-		if (mDisplay == kofxGui_Display_String && value != mValue)
-		{
-			int id = (int)value;
-			mGlobals->mListener->handleGui(mParamId, kofxGui_Get_String, &id, sizeof(int));
-		}
 	}
 	
 	mValue = value;	
@@ -82,8 +76,6 @@ bool ofxGuiRadar::update(int id, int task, void* data, int length)
 	{
 		if(task == kofxGui_Set_Float)
 			setValue(*(float*)data);
-		else if(task == kofxGui_Set_String)
-			mDisplaySting = *(string*)data;
 		
 		handled = true;
 	}
@@ -96,39 +88,34 @@ bool ofxGuiRadar::update(int id, int task, void* data, int length)
 void ofxGuiRadar::draw()
 {
 	glPushMatrix();
-	
-	glTranslatef(mObjX, mObjY, 0.0);
-	
-	if(mParamName != "")
-	{
-		if (mDisplay == kofxGui_Display_String && mSteps > 1)
-			drawParamString(0.0, 0.0, mParamName + ": " + mDisplaySting, false);
-		else
+		
+		glTranslatef(mObjX, mObjY, 0.0);
+		
+		if(mParamName != "")
 			drawParamString(0.0, 0.0, mParamName + ": " + floatToString(mValue, mDisplay), false);
-	}
-	
-	float x = (mCtrWidth * valueToFraction(mValue));
-	
-	ofFill();
-	
-	//	background
-	glColor4f(mGlobals->mCoverColor.r, mGlobals->mCoverColor.g, mGlobals->mCoverColor.b, mGlobals->mCoverColor.a);
-	ofRect(mCtrX, mCtrY, mCtrWidth, mCtrHeight);
-	
-	//	action
-	glColor4f(mGlobals->mSliderColor.r, mGlobals->mSliderColor.g, mGlobals->mSliderColor.b, mGlobals->mSliderColor.a);
-	ofRect(mCtrX, mCtrY, x, mCtrHeight);
-	
-	//	handle
-	glColor4f(mGlobals->mHandleColor.r, mGlobals->mHandleColor.g, mGlobals->mHandleColor.b, mGlobals->mHandleColor.a);
-	ofRect(x, mCtrY, 1.0, mCtrHeight);
-	
-	ofNoFill();
-	
-	//	frame
-	glColor4f(mGlobals->mFrameColor.r, mGlobals->mFrameColor.g, mGlobals->mFrameColor.b, mGlobals->mFrameColor.a);
-	ofRect(mCtrX, mCtrY, mCtrWidth, mCtrHeight);
-	
+		
+		float x = (mCtrWidth * valueToFraction(mValue));
+		
+		ofFill();
+		
+		//	background
+		glColor4f(mGlobals->mCoverColor.r, mGlobals->mCoverColor.g, mGlobals->mCoverColor.b, mGlobals->mCoverColor.a);
+		ofRect(mCtrX, mCtrY, mCtrWidth, mCtrHeight);
+		
+		//	action
+		glColor4f(mGlobals->mSliderColor.r, mGlobals->mSliderColor.g, mGlobals->mSliderColor.b, mGlobals->mSliderColor.a);
+		ofRect(mCtrX, mCtrY, x, mCtrHeight);
+		
+		//	handle
+		glColor4f(mGlobals->mHandleColor.r, mGlobals->mHandleColor.g, mGlobals->mHandleColor.b, mGlobals->mHandleColor.a);
+		ofRect(x, mCtrY, 1.0, mCtrHeight);
+		
+		ofNoFill();
+		
+		//	frame
+		glColor4f(mGlobals->mFrameColor.r, mGlobals->mFrameColor.g, mGlobals->mFrameColor.b, mGlobals->mFrameColor.a);
+		ofRect(mCtrX, mCtrY, mCtrWidth, mCtrHeight);
+		
 	glPopMatrix();
 }
 

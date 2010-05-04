@@ -26,7 +26,7 @@ public:
 	
 	ofxGuiButton();
 	
-	void	init(int id, string name, int x, int y, int width, int height, bool value, int mode, string image);
+	void	init(int id, string name, int x, int y, int width, int height, bool value, int display);
 	
 	void	setValue(bool value);
 
@@ -41,8 +41,6 @@ public:
 	void	saveToXml();
 	
 	bool	mValue;
-
-	ofImage	logo;
 };
 
 //	----------------------------------------------------------------------------------------------------

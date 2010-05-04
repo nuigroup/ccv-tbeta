@@ -1,5 +1,5 @@
 /*
- *  ofxGuiColor.h
+ *  ofxGuiSwitch.h
  *  openFrameworks
  *
  *  Created by Stefan Kirch on 18.06.08.
@@ -9,8 +9,8 @@
 
 //	----------------------------------------------------------------------------------------------------
 
-#ifndef OFX_GUI_COLOR
-#define OFX_GUI_COLOR
+#ifndef OFX_GUI_SWITCH
+#define OFX_GUI_SWITCH
 
 //	----------------------------------------------------------------------------------------------------
 
@@ -19,32 +19,33 @@
 
 //	----------------------------------------------------------------------------------------------------
 
-class ofxGuiColor : public ofxGuiObject
+class ofxGuiSwitch : public ofxGuiObject
 	{
 		
 	public:
 		
-		ofxGuiColor();
+		ofxGuiSwitch();
 		
-		void	init(int id, string name, int x, int y, int width, int height, ofRGBA value, int display);
+		void			init(int id, string name, int x, int y, int width, int height, int min, int max, int value, const string* paramStrings);
 		
-		void	setValue(ofRGBA value);
+		void			setValue(int value);
+		void			setRange(int min, int max);
 		
-		bool	update(int id, int task, void* data, int length);
-		void	draw();
+		bool			update(int id, int task, void* data, int length);
+		void			draw();
 		
-		bool	mouseDragged(int x, int y, int button);
-		bool	mousePressed(int x, int y, int button);
-		bool	mouseReleased(int x, int y, int button);
+		bool			mouseDragged(int x, int y, int button);
+		bool			mousePressed(int x, int y, int button);
+		bool			mouseReleased(int x, int y, int button);
 		
-		void	buildFromXml();
-		void	saveToXml();
+		void			buildFromXml();
+		void			saveToXml();
 		
-		int		mouseToSlider(float y);
-
-		int		mSize, mSlider;
-		ofRGBA	mValue;
-};
+		int				fractionToValue(float fraction);
+		
+		int				mValue, mMinVal, mMaxVal, mValDlt;
+		vector			<string>mParamStrings;
+	};
 
 //	----------------------------------------------------------------------------------------------------
 
