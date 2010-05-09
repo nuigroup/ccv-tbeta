@@ -26,7 +26,7 @@ class ofxGuiColor : public ofxGuiObject
 		
 		ofxGuiColor();
 		
-		void	init(int id, string name, int x, int y, int width, int height, ofRGBA value, int mode);
+		void	init(int id, string name, int x, int y, int width, int height, ofRGBA value, int display);
 		
 		void	setValue(ofRGBA value);
 		

@@ -20,7 +20,7 @@ ofxGuiButton::ofxGuiButton()
 
 //	----------------------------------------------------------------------------------------------------
 
-void ofxGuiButton::init(int id, string name, int x, int y, int width, int height, bool value, int mode, string image = "")
+void ofxGuiButton::init(int id, string name, int x, int y, int width, int height, bool value, int display)
 {
 	int	textWidth	= (name == "") ? 0 : mGlobals->mButtonXText + roundInt(mGlobals->mHeadFont.stringWidth(name));
 
@@ -33,12 +33,10 @@ void ofxGuiButton::init(int id, string name, int x, int y, int width, int height
 	mObjWidth		= textWidth + width;
 	mObjHeight		= height;
 
-	mMode			= mode;
+	mDisplay		= display;
 	
 	setValue(value);
 	setControlRegion(0, 0, width, height);
-
-	logo.loadImage(image);
 }
 
 //	----------------------------------------------------------------------------------------------------
@@ -80,8 +78,6 @@ void ofxGuiButton::draw()
 		glColor4f(mGlobals->mCoverColor.r, mGlobals->mCoverColor.g, mGlobals->mCoverColor.b, mGlobals->mCoverColor.a);
 		ofRect(mCtrX, mCtrY, mCtrWidth, mCtrHeight);
 		
-		logo.draw(0,0, mCtrWidth, mCtrHeight);
-
 		if(mValue == 1)
 		{
 			//	handle
@@ -113,7 +109,7 @@ bool ofxGuiButton::mousePressed(int x, int y, int button)
 	
 	if(mMouseIsDown)
 	{
-		if(mMode == kofxGui_Button_Trigger)
+		if(mDisplay == kofxGui_Button_Trigger)
 			setValue(true);
 		else
 			setValue(!mValue);
@@ -132,7 +128,7 @@ bool ofxGuiButton::mouseReleased(int x, int y, int button)
 	
 	if(mMouseIsDown)
 	{
-		if(mMode == kofxGui_Button_Trigger)
+		if(mDisplay == kofxGui_Button_Trigger)
 		{
 			setValue(false);
 			mGlobals->mListener->handleGui(mParamId, kofxGui_Set_Bool, &mValue, sizeof(bool));
@@ -156,7 +152,7 @@ void ofxGuiButton::buildFromXml()
 void ofxGuiButton::saveToXml()
 {
 	int		id		= saveObjectData();
-	bool	value	= (mMode == kofxGui_Button_Trigger) ? false : mValue;
+	bool	value	= (mDisplay == kofxGui_Button_Trigger) ? false : mValue;
 	
 	mGlobals->mXml.setValue("OBJECT:VALUE", value, id);
 }

@@ -31,7 +31,7 @@ ofxGuiMatrix::~ofxGuiMatrix()
 
 //	----------------------------------------------------------------------------------------------------
 
-void ofxGuiMatrix::init(int id, string name, int x, int y, int width, int height, int xGrid, int yGrid, int value, int mode, int spacing)
+void ofxGuiMatrix::init(int id, string name, int x, int y, int width, int height, int xGrid, int yGrid, int value, int display, int spacing)
 {
 	int	textHeight	= (name == "") ? 0 : mGlobals->mParamFontHeight;
 	
@@ -47,7 +47,7 @@ void ofxGuiMatrix::init(int id, string name, int x, int y, int width, int height
 	mXGrid			= xGrid;
 	mYGrid			= yGrid;
 	
-	mMode			= mode;
+	mDisplay			= display;
 	mSpacing		= spacing;
 	
 	setValue(value);
@@ -189,7 +189,7 @@ bool ofxGuiMatrix::mousePressed(int x, int y, int button)
 	{
 		int id = mouseToPadId(mouseToFraction(inside));
 		
-		if (mMode == kofxGui_Button_Trigger)
+		if (mDisplay == kofxGui_Button_Trigger)
 			mBuffer[id]	|= kofxGui_Matrix_Set;	// = 1;
 		else
 			mBuffer[id]	^= kofxGui_Matrix_Set;	// !mBuffer[id];
@@ -211,7 +211,7 @@ bool ofxGuiMatrix::mouseReleased(int x, int y, int button)
 	
 	if(mMouseIsDown)
 	{
-		if(mMode == kofxGui_Button_Trigger)
+		if(mDisplay == kofxGui_Button_Trigger)
 		{
 			mBuffer[mValue] ^= kofxGui_Matrix_Set;	//	= 0;
 			mGlobals->mListener->handleGui(mParamId, kofxGui_Set_Int, &mValue, sizeof(int));

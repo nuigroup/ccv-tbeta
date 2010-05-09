@@ -25,6 +25,8 @@
 #include "ofxGuiMatrix.h"
 #include "ofxGuiScope.h"
 #include "ofxGuiKnob.h"
+#include "ofxGuiRadar.h"
+#include "ofxGuiSwitch.h"
 
 //	----------------------------------------------------------------------------------------------------
 
@@ -44,15 +46,17 @@ public:
 	bool			mousePressed(int x, int y, int button);
 	bool			mouseReleased(int x, int y, int button);
 	
-	ofxGuiSlider*	addSlider(int id, string name, int width, int height, float min, float max, float value, int display, int steps);
-	ofxGuiXYPad*	addXYPad(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps);
-	ofxGuiPoints*	addPoints(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps);
-	ofxGuiButton*	addButton(int id, string name, int width, int height, bool value, int mode, string image);
-	ofxGuiFiles*	addFiles(int id, string name, int width, int height, string value, string subPath, string suffix);
-	ofxGuiColor*	addColor(int id, string name, int width, int height, ofRGBA value, int mode);
-	ofxGuiMatrix*	addMatrix(int id, string name, int width, int height, int xGrid, int yGrid, int value, int mode, int spacing);
-	ofxGuiScope*	addScope(int id, string name, int width, int height, int length, ofxPoint2f value, int mode);
-	ofxGuiKnob*		addKnob(int id, string name, int width, int height, float min, float max, float value, int display, int steps);
+	ofxGuiObject*	addSlider(int id, string name, int width, int height, float min, float max, float value, int display, int steps);
+	ofxGuiObject*	addXYPad(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps);
+	ofxGuiObject*	addPoints(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps);
+	ofxGuiObject*	addButton(int id, string name, int width, int height, bool value, int display);
+	ofxGuiObject*	addFiles(int id, string name, int width, int height, string value, string subPath, string suffix);
+	ofxGuiObject*	addColor(int id, string name, int width, int height, ofRGBA value, int display);
+	ofxGuiObject*	addMatrix(int id, string name, int width, int height, int xGrid, int yGrid, int value, int mode, int spacing);
+	ofxGuiObject*	addScope(int id, string name, int width, int height, int length, ofxPoint2f value, int display);
+	ofxGuiObject*	addKnob(int id, string name, int width, int height, float min, float max, float value, int display, int steps);
+	ofxGuiObject*	addRadar(int id, string name, int width, int height, float min, float max, float value, int display, int steps);
+	ofxGuiObject*	addSwitch(int id, string name, int width, int height,  int min, int max, int value, const string* paramStrings);
 	
 	void			adjustToNewContent(int w, int h);
 

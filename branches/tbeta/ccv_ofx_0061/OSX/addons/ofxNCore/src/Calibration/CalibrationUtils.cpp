@@ -19,8 +19,8 @@ CalibrationUtils::CalibrationUtils()
 	_camHeight = 240;
 }
 
-CalibrationUtils::~CalibrationUtils(){
-
+CalibrationUtils::~CalibrationUtils()
+{
     delete screenPoints;
 	delete cameraPoints;
     delete triangles;
@@ -30,19 +30,18 @@ CalibrationUtils::~CalibrationUtils(){
 //--------------------------------------------------------------
 //	Load Settings from the config.xml file
 //--------------------------------------------------------------
-void CalibrationUtils::loadXMLSettings(){
-
+void CalibrationUtils::loadXMLSettings()
+{
 	bGoToNextStep = false;
 
 	// Can this load via http?
-	if( calibrationXML.loadFile("calibration.xml")){
+	if( calibrationXML.loadFile("calibration.xml"))
 		//WOOT!
 		message = "Calibration Loaded!";
-	}else{
+	else
 		//FAIL!
 		message = "No calibration Found...";
 		// GENERATE DEFAULT XML DATA WHICH WILL BE SAVED INTO THE CONFIG
-	}
 
 	bool bboxRoot = true;
 	bool screenRoot = true;
@@ -57,14 +56,15 @@ void CalibrationUtils::loadXMLSettings(){
 	setGrid(GRID_X, GRID_Y);
 
 	//Bounding Box Points
-	if(bboxRoot){
+	if(bboxRoot)
+	{
 	    vector2df ul(calibrationXML.getValue("SCREEN:BOUNDINGBOX:ulx", 0.000000),calibrationXML.getValue("SCREEN:BOUNDINGBOX:uly", 0.000000));
 	    vector2df lr(calibrationXML.getValue("SCREEN:BOUNDINGBOX:lrx", 1.000000),calibrationXML.getValue("SCREEN:BOUNDINGBOX:lry", 1.000000));
 		rect2df boundingbox(ul, lr);
 		setScreenBBox(boundingbox);
-	}else{
-		setScreenScale(1.0f);
 	}
+	else
+		setScreenScale(1.0f);
 
 	//Calibration Points
 	if(screenRoot)
@@ -72,20 +72,20 @@ void CalibrationUtils::loadXMLSettings(){
 		//lets see how many <STROKE> </STROKE> tags there are in the xml file
 		int numDragTags = calibrationXML.getNumTags("SCREEN:POINT");
 
-			//if there is at least one <POINT> tag we can read the list of points
-			if(numDragTags > 0){
+		//if there is at least one <POINT> tag we can read the list of points
+		if(numDragTags > 0)
+		{
+			//we push into the last POINT tag this temporarirly treats the tag as the document root.
+			calibrationXML.pushTag("SCREEN:POINT", numDragTags-1);
 
-				//we push into the last POINT tag this temporarirly treats the tag as the document root.
-				calibrationXML.pushTag("SCREEN:POINT", numDragTags-1);
+			//we see how many points we have stored in <POINT> tags
+			int numPtTags = calibrationXML.getNumTags("POINT");
 
-				//we see how many points we have stored in <POINT> tags
-				int numPtTags = calibrationXML.getNumTags("POINT");
-
-			if(numPtTags > 0){
-
+			if(numPtTags > 0)
+			{
 				//We then read those x y values into our array
-				for(int i = 0; i < numPtTags; i++){
-
+				for(int i = 0; i < numPtTags; i++)
+				{
 					//the last argument of getValue can be used to specify
 					//which tag out of multiple tags you are refering to.
 					int x = calibrationXML.getValue("POINT:X", 0.000000, i);
@@ -105,7 +105,7 @@ void CalibrationUtils::loadXMLSettings(){
 
 	//Set the camera calibated box.
 	calculateBox();
-	computeCameraToScreenMap();
+//	computeCameraToScreenMap();
 }
 
 
@@ -134,9 +134,9 @@ void CalibrationUtils::computeCameraToScreenMap()
 			float transformedX = (float)x;
 			float transformedY = (float)y;
 
-			//convert camera to screenspace for all possible camera positions
+			//convert camera to screen space for all possible camera positions
 			cameraToScreenSpace(transformedX, transformedY);
-			//save these into a map of transformed camera to screenspace positions
+			//save these into a map of transformed camera to screen space positions
 			cameraToScreenMap[p] = vector2df(transformedX, transformedY);
 			p++;
 		}
@@ -157,9 +157,10 @@ void CalibrationUtils::setGrid(int x, int y)
 
 	initTriangles();
 
-	if(bscreenPoints && bcameraPoints){
-	initScreenPoints();
-	initCameraPoints(_camWidth, _camHeight);
+	if(bscreenPoints && bcameraPoints)
+	{
+		initScreenPoints();
+		initCameraPoints(_camWidth, _camHeight);
 	}
 }
 
@@ -169,14 +170,12 @@ void CalibrationUtils::setCamRes(int camWidth = 320, int camHeight = 240)
 	_camHeight = camHeight;
 }
 
-void CalibrationUtils::initTriangles(){
-
-	int i,j;
+void CalibrationUtils::initTriangles()
+{
 	int t = 0;
-
-	for(j=0; j<GRID_Y; j++)
+	for(int j = 0; j < GRID_Y; j++)
 	{
-		for(i=0; i<GRID_X; i++)
+		for(int i = 0; i < GRID_X; i++)
 		{
 			triangles[t+0] = (i+0) + ((j+0) * (GRID_X+1));
 			triangles[t+1] = (i+1) + ((j+0) * (GRID_X+1));
@@ -198,17 +197,15 @@ void CalibrationUtils::initScreenPoints()
 {
 	int p = 0;
 
-	int i,j;
-
 	vector2df xd(screenBB.lowerRightCorner.X-screenBB.upperLeftCorner.X,0.0f);
 	vector2df yd(0.0f, screenBB.lowerRightCorner.Y-screenBB.upperLeftCorner.Y);
 
 	xd /= (float) GRID_X;
 	yd /= (float) GRID_Y;
 
-	for(j=0; j<=GRID_Y; j++)
+	for(int j = 0; j <= GRID_Y; j++)
 	{
-		for(i=0; i<=GRID_X; i++)
+		for(int i = 0; i <= GRID_X; i++)
 		{
 			screenPoints[p] = screenBB.upperLeftCorner + xd*i + yd*j;
 			//printf("(%d, %d) = (%f, %f)\n", i, j, screenPoints[p].X, screenPoints[p].Y);
@@ -220,11 +217,9 @@ void CalibrationUtils::initScreenPoints()
 void CalibrationUtils::initCameraPoints(int camWidth, int camHeight)
 {
 	int p = 0;
-
-	int i,j;
-	for(j=0; j<=GRID_Y; j++)
+	for(int j = 0; j <= GRID_Y; j++)
 	{
-		for(i=0; i<=GRID_X; i++)
+		for(int i = 0; i <= GRID_X; i++)
 		{
 			cameraPoints[p] = vector2df((i * camWidth) / (float)GRID_X, (j * camHeight) / (float)GRID_Y);
 			p++;
@@ -235,7 +230,7 @@ void CalibrationUtils::initCameraPoints(int camWidth, int camHeight)
 void CalibrationUtils::setScreenScale(float s)
 {
 	// legacy
-	float offset = (1.0f - s)*0.5f;
+	float offset = (1.0f - s) * 0.5f;
 	screenBB = rect2df(vector2df(offset,offset),vector2df(1.0f-offset,1.0f-offset));
 	initScreenPoints();
 }
@@ -252,18 +247,18 @@ float CalibrationUtils::getScreenScale()
 
 void CalibrationUtils::cameraToScreenPosition(float &x, float &y)
 {
+	cameraToScreenSpace(x, y);
+
 	//is this right to avoid boundingbox overflow? this overflow occurs due to new angle box
-	if(y > _camHeight) y = _camHeight;
-	if(y < 0) y = 0;
-	if(x > _camWidth) x = _camWidth;
-	if(x < 0) x = 0;
-
-	int pos = (int)y * (int)_camWidth + (int)x;
-
-	x = cameraToScreenMap[pos].X;
-	y = cameraToScreenMap[pos].Y;
-
-	return;
+// 	if(y > _camHeight) y = _camHeight;
+// 	if(y < 0) y = 0;
+// 	if(x > _camWidth) x = _camWidth;
+// 	if(x < 0) x = 0;
+// 
+// 	int pos = (int)y * (int)_camWidth + (int)x;
+// 
+// 	x = cameraToScreenMap[pos].X;
+// 	y = cameraToScreenMap[pos].Y;
 }
 
 void CalibrationUtils::transformDimension(float &width, float &height)
@@ -276,13 +271,13 @@ void CalibrationUtils::transformDimension(float &width, float &height)
 	float centerX = ((maxBoxX - minBoxX)/2) + minBoxX;
 	float centerY = ((maxBoxY - minBoxY)/2) + minBoxY;
 
-	//Calculate x/y position of upperleft and lowerright x/y positions
+	//Calculate x/y position of upper left and lower right x/y positions
     float ulX = centerX - halfX;
     float ulY = centerY - halfY;
     float lrX = centerX + halfX;
     float lrY = centerY + halfY;
 
-	//Transform these x/y positions to screenspace
+	//Transform these x/y positions to screen space
 	cameraToScreenPosition(ulX, ulY);
 	cameraToScreenPosition(lrX, lrY);
 
@@ -298,26 +293,13 @@ void CalibrationUtils::calculateBox()
 	minBoxX = _camWidth;
 	maxBoxY = 0;
 	minBoxY = _camHeight;
-
-	//Calculate the max/min points based on cameraPoints
-	for(int i = 0; i < GRID_POINTS; i++){
-
-		if(cameraPoints[i].X > maxBoxX){
-
-			maxBoxX = cameraPoints[i].X;
-		}
-		else if(cameraPoints[i].X < minBoxX){
-
-			minBoxX = cameraPoints[i].X;
-		}
-		if(cameraPoints[i].Y > maxBoxY){
-
-			maxBoxY = cameraPoints[i].Y;
-		}
-		if(cameraPoints[i].Y < minBoxY){
-
-			minBoxY = cameraPoints[i].Y;
-		}
+	// Calculate the max/min points based on cameraPoints
+	for(int i = 0; i < GRID_POINTS; i++)
+	{
+		if(cameraPoints[i].X > maxBoxX)			maxBoxX = cameraPoints[i].X;
+		else if(cameraPoints[i].X < minBoxX)	minBoxX = cameraPoints[i].X;
+		if(cameraPoints[i].Y > maxBoxY)			maxBoxY = cameraPoints[i].Y;
+		else if(cameraPoints[i].Y < minBoxY)	minBoxY = cameraPoints[i].Y;
 	}
 }
 
@@ -325,9 +307,7 @@ void CalibrationUtils::calculateBox()
 void CalibrationUtils::cameraToScreenSpace(float &x, float &y)
 {
 	vector2df pt(x, y);
-
 	int t = findTriangleWithin(pt);
-
 	if(t != -1)
 	{
 		vector2df A = cameraPoints[triangles[t+0]];
@@ -357,7 +337,6 @@ void CalibrationUtils::cameraToScreenSpace(float &x, float &y)
 		y = transformedPos.Y;
 		return;
 	}
-
 	x = 0;
 	y = 0;
 	// FIXME: what to do in the case that it's outside the mesh?
@@ -373,16 +352,11 @@ bool CalibrationUtils::isPointInTriangle(vector2df p, vector2df a, vector2df b, 
 
 int CalibrationUtils::findTriangleWithin(vector2df pt)
 {
-	int t;
-
-	for(t=0; t<GRID_INDICES; t+=3)
+	for(int t = 0; t < GRID_INDICES; t += 3)
 	{
-		if( isPointInTriangle(pt, cameraPoints[triangles[t]], cameraPoints[triangles[t+1]], cameraPoints[triangles[t+2]]) )
-		{
+		if(isPointInTriangle(pt, cameraPoints[triangles[t]], cameraPoints[triangles[t+1]], cameraPoints[triangles[t+2]]) )
 			return t;
-		}
 	}
-
 	return -1;
 }
 
@@ -397,14 +371,13 @@ void CalibrationUtils::nextCalibrationStep()
 	if(bCalibrating)
 	{
 		calibrationStep++;
-
 		if(calibrationStep >= GRID_POINTS)
 		{
 			bCalibrating = false;
 			calibrationStep = 0;
 			saveCalibration();
 			calculateBox();
-			computeCameraToScreenMap();
+// 			computeCameraToScreenMap();
 
             saveCalibration();
 		}
@@ -432,8 +405,8 @@ void CalibrationUtils::saveCalibration()
 	int numDragTags = calibrationXML.getNumTags("SCREEN:POINT");
 
 	//if there is at least one <POINT> tag we can read the list of points
-	if(numDragTags > 0){
-
+	if(numDragTags > 0)
+	{
 		//we push into the last POINT tag this temporarirly treats the tag as the document root.
 		calibrationXML.pushTag("SCREEN:POINT", numDragTags-1);
 
@@ -450,11 +423,11 @@ void CalibrationUtils::saveCalibration()
 		calibrationXML.setValue("BOUNDINGBOX:lry", screenBB.lowerRightCorner.Y);
 
 		//Save all the Calibration Points
-		if(GRID_POINTS > 0){
-
+		if(GRID_POINTS > 0)
+		{
 			//We then read those x y values into our array
-			for(int i = 0; i < GRID_POINTS; i++){
-
+			for(int i = 0; i < GRID_POINTS; i++)
+			{
 				//the last argument of getValue can be used to specify
 				//which tag out of multiple tags you are refering to.
 				calibrationXML.setValue("POINT:X", cameraPoints[i].X, i);

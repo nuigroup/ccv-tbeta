@@ -3,7 +3,7 @@
 *  
 *
 *  Created on 2/2/09.
-*  Copyright 2009 NUI Group\Inc.. All rights reserved.
+*  Copyright 2009 NUI Group. All rights reserved.
 *
 */
 
@@ -14,10 +14,9 @@
 #include "ofxOsc.h"
 #include "ofxNetwork.h"
 
-class TUIO {
-
+class TUIO 
+{
 	public:		
-
 		TUIO();
 		~TUIO();
 		
@@ -35,6 +34,7 @@ class TUIO {
 		bool 			bHeightWidth;
 		bool 			bOSCMode;
 		bool			bTCPMode;
+		bool			bBinaryMode;
 		bool			bIsConnected;
 
 	private:

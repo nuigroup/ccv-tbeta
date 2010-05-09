@@ -20,9 +20,7 @@
 
 class BlobTracker : public TouchListener
 {
-
 public:
-
 	BlobTracker();
 	~BlobTracker();
 	//assigns IDs to each blob in the contourFinder
@@ -31,17 +29,15 @@ public:
 
 	CalibrationUtils* calibrate;
 	bool isCalibrating;
-	int MIN_MOVEMENT_THRESHOLD;
+	int MOVEMENT_FILTERING;
 	std::map<int, Blob> getTrackedBlobs();
 
 private:
-
 	int trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh);
 	int						IDCounter;	  //counter of last blob
 	int						fightMongrel;
 	std::vector<Blob>		trackedBlobs; //tracked blobs
 	std::map<int, Blob>     calibratedBlobs;
-	//std::vector<pair<int,Blob>>		finalBlobs; //tracked blobs
 };
 
 #endif

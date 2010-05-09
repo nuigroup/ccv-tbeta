@@ -30,7 +30,7 @@ ofxGuiScope::~ofxGuiScope()
 
 //	----------------------------------------------------------------------------------------------------
 
-void ofxGuiScope::init(int id, string name, int x, int y, int width, int height, int length, ofxPoint2f value, int mode)
+void ofxGuiScope::init(int id, string name, int x, int y, int width, int height, int length, ofxPoint2f value, int display)
 {
 	int	textHeight	= (name == "") ? 0 : mGlobals->mParamFontHeight;
 	
@@ -43,7 +43,7 @@ void ofxGuiScope::init(int id, string name, int x, int y, int width, int height,
 	mObjWidth		= width;
 	mObjHeight		= textHeight + height;
 		
-	mMode			= mode;
+	mDisplay		= display;
 	
 	setValue(value);
 	setControlRegion(0, textHeight, width, height);

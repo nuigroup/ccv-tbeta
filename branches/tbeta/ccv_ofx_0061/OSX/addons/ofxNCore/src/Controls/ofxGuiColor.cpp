@@ -20,7 +20,7 @@ ofxGuiColor::ofxGuiColor()
 
 //	----------------------------------------------------------------------------------------------------
 
-void ofxGuiColor::init(int id, string name, int x, int y, int width, int height, ofRGBA value, int mode)
+void ofxGuiColor::init(int id, string name, int x, int y, int width, int height, ofRGBA value, int display)
 {
 	int	textHeight	= (name == "") ? 0 : mGlobals->mParamFontHeight;
 	
@@ -33,9 +33,9 @@ void ofxGuiColor::init(int id, string name, int x, int y, int width, int height,
 	mObjWidth		= width;
 	mObjHeight		= textHeight + height;
 	
-	mMode			= mode;
+	mDisplay		= display;
 	
-	mSize			= (mode == kofxGui_Color_RGB ? 3 : 4);
+	mSize			= (display == kofxGui_Color_RGB ? 3 : 4);
 
 	setValue(value);
 	setControlRegion(0, textHeight, width, height);
@@ -72,7 +72,7 @@ void ofxGuiColor::draw()
 	glTranslatef(mObjX, mObjY, 0.0f);
 	
 	if(mParamName != "")
-		drawParamString(0.0, 0.0, mParamName + ": " + rgbaToString(mValue, mMode), false);
+		drawParamString(0.0, 0.0, mParamName + ": " + mValue.toString(mDisplay), false);
 	
 	ofFill();
 	
@@ -108,7 +108,7 @@ void ofxGuiColor::draw()
 	glColor4f(mGlobals->mHandleColor.r, mGlobals->mHandleColor.g, mGlobals->mHandleColor.b, mGlobals->mHandleColor.a);
 	ofRect(posX, posY, 1.0, height);
 	
-	if(mMode == kofxGui_Color_RGBA)
+	if(mDisplay == kofxGui_Color_RGBA)
 	{
 		posY	+= 1.0 + height;
 		posX	 = mCtrWidth * mValue.a;
@@ -186,7 +186,7 @@ void ofxGuiColor::saveToXml()
 {
 	int id = saveObjectData();
 	
-	mGlobals->mXml.setValue("OBJECT:VALUE", rgbaToString(mValue, kofxGui_Color_RGBA), id);
+	mGlobals->mXml.setValue("OBJECT:VALUE", mValue.toString(kofxGui_Color_RGBA), id);
 }
 
 //	----------------------------------------------------------------------------------------------------

@@ -14,16 +14,16 @@
 
 //	----------------------------------------------------------------------------------------------------
 
-#include "ofxXmlSettings.h"
-#include "ofxVectorMath.h"
-#include "ofxDirList.h"
-
+#define OF_ADDON_USING_OFXDIRLIST
+#define OF_ADDON_USING_OFXVECTORMATH
+#define OF_ADDON_USING_OFXXMLSETTINGS
 
 #include "ofMain.h"
+#include "ofAddons.h"
 
 //	----------------------------------------------------------------------------------------------------
 
-#define OFXGUI_VERSION			"0.06"
+#define OFXGUI_VERSION			"0.10"
 #define OFXGUI_XML				"ofxGui.xml"
 
 #define OFXGUI_PANEL_BORDER		10
@@ -37,7 +37,7 @@
 
 //	----------------------------------------------------------------------------------------------------
 
-static const char* kofxGui_Tags[] =
+static const string kofxGui_Tags[] =
 {
 	"UI",
 	"PANEL",
@@ -50,7 +50,8 @@ static const char* kofxGui_Tags[] =
 	"MATRIX",
 	"SCOPE",
 	"KNOB",
-	"RADAR"
+	"RADAR",
+	"SWITCH",
 };
 
 enum
@@ -67,6 +68,7 @@ enum
 	kofxGui_Object_Scope,
 	kofxGui_Object_Knob,
 	kofxGui_Object_Radar,
+	kofxGui_Object_Switch,
 };
 
 enum

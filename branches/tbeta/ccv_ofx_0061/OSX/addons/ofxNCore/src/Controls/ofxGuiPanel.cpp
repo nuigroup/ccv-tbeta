@@ -168,7 +168,7 @@ bool ofxGuiPanel::mouseReleased(int x, int y, int button)
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiSlider* ofxGuiPanel::addSlider(int id, string name, int width, int height, float min, float max, float value, int display, int steps)
+ofxGuiObject* ofxGuiPanel::addSlider(int id, string name, int width, int height, float min, float max, float value, int display, int steps)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 	
@@ -183,7 +183,7 @@ ofxGuiSlider* ofxGuiPanel::addSlider(int id, string name, int width, int height,
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiXYPad* ofxGuiPanel::addXYPad(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps)
+ofxGuiObject* ofxGuiPanel::addXYPad(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 
@@ -198,7 +198,7 @@ ofxGuiXYPad* ofxGuiPanel::addXYPad(int id, string name, int width, int height, o
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiPoints* ofxGuiPanel::addPoints(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps)
+ofxGuiObject* ofxGuiPanel::addPoints(int id, string name, int width, int height, ofxPoint2f min, ofxPoint2f max, ofxPoint2f value, int display, int steps)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 
@@ -213,12 +213,12 @@ ofxGuiPoints* ofxGuiPanel::addPoints(int id, string name, int width, int height,
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiButton* ofxGuiPanel::addButton(int id, string name, int width, int height, bool value, int mode, string image = "")
+ofxGuiObject* ofxGuiPanel::addButton(int id, string name, int width, int height, bool value, int display)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 
 	ofxGuiButton* button = new ofxGuiButton();
-	button->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, value, mode, image);
+	button->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, value, display);
 	mObjects.push_back(button);
 	
 	adjustToNewContent(button->mObjWidth, button->mObjHeight + offset);
@@ -228,7 +228,7 @@ ofxGuiButton* ofxGuiPanel::addButton(int id, string name, int width, int height,
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiFiles* ofxGuiPanel::addFiles(int id, string name, int width, int height, string value, string subPath, string suffix)
+ofxGuiObject* ofxGuiPanel::addFiles(int id, string name, int width, int height, string value, string subPath, string suffix)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 
@@ -243,12 +243,12 @@ ofxGuiFiles* ofxGuiPanel::addFiles(int id, string name, int width, int height, s
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiColor* ofxGuiPanel::addColor(int id, string name, int width, int height, ofRGBA value, int mode)
+ofxGuiObject* ofxGuiPanel::addColor(int id, string name, int width, int height, ofRGBA value, int display)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 	
 	ofxGuiColor* color = new ofxGuiColor();
-	color->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, value, mode);
+	color->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, value, display);
 	mObjects.push_back(color);
 	
 	adjustToNewContent(color->mObjWidth, color->mObjHeight + offset);
@@ -258,7 +258,7 @@ ofxGuiColor* ofxGuiPanel::addColor(int id, string name, int width, int height, o
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiMatrix* ofxGuiPanel::addMatrix(int id, string name, int width, int height, int xGrid, int yGrid, int value, int mode, int spacing)
+ofxGuiObject* ofxGuiPanel::addMatrix(int id, string name, int width, int height, int xGrid, int yGrid, int value, int mode, int spacing)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 	
@@ -273,25 +273,22 @@ ofxGuiMatrix* ofxGuiPanel::addMatrix(int id, string name, int width, int height,
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiScope* ofxGuiPanel::addScope(int id, string name, int width, int height, int length, ofxPoint2f value, int mode)
+ofxGuiObject* ofxGuiPanel::addScope(int id, string name, int width, int height, int length, ofxPoint2f value, int display)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 	
 	ofxGuiScope* scope = new ofxGuiScope();
-	scope->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, length, value, mode);
-	
+	scope->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, length, value, display);
 	mObjects.push_back(scope);
 	
 	adjustToNewContent(scope->mObjWidth, scope->mObjHeight + offset);
 	
 	return scope;
-
 }
-
 
 //	----------------------------------------------------------------------------------------------------
 
-ofxGuiKnob* ofxGuiPanel::addKnob(int id, string name, int width, int height, float min, float max, float value, int display, int steps)
+ofxGuiObject* ofxGuiPanel::addKnob(int id, string name, int width, int height, float min, float max, float value, int display, int steps)
 {
 	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
 	
@@ -302,6 +299,29 @@ ofxGuiKnob* ofxGuiPanel::addKnob(int id, string name, int width, int height, flo
 	adjustToNewContent(knob->mObjWidth, knob->mObjHeight + offset);
 	
 	return knob;
+}
+
+//	----------------------------------------------------------------------------------------------------
+
+ofxGuiObject* ofxGuiPanel::addRadar(int id, string name, int width, int height, float min, float max, float value, int display, int steps)
+{
+	//	todo
+	return NULL;
+}
+
+//	----------------------------------------------------------------------------------------------------
+
+ofxGuiObject* ofxGuiPanel::addSwitch(int id, string name, int width, int height, int min, int max, int value, const string* paramStrings)
+{
+	int offset = (mObjects.size() == 0 && mParamName == "") ? 0 : mSpacing;
+	
+	ofxGuiSwitch* swtch = new ofxGuiSwitch();
+	swtch->init(id, name, mBorder, mObjHeight - mBorder + offset, width, height, min, max, value, paramStrings);
+	mObjects.push_back(swtch);
+	
+	adjustToNewContent(swtch->mObjWidth, swtch->mObjHeight + offset);
+	
+	return swtch;
 }
 
 //	----------------------------------------------------------------------------------------------------
@@ -336,7 +356,6 @@ void ofxGuiPanel::buildFromXml()
 			int		display	= mGlobals->mXml.getValue("DISPLAY", 0);
 			int		steps	= mGlobals->mXml.getValue("STEPS", 0);
 			int		mode	= mGlobals->mXml.getValue("MODE", 0);
-			string	image	= mGlobals->mXml.getValue("IMAGE", "");
 			
 			if(type == "SLIDER")
 			{
@@ -344,46 +363,46 @@ void ofxGuiPanel::buildFromXml()
 				float	max		= mGlobals->mXml.getValue("MAX", 0.0f);
 				float	value	= mGlobals->mXml.getValue("VALUE", 0.0f);
 
-				ofxGuiSlider* slider = addSlider(id, name, width, height, min, max, value, display, steps);
+				ofxGuiObject* slider = addSlider(id, name, width, height, min, max, value, display, steps);
 				slider->buildFromXml();
 			}
 			else if(type == "XYPAD")
 			{
-				float	minx	= mGlobals->mXml.getValue("MIN_X", 0.0f);
-				float	miny	= mGlobals->mXml.getValue("MIN_Y", 0.0f);
-				float	maxx	= mGlobals->mXml.getValue("MAX_X", 0.0f);
-				float	maxy	= mGlobals->mXml.getValue("MAX_Y", 0.0f);
-				float	valuex	= mGlobals->mXml.getValue("VALUE_X", 0.0f);
-				float	valuey	= mGlobals->mXml.getValue("VALUE_Y", 0.0f);
+				float	minx		= mGlobals->mXml.getValue("MIN_X", 0.0f);
+				float	miny		= mGlobals->mXml.getValue("MIN_Y", 0.0f);
+				float	maxx		= mGlobals->mXml.getValue("MAX_X", 0.0f);
+				float	maxy		= mGlobals->mXml.getValue("MAX_Y", 0.0f);
+				float	valuex		= mGlobals->mXml.getValue("VALUE_X", 0.0f);
+				float	valuey		= mGlobals->mXml.getValue("VALUE_Y", 0.0f);
 				
-				ofxPoint2f min	= ofxPoint2f(minx, miny);
-				ofxPoint2f max	= ofxPoint2f(maxx, maxy);
+				ofxPoint2f min		= ofxPoint2f(minx, miny);
+				ofxPoint2f max		= ofxPoint2f(maxx, maxy);
 				ofxPoint2f value	= ofxPoint2f(valuex, valuey);
 				
-				ofxGuiXYPad* xypad = addXYPad(id, name, width, height, min, max, value, display, steps);
+				ofxGuiObject* xypad = addXYPad(id, name, width, height, min, max, value, display, steps);
 				xypad->buildFromXml();
 			}
 			else if(type == "POINTS")
 			{
-				float	minx	= mGlobals->mXml.getValue("MIN_X", 0.0f);
-				float	miny	= mGlobals->mXml.getValue("MIN_Y", 0.0f);
-				float	maxx	= mGlobals->mXml.getValue("MAX_X", 0.0f);
-				float	maxy	= mGlobals->mXml.getValue("MAX_Y", 0.0f);
-				float	valuex	= mGlobals->mXml.getValue("VALUE_X", 0.0f);
-				float	valuey	= mGlobals->mXml.getValue("VALUE_Y", 0.0f);
+				float	minx		= mGlobals->mXml.getValue("MIN_X", 0.0f);
+				float	miny		= mGlobals->mXml.getValue("MIN_Y", 0.0f);
+				float	maxx		= mGlobals->mXml.getValue("MAX_X", 0.0f);
+				float	maxy		= mGlobals->mXml.getValue("MAX_Y", 0.0f);
+				float	valuex		= mGlobals->mXml.getValue("VALUE_X", 0.0f);
+				float	valuey		= mGlobals->mXml.getValue("VALUE_Y", 0.0f);
 				
-				ofxPoint2f min	= ofxPoint2f(minx, miny);
-				ofxPoint2f max	= ofxPoint2f(maxx, maxy);
+				ofxPoint2f min		= ofxPoint2f(minx, miny);
+				ofxPoint2f max		= ofxPoint2f(maxx, maxy);
 				ofxPoint2f value	= ofxPoint2f(valuex, valuey);
 				
-				ofxGuiPoints* points = addPoints(id, name, width, height, min, max, value, display, steps);
+				ofxGuiObject* points = addPoints(id, name, width, height, min, max, value, display, steps);
 				points->buildFromXml();
 			}
 			else if(type == "BUTTON")
 			{
 				bool value = mGlobals->mXml.getValue("VALUE", 0);
 				
-				ofxGuiButton* button = addButton(id, name, width, height, value, mode, image);
+				ofxGuiObject* button = addButton(id, name, width, height, value, mode);
 				button->buildFromXml();
 			}
 			else if(type == "FILES")
@@ -391,14 +410,14 @@ void ofxGuiPanel::buildFromXml()
 				string	subPath	= mGlobals->mXml.getValue("SUBPATH", "");
 				string	suffix	= mGlobals->mXml.getValue("SUFFIX", "");
 				
-				ofxGuiFiles* files = addFiles(id, name, width, height, mGlobals->mXmlfile, subPath, suffix);
+				ofxGuiObject* files = addFiles(id, name, width, height, mGlobals->mXmlfile, subPath, suffix);
 				files->buildFromXml();
 			}
 			else if(type == "COLOR")
 			{
 				ofRGBA value = ofRGBA(mGlobals->mXml.getValue("VALUE", "FFFFFFFF"));
 				
-				ofxGuiColor* color = addColor(id, name, width, height, value, mode);
+				ofxGuiObject* color = addColor(id, name, width, height, value, mode);
 				color->buildFromXml();
 			}
 			else if(type == "MATRIX")
@@ -408,7 +427,7 @@ void ofxGuiPanel::buildFromXml()
 				int	value	= mGlobals->mXml.getValue("VALUE", 0);
 				int	spacing	= mGlobals->mXml.getValue("SPACING", 0);
 				
-				ofxGuiMatrix* matrix = addMatrix(id, name, width, height, xGrid, yGrid, value, mode, spacing);
+				ofxGuiObject* matrix = addMatrix(id, name, width, height, xGrid, yGrid, value, mode, spacing);
 
 				matrix->buildFromXml();
 			}
@@ -419,7 +438,7 @@ void ofxGuiPanel::buildFromXml()
 				float		valuey	= mGlobals->mXml.getValue("VALUE_Y", 0.0f);
 				ofxPoint2f	value	= ofxPoint2f(valuex, valuey);
 				
-				ofxGuiScope* scope = addScope(id, name, width, height, length, value, mode);
+				ofxGuiObject* scope = addScope(id, name, width, height, length, value, mode);
 				scope->buildFromXml();
 			}
 			else if(type == "KNOB")
@@ -428,8 +447,19 @@ void ofxGuiPanel::buildFromXml()
 				float	max		= mGlobals->mXml.getValue("MAX", 0.0f);
 				float	value	= mGlobals->mXml.getValue("VALUE", 0.0f);
 				
-				ofxGuiKnob* knob = addKnob(id, name, width, height, min, max, value, display, steps);
+				ofxGuiObject* knob = addKnob(id, name, width, height, min, max, value, display, steps);
 				knob->buildFromXml();
+			}
+			else if(type == "SWITCH")
+			{
+				float	min		= mGlobals->mXml.getValue("MIN", 0.0f);
+				float	max		= mGlobals->mXml.getValue("MAX", 0.0f);
+				float	value	= mGlobals->mXml.getValue("VALUE", 0.0f);
+				
+				//	const string* strings = 
+				
+				ofxGuiObject* swtch = addSwitch(id, name, width, height, min, max, value, NULL);
+				swtch->buildFromXml();
 			}
 			
 			mGlobals->mXml.popTag();

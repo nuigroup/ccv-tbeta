@@ -18,13 +18,13 @@ BlobTracker::BlobTracker()
 	isCalibrating = false;
 }
 
-BlobTracker::~BlobTracker(){
-
+BlobTracker::~BlobTracker()
+{
 	delete calibrate;
 }
 
-void BlobTracker::passInCalibration(CalibrationUtils* calibrater) {
-
+void BlobTracker::passInCalibration(CalibrationUtils* calibrater) 
+{
     calibrate = calibrater;
 }
 
@@ -35,8 +35,10 @@ void BlobTracker::track(ContourFinder* newBlobs)
 	for(int i=0; i<newBlobs->nBlobs; i++)
 		newBlobs->blobs[i].id=-1;
 
+	// STEP 1: Blob matching
+	//
 	//go through all tracked blobs to compute nearest new point
-	for(int i=0; i<trackedBlobs.size(); i++)
+	for(int i = 0; i < trackedBlobs.size(); i++)
 	{
 		/******************************************************************
 		 * *****************TRACKING FUNCTION TO BE USED*******************
@@ -47,16 +49,16 @@ void BlobTracker::track(ContourFinder* newBlobs)
 		 *****************************************************************/
 		int winner = trackKnn(newBlobs, &(trackedBlobs[i]), 3, 0);
 
-		if(winner==-1) //track has died, mark it for deletion
+		if(winner == -1) //track has died, mark it for deletion
 		{
 			//SEND BLOB OFF EVENT
 			TouchEvents.messenger = trackedBlobs[i];
 
-			if(isCalibrating){
+			if(isCalibrating)
+			{
 				TouchEvents.RAWmessenger = trackedBlobs[i];
 				TouchEvents.notifyRAWTouchUp(NULL);
 			}
-
 			calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 			calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 			//erase calibrated blob from map
@@ -124,7 +126,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						//SEND BLOB OFF EVENT
 						TouchEvents.messenger = trackedBlobs[j];
 
-						if(isCalibrating){
+						if(isCalibrating)
+						{
 							TouchEvents.RAWmessenger = trackedBlobs[j];
 							TouchEvents.notifyRAWTouchUp(NULL);
 						}
@@ -144,7 +147,8 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						//SEND BLOB OFF EVENT
 						TouchEvents.messenger = trackedBlobs[i];
 
-						if(isCalibrating){
+						if(isCalibrating)
+						{
 							TouchEvents.RAWmessenger = trackedBlobs[i];
 							TouchEvents.notifyRAWTouchUp(NULL);
 						}
@@ -172,36 +176,55 @@ void BlobTracker::track(ContourFinder* newBlobs)
 		}
 	}
 
+	// AlexP
+	// save the current time since we will be using it a lot
+	int now = ofGetElapsedTimeMillis();
+
+	// STEP 2: Blob update
+	//
 	//--Update All Current Tracks
 	//remove every track labeled as dead (ID='-1')
 	//find every track that's alive and copy it's data from newBlobs
-	for(int i=0; i<trackedBlobs.size(); i++)
+	for(int i = 0; i < trackedBlobs.size(); i++)
 	{
-		if(trackedBlobs[i].id==-1) //dead
+		if(trackedBlobs[i].id == -1) //dead
 		{
 			//erase track
-			trackedBlobs.erase(trackedBlobs.begin()+i,
-							   trackedBlobs.begin()+i+1);
-
+			trackedBlobs.erase(trackedBlobs.begin()+i, trackedBlobs.begin()+i+1);
 			i--; //decrement one since we removed an element
 		}
 		else //living, so update it's data
 		{
-			for(int j=0; j<newBlobs->nBlobs; j++)
+			for(int j = 0; j < newBlobs->nBlobs; j++)
 			{
-				if(trackedBlobs[i].id==newBlobs->blobs[j].id)
+				if(trackedBlobs[i].id == newBlobs->blobs[j].id)
 				{
 					//update track
 					ofPoint tempLastCentroid = trackedBlobs[i].centroid; // assign the new centroid to the old
-					trackedBlobs[i]=newBlobs->blobs[j];
+					trackedBlobs[i] = newBlobs->blobs[j];
 					trackedBlobs[i].lastCentroid = tempLastCentroid;
 
+					ofPoint tD;
 					//get the Differences in position
-					trackedBlobs[i].D.set((trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x) / (ofGetElapsedTimeMillis() - trackedBlobs[i].lastTimeTimeWasChecked), 
-										  (trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y) / (ofGetElapsedTimeMillis() - trackedBlobs[i].lastTimeTimeWasChecked));
+					tD.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
+							trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
+					//calculate the acceleration
+					float posDelta = sqrtf((tD.x*tD.x)+(tD.y*tD.y));
 
-					//printf("D(%f, %f)\n", trackedBlobs[i].D.x, trackedBlobs[i].D.y);
-					
+					// AlexP
+					// now, filter the blob position based on MOVEMENT_FILTERING value
+					// the MOVEMENT_FILTERING ranges [0,15] so we will have that many filtering steps
+					// Here we have a weighted low-pass filter
+					// adaptively adjust the blob position filtering strength based on blob movement
+					// http://www.wolframalpha.com/input/?i=plot+1/exp(x/15)+and+1/exp(x/10)+and+1/exp(x/5)+from+0+to+100
+					float a = 1.0f - 1.0f / expf(posDelta / (1.0f + (float)MOVEMENT_FILTERING*10));
+					trackedBlobs[i].centroid.x = a * trackedBlobs[i].centroid.x + (1-a) * trackedBlobs[i].lastCentroid.x;
+					trackedBlobs[i].centroid.y = a * trackedBlobs[i].centroid.y + (1-a) * trackedBlobs[i].lastCentroid.y;
+
+					//get the Differences in position
+					trackedBlobs[i].D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
+											trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
+
 					//if( abs((int)trackedBlobs[i].D.x) > 1 || abs((int)trackedBlobs[i].D.y) > 1) {
 //						printf("\nUNUSUAL BLOB @ %f\n-----------------------\ntrackedBlobs[%i]\nD = (%f, %f)\nXY= (%f, %f)\nlastTimeTimeWasChecked = %f\nsitting = %f\n",
 //							   ofGetElapsedTimeMillis(),
@@ -213,66 +236,52 @@ void BlobTracker::track(ContourFinder* newBlobs)
 //							   trackedBlobs[i].sitting
 //						);
 //					}
-					
-					
-					//calculate the accelleration
-					ofPoint tD = trackedBlobs[i].D;
-					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)/(ofGetElapsedTimeMillis() - trackedBlobs[i].lastTimeTimeWasChecked));
-					
-					trackedBlobs[i].lastTimeTimeWasChecked = ofGetElapsedTimeMillis();
+
+					//calculate the acceleration again
+					tD = trackedBlobs[i].D;
+					trackedBlobs[i].maccel = sqrtf((tD.x* tD.x)+(tD.y*tD.y)) / (now - trackedBlobs[i].lastTimeTimeWasChecked);
 
 					//calculate the age
 					trackedBlobs[i].age = ofGetElapsedTimef() - trackedBlobs[i].downTime;
-
-					//if not moving more than min_movement_threshold then set to same position as last frame
-		            if(trackedBlobs[i].maccel < MIN_MOVEMENT_THRESHOLD)
-					{	//this helps avoid jittery blobs
-						trackedBlobs[i].centroid.x = trackedBlobs[i].lastCentroid.x;
-						trackedBlobs[i].centroid.y = trackedBlobs[i].lastCentroid.y;
-                    }
 
 					//set sitting (held length)
                     if(trackedBlobs[i].maccel < 7)
 					{	//1 more frame of sitting
 						if(trackedBlobs[i].sitting != -1)
-						trackedBlobs[i].sitting = ofGetElapsedTimef() - trackedBlobs[i].downTime;           
+							trackedBlobs[i].sitting = ofGetElapsedTimef() - trackedBlobs[i].downTime;           
 					}
-					else {
+					else
 						trackedBlobs[i].sitting = -1;
-					}
 
 					//printf("time: %f\n", ofGetElapsedTimeMillis());
 					//printf("%i age: %f, downTimed at: %f\n", i, trackedBlobs[i].age, trackedBlobs[i].downTime);
 
 					//if blob has been 'holding/sitting' for 1 second send a held event
-					if(trackedBlobs[i].sitting > 1.0f){
-
+					if(trackedBlobs[i].sitting > 1.0f)
+					{
 						//SEND BLOB HELD EVENT
 						TouchEvents.messenger = trackedBlobs[i];
 
-						if(isCalibrating){
+						if(isCalibrating)
+						{
 							TouchEvents.RAWmessenger = trackedBlobs[i];
 							TouchEvents.notifyRAWTouchHeld(NULL);
 						}
-						
+
 						//calibrated values
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.lastCentroid.y);
 						
 						//Calibrated dx/dy
-						TouchEvents.messenger.D.set((TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x) / (ofGetElapsedTimeMillis() - TouchEvents.messenger.lastTimeTimeWasChecked), 
-													(TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y) / (ofGetElapsedTimeMillis() - TouchEvents.messenger.lastTimeTimeWasChecked));
-						
-						TouchEvents.messenger.lastTimeTimeWasChecked = ofGetElapsedTimeMillis();
-						
-						
+						TouchEvents.messenger.D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
+												trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
 
-						
-						//calibrated accelleration
-						ofPoint tD2 = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y)/(ofGetElapsedTimeMillis() - trackedBlobs[i].lastTimeTimeWasChecked));						
-						
+						//calibrated acceleration
+						ofPoint tD = TouchEvents.messenger.D;
+						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (now - TouchEvents.messenger.lastTimeTimeWasChecked);
+						TouchEvents.messenger.lastTimeTimeWasChecked = now;
+
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
@@ -280,15 +289,16 @@ void BlobTracker::track(ContourFinder* newBlobs)
                         trackedBlobs[i].sitting = -1;
 
 						TouchEvents.notifyTouchHeld(NULL);
-
-					} else {
-						
+					} 
+					else 
+					{
 						//printf("(%f, %f) -> (%f, %f) \n", trackedBlobs[i].lastCentroid.x, trackedBlobs[i].lastCentroid.y, trackedBlobs[i].centroid.x, trackedBlobs[i].centroid.y);
 
 						//SEND BLOB MOVED EVENT
 						TouchEvents.messenger = trackedBlobs[i];
 
-						if(isCalibrating){
+						if(isCalibrating)
+						{
 							TouchEvents.RAWmessenger = trackedBlobs[i];
 							TouchEvents.notifyRAWTouchMoved(NULL);
 						}
@@ -297,36 +307,36 @@ void BlobTracker::track(ContourFinder* newBlobs)
 						calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 						calibrate->cameraToScreenPosition(TouchEvents.messenger.lastCentroid.x, TouchEvents.messenger.lastCentroid.y);
-						
-						//Calibrated dx/dy
-						TouchEvents.messenger.D.set((TouchEvents.messenger.centroid.x - TouchEvents.messenger.lastCentroid.x) / (ofGetElapsedTimeMillis() - TouchEvents.messenger.lastTimeTimeWasChecked), 
-													(TouchEvents.messenger.centroid.y - TouchEvents.messenger.lastCentroid.y) / (ofGetElapsedTimeMillis() - TouchEvents.messenger.lastTimeTimeWasChecked));
-	
-						
-						TouchEvents.messenger.lastTimeTimeWasChecked = ofGetElapsedTimeMillis();
-						
-						
-						//printf("d(%0.4f, %0.4f)\n", TouchEvents.messenger.D.x, TouchEvents.messenger.D.y);
 
-						
-												
-						//calibrated accelleration
-						ofPoint tD2 = TouchEvents.messenger.D;
-						TouchEvents.messenger.maccel = sqrtf((tD2.x* tD2.x)+(tD2.y*tD2.y)/(ofGetElapsedTimeMillis() - trackedBlobs[i].lastTimeTimeWasChecked));						
-						
+						//Calibrated dx/dy
+						TouchEvents.messenger.D.set(trackedBlobs[i].centroid.x - trackedBlobs[i].lastCentroid.x, 
+												trackedBlobs[i].centroid.y - trackedBlobs[i].lastCentroid.y);
+
+						//printf("d(%0.4f, %0.4f)\n", TouchEvents.messenger.D.x, TouchEvents.messenger.D.y);
+				
+						//calibrated acceleration
+						ofPoint tD = TouchEvents.messenger.D;
+						TouchEvents.messenger.maccel = sqrtf((tD.x*tD.x)+(tD.y*tD.y)) / (now - TouchEvents.messenger.lastTimeTimeWasChecked);
+						TouchEvents.messenger.lastTimeTimeWasChecked = now;
+
 						//add to calibration map
 						calibratedBlobs[TouchEvents.messenger.id] = TouchEvents.messenger;
 
 						TouchEvents.notifyTouchMoved(NULL);
 					}
+					// AlexP
+					// The last lastTimeTimeWasChecked is updated at the end after all acceleration values are calculated
+					trackedBlobs[i].lastTimeTimeWasChecked = now;
 				}
 			}
 		}
 	}
+
+	// STEP 3: add tracked blobs to TouchEvents
 	//--Add New Living Tracks
 	//now every new blob should be either labeled with a tracked ID or\
 	//have ID of -1... if the ID is -1... we need to make a new track
-	for(int i=0; i<newBlobs->nBlobs; i++)
+	for(int i = 0; i < newBlobs->nBlobs; i++)
 	{
 		if(newBlobs->blobs[i].id==-1)
 		{
@@ -347,11 +357,11 @@ void BlobTracker::track(ContourFinder* newBlobs)
 			//Add to blob messenger
 			TouchEvents.messenger = newBlobs->blobs[i];
 
-			if(isCalibrating){
+			if(isCalibrating)
+			{
 				TouchEvents.RAWmessenger = newBlobs->blobs[i];
 				TouchEvents.notifyRAWTouchDown(NULL);
 			}
-
             calibrate->transformDimension(TouchEvents.messenger.boundingRect.width, TouchEvents.messenger.boundingRect.height);
             calibrate->cameraToScreenPosition(TouchEvents.messenger.centroid.x, TouchEvents.messenger.centroid.y);
 			//add to calibrated blob map
@@ -359,14 +369,13 @@ void BlobTracker::track(ContourFinder* newBlobs)
 
 			//Send Event
 			TouchEvents.notifyTouchDown(NULL);
-
 			trackedBlobs.push_back(newBlobs->blobs[i]);
 		}
 	}
 }
 
-std::map<int, Blob> BlobTracker::getTrackedBlobs(){
-	
+std::map<int, Blob> BlobTracker::getTrackedBlobs()
+{
     return calibratedBlobs;
 }
 
@@ -380,7 +389,6 @@ std::map<int, Blob> BlobTracker::getTrackedBlobs(){
 *			  must always be an odd number to avoid tying
 * thresh	= threshold for optimization
 **************************************************************************/
-
 int BlobTracker::trackKnn(ContourFinder *newBlobs, Blob *track, int k, double thresh = 0)
 {
 
@@ -455,6 +463,5 @@ int BlobTracker::trackKnn(ContourFinder *newBlobs, Blob *track, int k, double th
 			winner = iter->first;
 		}
 	}
-
 	return winner;
 }

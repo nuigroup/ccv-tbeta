@@ -52,12 +52,6 @@ void ofxGuiKnob::setValue(float value)
 		float	slice		= roundInt(fraction * steps) / steps;
 		
 		value = mMinVal + mValDlt * slice;
-		
-		if (mDisplay == kofxGui_Display_String && value != mValue)
-		{
-			int id = (int)value;
-			mGlobals->mListener->handleGui(mParamId, kofxGui_Get_String, &id, sizeof(int));
-		}
 	}
 	
 	mValue = value;	
@@ -82,9 +76,7 @@ bool ofxGuiKnob::update(int id, int task, void* data, int length)
 	{
 		if(task == kofxGui_Set_Float)
 			setValue(*(float*)data);
-		else if(task == kofxGui_Set_String)
-			mDisplaySting = *(string*)data;
-		
+
 		handled = true;
 	}
 	
@@ -186,10 +178,7 @@ void ofxGuiKnob::draw()
 	glColor4f(mGlobals->mFrameColor.r, mGlobals->mFrameColor.g, mGlobals->mFrameColor.b, mGlobals->mFrameColor.a);
 	ofEllipse(x, y, w, h);
 	
-	if (mDisplay == kofxGui_Display_String && mSteps > 1)
-		drawValueString(x, y, mDisplaySting);
-	else
-		drawValueString(x, y, floatToString(mValue, mDisplay));
+	drawValueString(x, y, floatToString(mValue, mDisplay));
 	
 	glPopMatrix();
 }

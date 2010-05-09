@@ -16,7 +16,7 @@ public:
 	{
 		TouchEvents.addListener(this);
 	}
-	ofxNCoreVision * tbeta;
+	ofxNCoreVision * ccv;
 
 	void setup();
 	void update();

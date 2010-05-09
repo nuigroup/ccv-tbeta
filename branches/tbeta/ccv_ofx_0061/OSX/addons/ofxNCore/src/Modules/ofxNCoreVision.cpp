@@ -19,48 +19,19 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	ofSetWindowTitle(" Community Core Vision ");
 	
 	//create filter
-	if ( filter == NULL ){filter = new ProcessFilters();}
+	if(filter == NULL)	filter = new ProcessFilters();
 	
 	//Load Settings from config.xml file
 	loadXMLSettings();
-
-    //removes the 'x' button on windows which causes a crash due to a GLUT bug
-	#ifdef TARGET_WIN32
-		//Get rid of 'x' button
-		HWND hwndConsole = FindWindowA(NULL, " Community Core Vision ");
-		HMENU hMnu = ::GetSystemMenu(hwndConsole, FALSE);
-		RemoveMenu(hMnu, SC_CLOSE, MF_BYCOMMAND);
-	#endif
-
-	
-	if(printfToFile) {
-		/*****************************************************************************************************
-		* LOGGING
-		******************************************************************************************************/
-		/* alright first we need to get time and date so our logs can be ordered */
-		time ( &rawtime );
-		timeinfo = localtime ( &rawtime );
-		strftime (fileName,80,"../logs/log_%B_%d_%y_%H_%M_%S.txt",timeinfo);
-		FILE *stream ;
-		sprintf(fileName, ofToDataPath(fileName).c_str());
-		if((stream = freopen(fileName, "w", stdout)) == NULL){}
-		/******************************************************************************************************/
-	}
-	
-	printf("printfToFile %i!\n", printfToFile);
-
-	
 
 	//Setup Window Properties
 	ofSetWindowShape(winWidth,winHeight);
 	ofSetVerticalSync(false);	            //Set vertical sync to false for better performance?
 	
-	printf("freedom?");
+	//printf("Application Loaded...\n?");
 
 	//load camera/video
 	initDevice();
-	printf("freedom2?");
-
 	//set framerate
 	ofSetFrameRate(camRate * 1.3);			//This will be based on camera fps in the future
 
@@ -72,6 +43,7 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 	sourceImg.allocate(camWidth, camHeight);    //Source Image
 	sourceImg.setUseTexture(false);				//We don't need to draw this so don't create a texture
 	/******************************************************************************************************/
+	//printf("Cameras Loaded...\n");
 
 	//Fonts - Is there a way to dynamically change font size?
 	verdana.loadFont("verdana.ttf", 8, true, true);	   //Font used for small images
@@ -79,13 +51,13 @@ void ofxNCoreVision::_setup(ofEventArgs &e)
 
 	//Static Images
 	background.loadImage("images/background.jpg"); //Main (Temp?) Background
-
-	printf("freedom3?");
+	//printf("freedom3?");
+	
 	//GUI Controls
 	controls = ofxGui::Instance(this);
 	setupControls();
 	
-	printf("freedom4?");
+	//printf("Controls Loaded...\n");
 
 	//Setup Calibration
 	calib.setup(camWidth, camHeight, &tracker);
@@ -154,9 +126,6 @@ void ofxNCoreVision::loadXMLSettings()
 	filter->bVerticalMirror		= XML.getValue("CONFIG:BOOLEAN:VMIRROR",0);
 	filter->bHorizontalMirror	= XML.getValue("CONFIG:BOOLEAN:HMIRROR",0);
 	
-	//Logging
-	printfToFile				= XML.getValue("CONFIG:BOOLEAN:PRINTFTOFILE",0);
-	
 	//Filters
 	filter->bTrackDark			= XML.getValue("CONFIG:BOOLEAN:TRACKDARK", 0);
 	filter->bHighpass			= XML.getValue("CONFIG:BOOLEAN:HIGHPASS",1);
@@ -167,7 +136,7 @@ void ofxNCoreVision::loadXMLSettings()
 	bGPUMode					= XML.getValue("CONFIG:BOOLEAN:GPU", 0);
 	bMiniMode                   = XML.getValue("CONFIG:BOOLEAN:MINIMODE",0);
 	//CONTROLS
-	tracker.MIN_MOVEMENT_THRESHOLD	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
+	tracker.MOVEMENT_FILTERING	= XML.getValue("CONFIG:INT:MINMOVEMENT",0);
 	MIN_BLOB_SIZE				= XML.getValue("CONFIG:INT:MINBLOBSIZE",2);
 	MAX_BLOB_SIZE				= XML.getValue("CONFIG:INT:MAXBLOBSIZE",100);
 	backgroundLearnRate			= XML.getValue("CONFIG:INT:BGLEARNRATE", 0.01f);
@@ -181,6 +150,7 @@ void ofxNCoreVision::loadXMLSettings()
 	bTUIOMode					= XML.getValue("CONFIG:BOOLEAN:TUIO",0);
 	myTUIO.bOSCMode				= XML.getValue("CONFIG:BOOLEAN:OSCMODE",1);
 	myTUIO.bTCPMode				= XML.getValue("CONFIG:BOOLEAN:TCPMODE",1);
+	myTUIO.bBinaryMode			= XML.getValue("CONFIG:BOOLEAN:BINMODE",1);
 	myTUIO.bHeightWidth			= XML.getValue("CONFIG:BOOLEAN:HEIGHTWIDTH",0);
 	tmpLocalHost				= XML.getValue("CONFIG:NETWORK:LOCALHOST", "localhost");
 	tmpPort						= XML.getValue("CONFIG:NETWORK:TUIOPORT_OUT", 3333); 
@@ -203,14 +173,13 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:LEARNBG", filter->bLearnBakground);
 	XML.setValue("CONFIG:BOOLEAN:VMIRROR", filter->bVerticalMirror);
 	XML.setValue("CONFIG:BOOLEAN:HMIRROR", filter->bHorizontalMirror);
-	XML.setValue("CONFIG:BOOLEAN:PRINTFTOFILE", printfToFile);
 	XML.setValue("CONFIG:BOOLEAN:TRACKDARK", filter->bTrackDark);
 	XML.setValue("CONFIG:BOOLEAN:HIGHPASS", filter->bHighpass);
 	XML.setValue("CONFIG:BOOLEAN:AMPLIFY", filter->bAmplify);
 	XML.setValue("CONFIG:BOOLEAN:SMOOTH", filter->bSmooth);
 	XML.setValue("CONFIG:BOOLEAN:DYNAMICBG", filter->bDynamicBG);
 	XML.setValue("CONFIG:BOOLEAN:GPU", bGPUMode);
-	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MIN_MOVEMENT_THRESHOLD);
+	XML.setValue("CONFIG:INT:MINMOVEMENT", tracker.MOVEMENT_FILTERING);
 	XML.setValue("CONFIG:INT:MINBLOBSIZE", MIN_BLOB_SIZE);
 	XML.setValue("CONFIG:INT:MAXBLOBSIZE", MAX_BLOB_SIZE);
 	XML.setValue("CONFIG:INT:BGLEARNRATE", backgroundLearnRate);
@@ -224,6 +193,7 @@ void ofxNCoreVision::saveSettings()
 	XML.setValue("CONFIG:BOOLEAN:HEIGHTWIDTH", myTUIO.bHeightWidth);
 	XML.setValue("CONFIG:BOOLEAN:OSCMODE", myTUIO.bOSCMode);
 	XML.setValue("CONFIG:BOOLEAN:TCPMODE", myTUIO.bTCPMode);
+	XML.setValue("CONFIG:BOOLEAN:BINMODE", myTUIO.bBinaryMode);
 //	XML.setValue("CONFIG:NETWORK:LOCALHOST", myTUIO.localHost);
 //	XML.setValue("CONFIG:NETWORK:TUIO_PORT_OUT",myTUIO.TUIOPort);
 	XML.saveFile("config.xml");
@@ -233,18 +203,16 @@ void ofxNCoreVision::saveSettings()
 *				Init Device
 ************************************************/
 //Init Device (camera/video)
-void ofxNCoreVision::initDevice(){
-
-	//save/update log file
-	if(printfToFile) if((stream = freopen(fileName, "a", stdout)) == NULL){}
-
+void ofxNCoreVision::initDevice()
+{
 	//Pick the Source - camera or video
 	if (bcamera)
 	{
 		//check if a firefly, ps3 camera, or other is plugged in
 		#ifdef TARGET_WIN32
 			/****PS3 - PS3 camera only****/
-		    if(ofxPS3::getDeviceCount() > 0 && PS3 == NULL){
+		    if(ofxPS3::getDeviceCount() > 0 && PS3 == NULL)
+			{
 				PS3 = new ofxPS3();
 				PS3->listDevices();
 				PS3->initPS3(camWidth, camHeight, camRate);
@@ -254,7 +222,8 @@ void ofxNCoreVision::initDevice(){
 				return;
 			}
 			/****ffmv - firefly camera only****/
-			else if(ofxffmv::getDeviceCount() > 0 && ffmv == NULL){
+			else if(ofxffmv::getDeviceCount() > 0 && ffmv == NULL)
+			{
 			   ffmv = new ofxffmv();
 			   ffmv->listDevices();
 			   ffmv->initFFMV(camWidth,camHeight);
@@ -263,7 +232,8 @@ void ofxNCoreVision::initDevice(){
 			   camHeight = ffmv->getCamHeight();
 			   return;
 			}
-			else if( vidGrabber == NULL ) {
+			else if( vidGrabber == NULL ) 
+			{
 				vidGrabber = new ofVideoGrabber();
 				vidGrabber->listDevices();
 				vidGrabber->setVerbose(true);
@@ -273,7 +243,8 @@ void ofxNCoreVision::initDevice(){
 				camHeight = vidGrabber->height;
 				return;
 			}
-			else if( dsvl == NULL) {
+			else if( dsvl == NULL) 
+			{
 				dsvl = new ofxDSVL();
 				dsvl->initDSVL();
 				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, dsvl->getCamWidth(), dsvl->getCamHeight());
@@ -282,19 +253,23 @@ void ofxNCoreVision::initDevice(){
 				return;
 			}
 		#else 
-			if( vidGrabber == NULL ) {
-			vidGrabber = new ofVideoGrabber();
-			vidGrabber->listDevices();
-			vidGrabber->setVerbose(true);
-			vidGrabber->initGrabber(camWidth,camHeight);
-			printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
-			camWidth = vidGrabber->width;
-			camHeight = vidGrabber->height;
-			return;
-        }
+			if( vidGrabber == NULL ) 
+			{
+				vidGrabber = new ofVideoGrabber();
+				vidGrabber->listDevices();
+				vidGrabber->setVerbose(true);
+				vidGrabber->initGrabber(camWidth,camHeight);
+				printf("Camera Mode\nAsked for %i by %i - actual size is %i by %i \n\n", camWidth, camHeight, vidGrabber->width, vidGrabber->height);
+				camWidth = vidGrabber->width;
+				camHeight = vidGrabber->height;
+				return;
+			}
 		#endif
-	}else{
-		if( vidPlayer == NULL ) {
+	}
+	else
+	{
+		if( vidPlayer == NULL ) 
+		{
             vidPlayer = new ofVideoPlayer();
             vidPlayer->loadMovie( videoFileName );
             vidPlayer->play();
@@ -312,15 +287,9 @@ void ofxNCoreVision::initDevice(){
 *****************************************************************************/
 void ofxNCoreVision::_update(ofEventArgs &e)
 {
-	//save/update log file
-	if(printfToFile) if((stream = freopen(fileName, "a", stdout)) == NULL){}
-
-
-	if(exited) return;
-
 	bNewFrame = false;
 
-	if (bcamera) //if camera
+	if(bcamera) //if camera
 	{
 		#ifdef TARGET_WIN32
 			if(PS3!=NULL)//ps3 camera
@@ -353,7 +322,8 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 	}
 
 	//if no new frame, return
-	if(!bNewFrame){
+	if(!bNewFrame)
+	{
 		return;
 	}
 	else//else process camera frame
@@ -413,18 +383,20 @@ void ofxNCoreVision::_update(ofEventArgs &e)
 *				Input Device Stuff
 ************************************************/
 //get pixels from camera
-void ofxNCoreVision::getPixels(){
-
+void ofxNCoreVision::getPixels()
+{
 #ifdef TARGET_WIN32
-	if(PS3!=NULL){
-		sourceImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
-		//convert to grayscale
-		processedImg = sourceImg;
+	if(PS3!=NULL)
+	{
+		//already grayscale
+		processedImg.setFromPixels(PS3->getPixels(), camWidth, camHeight);
 	}
-	else if(ffmv != NULL){
+	else if(ffmv != NULL)
+	{
 		processedImg.setFromPixels(ffmv->fcImage[ffmv->getDeviceID()].pData, camWidth, camHeight);
 	}
-	else if(vidGrabber != NULL ) {
+	else if(vidGrabber != NULL ) 
+	{
 		sourceImg.setFromPixels(vidGrabber->getPixels(), camWidth, camHeight);
 		//convert to grayscale
 		processedImg = sourceImg;
@@ -436,7 +408,8 @@ void ofxNCoreVision::getPixels(){
 			//convert to grayscale
 			processedImg = sourceImg;
 		}
-		else{//if grayscale
+		else
+		{	//if grayscale
 			processedImg.setFromPixels(dsvl->getPixels(), camWidth, camHeight);
 		}
 	}
@@ -513,8 +486,6 @@ void ofxNCoreVision::grabFrameToGPU(GLuint target)
 *****************************************************************************/
 void ofxNCoreVision::_draw(ofEventArgs &e)
 {
-	if(exited) return;
-
 	if (showConfiguration) 
 	{
 		//if calibration
@@ -540,8 +511,8 @@ void ofxNCoreVision::_draw(ofEventArgs &e)
 	}	
 }
 
-void ofxNCoreVision::drawFullMode(){
-
+void ofxNCoreVision::drawFullMode()
+{
 	ofSetColor(0xFFFFFF);
 	//Draw Background Image
 	background.draw(0, 0);
@@ -557,43 +528,37 @@ void ofxNCoreVision::drawFullMode(){
 	if (bGPUMode) filter->drawGPU();
 	else filter->draw();
 
-	ofSetColor(0x000000);
-	if (bShowPressure)
-	{
-		bigvideo.drawString("Pressure Map", 140, 20);
-	}
-	else
-	{
-		bigvideo.drawString("Source Image", 140, 20);
-	}
-	bigvideo.drawString("Tracked Image", 475, 20);
+	ofSetColor(0x969696);
+
+	bigvideo.drawString("Source", 168, 20);
+	bigvideo.drawString("Tracked", 509, 20);
 
 	//draw link to tbeta website
 	ofSetColor(79, 79, 79);
 	ofFill();
-	ofRect(721, 586, 228, 14);
+	ofRect(721, 584, 228, 16);
 	ofSetColor(0xFFFFFF);
-	ofDrawBitmapString("|  ~  |tbeta.nuigroup.com", 725, 596);
+	ofDrawBitmapString(" www.nuigroup.com/ccv - 1.3 ", 725, 596);
 
 	//Display Application information in bottom right
-	string str = "Calc. Time [ms]:  ";
-	str+= ofToString(differenceTime, 0)+"\n\n";
+	string str = "Calculation Time: ";
+	str+= ofToString(differenceTime, 0)+" ms \n\n";
 
 	if (bcamera)
 	{
-		string str2 = "Camera [Res]:     ";
-        str2+= ofToString(camWidth, 0) + " x " + ofToString(camWidth, 0)  + "\n";
-		string str4 = "Camera [fps]:     ";
-		str4+= ofToString(fps, 0)+"\n";
+		string str2 = "Camera Resolution: ";
+        str2+= ofToString(camWidth, 0) + " x " + ofToString(camHeight, 0)  + "\n";
+		string str4 = "Camera Framerate: ";
+		str4+= ofToString(fps, 0)+" FPS \n";
 		ofSetColor(0xFFFFFF);
 		verdana.drawString(str + str2 + str4, 740, 410);
 	}
 	else
 	{
-		string str2 = "Video [Res]:       ";
+		string str2 = "Video Resolution: ";
 		str2+= ofToString(vidPlayer->width, 0) + " x " + ofToString(vidPlayer->height, 0)  + "\n";
-		string str4 = "Video [fps]:        ";
-		str4+= ofToString(fps, 0)+"\n";
+		string str4 = "Video Framerate: ";
+		str4+= ofToString(fps, 0)+" FPS \n";
 		ofSetColor(0xFFFFFF);
 		verdana.drawString(str + str2 + str4, 740, 410);
 	}
@@ -604,19 +569,27 @@ void ofxNCoreVision::drawFullMode(){
 		ofSetColor(0xffffff);
 		char buf[256];
 		if(myTUIO.bOSCMode)
-			sprintf(buf, "Sending OSC messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
-		else{
+			sprintf(buf, "Sending TUIO messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOPort);
+		else if(myTUIO.bTCPMode)
+		{
 			if(myTUIO.bIsConnected)
-			sprintf(buf, "Sending TCP messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+				//sprintf(buf, "Sending XML messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+				sprintf(buf, "Sending XML messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOFlashPort);
 			else
-			sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
-		}		
-		
+				sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
+		}
+		else if(myTUIO.bBinaryMode)
+		{
+			if(myTUIO.bIsConnected)
+				//sprintf(buf, "Sending XML messages to:\nPort: %i", myTUIO.TUIOFlashPort);
+				sprintf(buf, "Sending BINARY messages to:\nHost: %s\nPort: %i", myTUIO.localHost, myTUIO.TUIOFlashPort);
+			else
+				sprintf(buf, "Could not bind or send TCP to:\nPort: %i", myTUIO.TUIOFlashPort);
+		}
 		verdana.drawString(buf, 740, 480);
 	}
-
 	ofSetColor(0xFF0000);
-	verdana.drawString("Press spacebar to toggle fast mode", 730, 572);
+	verdana.drawString("Press spacebar for mini mode", 748, 572);
 }
 
 void ofxNCoreVision::drawMiniMode()
@@ -625,7 +598,8 @@ void ofxNCoreVision::drawMiniMode()
 	ofSetColor(0,0,0);
 	ofRect(0,0,ofGetWidth(), ofGetHeight());
 	//draw outlines
-	if (bDrawOutlines){
+	if (bDrawOutlines)
+	{
 		for (int i=0; i<contourFinder.nBlobs; i++)
 		{
 			contourFinder.blobs[i].drawContours(0,0, camWidth, camHeight+175, ofGetWidth(), ofGetHeight());
@@ -643,20 +617,22 @@ void ofxNCoreVision::drawMiniMode()
 	//draw text
 	ofSetColor(250,250,250);
 	verdana.drawString("Calc. Time  [ms]:        " + ofToString(differenceTime,0),10, ofGetHeight() - 70 );
-	if (bcamera){
+	if (bcamera)
+	{
 		verdana.drawString("Camera [fps]:            " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
-	else {
+	else 
+	{
 		verdana.drawString("Video [fps]:              " + ofToString(fps,0),10, ofGetHeight() - 50 );
 	}
 	verdana.drawString("Blob Count:               " + ofToString(contourFinder.nBlobs,0),10, ofGetHeight() - 29 );
-	verdana.drawString("Sending TUIO:  " ,10, ofGetHeight() - 9 );
+	verdana.drawString("Communication:  " ,10, ofGetHeight() - 9 );
 
 	//draw green tuio circle
-	if((myTUIO.bIsConnected || myTUIO.bOSCMode) && bTUIOMode)//green = connected
-	ofSetColor(0x00FF00);
+	if((myTUIO.bIsConnected || myTUIO.bOSCMode) && bTUIOMode)
+		ofSetColor(0x00FF00);	//green = connected
 	else
-	ofSetColor(0xFF0000); //red = not connected
+		ofSetColor(0xFF0000);	//red = not connected
 	ofFill();
 	ofCircle(ofGetWidth() - 17 , ofGetHeight() - 10, 5);
 	ofNoFill();
@@ -691,12 +667,6 @@ void ofxNCoreVision::drawFingerOutlines()
 *****************************************************************************/
 void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 {
-	// detect escape key
-	if(e.key==0x1b)
-	{
-		exited=true;
-	}
-
 	if (showConfiguration)
 	{
 		switch (e.key)
@@ -727,20 +697,35 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 		case 't':
 			myTUIO.bOSCMode = !myTUIO.bOSCMode;
 			myTUIO.bTCPMode = false;
+			myTUIO.bBinaryMode = false;
 			bTUIOMode = myTUIO.bOSCMode;
 			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 			//clear blobs
 //			myTUIO.blobs.clear();
 			break;
 		case 'f':
 			myTUIO.bOSCMode = false;
 			myTUIO.bTCPMode = !myTUIO.bTCPMode;
+			myTUIO.bBinaryMode = false;
 			bTUIOMode = myTUIO.bTCPMode;
 			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
 			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
 			//clear blobs
 //			myTUIO.blobs.clear();
+			break;
+		case 'n':
+			myTUIO.bOSCMode = false;
+			myTUIO.bTCPMode = false;
+			myTUIO.bBinaryMode = !myTUIO.bBinaryMode;
+			bTUIOMode = myTUIO.bBinaryMode;
+			controls->update(appPtr->optionPanel_tuio_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bTCPMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_tuio_osc, kofxGui_Set_Bool, &appPtr->myTUIO.bOSCMode, sizeof(bool));
+			controls->update(appPtr->optionPanel_bin_tcp, kofxGui_Set_Bool, &appPtr->myTUIO.bBinaryMode, sizeof(bool));
+			//clear blobs
+			//			myTUIO.blobs.clear();
 			break;
 		case 'g':
 			bGPUMode ? bGPUMode = false : bGPUMode = true;
@@ -749,7 +734,8 @@ void ofxNCoreVision::_keyPressed(ofKeyEventArgs &e)
 			break;
 		case 'v':
 			if (bcamera && vidGrabber != NULL)
-				vidGrabber->videoSettings();
+				if(vidGrabber)
+					vidGrabber->videoSettings();
 			break;
 		case 'l':
 			bShowLabels ? bShowLabels = false : bShowLabels = true;
@@ -795,7 +781,7 @@ void ofxNCoreVision::_keyReleased(ofKeyEventArgs &e)
 		if ( e.key == 'c' && !bCalibration)
 		{
 			bShowInterface = false;
-			//Enter/Exit Calibration
+			// Enter/Exit Calibration
 			bCalibration = true;
 			calib.calibrating = true;
 			tracker.isCalibrating = true;
@@ -820,7 +806,8 @@ void ofxNCoreVision::_mousePressed(ofMouseEventArgs &e)
 	if (showConfiguration)
 	{
 		controls->mousePressed(e.x, e.y, e.button); //guilistener
-		if (e.x > 722 && e.y > 586){ofLaunchBrowser("http://tbeta.nuigroup.com");}
+		if (e.x > 722 && e.y > 586)
+			ofLaunchBrowser("http://ccv.nuigroup.com");
 	}
 }
 
@@ -834,8 +821,8 @@ void ofxNCoreVision::_mouseReleased(ofMouseEventArgs &e)
 * Getters
 *****************************************************************************/
 
-std::map<int, Blob> ofxNCoreVision::getBlobs(){
-
+std::map<int, Blob> ofxNCoreVision::getBlobs()
+{
 	return tracker.getTrackedBlobs();
 }
 
@@ -844,21 +831,18 @@ std::map<int, Blob> ofxNCoreVision::getBlobs(){
 *****************************************************************************/
 void ofxNCoreVision::_exit(ofEventArgs &e)
 {
-	//save/update log file
-	if((stream = freopen(fileName, "a", stdout)) == NULL){}
-
 	saveSettings();
-
+	// AlexP
+	// C++ guarantees that operator delete checks its argument for null-ness
     #ifdef TARGET_WIN32
-		if(PS3!=NULL) delete PS3;
-		if(ffmv!=NULL) delete ffmv;
-		if(dsvl!=NULL) delete dsvl;	
+		delete PS3;		PS3 = NULL;
+		delete ffmv; 	ffmv = NULL;
+		delete dsvl;	dsvl = NULL;
 	#endif
-
-	if(vidGrabber!=NULL) delete vidGrabber;
-	if(vidPlayer !=NULL) delete vidPlayer;
+	delete filter;		filter = NULL;
+	delete vidGrabber;	vidGrabber = NULL;
+	delete vidPlayer;	vidPlayer = NULL;
 	// -------------------------------- SAVE STATE ON EXIT
-	
 	printf("Vision module has exited!\n");
 }
 
