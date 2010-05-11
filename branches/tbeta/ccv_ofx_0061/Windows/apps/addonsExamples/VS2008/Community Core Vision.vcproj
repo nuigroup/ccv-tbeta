@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudio.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmt.lib PocoNetmt.lib PocoUtilmt.lib PocoXMLmt.lib Ws2_32.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cv110.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cvaux110.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cxcore110.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\vs2008\oscpack.lib ..\..\..\addons\ofxFFMV\lib\PGRFlyCapture.lib ..\..\..\addons\ofxDSVL\lib\dsvl.lib ..\..\..\addons\ofxPS3\lib\PS3EyeMulticam.lib ..\..\..\libs\openFrameworksCompiled\lib\vs2008\openframeworksLibDebug.lib"
+				AdditionalDependencies="OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib glut32.lib rtAudio.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib GLee.lib fmodex_vc.lib glu32.lib PocoFoundationmt.lib PocoNetmt.lib PocoUtilmt.lib PocoXMLmt.lib Ws2_32.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cv110.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cvaux110.lib ..\..\..\addons\ofxOpenCv\libs\opencv\lib\vs2008\cxcore110.lib ..\..\..\addons\ofxOsc\libs\oscpack\lib\vs2008\oscpack.lib ..\..\..\addons\ofxFFMV\lib\PGRFlyCapture.lib ..\..\..\addons\ofxDSVL\lib\dsvl.lib ..\..\..\addons\ofxPS3\lib\PS3EyeMulticam.lib ..\..\..\libs\openFrameworksCompiled\lib\vs2008\openframeworksLib.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\..\libs\glut\lib\vs2008;..\..\..\libs\rtAudio\lib\vs2008;..\..\..\libs\freeImage\lib\vs2008;..\..\..\libs\freetype\lib\vs2008;..\..\..\libs\fmodex\lib\vs2008;..\..\..\libs\videoInput\lib\vs2008;..\..\..\libs\glee\lib\vs2008;..\..\..\libs\glu\lib\vs2008;..\..\..\libs\Poco\lib\vs2008;..\..\..\libs\quicktime\lib\vs2008"
 				IgnoreAllDefaultLibraries="false"
@@ -203,134 +203,6 @@
 				RelativePath=".\src\testApp.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="libs"
-			>
-			<Filter
-				Name="openFrameworks"
-				>
-				<File
-					RelativePath="..\..\..\libs\openFrameworks\ofMain.h"
-					>
-				</File>
-				<Filter
-					Name="app"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\app\ofAppBaseWindow.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\app\ofAppGlutWindow.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\app\ofAppRunner.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\app\ofBaseApp.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="graphics"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\graphics\ofBitmapFont.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\graphics\ofGraphics.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\graphics\ofImage.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\graphics\ofTexture.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\graphics\ofTrueTypefont.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="sound"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\sound\ofSoundPlayer.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\sound\ofSoundStream.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="util"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\utils\ofConstants.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\utils\ofMath.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\utils\ofTypes.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\utils\ofUtils.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="video"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\video\ofQtUtils.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\video\ofVideoGrabber.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\video\ofVideoPlayer.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="communication"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\communication\ofArduino.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\communication\ofSerial.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="events"
-					>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\events\ofEvents.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\libs\openFrameworks\events\ofEventUtils.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="addons"
